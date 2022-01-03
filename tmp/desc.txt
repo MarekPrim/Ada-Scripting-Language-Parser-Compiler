@@ -1,0 +1,30 @@
+
+
+dans le main
+
+
+cp : int; -- compteur ordinal
+
+Variables : [] variable;
+Instructions : [] String de Adr -> Adr+Taille_Programme
+;
+
+
+
+type  variable is record
+valeur : T; {T : Integer || Caracter || [Integer] || [Boolean] || String[Capacite] || String}
+type : String;
+identificateur : String;
+end record
+
+
+Enum Mot_reservé = [Début,...]
+
+
+
+Modules :
+
+    Intépreteur de programme en langage intermédiaire
+    Opérations mémoire -> Variables & Branchements
+    Opérateurs arithmétiques de base -> Identification & Résolution
+
