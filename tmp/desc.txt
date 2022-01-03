@@ -12,7 +12,7 @@ Instructions : [] String de Adr -> Adr+Taille_Programme
 
 
 type  variable is record
-valeur : T; {T : Integer || Caracter || [Integer] || [Boolean] || String[Capacite] || String}
+valeur : T; {T : Integer || Character || [Integer] || [Boolean] || String[Capacite] || String}
 type : String;
 identificateur : String;
 end record
