@@ -1,0 +1,170 @@
+// La syntaxe choisie pour le code intermédiaire est celle utilisée dans le sujet, et utilisera
+// l'instruction GOTO de BASIC.
+
+R0 : Transformer un programme en langage source en langage intermédiaire
+
+R1 : Comment transformer un programme en langage source vers un programme en langage intermédiaire ?
+
+    R1.1 : Parcourir le programme en langage source et créer un programme en langage intermédiaire
+    R1.2 : Ecrire le code en langage intermédiaire dans un fichier
+
+R2 : Comment parcourir le programme en langage source et créer un programme en langage intermédiaire ?
+
+    R2.1 : Ouvrir le fichier en langage source et lire les lignes du fichier   -- in fileName String, out lines String[]
+    R2.2 : Parcourir les lignes du fichier et créer un programme en langage intermédiaire
+
+R3 : Comment ouvrir un fichier en langage source et lire les lignes du fichier?
+    
+        R3.1 : Ouvrir le fichier en langage source      -- out file File
+        R3.2 : Lire les lignes du fichier en langage source     -- out String[] lines, in File file
+
+R3 : Comment parcourir les lignes du fichier et créer un code en langage intermédiaire ?
+
+    R3.1 : Parcourir les lignes du fichier  -- in String[] lines, out String line
+    R3.2 : Créer un code en langage intermédiaire  -- in line String, out String code
+
+R4 : Comment parcourir les lignes du fichier ?
+    A5 :        -- in String[] lines, out String line
+        Pour chaque ligne line de lines faire
+            Si estCodeSignificatif(line) alors
+                R4.1 : Passer la ligne lue à la fonction de création de code en langage intermédiaire
+            sinon
+                Ignorer la ligne
+            Fin Si
+        Fin pour
+
+R5 : Comment savoir si une ligne est un code significatif ?
+    Si la ligne est une ligne de commentaire alors
+        Retourne faux
+    Sinon Si ligne est vide alors
+        Retourne faux
+    Sinon
+        Retourne vrai
+    Fin Si
+
+
+R4 : Comment créer un code en langage intermédiaire ?
+    R4.1 : Récupérer toutes les variables non déclarées avant la première instruction et les ajouter à la déclaration
+    R4.2 : Identifier toutes les variables intermédiaires utilisées lors de l'exécution et les déclarer de manière explicite
+    R4.3 : Transformer les instructions "Tant Que X" en "IF GOTO label"
+    R4.4 : Transformer les instructions "Si X Alors" en "IF GOTO label"
+    R4.5 : Labelliser chaque ligne de programme avec le numéro de ligne et remplacer les labels Ln par leur numéro de ligne
+
+R5 : Comment récupérer toutes les variable non déclarées avant la première instruction et les ajouter à la déclaration ?
+    R5.1 : Identifier les variables déclarées avant l'exécution
+    R5.2 : Identifier toutes les variables n'appartenant pas aux variables déclarées avant éxecution
+    R5.3 : Ajouter les variables non déclarées à la déclaration
+
+
+R6 : Comment identifier les variables déclarées avant l'exécution ?
+    R6.1 : Parcourir les lignes comprises entre "Programme" et "Début"      -- in String[] lines, out String[] linesBeforeBegin
+    R6.2 : Identifier les variables déclarées       -- in String[] linesBeforeBegin, out variable variablesDeclared
+    R6.3 : Insérer les variables dans un tableau     -- in variable variablesDeclared, in out variable[] variablesDeclaredArray
+
+R6 : Comment identifier les variables n'appartenant pas aux variables déclarées avant éxecution ?
+    R6.1 : Parcourir les lignes comprises entre "Début" et "Fin"      -- in String[] lines, out String[] linesAfterBegin
+    R6.2 : Identifier chaque variable       -- in String[] linesBeforeBegin, out variable variablesDeclared
+    R6.3 : Déterminer si la variable est déclarée   -- in variable variablesDeclared, in out variable[] variablesDeclaredArray
+    R6.4 : Insérer les variables non déclarées dans un tableau     -- in variable variablesDeclared, in out variable[] variablesDeclaredArray
+
+
+R7 : Comment identifier chaque variable ?
+    Si la ligne comporte une affectation alors
+        R7.1 : Récupérer l'identificateur et le type de la variable      -- in String line, out String variableIdentifier,variableType
+        R7.2 : Retourner la variable      -- in variableIdentifier, in variableType, out variable variable
+    Sinon
+        Ignorer la ligne
+    Fin Si
+
+R7 : Comment déterminer si la variable est déclarée ?
+    R7.1 : Parcourir les variables déclarées      -- in variable[] variablesDeclaredArray, in variable variable
+    R7.2 : Si la variable appartient à variablesDeclaredArray[] alors
+        Retourner faux
+    Sinon
+        Retourner vrai
+    Fin Si
+
+R6 : Comment ajouter les variables non déclarées à la déclaration ?
+    R6.1 : Parcourir les variables identifiées      -- in variable[] variablesDeclaredArray, in variable variable
+    R6.2 : Ajouter la variable à la déclaration     -- in variable[] variablesDeclaredArray, in out String[] lines
+
+R7 : Comment ajouter la variable à la déclaration ?
+    R7.1 : Trier le tableau de variables en fonction du type de la variable      -- in out variable[] variablesDeclaredArray
+    A7.1 : 
+            Pour toute variable v de variablesDeclaredArray faire
+                Ecrire dans la déclaration l'identificateur de v
+                Si v est dernière valeur de variablesDeclaredArray alors
+                    Ecrire ": Entier"
+                Sinon
+                    Ecrire ","
+                Fin Si
+            Fin Pour
+
+
+
+
+R5 : Comment identifier toutes les variables intermédiaires utilisées lors de l'exécution et les déclarer de manière explicite ?
+
+    R5.1 : Parcourir les lignes comprises entre "Début" et "Fin"      -- in String[] lines, out String line
+    R5.2 : Déterminer si la ligne contient une instruction utilisant une variable intermédiaire et ajouter la déclaration des variables "finales"      -- in String line, out boolean isInstructionUsingVariable
+
+R6 : Comment déterminer si la ligne contient une instruction utilisant une variable intermédiaire ?
+    A7 :
+        Si line contient opérateur composé alors
+            R6.1 : Décomposer l'opérateur composé en opérateurs individuels      -- in String line, out String[] operators
+        Sinon
+            Ignorer la ligne
+        Fin Si
+
+R7 : Comment décomposer l'opérateur composé en opérateurs individuels ?
+    R7.1 : Récupérer les variable et les opérateurs élémentaires utilisés par l'opérateur composé
+    R7.2 : Remplacer l'opérateur composé par un opérateur élémentaire des variables "finales"
+
+R8 : Comment récupérer les variables et opérateurs élémentaires utilisés par l'opérateur ?
+    A9 :
+        Selon opérateur dans
+            '>=' => 
+                R8.1 : Décomposer en '>' et '='     -- in String opérateur, in variables[] variables, out String[] operators
+            '<=' =>
+                R8.2 : Décomposer en '<' et '='     -- in String opérateur, in variables[] variables, out String[] operators
+        Fin Selon
+
+R9 : Comment décomposer en '>' et '=' ?
+    R9.1 : Ajouter Tk,Ti et Tf à la déclaration      -- in variables[] variables
+    R9.2 : Affecter à Tk le résultat de "variables[1] = variables[2]"
+    R9.3 : Affecter à Ti le résultat de "variables[1] > variables[2]"
+    R9.4 : Affecter à Tf le résultat de "Tk et Ti"
+
+R9 : Comment décomposer en '<' et '=' ?
+    R9.1 : Ajouter Tk,Ti et Tf à la déclaration      -- in variables[] variables
+    R9.2 : Affecter à Tk le résultat de "variables[1] = variables[2]"
+    R9.3 : Affecter à Ti le résultat de "variables[1] < variables[2]"
+    R9.4 : Affecter à Tf le résultat de "Tk et Ti"
+
+
+R5 : Comment transformer les instructions "Tant Que X" en "GOTO label" ?
+    R5.1 : Parcourir les lignes comprises entre "Début" et "Fin"      -- in String[] lines, out String line
+    R5.2 : Déterminer si la ligne contient une instruction "Tant Que X"      -- in String line, out boolean isTQ
+    R5.3 : Transformer la ligne en "GOTO label"      -- in String line, in boolean isTQ, out String line
+
+R6 : Comment déterminer si la ligne contient une instruction "Tant Que X" ?
+    A6.1 : Si la ligne contient "Tant Que" alors
+        Retourner vrai
+    Sinon
+        Retourner faux
+    Fin Si
+
+R6 : Comment tranformer la ligne en "GOTO label" ?
+    R6.1 : Déterminer le label à utiliser pour rentrer dans la boucle et l'ajouter au programme     -- in String lines[], in String line, out String labelDebut
+    R6.2 : Déterminer le label à utiliser en sortie de la boucle et l'ajouter au programme     -- in String lines[], in String line, out String labelFin
+    R6.3 : Remplacer "Tant Que X" en "GOTO Ln_start"
+    R6.4 : Ajouter "GOTO labelFin" en séquence du "GOTO labelDebut"
+
+R7 : Comment déterminer le label à utiliser pour rentrer dans la boucle et l'ajouter au programme
+    R7.1 : Récupérer la ligne suivant le "Tant Que X"
+    R7.2 : Ajouter le label Ln_start à la ligne
+
+R7 : Comment déterminer le label à utiliser en sortie de la boucle et l'ajouter au programme
+    R7.1 : Récupérer la ligne contenant "Fin Tant Que"
+    R7.2 : Ajouter le label Ln_end à la ligne
+
