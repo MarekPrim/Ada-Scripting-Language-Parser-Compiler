@@ -121,16 +121,3 @@ package body intermediaire is
     end interpreterCommande;
 
 end intermediaire;
-
-type record_lignes is record
-        tab_lignes : lignes;
-        nb_lignes : integer;
-    end record;
-
-    type variable is record
-        valeur : T; --{T : Integer || Character || [Integer] || [Boolean] || String[Capacite] || String}
-        type : String;
-        identificateur : String;
-    end record;
-
-    type variables is array(1..CMAX) of variable;
