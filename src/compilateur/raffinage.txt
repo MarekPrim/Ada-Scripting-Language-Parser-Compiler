@@ -42,19 +42,18 @@ R5 : Comment savoir si une ligne est un code significatif ?
         Retourne vrai
     Fin Si
 
-
 R4 : Comment créer un code en langage intermédiaire ?
     R4.1 : Récupérer toutes les variables non déclarées avant la première instruction et les ajouter à la déclaration
     R4.2 : Identifier toutes les variables intermédiaires utilisées lors de l'exécution et les déclarer de manière explicite
     R4.3 : Transformer les instructions "Tant Que X" en "IF GOTO label"
     R4.4 : Transformer les instructions "Si X Alors" en "IF GOTO label"
-    R4.5 : Labelliser chaque ligne de programme avec le numéro de ligne et remplacer les labels Ln par leur numéro de ligne
+    R4.5 : Transformer les instructions "Si X Alors XYZ Sinon ZYX" en "IF GOTO label ELSE GOTO label"
+    R4.6 : Labelliser chaque ligne de programme avec le numéro de ligne et remplacer les labels Ln par leur numéro de ligne
 
 R5 : Comment récupérer toutes les variable non déclarées avant la première instruction et les ajouter à la déclaration ?
     R5.1 : Identifier les variables déclarées avant l'exécution
     R5.2 : Identifier toutes les variables n'appartenant pas aux variables déclarées avant éxecution
     R5.3 : Ajouter les variables non déclarées à la déclaration
-
 
 R6 : Comment identifier les variables déclarées avant l'exécution ?
     R6.1 : Parcourir les lignes comprises entre "Programme" et "Début"      -- in String[] lines, out String[] linesBeforeBegin
@@ -66,7 +65,6 @@ R6 : Comment identifier les variables n'appartenant pas aux variables déclarée
     R6.2 : Identifier chaque variable       -- in String[] linesBeforeBegin, out variable variablesDeclared
     R6.3 : Déterminer si la variable est déclarée   -- in variable variablesDeclared, in out variable[] variablesDeclaredArray
     R6.4 : Insérer les variables non déclarées dans un tableau     -- in variable variablesDeclared, in out variable[] variablesDeclaredArray
-
 
 R7 : Comment identifier chaque variable ?
     Si la ligne comporte une affectation alors
@@ -99,9 +97,6 @@ R7 : Comment ajouter la variable à la déclaration ?
                     Ecrire ","
                 Fin Si
             Fin Pour
-
-
-
 
 R5 : Comment identifier toutes les variables intermédiaires utilisées lors de l'exécution et les déclarer de manière explicite ?
 
@@ -141,11 +136,10 @@ R9 : Comment décomposer en '<' et '=' ?
     R9.3 : Affecter à Ti le résultat de "variables[1] < variables[2]"
     R9.4 : Affecter à Tf le résultat de "Tk et Ti"
 
-
 R5 : Comment transformer les instructions "Tant Que X" en "GOTO label" ?
     R5.1 : Parcourir les lignes comprises entre "Début" et "Fin"      -- in String[] lines, out String line
     R5.2 : Déterminer si la ligne contient une instruction "Tant Que X"      -- in String line, out boolean isTQ
-    R5.3 : Transformer la ligne en "GOTO label"      -- in String line, in boolean isTQ, out String line
+    R5.3 : Transformer la ligne "Tant Que X" en "GOTO label"      -- in String line, in boolean isTQ, out String line
 
 R6 : Comment déterminer si la ligne contient une instruction "Tant Que X" ?
     A6.1 : Si la ligne contient "Tant Que" alors
@@ -157,8 +151,8 @@ R6 : Comment déterminer si la ligne contient une instruction "Tant Que X" ?
 R6 : Comment tranformer la ligne en "GOTO label" ?
     R6.1 : Déterminer le label à utiliser pour rentrer dans la boucle et l'ajouter au programme     -- in String lines[], in String line, out String labelDebut
     R6.2 : Déterminer le label à utiliser en sortie de la boucle et l'ajouter au programme     -- in String lines[], in String line, out String labelFin
-    R6.3 : Remplacer "Tant Que X" en "GOTO Ln_start"
-    R6.4 : Ajouter "GOTO labelFin" en séquence du "GOTO labelDebut"
+    R6.3 : Remplacer "Tant Que X" en "IF X GOTO Ln_start"
+    R6.4 : Ajouter "GOTO Ln_end" en séquence du "Tant Que X"
 
 R7 : Comment déterminer le label à utiliser pour rentrer dans la boucle et l'ajouter au programme
     R7.1 : Récupérer la ligne suivant le "Tant Que X"
@@ -167,4 +161,55 @@ R7 : Comment déterminer le label à utiliser pour rentrer dans la boucle et l'a
 R7 : Comment déterminer le label à utiliser en sortie de la boucle et l'ajouter au programme
     R7.1 : Récupérer la ligne contenant "Fin Tant Que"
     R7.2 : Ajouter le label Ln_end à la ligne
+    R7.3 : Remplacer "Fin Tant Que" par "NULL"
 
+R5 : Comment transformer les instructions "Si X Alors" en "IF X GOTO Ln"
+    R5.1 : Parcourir les lignes comprises entre "Début" et "Fin"      -- in String[] lines, out String line
+    R5.2 : Déterminer si la ligne contient une instruction "Si X Alors"      -- in String line, out boolean isIF
+    R5.3 : Transformer la ligne "Tant Que X" en "GOTO label"      -- in String line, in boolean isIF, out String line
+
+R6 : Comment déterminer si la ligne contient une instruction "Si X Alors" ?
+    A6.1 : Si la ligne contient "SI X Alors" alors
+        Retourner vrai
+    Sinon
+        Retourner faux
+    Fin Si
+
+R6 : Comment tranformer la ligne en "GOTO label" ?
+    R6.1 : Déterminer le label à utiliser pour rentrer dans le code imbriqué dans la condition et l'ajouter au programme
+    R6.2 : Remplacer "Si X Alors" par "GOTO label_if"
+
+R7 : Comment déterminer le label à utiliser pour rentrer dans le code imbriqué dans la condition et l'ajouter au programme ?
+    R7.1 : Récupérer la ligne suivant "Si X Alors"
+    R7.2 : Ajouter le label label_if
+
+R5 : Comment transformer les instructions "Si X Alors" en "IF X GOTO Ln ELSE GOTO Ln'" ?
+    R5.1 : Parcourir les lignes comprises entre "Début" et "Fin"      -- in String[] lines, out String line
+    R5.2 : Déterminer si la ligne contient une instruction "Si X Alors XYZ Sinon ZYX"      -- in String line, out boolean isIF
+    R5.3 : Transformer la ligne "Si X Alors XYZ Sinon ZYX" en "GOTO label"      -- in String line, in boolean isIF, out String line 
+
+R6 : Comment transformer la ligne "Si X Alors XYZ Sinon ZYX" en "GOTO label" ?
+    R6.1 : Déterminer le label à utiliser pour rentrer dans le code imbriqué si condition vraie et l'ajouter au programme
+    R6.2 : Déterminer le label à utiliser pour rentrer dans le code imbriqué si condition fausse et l'ajouter au programme
+    R6.3 : Remplacer "Si X alors XYZ Sinon ZYX" par "IF X GOTO ln ELSE GOTO ln'"
+
+R7 : Comment déterminer le label à utiliser pour rentrer dans le code imbriqué si condition fausse et l'ajouter au programme
+    R7.1 : Récupérer la ligne suivant "Sinon"
+    R7.2 : Ajouter le label ln'
+
+R5 : Comment labelliser chaque ligne de programme avec le numéro de ligne et remplacer les labels Ln par leur numéro de ligne
+    R5.1 : Parcourir le programme entre "Début" et "Fin"
+    R5.2 : Numéroter les lignes
+    R5.3 : Remplacer les labels par leur numéro de ligne
+
+R6 : Comment remplacer les labels par leur numéro de ligne
+    R6.1 : Parcourir le programme entre "Début" et "Fin"
+    R6.2 : Récupérer tous les labels déclarées
+    R6.3 : Remplacer le label par son numéro de ligne
+
+R7 : Comment remplacer le label par son numéro de ligne ?
+    A8 :
+        Pour tout label du programme faire
+            A8.1 : Récupérer la ligne correspondant à sa déclaration
+            A8.2 : Remplacer chaque appel de ce label par son numéro de ligne 
+        Fin Pour
