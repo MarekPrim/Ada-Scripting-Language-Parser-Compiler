@@ -14,7 +14,7 @@ package operateurs is
     -- Préconditions : 
     -- Postconditions : variables(index(indificateur)) = valeur
     -- Exceptions : Variable_Inconnue, Variable_Constante
-    procedure affectation(identificateur : in String; variables : in out variable; valeur : in T);
+    procedure affectation(identificateur : in String; variables : in out variables; valeur : in T);
 
     -- nom : operationArithmetique
     -- semantique : effectue l'operation arithmetique
@@ -53,6 +53,6 @@ package operateurs is
     -- Précondition : 
     -- Postcondition :
     -- Exceptions :
-    procedure branchementConditionel(op : in Character; cp : in out Integer; variables : in variable; line : in Integer);
+    procedure branchementConditionel(op : in Character; cp : in out Integer; variables : in variable[]; line : in Integer);
 
 end operateurs;

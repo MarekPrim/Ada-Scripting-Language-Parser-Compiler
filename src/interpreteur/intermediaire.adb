@@ -1,7 +1,7 @@
 
 package body intermediaire is
 
-    function initialiserInstructions(file_name : in String) return record_lignes is
+    function initialiserInstructions(fileName : in String) return ligne is
         F         : File_Type;
         lines : record_lignes;
         str : currentLine;
@@ -21,7 +21,7 @@ package body intermediaire is
         Close (F);
     end initialiserInstructions;
 
-    function recuperationVariables(lines : in record_lignes) return variables is
+    function recuperationVariables(lines : in record_lignes) return variable is
         vars : variables;   
         i : integer;
         j : integer;
@@ -119,5 +119,31 @@ package body intermediaire is
             i := i+1;
         end loop;
     end interpreterCommande;
+
+    function rechercherVariable (nomVariable : in string) return ptrVariable is
+
+    begin
+
+        for i in 1..record_variables.nb_lignes loop
+            if (record_variables.tab_variables(i).identificateur = nomVariable) then
+                return record_variables.tab_variables(i);
+            end if;
+        end loop;
+
+        return null;
+
+    end rechercherVariable;
+
+    procedure traiterProgramme (fileName : in string) is
+        lines : record_lignes;
+        variables : record_variables;
+    begin
+
+        lines := initialiserInstructions(fileName);
+        variables := recuperationVariables(lines);
+
+
+
+    end traiterProgramme;
 
 end intermediaire;

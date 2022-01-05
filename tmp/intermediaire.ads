@@ -1,8 +1,7 @@
 
 package intermediaire is
-    -- Enumerations
-    type Reserved_Langage_Word is (Programme,Début, Fin, est);
-    
+-- Enumerations
+ type Reserved_Langage_Word is (Programme,Début, Fin, est);
     SMAX : constant integer;        -- taille d'un string
     TMAX : constant integer;        -- taille du tableau de string
     CMAX : constant integer;        -- taille du tableau de variables
@@ -13,6 +12,7 @@ package intermediaire is
     Variable_Deja_Definie : Exception -- La variable a déjà été déclarée dans le programme
     Acces_Limite : Exception; -- Le compteur CP est hors limite (Ex : Programme avec un corps de 10 lignes et CP = 11) dans le programme
     
+    
     type variable is private;
     type ptrVariable is access variable;
 
@@ -20,7 +20,6 @@ package intermediaire is
     type ptrLigne is access ligne;
 
     type ligne is record
-        numLigne : integer;
         text : String;
         prev : ptrLigne;
         next : ptrLigne;
@@ -39,12 +38,12 @@ package intermediaire is
     procedure traiterProgramme;
     
     -- nom : initialiserInstructions
-    -- semantique : parcourt les lignes du fichier et stocke ces lignes dans la liste doublement chainée ligne
+    -- semantique : parcoure les lignes du fichier et stocke ces lignes dans le tableau instructions
     -- parametres : fileName : in string        nom du fichier à interpréter
-    --              ptr : in out ptrLigne       pointeur sur la liste des lignes
     -- Préconditions : le fichier est fermé
     -- Postconditions : le fichier est fermé
-    function initialiserInstructions(fileName : in string) return ptrLigne;
+    function initialiserInstructions(fileName : in string) return lignes;
+
 
     -- nom : recuperationVariables
     -- semantique : Récupérer les variables d'un programme en langage intermédiaire
@@ -55,7 +54,7 @@ package intermediaire is
     -- Préconditions : le programme est correctement formé [Non vérifié dans notre cas]
     -- Postconditions : variables.length > 0 && variables contient les variables du programme
     -- Exceptions : Aucune_Variable_Definie, Type_Incorrect, Variable_Deja_Definie
-    function recupererVariables(ptrLine : in out ptrLigne) return ptrvariable;
+    function recuperationVariables(lines : in lignes) return variables;
 
     -- nom : interpreterCommande
     -- semantique : interprete la ligne ou se trouve cp
@@ -66,7 +65,8 @@ package intermediaire is
     -- Préconditions :
     -- Postconditions :  
     -- Exceptions : Acces_Limite
-    procedure interpreterCommande (ptrLine : in ptrLigne; ptrVar : in out ptrVariable);
+    procedure interpreterCommande (lines : in lignes; vars : in out variables; cp : in out integer);
+
 
     -- nom : rechercherVariable
     -- semantique : retourne un pointeur sur la variable recherchée
@@ -78,5 +78,6 @@ package intermediaire is
     -- Postconditions :  
     -- Exceptions : Variable_Non_Trouvée
     function rechercherVariable (nomVariable : in string) return ptrVariable;
+
 
 end intermediaire;
