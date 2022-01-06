@@ -28,7 +28,7 @@ package operateurs is
     -- cp : indice de l'instruction courante
     -- Précondition : la liste des variables est bien formée; op est un operateur arithmetique
     -- Postcondition : CP est incrémenté de 1
-    -- Exceptions : Aucune
+    -- Exceptions : Operateur_Incorrect
     procedure operationArithmetique(op: in Character; op1 : in Integer; op2 : in Integer; cp : in out Integer; res : out Integer);
 
     -- operationLogique

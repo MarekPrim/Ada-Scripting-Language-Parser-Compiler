@@ -4,7 +4,7 @@ generic
 
 package intermediaire is
     -- Enumerations
-    type Reserved_Langage_Word is (Programme,Début, Fin, est);
+    type Reserved_Langage_Word is (Programme,Debut, Fin, est);
     
     SMAX : constant integer;        -- taille d'un string
     TMAX : constant integer;        -- taille du tableau de string

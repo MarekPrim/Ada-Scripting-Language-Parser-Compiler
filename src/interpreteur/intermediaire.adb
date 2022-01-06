@@ -7,16 +7,27 @@ package body intermediaire is
         i : integer;
     begin
         pointeur := creer_liste_vide;
+    
+        Open (F, In_File, fileName);
 
-        Open (F, In_File, file_name);
-        while (not End_Of_File (F) and then Get_Line(F)(1..5) /= Reserved_Langage_Word'Image(Programme)) loop
-        end loop;
-
-        while (not End_Of_File (F) and then Get_Line(F)(1..5) /= Reserved_Langage_Word'Image(Début)) loop
+        while (Get_Line((F)1..9) /= Reserved_Langage_Word'Image(Programme)) loop
 
         end loop;
 
-        Close (F);
+        while (Get_Line(F)(1..5) /= Reserved_Langage_Word'Image(Debut)) loop
+            i := 1;
+            while (Get_Line(i) /= ':') loop
+                i := i+1;
+            end loop;
+            i := i+1;
+            while (get_line(F)(i) /= null) then
+                -- recuperer le type des variables
+            end loop;
+            -- ensuite recuperer le nom des variables
+
+        end loop;
+
+        Close(F);
 
     end recupererVariables;
 
@@ -124,20 +135,8 @@ package body intermediaire is
 
 
             case(lines.tab_lignes(i)(k..k+1)) is
-            when "<-" =>
-                affectation(identificateur : in String; variables : in out variables; valeur : in T)
-            when '-' =>
-                resultat := op1 - op2;
-                null;
-            when '*' =>
-                resultat := op1 * op2;
-                null;
-            when '/' =>
-                resultat := op1 / op2;
-                null;
-            when others =>
-                raise Operateur_Incorrect;
-        end case;
+                --TODO
+            end case;
 
             i := i+1;
         end loop;
