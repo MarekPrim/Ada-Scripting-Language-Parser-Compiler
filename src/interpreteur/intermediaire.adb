@@ -1,27 +1,27 @@
-
 package body intermediaire is
 
-    function initialiserInstructions(fileName : in String) return ligne is
+    function recupererVariables(fileName : in string) return ptrvariable is
         F         : File_Type;
-        lines : record_lignes;
+        pointeur : ptrVariable;
         str : currentLine;
         i : integer;
     begin
-        Open (F, In_File, file_name);
-        lines.nb_lignes := 0;
-        i := 1;
-        while not End_Of_File (F) loop
-            str := Get_Line(F);
-            if (str(0..1) /= "--") then
-                lines.tab_lignes(i) := str;
-                lines.nb_lignes := line.nb_lignes + 1;
-                i := i+1;
-            end if;
-        end loop;
-        Close (F);
-    end initialiserInstructions;
+        pointeur := creer_liste_vide;
 
-    function recuperationVariables(lines : in record_lignes) return variable is
+        Open (F, In_File, file_name);
+        while (not End_Of_File (F) and then Get_Line(F)(1..5) /= Reserved_Langage_Word'Image(Programme)) loop
+        end loop;
+
+        while (not End_Of_File (F) and then Get_Line(F)(1..5) /= Reserved_Langage_Word'Image(Début)) loop
+
+        end loop;
+
+        Close (F);
+
+    end recupererVariables;
+
+
+      function recuperationVariables(lines : in record_lignes) return variable is
         vars : variables;   
         i : integer;
         j : integer;
@@ -76,9 +76,32 @@ package body intermediaire is
             end loop;
 
             i := i+1;
-        end loop;
+        end loop;1
 
     end recuperationVariables;
+    
+    
+    function initialiserInstructions(fileName : in String) return ligne is
+        F         : File_Type;
+        lines : record_lignes;
+        str : currentLine;
+        i : integer;
+    begin
+        Open (F, In_File, file_name);
+        lines.nb_lignes := 0;
+        i := 1;
+        while not End_Of_File (F) loop
+            str := Get_Line(F);
+            if (str(0..1) /= "--") then
+                lines.tab_lignes(i) := str;
+                lines.nb_lignes := line.nb_lignes + 1;
+                i := i+1;
+            end if;
+        end loop;
+        Close (F);
+    end initialiserInstructions;
+
+  
 
 
     procedure interpreterCommande (lines : in record_lignes; vars : in out variables; cp : in out integer) is
@@ -120,15 +143,11 @@ package body intermediaire is
         end loop;
     end interpreterCommande;
 
-    function rechercherVariable (nomVariable : in string) return ptrVariable is
+    function rechercherVariable (variables:in ptrVariable; nomVariable : in string) return ptrVariable is
 
     begin
 
-        for i in 1..record_variables.nb_lignes loop
-            if (record_variables.tab_variables(i).identificateur = nomVariable) then
-                return record_variables.tab_variables(i);
-            end if;
-        end loop;
+        //TODO
 
         return null;
 
@@ -141,7 +160,6 @@ package body intermediaire is
 
         lines := initialiserInstructions(fileName);
         variables := recuperationVariables(lines);
-
 
 
     end traiterProgramme;

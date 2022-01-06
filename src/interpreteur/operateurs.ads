@@ -8,18 +8,21 @@ package operateurs is
     -- nom : affectation
     -- semantique : affectation d'une valeur a une variable identifiée par son nom/identificateur
     -- paramètres :
-    --    identificateur : in String // nom de la variable
-    --    valeur : in T // valeur a affecter
-    --    variables : in out variables // Variables du programme
+    --      identificateur : in String // nom de la variable
+    --      valeur : in T // valeur a affecter
+    --      ptrVariable : in ptrVariable        // pointeur sur les variables
     -- Préconditions : 
-    -- Postconditions : variables(index(indificateur)) = valeur
+    -- Postconditions : 
+    --                  ptrVar.all.valeur = T
+    --                  ptrVar.all.typeVariable = typeVariable
+    --                  ptrVar.all.identificateur = identificateur
     -- Exceptions : Variable_Inconnue, Variable_Constante
-    procedure affectation(identificateur : in String; variables : in out variable; valeur : in T);
+    procedure affectation(typeVariable : in String; identificateur : in String; valeur : in T; ptrvar : in out ptrVariable);
 
     -- nom : operationArithmetique
     -- semantique : effectue l'operation arithmetique
     -- parametres :
-    --  op : operateur arithmetique {+,-,*,/}
+    -- op : operateur arithmetique {+,-,*,/}
     -- op1 : operande 1
     -- op2 : operande 2
     -- cp : indice de l'instruction courante
@@ -53,6 +56,6 @@ package operateurs is
     -- Précondition : 
     -- Postcondition :
     -- Exceptions :
-    procedure branchementConditionel(op : in Character; cp : in out Integer; variables : in variable; line : in Integer);
+    procedure branchementConditionel(op : in Character; cp : in out Integer; variables : in variable[]; line : in Integer);
 
 end operateurs;

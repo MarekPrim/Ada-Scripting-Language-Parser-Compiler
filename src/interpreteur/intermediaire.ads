@@ -1,3 +1,6 @@
+generic
+    type T is private;
+
 
 package intermediaire is
     -- Enumerations
@@ -19,9 +22,12 @@ package intermediaire is
     type ligne is private;
     type ptrLigne is access ligne;
 
+    type type_operandes is array(1..3) of string;
+
     type ligne is record
         numLigne : integer;
-        text : String;
+        operandes : type_operandes;
+        operation : String;
         prev : ptrLigne;
         next : ptrLigne;
     end record;
@@ -37,46 +43,67 @@ package intermediaire is
 
     --procedure traiterProgramme(); //appelera le parser, partie visible par l'utilisateur
     procedure traiterProgramme;
+
+    -- nom : recupererVariables
+    -- semantique : récupère les variables d'un programme en langage intermédiaire contenues entre 'Début' (exclu) et 'Programme' (exclue)
+    -- paramètres :
+    --      fileName : in string        // nom du fichier à interpréter
+    -- type-retour : 
+    --      ptrVariable                 // pointeur sur un type variable
+    -- Préconditions : le programme est correctement formé [Non vérifié dans notre cas]
+    -- Postconditions : la liste doublement chainée contient les variables du programme
+    -- Exceptions : Aucune_Variable_Definie, Type_Incorrect, Variable_Deja_Definie
+    function recupererVariables(fileName : in string) return ptrvariable;
     
     -- nom : initialiserInstructions
-    -- semantique : parcourt les lignes du fichier et stocke ces lignes dans la liste doublement chainée ligne
-    -- parametres : fileName : in string        nom du fichier à interpréter
-    --              ptr : in out ptrLigne       pointeur sur la liste des lignes
-    -- Préconditions : le fichier est fermé
+    -- semantique : récupère les lignes d'un programme en langage intermédiaire contenues entre 'Début' (exclu) et 'Fin' (exclue)
+    -- paramètres 
+    --      fileName : in string        // nom du fichier à interpréter
+    -- type-retour : 
+    --      ptrLigne                    // pointeur sur un type ligne
+    -- Préconditions : 
+    --                  le fichier est fermé
+    --                  le contenu entre 'Début' et 'Fin' n'est pas vide
     -- Postconditions : le fichier est fermé
-    function initialiserInstructions(fileName : in string) return ptrLigne;
-
-    -- nom : recuperationVariables
-    -- semantique : Récupérer les variables d'un programme en langage intermédiaire
-    -- paramètres :
-    --    lines -> in lignes // Contient le programme en langage intermédiaire
-    --    vars -> in variables // Contient les variables du programme
-    -- et les stocker dans un tableau de variables en mémoire
-    -- Préconditions : le programme est correctement formé [Non vérifié dans notre cas]
-    -- Postconditions : variables.length > 0 && variables contient les variables du programme
-    -- Exceptions : Aucune_Variable_Definie, Type_Incorrect, Variable_Deja_Definie
-    function recupererVariables(ptrLine : in out ptrLigne) return ptrvariable;
+    function initialiserInstructions(fileName : in string) return ptrLigne;  
 
     -- nom : interpreterCommande
-    -- semantique : interprete la ligne ou se trouve cp
+    -- semantique : interprete la ligne pointée par ptrLine
     -- parametres :
-    --          lines -> in lignes // Contient le programme en langage intermédiaire
-    --          vars -> in out variables // Contient les variables du programme
-    --          cp -> in out int // Contient la position du curseur (ligne interpretee) dans le programme
-    -- Préconditions :
-    -- Postconditions :  
-    -- Exceptions : Acces_Limite
+    --      ptrLine     : in ptrLigne           // pointeur sur les lignes
+    --      ptrVariable : in ptrVariable        // pointeur sur les variables
+    -- Préconditions    : ptrLigne n'est pas null
+    -- Postconditions   : le numéro de la ligne pointée par ptrLine change pendant la procédure
+    -- Exceptions       : Acces_Limite
     procedure interpreterCommande (ptrLine : in ptrLigne; ptrVar : in out ptrVariable);
 
     -- nom : rechercherVariable
     -- semantique : retourne un pointeur sur la variable recherchée
     -- parametres :
-    --          nomVariable : in string             nom de la variable à rechercher
+    --          nomVariable : in string         // nom de la variable à rechercher
     -- typeRetour : 
-    --          ptrVariable                         pointeur sur la variable recherchée
-    -- Préconditions :
-    -- Postconditions :  
+    --          ptrVariable                     // pointeur sur la variable recherchée
+    -- Préconditions    : 
+    -- Postconditions   :  
     -- Exceptions : Variable_Non_Trouvée
-    function rechercherVariable (nomVariable : in string) return ptrVariable;
+    function rechercherVariable (variables : in ptrVariable,nomVariable : in string) return ptrVariable;
+
+    -- nom : pointerEnTeteVariables
+    -- semantique : le pointeur pointe en tête de la liste doublement chaînée des variables
+    -- parametres :
+    --          ptr : in out ptrVariable       // pointeur sur les variables    
+    -- Préconditions    : la liste des variables n'est pas vide
+    -- Postconditions   : ptr.all.prev = null 
+    -- Exceptions :                 
+    procedure pointerEnTeteVariables (ptr : in ptrVariable);
+
+    -- nom : pointerEnTeteLignes
+    -- semantique : le pointeur pointe en tête de la liste doublement chaînée des lignes
+    -- parametres :
+    --          ptr : in out ptrVariable       // pointeur sur les lignes    
+    -- Préconditions    : la liste des lignes n'est pas vide
+    -- Postconditions   : ptr.all.prev = null 
+    -- Exceptions :                 
+    procedure pointerEnTeteLignes (ptr : in ptrLigne);
 
 end intermediaire;
