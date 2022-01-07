@@ -1,35 +1,47 @@
-<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><element><id>UMLPackage</id><coordinates><x>37</x><y>106</y><w>220</w><h>140</h></coordinates><panel_attributes>Interpréteur
+<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLPackage</id><coordinates><x>141</x><y>76</y><w>610</w><h>490</h></coordinates><panel_attributes>Interpréteur
 --
 +Intermediaire
 -Operateurs
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 bg=none
 
 
 fg=white
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>67</x><y>56</y><w>100</w><h>30</h></coordinates><panel_attributes>Compilateur
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>497</x><y>116</y><w>210</w><h>120</h></coordinates><panel_attributes>variable
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>151</x><y>26</y><w>100</w><h>30</h></coordinates><panel_attributes>Compilateur
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>791</x><y>136</y><w>210</w><h>120</h></coordinates><panel_attributes>T_Cell_Instruction
 --
-valeur : &lt;T&gt;
-type : String
-identificateur : String
-constant : Boolean
+numInstruction : Integer
+operandes : T_Operandes
+operation : chaine
+prev : T_List_Instruction
+next : T_List_Instruction
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>497</x><y>306</y><w>210</w><h>140</h></coordinates><panel_attributes>ligne
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>791</x><y>496</y><w>210</w><h>140</h></coordinates><panel_attributes>T_Cell_Variable
 --
-text : String
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>700</x><y>106</y><w>220</w><h>80</h></coordinates><panel_attributes>next &lt;ptrVariable&gt;
-m1=0..1
-m2=0..1
-</panel_attributes><additional_attributes>10;10;100;10;100;50;10;50</additional_attributes></element><element><id>Relation</id><coordinates><x>700</x><y>176</y><w>220</w><h>80</h></coordinates><panel_attributes>prev &lt;ptrVariable&gt;
-m1=0..1
-m2=0..1
-</panel_attributes><additional_attributes>10;10;100;10;100;50;10;50</additional_attributes></element><element><id>Relation</id><coordinates><x>700</x><y>306</y><w>190</w><h>80</h></coordinates><panel_attributes>next &lt;ptrLigne&gt;
-m1=0..1
-m2=0..1
-</panel_attributes><additional_attributes>10;10;90;10;90;50;10;50</additional_attributes></element><element><id>Relation</id><coordinates><x>700</x><y>376</y><w>190</w><h>80</h></coordinates><panel_attributes>prev &lt;ptrLigne&gt;
-m1=0..1
-m2=0..1
-</panel_attributes><additional_attributes>10;10;90;10;90;50;10;50</additional_attributes></element><element><id>UMLPackage</id><coordinates><x>20</x><y>378</y><w>470</w><h>140</h></coordinates><panel_attributes>Intermediaire
+ptrVar: T_Ptr_Variable
+next : T_List_Variable
+prev : T_List_Variable
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>154</x><y>398</y><w>470</w><h>140</h></coordinates><panel_attributes>Intermediaire
 --
 bg=orange
 
@@ -37,11 +49,31 @@ bg=orange
 +initialiserInstructions(fileName : in string) : ligne
 +recuperationVariables(lines : in ligne) : variable
 +interpreterCommande (lines : in lignes; vars : in out variables; cp : in out integer)
-+rechercherVariable (nomVariable : in string) : ptrVariable</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>270</x><y>298</y><w>140</w><h>70</h></coordinates><panel_attributes>Operateurs
++rechercherVariable (nomVariable : in string) : ptrVariable</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>154</x><y>218</y><w>590</w><h>140</h></coordinates><panel_attributes>Operateurs
 --
 bg=yellow
 +affectation(identificateur : in String; variables : in out variable; valeur : in T)
 +operationArithmetique(op: in Character; op1 : in Integer; op2 : in Integer; cp : in out Integer; res : out Integer)
 +operationLogique(op: in Character; variables : in variable[]; cp : in out Integer, res : out Boolean)
 +branchementBasic(cp : in out Integer; line : in Integer)
-+branchementConditionel(op : in Character; cp : in out Integer; variables : in variable; line : in Integer)</panel_attributes><additional_attributes></additional_attributes></element></diagram>
++branchementConditionel(op : in Character; cp : in out Integer; variables : in variable; line : in Integer)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>791</x><y>306</y><w>210</w><h>140</h></coordinates><panel_attributes>T_Variable
+--
+valeurVariable : Integer
+tyleVariable : chaine
+nomVariable : chaine
+isConstant : Boolean
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1044</x><y>170</y><w>100</w><h>30</h></coordinates><panel_attributes>T_List_Instruction</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>994</x><y>180</y><w>70</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;50;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1044</x><y>360</y><w>100</w><h>30</h></coordinates><panel_attributes>T_Ptr_Variable</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1054</x><y>540</y><w>100</w><h>30</h></coordinates><panel_attributes>T_List_Variable</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>994</x><y>550</y><w>80</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;60;10</additional_attributes></element><element><id>Relation</id><coordinates><x>994</x><y>360</y><w>70</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;50;10</additional_attributes></element><element><id>UMLNote</id><coordinates><x>764</x><y>90</y><w>440</w><h>570</h></coordinates><panel_attributes>Types manipulés dans l'interpréteur</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>144</x><y>0</y><w>140</w><h>70</h></coordinates><panel_attributes>Compilateur
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>391</x><y>0</y><w>360</w><h>90</h></coordinates><panel_attributes>Tests
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>141</x><y>580</y><w>380</w><h>130</h></coordinates><panel_attributes>Main
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>400</x><y>30</y><w>100</w><h>50</h></coordinates><panel_attributes>tests_module
+--
+Tests unitaires</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>510</x><y>30</y><w>100</w><h>50</h></coordinates><panel_attributes>tests
+--
+Tests fonctionnels</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>620</x><y>30</y><w>100</w><h>50</h></coordinates><panel_attributes>code_test.md
+--
+Fichier de test</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLNote</id><coordinates><x>160</x><y>610</y><w>140</w><h>100</h></coordinates><panel_attributes>Main</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>180</x><y>670</y><w>100</w><h>30</h></coordinates><panel_attributes>Interpréteur</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>180</x><y>630</y><w>100</w><h>30</h></coordinates><panel_attributes>Compilation</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>350</x><y>630</y><w>100</w><h>50</h></coordinates><panel_attributes>facto.med
+--
+Fichier de test</panel_attributes><additional_attributes></additional_attributes></element></diagram>

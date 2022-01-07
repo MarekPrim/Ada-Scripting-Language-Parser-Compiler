@@ -7,8 +7,12 @@ procedure test_intermediaire is
 
 
 fileName : constant string := "code_test.med";
+fileNameSansVariable : constant string := "code_exception_no_variable.med";
+fileNameSansType : constant string := "code_exception_no_type.med";
+fileNameDeuxDeclarations : constant string := "code_exception_two_declaration.med";
 line : ptrLigne;
 variables : ptrVariable;
+variables_stub : ptrVariable;
 search : ptrVariable;
 
 begin
@@ -44,6 +48,24 @@ search := new variable;
             Put_Line("KO");
         end if;
 
+        begin
+            variables_stub := rechercherVariable(fileNameMalForme);
+            exception
+                when Aucune_Variable_Definie => Put_Line("OK");
+        end;
+
+        begin
+            variables_stub := rechercherVariable(fileNameSansType);
+            exception
+                when Type_Incorrect => Put_Line("OK");
+        end;
+
+        begin
+            variables_stub := rechercherVariable(fileNameDeuxDeclarations);
+            exception
+                when Variable_Deja_Definie => Put_Line("OK");
+        end;
+
     -- Test de la recherche d'une variable
 
         search := rechercherVariable(variables, "Sum");
@@ -56,6 +78,13 @@ search := new variable;
         else
             Put_Line("KO");
         end if;
+
+        begin
+            search := rechercherVariable(variables,"xyz");
+
+            exception
+                when Variable_Non_Trouvée => Put_Line("OK");
+        end;
 
     -- Test de l'initialisation des instructions
 
@@ -91,6 +120,8 @@ search := new variable;
 
         line := line.all.prev;
 
+       
+
     -- Test de l'interprétation d'une commande/ligne d'instruction
         interpreterCommande(line, variables);
 
@@ -111,6 +142,8 @@ search := new variable;
         else
             Put_Line("KO");
         end if;
+
+        
 
 
     -- Test des fonctions utilitaires pour les listes

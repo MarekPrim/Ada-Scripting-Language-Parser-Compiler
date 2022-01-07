@@ -40,6 +40,14 @@ variables.all.next.all.next := new variable'(2,"entier","test_constant",false, n
             write("Affectation KO");
         end if;
 
+        begin
+            affectation("entier","test_constant",1,variables);
+
+            exception
+                when Variable_Constante => Put_Line("OK");
+                when others => Put_Line("NOK");
+        end;
+
     -- Test +;-;*;/
         cp :=0;
         op1 := 4;
@@ -98,6 +106,15 @@ variables.all.next.all.next := new variable'(2,"entier","test_constant",false, n
         else
             write("Operation arithmetique KO");
         end if;
+
+        begin
+            operateur := "^";
+            operationArithmetique(operateur,op1,op2,cp; resultat_arithmetique);
+
+            exception
+                when Operateur_Incorrect => Put_Line("OK");
+                when others => Put_Line("NOK");
+        end;
 
     -- Test opérateur logique
         tab_i:= (1,2);
@@ -173,6 +190,15 @@ variables.all.next.all.next := new variable'(2,"entier","test_constant",false, n
         else
             write("Operation logique KO");
         end if;
+
+        begin
+            operateur := "^";
+            operationLogique(operateur,tab_i,cp,resultat_logique);
+
+            exception
+                when Operateur_Incorrect => Put_Line("OK");
+                when others => Put_Line("NOK");
+        end;
 
     
     -- Test branchement basique
