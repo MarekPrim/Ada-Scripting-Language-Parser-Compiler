@@ -66,6 +66,12 @@ search := new variable;
                 when Variable_Deja_Definie => Put_Line("OK");
         end;
 
+        begin
+            variables_stub := rechercherVariable("ce_fichier_n_existe_pas.med");
+            exception
+                when Fichier_Non_Trouve => Put_Line("OK");
+        end;
+
     -- Test de la recherche d'une variable
 
         search := rechercherVariable(variables, "Sum");

@@ -13,8 +13,10 @@ package intermediaire is
     Aucune_Variable_Definie : Exception; -- Aucune variable n'est definie dans le programme
     Type_Incorrect : Exception; -- Le type de la variable n'est pas correct pour l'opération à effectuer
     Variable_Non_Declaree : Exception; -- La variable à utiliser n'est pas declaree dans le programme
-    Variable_Deja_Definie : Exception -- La variable a déjà été déclarée dans le programme
+    Variable_Deja_Definie : Exception; -- La variable a déjà été déclarée dans le programme
     Acces_Limite : Exception; -- Le compteur CP est hors limite (Ex : Programme avec un corps de 10 lignes et CP = 11) dans le programme
+    Fichier_Non_Lisible : Exception;
+    Fichier_Non_Trouve : Exception;
     
     type variable is private;
     type ptrVariable is access variable;
@@ -42,6 +44,11 @@ package intermediaire is
     end record;
 
     --procedure traiterProgramme(); //appelera le parser, partie visible par l'utilisateur
+    -- paramètres :
+    --      fileName : in String
+    -- Préconditions :
+    -- Postconditions :
+    -- Exceptions : 
     procedure traiterProgramme;
 
     -- nom : recupererVariables
@@ -52,7 +59,7 @@ package intermediaire is
     --      ptrVariable                 // pointeur sur un type variable
     -- Préconditions : le programme est correctement formé [Non vérifié dans notre cas]
     -- Postconditions : la liste doublement chainée contient les variables du programme
-    -- Exceptions : Aucune_Variable_Definie, Type_Incorrect, Variable_Deja_Definie
+    -- Exceptions : Aucune_Variable_Definie, Type_Incorrect, Variable_Deja_Definie, Fichier_Non_Trouve, Fichier_Non_Lisible
     function recupererVariables(fileName : in string) return ptrvariable;
     
     -- nom : initialiserInstructions
@@ -65,6 +72,7 @@ package intermediaire is
     --                  le fichier est fermé
     --                  le contenu entre 'Début' et 'Fin' n'est pas vide
     -- Postconditions : le fichier est fermé
+    -- Exceptions : Fichier_Non_Trouve, Fichier_Non_Lisible
     function initialiserInstructions(fileName : in string) return ptrLigne;  
 
     -- nom : interpreterCommande

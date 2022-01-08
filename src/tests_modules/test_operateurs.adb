@@ -28,7 +28,7 @@ procedure test_operateurs is
 
 begin
 
-variables := new new variable'(null,"entier","test",false, null, null);
+variables := new variable'(null,"entier","test",false, null, null);
 variables.all.next := new variable'(2,"entier","test2",false, null, variables);
 variables.all.next.all.next := new variable'(2,"entier","test_constant",false, null, variables.all.next);
 
@@ -55,7 +55,7 @@ variables.all.next.all.next := new variable'(2,"entier","test_constant",false, n
         resultat_arithmetique := 0;
 
         operateur := '+';
-        operationArithmetique(operateur,op1,op2,cp; resultat_arithmetique);
+        operationArithmetique(operateur,op1,op2,cp, resultat_arithmetique);
         if(resultat_arithmetique = 6) then
             write("Operation arithmetique OK");
         else
