@@ -1,4 +1,4 @@
-<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLPackage</id><coordinates><x>141</x><y>76</y><w>610</w><h>490</h></coordinates><panel_attributes>Interpréteur
+<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLPackage</id><coordinates><x>141</x><y>86</y><w>610</w><h>490</h></coordinates><panel_attributes>Interpréteur
 --
 +Intermediaire
 -Operateurs
@@ -27,53 +27,71 @@ bg=none
 
 
 fg=white
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>151</x><y>26</y><w>100</w><h>30</h></coordinates><panel_attributes>Compilateur
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>791</x><y>136</y><w>210</w><h>120</h></coordinates><panel_attributes>T_Cell_Instruction
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>151</x><y>36</y><w>100</w><h>30</h></coordinates><panel_attributes>Compilateur
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>791</x><y>86</y><w>210</w><h>90</h></coordinates><panel_attributes>T_Cell_Instruction
 --
-numInstruction : Integer
-operandes : T_Operandes
-operation : chaine
+ptrIns : T_Ptr_Instruction
 prev : T_List_Instruction
 next : T_List_Instruction
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>791</x><y>496</y><w>210</w><h>140</h></coordinates><panel_attributes>T_Cell_Variable
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>791</x><y>566</y><w>220</w><h>50</h></coordinates><panel_attributes>T_Opérandes : [1..3] of T_Ptr_Variables
+-..
+[x | y | z]
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>154</x><y>338</y><w>470</w><h>230</h></coordinates><panel_attributes>Intermediaire
 --
-ptrVar: T_Ptr_Variable
-next : T_List_Variable
-prev : T_List_Variable
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>154</x><y>398</y><w>470</w><h>140</h></coordinates><panel_attributes>Intermediaire
---
-bg=orange
+bg=green
 
-+traiterProgramme()
++parseFile (fileName : in string; variables : in out T_List_Variable; instructions : in out T_List_Instruction)
++ligneCommenceParMotReserve (ligne : in Unbounded_string; enum : in string) : boolean
++renvoyerLigneSansEspace (ligne : in Unbounded_string) : Unbounded_string
++traiterProgramme(fileName : in string)
 +initialiserInstructions(fileName : in string) : ligne
-+recuperationVariables(lines : in ligne) : variable
++recupererVariables(variables : in out T_List_Variable; ligne : in Unbounded_string)
 +interpreterCommande (lines : in lignes; vars : in out variables; cp : in out integer)
-+rechercherVariable (nomVariable : in string) : ptrVariable</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>154</x><y>218</y><w>590</w><h>140</h></coordinates><panel_attributes>Operateurs
++rechercherVariable (nomVariable : in string) : ptrVariable
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>154</x><y>178</y><w>590</w><h>140</h></coordinates><panel_attributes>Operateurs
 --
 bg=yellow
 +affectation(identificateur : in String; variables : in out variable; valeur : in T)
 +operationArithmetique(op: in Character; op1 : in Integer; op2 : in Integer; cp : in out Integer; res : out Integer)
 +operationLogique(op: in Character; variables : in variable[]; cp : in out Integer, res : out Boolean)
 +branchementBasic(cp : in out Integer; line : in Integer)
-+branchementConditionel(op : in Character; cp : in out Integer; variables : in variable; line : in Integer)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>791</x><y>306</y><w>210</w><h>140</h></coordinates><panel_attributes>T_Variable
++branchementConditionel(op : in Character; cp : in out Integer; variables : in variable; line : in Integer)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>791</x><y>206</y><w>210</w><h>100</h></coordinates><panel_attributes>T_Variable
 --
 valeurVariable : Integer
 tyleVariable : chaine
 nomVariable : chaine
 isConstant : Boolean
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1044</x><y>170</y><w>100</w><h>30</h></coordinates><panel_attributes>T_List_Instruction</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>994</x><y>180</y><w>70</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;50;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1044</x><y>360</y><w>100</w><h>30</h></coordinates><panel_attributes>T_Ptr_Variable</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1054</x><y>540</y><w>100</w><h>30</h></coordinates><panel_attributes>T_List_Variable</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>994</x><y>550</y><w>80</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;60;10</additional_attributes></element><element><id>Relation</id><coordinates><x>994</x><y>360</y><w>70</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;50;10</additional_attributes></element><element><id>UMLNote</id><coordinates><x>764</x><y>90</y><w>440</w><h>570</h></coordinates><panel_attributes>Types manipulés dans l'interpréteur</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>144</x><y>0</y><w>140</w><h>70</h></coordinates><panel_attributes>Compilateur
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1054</x><y>70</y><w>100</w><h>30</h></coordinates><panel_attributes>T_List_Instruction</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>994</x><y>70</y><w>80</w><h>40</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;16;60;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1054</x><y>200</y><w>100</w><h>30</h></coordinates><panel_attributes>T_Ptr_Variable</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1054</x><y>360</y><w>100</w><h>30</h></coordinates><panel_attributes>T_List_Variable</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>984</x><y>330</y><w>90</w><h>70</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;16;70;50</additional_attributes></element><element><id>Relation</id><coordinates><x>994</x><y>190</y><w>80</w><h>40</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;16;60;20</additional_attributes></element><element><id>UMLNote</id><coordinates><x>764</x><y>30</y><w>440</w><h>900</h></coordinates><panel_attributes>Types manipulés dans l'interpréteur</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>144</x><y>10</y><w>140</w><h>70</h></coordinates><panel_attributes>Compilateur
 --
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>391</x><y>0</y><w>360</w><h>90</h></coordinates><panel_attributes>Tests
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>391</x><y>10</y><w>360</w><h>90</h></coordinates><panel_attributes>Tests
 --
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>141</x><y>580</y><w>380</w><h>130</h></coordinates><panel_attributes>Main
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>141</x><y>590</y><w>380</w><h>130</h></coordinates><panel_attributes>Main
 --
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>400</x><y>30</y><w>100</w><h>50</h></coordinates><panel_attributes>tests_module
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>400</x><y>40</y><w>100</w><h>50</h></coordinates><panel_attributes>tests_module
 --
-Tests unitaires</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>510</x><y>30</y><w>100</w><h>50</h></coordinates><panel_attributes>tests
+Tests unitaires</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>510</x><y>40</y><w>100</w><h>50</h></coordinates><panel_attributes>tests
 --
-Tests fonctionnels</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>620</x><y>30</y><w>100</w><h>50</h></coordinates><panel_attributes>code_test.md
+Tests fonctionnels</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>620</x><y>40</y><w>100</w><h>50</h></coordinates><panel_attributes>code_test.md
 --
-Fichier de test</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLNote</id><coordinates><x>160</x><y>610</y><w>140</w><h>100</h></coordinates><panel_attributes>Main</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>180</x><y>670</y><w>100</w><h>30</h></coordinates><panel_attributes>Interpréteur</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>180</x><y>630</y><w>100</w><h>30</h></coordinates><panel_attributes>Compilation</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>350</x><y>630</y><w>100</w><h>50</h></coordinates><panel_attributes>facto.med
+Fichier de test</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLNote</id><coordinates><x>160</x><y>620</y><w>140</w><h>100</h></coordinates><panel_attributes>Main</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>180</x><y>680</y><w>100</w><h>30</h></coordinates><panel_attributes>Interpréteur</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>180</x><y>640</y><w>100</w><h>30</h></coordinates><panel_attributes>Compilation</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>350</x><y>640</y><w>100</w><h>50</h></coordinates><panel_attributes>facto.med
 --
-Fichier de test</panel_attributes><additional_attributes></additional_attributes></element></diagram>
+Fichier de test</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>791</x><y>346</y><w>210</w><h>90</h></coordinates><panel_attributes>T_Cell_Variable
+--
+ptrVar: T_Ptr_Variable
+next : T_List_Variable
+prev : T_List_Variable
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1054</x><y>470</y><w>100</w><h>30</h></coordinates><panel_attributes>T_Ptr_Instruction</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>984</x><y>450</y><w>90</w><h>60</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;16;70;40</additional_attributes></element><element><id>UMLClass</id><coordinates><x>791</x><y>466</y><w>210</w><h>80</h></coordinates><panel_attributes>T_Instruction
+--
+numInstruction : Integer
+operandes : T_Operandes
+operation : Chaine</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>790</x><y>640</y><w>280</w><h>140</h></coordinates><panel_attributes>Liste_Doublement_Chainee
+--
+bg=magenta
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>800</x><y>680</y><w>250</w><h>80</h></coordinates><panel_attributes>/P_List_Chainee/
+--
+creer_liste_vide() ; pointeur
+est_vide(ptr : in pointeur) : Boolean
+ajouter(ptr : in out pointeur, rec : in pointeur)
+
+</panel_attributes><additional_attributes></additional_attributes></element></diagram>
