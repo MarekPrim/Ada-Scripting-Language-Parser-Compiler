@@ -4,11 +4,10 @@ use ada.Text_IO, ada.integer_Text_io, Ada.Strings.Unbounded, Ada.Text_IO.Unbound
 
 package body intermediaire is
 
-    package Liste_Variables is new P_List_Double(pointeur => T_Ptr_Variable, type_record => T_Cell_Variable);
+    package Liste_Variables is new P_List_Double(pointeur => T_List_Variable);
     use Liste_Variables;
 
-    package Liste_Instructions is new P_List_Double(pointeur => T_Ptr_Instruction, type_record => T_Cell_Instruction);
-    use Liste_Instructions;
+    
 
     procedure traiterProgramme(fileName : in string) is
         variables : T_List_Variable;
@@ -144,8 +143,8 @@ package body intermediaire is
             if (find) then
                 nomVariable.nbCharsEffectif := k;
                 ptrVariable := new T_Variable'(0, typeVariable, nomVariable, false);
-                record_ajout := new T_Cell_Variable'(ptrVariable, null, null)
-                Liste_Variables.ajouter(variables, record_ajout);
+                record_ajout := new T_Cell_Variable'(ptrVariable, null, null);
+                ajouter(variables, record_ajout);
             else
                 i := i+1;
             end if;

@@ -16,11 +16,13 @@ package intermediaire is
     type T_Cell_Variable;
     type T_Cell_Instruction;
     type T_Variable;
+    type T_Instruction;
 
     type T_List_Variable is access T_Cell_Variable;
     type T_List_Instruction is access T_Cell_Instruction;
 
     type T_Ptr_Variable is access T_Variable;
+    type T_Ptr_Instruction is access T_Instruction;
 
     type Chaine is record
         str : String(1..100);
@@ -36,10 +38,14 @@ package intermediaire is
         isConstant : Boolean;
     end record;
 
-    type T_Cell_Instruction is record
-        numInstruction : integer;
+    type T_Instruction is record
+        numInstruction : Integer;
         operandes : T_Operandes;
         operation : Chaine;
+    end record;
+
+    type T_Cell_Instruction is record
+        ptrIns : T_Ptr_Instruction; 
         prev : T_List_Instruction;
         next : T_List_Instruction;
     end record;
@@ -133,9 +139,9 @@ package intermediaire is
     -- pre-condition : /
     -- post-condition : est_vide (l) est vide
     -- exception : /
-    function creer_liste_vide return T_List_Variable
-    with 
-        post => est_vide(creer_liste_vide'result) = true;
+    --function creer_liste_vide return T_List_Variable
+    --with 
+    --    post => est_vide(creer_liste_vide'result) = true;
 
     -- nom : est_vide
     -- semantique : teste si une liste f_l est vide
@@ -144,10 +150,10 @@ package intermediaire is
     -- pre-condiition : /
     -- post-condition : /
     -- exception : /
-    function est_vide(p : in T_List_Variable) return boolean;
+    --function est_vide(p : in T_List_Variable) return boolean;
 
 
-    procedure ajouter(f_l : in out T_List_Variable; f_nouveau : in T_Ptr_Variable);
+    --procedure ajouter(f_l : in out T_List_Variable; f_nouveau : in T_Ptr_Variable);
 
     procedure afficher_liste(f_l : in T_List_Variable);
 
