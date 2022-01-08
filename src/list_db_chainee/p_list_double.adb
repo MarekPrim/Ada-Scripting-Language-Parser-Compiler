@@ -10,24 +10,21 @@ package body P_List_Double is
         return p;
     end creer_liste_vide;
 
-    function est_vide (p : in pointeur) return Boolean is
+    function est_vide (ptr : in pointeur) return Boolean is
     begin
-        return p = null;
+        return ptr = null;
     end est_vide;
 
-    procedure ajouter (p : in out pointeur; f_nouveau : in pointeur_record) is
+    procedure ajouter (ptr : in out pointeur; rec : in pointeur) is
     begin
-        if (est_vide (p)) then
-            p                  := f_nouveau;
-            f_nouveau.all.prev := null;
-            f_nouveau.all.next := null;
+        if (est_vide (ptr)) then
+            ptr                := rec;
+            rec.all.prev := null;
+            rec.all.next := null;
         else
-            while (p.all.next /= null) loop
-                p := p.all.next;
-            end loop;
-
-            p.all.next          := f_nouveau;
-            p.all.next.all.prev := p;
+            ptr.all.next := rec;
+            ptr.all.next.all.prev := ptr;  
+            ptr := ptr.all.next;
         end if;
     end ajouter;
 

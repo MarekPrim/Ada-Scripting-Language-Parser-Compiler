@@ -1,10 +1,9 @@
 generic
     type pointeur is private;
-    type type_record is private;
 
 package P_List_Double is
 
-    type pointeur_record is access type_record;
+    --type pointeur_record is access type_record;
 
     -- nom : creer_liste_vide
     -- semantique : creer une liste vide
@@ -33,6 +32,6 @@ package P_List_Double is
     -- pre-condiition : /
     -- post-condition : f_nouveau appartient a la liste
     -- exception : /
-    procedure ajouter (ptr : in out pointeur; rec : in pointeur_record);
+    procedure ajouter (ptr : in out pointeur; rec : in pointeur);
 
 end P_List_Double;
