@@ -1,166 +1,198 @@
+with ada.Text_IO, ada.integer_Text_IO, Ada.Strings.Unbounded, Ada.Text_IO.Unbounded_IO, Ada.Characters.Handling, P_List_Double;
+use ada.Text_IO, ada.integer_Text_io, Ada.Strings.Unbounded, Ada.Text_IO.Unbounded_IO, Ada.Characters.Handling;
+
+
 package body intermediaire is
 
-    function recupererVariables(fileName : in string) return ptrvariable is
-        F         : File_Type;
-        pointeur : ptrVariable;
-        str : currentLine;
-        i : integer;
+    package Liste_Variables is new P_List_Double(pointeur => T_Ptr_Variable, type_record => T_Cell_Variable);
+    use Liste_Variables;
+
+    package Liste_Instructions is new P_List_Double(pointeur => T_Ptr_Instruction, type_record => T_Cell_Instruction);
+    use Liste_Instructions;
+
+    procedure traiterProgramme(fileName : in string) is
+        variables : T_List_Variable;
+        instructions : T_List_Instruction; 
     begin
-        pointeur := creer_liste_vide;
-    
-        Open (F, In_File, fileName);
+        parseFile(fileName, variables, instructions);
+        afficher_liste(variables);
+    end traiterProgramme;
 
-        while (Get_Line((F)1..9) /= Reserved_Langage_Word'Image(Programme)) loop
+    function ligneCommenceParMotReserve (ligne : in Unbounded_string; enum : in string) return boolean is
+        i : integer;
+        longueurEnum : integer;
+        currentChar : Character;
+    begin
+        i := 1;
 
+        longueurEnum := length(To_Unbounded_String(enum));
+
+        while (i <= length(ligne) and i <= longueurEnum) loop
+
+            if (i > 1) then
+                currentChar := To_Lower(enum(i));
+            else
+                currentChar := enum(i);
+            end if;
+
+            if (not (element(ligne, i) = currentChar)) then
+                return false;
+            end if;
+            i := i+1;
         end loop;
 
-        while (Get_Line(F)(1..5) /= Reserved_Langage_Word'Image(Debut)) loop
-            i := 1;
-            while (Get_Line(i) /= ':') loop
-                i := i+1;
-            end loop;
-            i := i+1;
-            while (get_line(F)(i) /= null) then
-                -- recuperer le type des variables
-            end loop;
-            -- ensuite recuperer le nom des variables
+        return true;
 
+    end ligneCommenceParMotReserve;
+
+    function renvoyerLigneSansEspace (ligne : in Unbounded_string) return Unbounded_string is
+        j : integer;
+        trimLigne : Unbounded_string;
+    begin
+        j := 1;
+        for i in 1..length(ligne) loop
+            if (not (element(ligne, i) = ' ')) then
+                append(trimLigne, element(ligne, i));
+                j := j+1;
+            end if;
+        end loop;
+        return trimLigne;
+    end renvoyerLigneSansEspace;
+
+    procedure parseFile (fileName : in string; variables : in out T_List_Variable; instructions : in out T_List_Instruction) is
+        F         : File_Type;
+        ligne : Unbounded_string;
+    begin
+    
+        variables := creer_liste_vide;
+
+        Open (F, In_File, fileName);
+
+        loop
+            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
+        exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Programme)));
+        end loop;
+
+        ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
+
+        loop
+
+            recupererVariables(variables, ligne);
+        
+            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
+
+        exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut)));
+        end loop;
+
+        ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
+
+        loop
+
+            --recupererInstructions(instructions, ligne);
+        
+            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
+
+        exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Fin)));
         end loop;
 
         Close(F);
 
-    end recupererVariables;
+    end parseFile;
 
 
-      function recuperationVariables(lines : in record_lignes) return variable is
-        vars : variables;   
-        i : integer;
-        j : integer;
-        k := integer;
-        typeVariable : string(1..100);
-        indextypeVariable : integer;
-        nomVariable : string(1..100);
-        indexNomVariable : integer
+    procedure recupererVariables(variables : in out T_List_Variable; ligne : in Unbounded_string) is
+        find : boolean;
+        i : integer; 
+        j : integer; 
+        k : integer;
+        typeVariable : chaine;
+        nomVariable : chaine;
+        ptrVariable : T_Ptr_Variable;
+        record_ajout : T_List_Variable;
     begin
-        i := 2;
-        j := 1;
-
-
-        -- R0 : recuperer les variables
-
-        -- R1 : comment recuperer les variables
-
-        -- parcourir les lignes juqu'au trouver "Début"
-
-        while (lines.tab_lignes(i)(1..5) /= Reserved_Langage_Word'Image(Début)) loop
-            
-            -- recuperer le type de données de la ligne courante
-            k := 1;
-            while (lines.tab_lignes(i)(k) /= ":") loop
-                k := k+1;
-            end loop;
-            
-            indexType := 1;
-            while (lines.tab_lignes(i)(k)) /= " ")
-                typeVariable(indexTypeVariable) := lines.tab_lignes(i)(k);
-                indexTypeVariable := indexTypeVariable+1;
-                k := k+1;
-            end loop;
-
-            -- recuperer les noms des variables
-            k := 1;
-            while (lines.tab_lignes(i)(k) /= ":") loop
-                indexNomVariable := 1;
-                while (Character'POS(lines.tab_lignes(i)(k)) in 65..122 or Character'POS(lines.tab_lignes(i)(k)) in 48..57) then
-                    nomVariable(indexNomVariable) := 1;
-                    indexNomVariable := indexNomVariable + 1;
-                    k := k+1;
-                end if;
-
-                -- stocker noms et types des variables dans le tableau
-
-                vars(j).type := typeVariable(1..indexTypeVariable-1);
-                vars(j).identificateur := nomVariable(1..indexNomVariable-1);
-                
-                j := j+1;
-
-            end loop;
-
-            i := i+1;
-        end loop;1
-
-    end recuperationVariables;
     
-    
-    function initialiserInstructions(fileName : in String) return ligne is
-        F         : File_Type;
-        lines : record_lignes;
-        str : currentLine;
-        i : integer;
-    begin
-        Open (F, In_File, file_name);
-        lines.nb_lignes := 0;
         i := 1;
-        while not End_Of_File (F) loop
-            str := Get_Line(F);
-            if (str(0..1) /= "--") then
-                lines.tab_lignes(i) := str;
-                lines.nb_lignes := line.nb_lignes + 1;
+        -- Parcourir la ligne jusqu'à trouver la déclaration de type
+        while(element(ligne, i) /= ':') loop
+            i := i+1;
+        end loop;
+
+        j := 0;
+        -- Récupérer le type de la variable
+        while(i <= length(ligne)) loop
+            j := j+1;
+            typeVariable.str(j) := element(ligne, i);
+            i := i+1;
+        end loop;
+
+        typeVariable.nbCharsEffectif := j;
+
+        i := 1;
+        -- Parcourir la ligne pour trouver le nom de la variable
+        while(i <= length(ligne) and element(ligne, i) /= ':') loop
+
+            k := 0;
+
+            find := false;
+            while (Character'POS(element(ligne, i)) in 65..122 or Character'POS(element(ligne, i)) in 48..57) loop
+                k := k+1;
+                find := true;
+                nomVariable.str(k) := element(ligne, i);
+                i := i+1;
+            end loop;
+
+            if (find) then
+                nomVariable.nbCharsEffectif := k;
+                ptrVariable := new T_Variable'(0, typeVariable, nomVariable, false);
+                record_ajout := new T_Cell_Variable'(ptrVariable, null, null)
+                Liste_Variables.ajouter(variables, record_ajout);
+            else
                 i := i+1;
             end if;
+
+
         end loop;
-        Close (F);
-    end initialiserInstructions;
 
-  
+    end recupererVariables;
 
+    -- function creer_liste_vide return T_List_Variable is
+    --     p : T_List_Variable;
+    -- begin
+    --     p := null;
+    --     return p;
+    -- end creer_liste_vide;
 
-    procedure interpreterCommande (lines : in record_lignes; vars : in out variables; cp : in out integer) is
-        i : integer;
-        k : integer;
-        begin : boolean;
-        operation : string(1..2);
-        nomVariable : string(1..100);
+    -- function est_vide(p : in T_List_Variable) return boolean is
+    -- begin
+    --     return p = null;
+    -- end est_vide;
+
+    -- procedure ajouter(f_l : in out T_List_Variable; f_nouveau : in T_Ptr_Variable) is
+    -- begin
+    --     if (f_l = null) then
+    --         f_l := new T_Cell_Variable'(f_nouveau, null, null);
+    --     else
+    --         f_l.all.next := new T_Cell_Variable'(f_nouveau, null, null);
+    --         f_l.all.next.all.prev := f_l;  
+    --         f_l := f_l.all.next;
+    --     end if;
+    -- end ajouter;
+
+    procedure afficher_liste(f_l : in T_List_Variable) is
+        l : T_List_Variable;
     begin
-        begin := false;
-        while (i < lines.nb_lignes) loop
-            while (lines.tab_lignes(i)(1..5) /= Reserved_Langage_Word'Image(Début)) loop
-                i := i+1;
-            end loop;
-
-            k := 1;
-
-
-
-
-
-            case(lines.tab_lignes(i)(k..k+1)) is
-                --TODO
-            end case;
-
-            i := i+1;
+        l := f_l;
+        while(l.all.prev /= null) loop
+            l := l.all.prev;
         end loop;
-    end interpreterCommande;
+        while (l /= null) loop
+            put(l.all.ptrVar.all.nomVariable.str(1..l.all.ptrVar.all.nomVariable.nbCharsEffectif));
+            if (l.all.next /= null) then
+                put(" -> ");
+            end if;
+            l := l.all.next;
+        end loop;
+    end afficher_liste;
 
-    function rechercherVariable (variables:in ptrVariable; nomVariable : in string) return ptrVariable is
-
-    begin
-
-        //TODO
-
-        return null;
-
-    end rechercherVariable;
-
-    procedure traiterProgramme (fileName : in string) is
-        lines : record_lignes;
-        variables : record_variables;
-    begin
-
-        lines := initialiserInstructions(fileName);
-        variables := recuperationVariables(lines);
-
-
-    end traiterProgramme;
 
 end intermediaire;
