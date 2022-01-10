@@ -1,6 +1,6 @@
 package body operateurs is
 
-    procedure affectation(identificateur : in String; variables : in out variable; valeur : in T) is
+    procedure affectation(identificateur : in String; variables : in out T_List_Variable; valeur : in T) is
         var : variable;
 
     begin
@@ -8,10 +8,10 @@ package body operateurs is
         if var = null then
             raise Variable_Inconnue;
         end if;
-        if(var.constant) then
+        if(var.all.ptrVar.all.isConstant) then
             raise Variable_Constante;
         else
-            var.all.valeur := valeur;
+            var.all.ptrVar.all.valeurVariable := valeur;
         end if;
     end affectation;
 
@@ -38,24 +38,31 @@ package body operateurs is
         cp := cp + 1;
     end operationArithmetique;
 
-    procedure operationLogique(op: in Character; variables : in variable[]; cp : in out Integer, res : out Boolean) is
+    procedure operationLogique(instructions : in T_Instruction; cp : in out Integer, res : out Boolean) is
         resultat : Boolean;
+        op : String;
+        op1 : T_Ptr_Variable;
+        op2 : T_Ptr_Variable;
     begin
+        op := instructions.all.operateur.string;
+        op1 := instructions.all.operande1.all.ptrVar;
+        op2 := instructions.all.operande2.all.ptrVar;
+
         case(op) is
             when '=' =>
-                resultat := variables[1].valeur = variables[2].valeur;
+                resultat := op1.all.valeurVariable = op2.all.valeurVariable;
                 null;
             when '<' =>
-                resultat := variables[1].valeur < variables[2].valeur;
+                resultat := op1.all.valeurVariable < op2.all.valeurVariable;
                 null;
             when '>' =>
-                resultat := variables[1].valeur > variables[2].valeur;
+                resultat := op1.all.valeurVariable > op2.all.valeurVariable;
                 null;
             when '<=' =>
-                resultat := variables[1].valeur <= variables[2].valeur;
+                resultat := op1.all.valeurVariable <= op2.all.valeurVariable;
                 null;
             when '>=' =>
-                resultat := variables[1].valeur >= variables[2].valeur;
+                resultat := op1.all.valeurVariable >= op2.all.valeurVariable;
                 null;
             when others =>
                 raise Operateur_Incorrect;
@@ -69,10 +76,10 @@ package body operateurs is
         cp := line;
     end branchementBasic;
 
-    procedure branchementConditionel(op : in Character; cp : in out Integer; variables : in variable[]; line : in Integer) is
+    procedure branchementConditionel(op : in Character; cp : in out Integer; instructions : in T_Instruction; line : in Integer) is
         branch : Boolean := False;
     begin
-        operationLogique(op,variables,cp,branch);
+        operationLogique(instruction,cp,branch);
         if(branch) then
             branchementBasic(cp,line);
         else

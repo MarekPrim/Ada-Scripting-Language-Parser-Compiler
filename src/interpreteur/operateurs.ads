@@ -17,7 +17,7 @@ package operateurs is
     --                  ptrVar.all.typeVariable = typeVariable
     --                  ptrVar.all.identificateur = identificateur
     -- Exceptions : Variable_Inconnue, Variable_Constante
-    procedure affectation(typeVariable : in String; identificateur : in String; valeur : in T; ptrvar : in out ptrVariable);
+    procedure affectation(typeVariable : in String; identificateur : in String; valeur : in T; ptrvar : in out T_List_Variable);
 
     -- nom : operationArithmetique
     -- semantique : effectue l'operation arithmetique
@@ -42,7 +42,7 @@ package operateurs is
     -- Préconditions : op est bien un opérateur logique
     -- Postconditions : 
     -- Exceptions : 
-    procedure operationLogique(op: in Character; variables : in variable[]; cp : in out Integer, res : out Boolean);
+    procedure operationLogique(op: in Character; variables : in T_List_Variable; cp : in out Integer, res : out Boolean);
 
     -- branchementBasic
     -- Attribution d'un numéro de ligne à CP
@@ -56,6 +56,6 @@ package operateurs is
     -- Précondition : 
     -- Postcondition :
     -- Exceptions :
-    procedure branchementConditionel(op : in Character; cp : in out Integer; variables : in variable[]; line : in Integer);
+    procedure branchementConditionel(op : in Character; cp : in out Integer; variables : in T_List_Variable; line : in Integer);
 
 end operateurs;
