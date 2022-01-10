@@ -1,11 +1,12 @@
-with ada.Text_IO, ada.integer_Text_IO, Ada.Strings.Unbounded, Ada.Text_IO.Unbounded_IO, Ada.Characters.Handling, P_List_Double;
+with ada.Text_IO, ada.integer_Text_IO, Ada.Strings.Unbounded, Ada.Text_IO.Unbounded_IO, Ada.Characters.Handling;
+--with P_List_Double;
 use ada.Text_IO, ada.integer_Text_io, Ada.Strings.Unbounded, Ada.Text_IO.Unbounded_IO, Ada.Characters.Handling;
 
 
 package body intermediaire is
 
-    package Liste_Variables is new P_List_Double(pointeur => T_List_Variable);
-    use Liste_Variables;
+    --package Liste_Variables is new P_List_Double(pointeur => T_List_Variable);
+    --use Liste_Variables;
 
     
 
@@ -144,7 +145,7 @@ package body intermediaire is
                 nomVariable.nbCharsEffectif := k;
                 ptrVariable := new T_Variable'(0, typeVariable, nomVariable, false);
                 record_ajout := new T_Cell_Variable'(ptrVariable, null, null);
-                ajouter(variables, record_ajout);
+                --ajouter(variables, record_ajout);
             else
                 i := i+1;
             end if;
@@ -192,6 +193,53 @@ package body intermediaire is
             l := l.all.next;
         end loop;
     end afficher_liste;
+
+    procedure recupererInstructions(instructions : in out T_List_Instruction; ligne : in Unbounded_string) is
+    begin
+        instructions := null;
+    end recupererInstructions;
+
+    function rechercherVariable (variables : in T_List_Variable; nomVariable : in string) return T_List_Variable is
+    begin
+        return null;
+    end rechercherVariable;
+
+    function creer_liste_vide return T_List_Variable is
+    begin
+
+        return null;
+
+    end creer_liste_vide;
+
+    function est_vide(p : in T_List_Variable) return boolean is
+    begin
+        return p = null;
+    end est_vide;
+
+    procedure ajouter(f_l : in out T_List_Variable; f_nouveau : in T_Ptr_Variable) is
+    begin
+        null;
+    end ajouter;
+
+    function creer_liste_vide return T_List_Instruction is
+    begin
+        return null;
+    end creer_liste_vide;
+
+    function est_vide(p : in T_List_Instruction) return boolean is
+    begin
+        return p = null;
+    end est_vide;
+
+    procedure ajouter(f_l : in out T_List_Variable; f_nouveau : in T_Ptr_Instruction) is
+    begin
+        null;
+    end ajouter;
+
+    procedure interpreterCommande (ptrLine : in T_List_Instruction; ptrVar : in out T_List_Variable) is
+    begin
+        null;
+    end interpreterCommande;
 
 
 end intermediaire;

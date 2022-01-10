@@ -3,7 +3,7 @@ use ada.text_io, Ada.Streams.Stream_IO;
 
 package body intermediaire is
 
-    function initialiserInstructions(fileName : in String) return record_lignes is
+    function recupererInstructions(fileName : in String) return record_lignes is
         F : File_Type;
         S : stream_access;
         lines : record_lignes;
@@ -24,12 +24,12 @@ package body intermediaire is
         end loop;
         Close (F);
         return lines;
-    end initialiserInstructions;
+    end recupererInstructions;
 
     procedure traiterProgramme (fileName : in string) is
         lines : record_lignes;
     begin
-        lines := initialiserInstructions(fileName);
+        lines := recupererInstructions(fileName);
     end traiterProgramme;
 
 end intermediaire;

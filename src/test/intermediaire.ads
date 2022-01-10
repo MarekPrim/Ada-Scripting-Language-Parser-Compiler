@@ -40,12 +40,12 @@ package intermediaire is
     --procedure traiterProgramme(); //appelera le parser, partie visible par l'utilisateur
     procedure traiterProgramme(fileName : in string);
     
-    -- nom : initialiserInstructions
+    -- nom : recupererInstructions
     -- semantique : parcoure les lignes du fichier et stocke ces lignes dans le tableau instructions
     -- parametres : fileName : in string        nom du fichier à interpréter
     -- Préconditions : le fichier est fermé
     -- Postconditions : le fichier est fermé
-    function initialiserInstructions(fileName : in string) return record_lignes;
+    function recupererInstructions(fileName : in string) return record_lignes;
 
 
 end intermediaire;

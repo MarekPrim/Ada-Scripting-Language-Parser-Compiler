@@ -48,7 +48,7 @@ D s-unstyp.ads		20210408115627 34867c83 system.unsigned_types%s
 D s-wchcon.ads		20210408115627 1b7d22d2 system.wch_con%s
 G a e
 G c Z s b [traiterprogramme intermediaire 41 15 none]
-G c Z s b [initialiserinstructions intermediaire 48 14 none]
+G c Z s b [recupererInstructions intermediaire 48 14 none]
 G c Z s s [variableIP intermediaire 26 10 none]
 G c Z s s [TlignesBIP intermediaire 19 5 none]
 G c Z s s [record_lignesIP intermediaire 21 10 none]
@@ -98,7 +98,7 @@ X 10 intermediaire.ads
 37i9*nb_variables{integer}
 41U15*traiterProgramme 41>32 11|30b15 35l9 35t25
 41a32 fileName{string} 11|30b33 34r42
-48V14*initialiserInstructions{21R10} 48>38 11|7b14 28l9 28t32 34s18
+48V14*recupererInstructions{21R10} 48>38 11|7b14 28l9 28t32 34s18
 48a38 fileName{string} 11|7b38 15r27
 X 11 intermediaire.adb
 8p9 F{6|64P9} 15m15 15r15 18r32 19r29 26m16 26r16

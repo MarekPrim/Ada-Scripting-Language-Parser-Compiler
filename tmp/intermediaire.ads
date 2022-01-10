@@ -37,12 +37,12 @@ package intermediaire is
     --procedure traiterProgramme(); //appelera le parser, partie visible par l'utilisateur
     procedure traiterProgramme;
     
-    -- nom : initialiserInstructions
+    -- nom : recupererInstructions
     -- semantique : parcoure les lignes du fichier et stocke ces lignes dans le tableau instructions
     -- parametres : fileName : in string        nom du fichier à interpréter
     -- Préconditions : le fichier est fermé
     -- Postconditions : le fichier est fermé
-    function initialiserInstructions(fileName : in string) return lignes;
+    function recupererInstructions(fileName : in string) return lignes;
 
 
     -- nom : recuperationVariables
@@ -76,7 +76,7 @@ package intermediaire is
     --          ptrVariable                         pointeur sur la variable recherchée
     -- Préconditions :
     -- Postconditions :  
-    -- Exceptions : Variable_Non_Trouvée
+    -- Exceptions : Variable_Non_Trouvee
     function rechercherVariable (nomVariable : in string) return ptrVariable;
 
 

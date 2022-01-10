@@ -1,9 +1,11 @@
-generic type T is private;
+with intermediaire; use intermediaire;
+--generic type T is private;
 package operateurs is
 
     Variable_Inconnue : Exception;
     Variable_Constante : Exception;
     Operateur_Incorrect : Exception;
+
 
     -- nom : affectation
     -- semantique : affectation d'une valeur a une variable identifiée par son nom/identificateur
@@ -17,7 +19,8 @@ package operateurs is
     --                  ptrVar.all.typeVariable = typeVariable
     --                  ptrVar.all.identificateur = identificateur
     -- Exceptions : Variable_Inconnue, Variable_Constante
-    procedure affectation(typeVariable : in String; identificateur : in String; valeur : in T; ptrvar : in out T_List_Variable);
+    procedure affectation(typeVariable : in String; identificateur : in String; valeur : in Integer --T
+    ; variables : in out T_List_Variable);
 
     -- nom : operationArithmetique
     -- semantique : effectue l'operation arithmetique
@@ -29,7 +32,7 @@ package operateurs is
     -- Précondition : la liste des variables est bien formée; op est un operateur arithmetique
     -- Postcondition : CP est incrémenté de 1
     -- Exceptions : Operateur_Incorrect
-    procedure operationArithmetique(op: in Character; op1 : in Integer; op2 : in Integer; cp : in out Integer; res : out Integer);
+    procedure operationArithmetique(op: in String; op1 : in Integer; op2 : in Integer; cp : in out Integer; res : out Integer);
 
     -- operationLogique
     -- Retourne si une opération logique est vraie ou fausse
@@ -42,7 +45,7 @@ package operateurs is
     -- Préconditions : op est bien un opérateur logique
     -- Postconditions : 
     -- Exceptions : 
-    procedure operationLogique(instructions : in T_Instruction; cp : in out Integer, res : out Boolean);
+    procedure operationLogique(instructions : in T_List_Instruction; cp : in out Integer; res : out Boolean);
 
     -- branchementBasic
     -- Attribution d'un numéro de ligne à CP
@@ -56,6 +59,6 @@ package operateurs is
     -- Précondition : 
     -- Postcondition :
     -- Exceptions :
-    procedure branchementConditionel(cp : in out Integer; instructions : in T_Instruction; line : in Integer);
+    procedure branchementConditionel(cp : in out Integer; instructions : in T_List_Instruction; line : in Integer);
 
 end operateurs;

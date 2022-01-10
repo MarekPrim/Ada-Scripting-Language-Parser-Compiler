@@ -9,6 +9,7 @@ package intermediaire is
     Type_Incorrect : Exception; -- Le type de la variable n'est pas correct pour l'opération à effectuer
     Variable_Non_Declaree : Exception; -- La variable à utiliser n'est pas declaree dans le programme
     Variable_Deja_Definie : Exception; -- La variable a déjà été déclarée dans le programme
+    Variable_Non_Trouvee : Exception;
     Acces_Limite : Exception; -- Le compteur CP est hors limite (Ex : Programme avec un corps de 10 lignes et CP = 11) dans le programme
     Fichier_Non_Lisible : Exception;
     Fichier_Non_Trouve : Exception;
@@ -18,7 +19,11 @@ package intermediaire is
     type T_Variable;
     type T_Instruction;
 
-    type Chaine is private;
+    --type Chaine is private;
+    type Chaine is record
+            str : String(1..100);
+            nbCharsEffectif : Integer;
+    end record;
 
     type T_List_Variable is access T_Cell_Variable;
     type T_List_Instruction is access T_Cell_Instruction;
@@ -26,7 +31,8 @@ package intermediaire is
     type T_Ptr_Variable is access T_Variable;
     type T_Ptr_Instruction is access T_Instruction;
 
-    type T_Operandes is private;
+    --type T_Operandes is private;
+    type T_Operandes is array(1..3) of T_Ptr_Variable;
 
     type T_Variable is record
         valeurVariable : Integer;
@@ -77,7 +83,7 @@ package intermediaire is
     -- Exceptions : Aucune_Variable_Definie, Type_Incorrect, Variable_Deja_Definie
      procedure recupererVariables(variables : in out T_List_Variable; ligne : in Unbounded_string);
     
-    -- nom : initialiserInstructions
+    -- nom : recupererInstructions
     -- semantique : récupère les lignes d'un programme en langage intermédiaire contenues entre 'Début' (exclu) et 'Fin' (exclue)
     -- paramètres 
     --  instructions : in out T_List_Instruction : la liste des instructions
@@ -86,7 +92,7 @@ package intermediaire is
     --                  le fichier est fermé
     --                  le contenu entre 'Début' et 'Fin' n'est pas vide
     -- Postconditions : le fichier est fermé
-    -- procedure initialiserInstructions(instructions : in out T_List_Instruction; ligne : in Unbounded_string);
+    procedure recupererInstructions(instructions : in out T_List_Instruction; ligne : in Unbounded_string);
 
     -- nom : interpreterCommande
     -- semantique : interprete la ligne pointée par ptrLine
@@ -96,7 +102,7 @@ package intermediaire is
     -- Préconditions    : ptrLigne n'est pas null
     -- Postconditions   : le numéro de la ligne pointée par ptrLine change pendant la procédure
     -- Exceptions       : Acces_Limite
-    -- procedure interpreterCommande (ptrLine : in T_Cell_Instruction; ptrVar : in out T_List_Variable);
+    procedure interpreterCommande (ptrLine : in T_List_Instruction; ptrVar : in out T_List_Variable);
 
     -- nom : rechercherVariable
     -- semantique : retourne un pointeur sur la variable recherchée
@@ -107,8 +113,8 @@ package intermediaire is
     --          ptrVariable T_List_Variable    // pointeur sur la variable recherchée
     -- Préconditions    : 
     -- Postconditions   :  
-    -- Exceptions : Variable_Non_Trouvée
-    -- function rechercherVariable (variables : in T_List_Variable, nomVariable : in string) return T_List_Variable;
+    -- Exceptions : Variable_Non_Trouvee
+    function rechercherVariable (variables : in T_List_Variable; nomVariable : in string) return T_List_Variable;
 
     -- nom : pointerEnTeteVariables
     -- semantique : le pointeur pointe en tête de la liste doublement chaînée des variables
@@ -135,9 +141,20 @@ package intermediaire is
     -- pre-condition : /
     -- post-condition : est_vide (l) est vide
     -- exception : /
-    --function creer_liste_vide return T_List_Variable
-    --with 
-    --    post => est_vide(creer_liste_vide'result) = true;
+    function creer_liste_vide return T_List_Variable
+    with 
+       post => est_vide(creer_liste_vide'result) = true;
+
+    -- nom : creer_liste_vide
+    -- semantique : creer une liste vide
+    -- parametres : /
+    -- type retour : T_List_Integer
+    -- pre-condition : /
+    -- post-condition : est_vide (l) est vide
+    -- exception : /
+    function creer_liste_vide return T_List_Instruction
+    with 
+       post => est_vide(creer_liste_vide'result) = true;
 
     -- nom : est_vide
     -- semantique : teste si une liste f_l est vide
@@ -146,19 +163,27 @@ package intermediaire is
     -- pre-condiition : /
     -- post-condition : /
     -- exception : /
-    --function est_vide(p : in T_List_Variable) return boolean;
+    function est_vide(p : in T_List_Variable) return boolean;
+
+    -- nom : est_vide
+    -- semantique : teste si une liste f_l est vide
+    -- parametres : l : in T_List_Integer
+    -- type retour : boolean
+    -- pre-condiition : /
+    -- post-condition : /
+    -- exception : /
+    function est_vide(p : in T_List_Instruction) return boolean;
 
 
-    --procedure ajouter(f_l : in out T_List_Variable; f_nouveau : in T_Ptr_Variable);
+    procedure ajouter(f_l : in out T_List_Variable; f_nouveau : in T_Ptr_Variable);
+
+    procedure ajouter(f_l : in out T_List_Variable; f_nouveau : in T_Ptr_Instruction);
 
     procedure afficher_liste(f_l : in T_List_Variable);
 
 
-    private
-        type Chaine is record
-            str : String(1..100);
-            nbCharsEffectif : Integer;
-        end record;
-        type T_Operandes is array(1..3) of T_Ptr_Variable;
+    --private
+        
+        
 
 end intermediaire;
