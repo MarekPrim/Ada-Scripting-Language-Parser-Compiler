@@ -58,9 +58,9 @@ package intermediaire is
 
     -- Parse le fichier en lisant une par une les lignes du fichier afin de passer les données aux autres fonctions
     -- Paramètres :
-    --  fileName : le nom du fichier à lire
-    --  listeInstructions : la liste des instructions
-    --  listeVariables : la liste des variables
+    --  fileName in string : le nom du fichier à lire
+    --  listeInstructions in out T_List_Instruction : la liste des instructions
+    --  listeVariables in out T_List_Variable : la liste des variables
     -- Préconditions
     procedure parseFile (fileName : in string; variables : in out T_List_Variable; instructions : in out T_List_Instruction);
 
@@ -73,9 +73,8 @@ package intermediaire is
     -- nom : recupererVariables
     -- semantique : récupère les variables d'un programme en langage intermédiaire contenues entre 'Début' (exclu) et 'Programme' (exclue)
     -- paramètres :
-    --      fileName : in string        // nom du fichier à interpréter
-    -- type-retour : 
-    --      ptrVariable                 // pointeur sur un type variable
+    --  variables : in out T_List_Variable : la liste des variables
+    -- ligne : in Unbounded_string : la ligne à analyser
     -- Préconditions : le programme est correctement formé [Non vérifié dans notre cas]
     -- Postconditions : la liste doublement chainée contient les variables du programme
     -- Exceptions : Aucune_Variable_Definie, Type_Incorrect, Variable_Deja_Definie
@@ -84,35 +83,35 @@ package intermediaire is
     -- nom : initialiserInstructions
     -- semantique : récupère les lignes d'un programme en langage intermédiaire contenues entre 'Début' (exclu) et 'Fin' (exclue)
     -- paramètres 
-    --      fileName : in string        // nom du fichier à interpréter
-    -- type-retour : 
-    --      ptrLigne                    // pointeur sur un type ligne
+    --  instructions : in out T_List_Instruction : la liste des instructions
+    --  ligne : in Unbounded_string : la ligne à analyser
     -- Préconditions : 
     --                  le fichier est fermé
     --                  le contenu entre 'Début' et 'Fin' n'est pas vide
     -- Postconditions : le fichier est fermé
-    -- function initialiserInstructions(fileName : in string) return ptrLigne;  
+    -- procedure initialiserInstructions(instructions : in out T_List_Instruction; ligne : in Unbounded_string);
 
     -- nom : interpreterCommande
     -- semantique : interprete la ligne pointée par ptrLine
     -- parametres :
-    --      ptrLine     : in ptrLigne           // pointeur sur les lignes
-    --      ptrVariable : in ptrVariable        // pointeur sur les variables
+    --  ptrLine : in out T_Cell_Instruction : la ligne à interpréter
+    --  ptrVar : in out T_List_Variable : la liste des variables
     -- Préconditions    : ptrLigne n'est pas null
     -- Postconditions   : le numéro de la ligne pointée par ptrLine change pendant la procédure
     -- Exceptions       : Acces_Limite
-    -- procedure interpreterCommande (ptrLine : in ptrLigne; ptrVar : in out ptrVariable);
+    -- procedure interpreterCommande (ptrLine : in T_Cell_Instruction; ptrVar : in out T_List_Variable);
 
     -- nom : rechercherVariable
     -- semantique : retourne un pointeur sur la variable recherchée
     -- parametres :
     --          nomVariable : in string         // nom de la variable à rechercher
+    --          ptrVar : in T_List_Variable    // liste des variables
     -- typeRetour : 
-    --          ptrVariable                     // pointeur sur la variable recherchée
+    --          ptrVariable T_List_Variable    // pointeur sur la variable recherchée
     -- Préconditions    : 
     -- Postconditions   :  
     -- Exceptions : Variable_Non_Trouvée
-    -- function rechercherVariable (variables : in ptrVariable,nomVariable : in string) return ptrVariable;
+    -- function rechercherVariable (variables : in T_List_Variable, nomVariable : in string) return T_List_Variable;
 
     -- nom : pointerEnTeteVariables
     -- semantique : le pointeur pointe en tête de la liste doublement chaînée des variables
@@ -121,7 +120,7 @@ package intermediaire is
     -- Préconditions    : la liste des variables n'est pas vide
     -- Postconditions   : ptr.all.prev = null 
     -- Exceptions :                 
-    -- procedure pointerEnTeteVariables (ptr : in ptrVariable);
+    -- procedure pointerEnTeteVariables (ptr : in T_List_Variable);
 
     -- nom : pointerEnTeteLignes
     -- semantique : le pointeur pointe en tête de la liste doublement chaînée des lignes
@@ -130,7 +129,7 @@ package intermediaire is
     -- Préconditions    : la liste des lignes n'est pas vide
     -- Postconditions   : ptr.all.prev = null 
     -- Exceptions :                 
-    -- procedure pointerEnTeteLignes (ptr : in ptrLigne);
+    -- procedure pointerEnTeteLignes (ptr : in T_List_Instruction);
 
     -- nom : creer_liste_vide
     -- semantique : creer une liste vide
