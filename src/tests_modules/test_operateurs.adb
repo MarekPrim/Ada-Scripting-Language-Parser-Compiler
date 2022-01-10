@@ -5,10 +5,6 @@ with operateurs;
 
 procedure test_operateurs is
     
-    TYPE Tab_Entiers is array(1.. 2) of Integer;
-    TYPE Tab_Boolean is array(1.. 2) of Boolean;
-    TYPE Tab_Variables is array(1..2) of variable;
-
     variables : T_List_Variable;
     search : T_List_Variable;
     package operateurs_int is new operateurs(T=>Integer);
@@ -22,7 +18,7 @@ procedure test_operateurs is
     cp : Integer;
     resultat_arithmetique : Integer;
     resultat_logique : Boolean;
-    chaine : Chaine;
+    Chaine: Chaine;
     operandes : T_Operandes;
 
 
@@ -87,7 +83,7 @@ Open (F, In_File, fileName);
         end if;
 
         operateur := '-';
-        operationArithmetique(operateur,op1,op2,cp; resultat_arithmetique);
+        operationArithmetique(operateur,op1,op2,cp, resultat_arithmetique);
         if(resultat_arithmetique = 2) then
             write("Operation arithmetique OK");
         else
@@ -100,7 +96,7 @@ Open (F, In_File, fileName);
         end if;
 
         operateur := '*';
-        operationArithmetique(operateur,op1,op2,cp; resultat_arithmetique);
+        operationArithmetique(operateur,op1,op2,cp,resultat_arithmetique);
         if(resultat_arithmetique = 8) then
             write("Operation arithmetique OK");
         else
@@ -113,7 +109,7 @@ Open (F, In_File, fileName);
         end if;
 
         operateur := '/';
-        operationArithmetique(operateur,op1,op2,cp; resultat_arithmetique);
+        operationArithmetique(operateur,op1,op2,cp,resultat_arithmetique);
         if(resultat_arithmetique = 2) then
             write("Operation arithmetique OK");
         else
@@ -127,7 +123,7 @@ Open (F, In_File, fileName);
 
         begin
             operateur := "^";
-            operationArithmetique(operateur,op1,op2,cp; resultat_arithmetique);
+            operationArithmetique(operateur,op1,op2,cp, resultat_arithmetique);
 
             exception
                 when Operateur_Incorrect => Put_Line("OK");
@@ -141,7 +137,7 @@ Open (F, In_File, fileName);
 
         instruction := creer_liste_vide;
         instruction := new T_Cell_Instruction(null,null,null);
-        chaine := new Chaine ("=",1);
+        Chaine:= Chaine("=",1);
         operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
         instruction.all.ptrIns := new T_Instruction(1,operandes,chaine);
 
@@ -155,7 +151,7 @@ Open (F, In_File, fileName);
 
         instruction := creer_liste_vide;
         instruction := new T_Cell_Instruction(null,null,null);
-        chaine := new Chaine (">",1);
+        Chaine:= Chaine(">",1);
         operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
         instruction.all.ptrIns := new T_Instruction(1,operandes,chaine);
         operationLogique(operateur,instruction,cp,resultat_logique);
@@ -167,7 +163,7 @@ Open (F, In_File, fileName);
 
         instruction := creer_liste_vide;
         instruction := new T_Cell_Instruction(null,null,null);
-        chaine := new Chaine ("<",1);
+        Chaine:= Chaine("<",1);
         operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
         instruction.all.ptrIns := new T_Instruction(1,operandes,chaine);
         operationLogique(operateur,instruction,cp,resultat_logique);
@@ -180,10 +176,9 @@ Open (F, In_File, fileName);
 
 instruction := creer_liste_vide;
         instruction := new T_Cell_Instruction(null,null,null);
-        chaine := new Chaine (">=",2);
+        Chaine:= Chaine(">=",2);
         operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
         instruction.all.ptrIns := new T_Instruction(1,operandes,chaine);
-        operateur := '>=';
         operationLogique(operateur,instruction,cp,resultat_logique);
         if(resultat_logique = true) then
             write("OK");
@@ -193,10 +188,10 @@ instruction := creer_liste_vide;
 
 instruction := creer_liste_vide;
         instruction := new T_Cell_Instruction(null,null,null);
-        chaine := new Chaine ("<=",2);
+        Chaine:= Chaine("<=",2);
         operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
         instruction.all.ptrIns := new T_Instruction(1,operandes,chaine);
-        operateur := '<=';
+
         operationLogique(operateur,instruction,cp,resultat_logique);
         if(resultat_logique = false) then
             write("OK");
@@ -206,7 +201,7 @@ instruction := creer_liste_vide;
 
         instruction := creer_liste_vide;
         instruction := new T_Cell_Instruction(null,null,null);
-        chaine := new Chaine ("&",1);
+        Chaine:= Chaine("&",1);
         operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
         instruction.all.ptrIns := new T_Instruction(1,operandes,chaine);
         operationLogique(operateur,instruction,cp,resultat_logique);
@@ -218,7 +213,7 @@ instruction := creer_liste_vide;
 
         instruction := creer_liste_vide;
         instruction := new T_Cell_Instruction(null,null,null);
-        chaine := new Chaine ("|",1);
+        Chaine:= Chaine("|",1);
         operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
         instruction.all.ptrIns := new T_Instruction(1,operandes,chaine);
         operationLogique(operateur,instruction,cp,resultat_logique);
@@ -242,9 +237,9 @@ instruction := creer_liste_vide;
     -- Test branchement conditionnel
         instruction := creer_liste_vide;
         instruction := new T_Cell_Instruction(null,null,null);
-        chaine := new Chaine ("=",1);
+        Chaine:= Chaine("=",1);
         operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
-        instruction.all.ptrIns := new T_Instruction(1,operandes,chaine,)
+        instruction.all.ptrIns := new T_Instruction(1,operandes,chaine);
         cp := 0;
         affectation("entier","i",variables, 5);
         affectation("entier","n",variables, 2);

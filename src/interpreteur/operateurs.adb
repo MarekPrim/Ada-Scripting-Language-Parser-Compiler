@@ -1,3 +1,5 @@
+with intermediaire; use intermediaire; --Permet de partager les types définis dans intermediaire.ads
+
 package body operateurs is
 
     procedure affectation(identificateur : in String; variables : in out T_List_Variable; valeur : in T) is
