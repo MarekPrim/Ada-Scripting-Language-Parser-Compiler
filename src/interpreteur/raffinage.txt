@@ -10,6 +10,7 @@ R1 : comment interpréter un code intermédiaire
 R2 : comment récupérer les lignes utiles du code intermédiaire
 
     tant que le pointeur sur le fichier n'est pas vide faire
+        supprimer les espaces inutiles de la ligne
         si la ligne n'est pas vide (remplie d'espaces) et ne commence pas par '--'
             inserer la ligne dans un tableau de String
         sinon
@@ -28,6 +29,12 @@ R2 : comment récupérer les variables du code intermédiaire
 
         récupérer le nom des variables contenues dans la ligne
 
+    fin tant que
+
+R3 : comment supprimer les espaces inutiles de la ligne
+
+    tant que la ligne contient un espace inutile
+        supprimer l'espace inutile
     fin tant que
 
 R3 : comment récupérer le type des variables contenues dans la ligne

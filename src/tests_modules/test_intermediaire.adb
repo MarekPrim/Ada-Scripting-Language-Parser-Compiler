@@ -50,7 +50,8 @@ variables := creer_liste_vide;
             Put_Line("KO");
         end if;
 
-        if(variables.all.ptrVar.all.nomVariable.str = "entier") then
+
+        if(variables.all.ptrVar.all.typeVariable.str = "entier") then
             Put_Line("OK");
         else
             Put_Line("KO");

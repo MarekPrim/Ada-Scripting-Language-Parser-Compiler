@@ -46,7 +46,7 @@ package body operateurs is
         op1 : T_Ptr_Variable;
         op2 : T_Ptr_Variable;
     begin
-        op := instructions.all.operateur.string;
+        op := instructions.all.operation.str;
         op1 := instructions.all.operande1.all.ptrVar;
         op2 := instructions.all.operande2.all.ptrVar;
 
