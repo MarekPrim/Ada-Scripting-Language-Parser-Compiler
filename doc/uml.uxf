@@ -45,7 +45,7 @@ bg=green
 +ligneCommenceParMotReserve (ligne : in Unbounded_string; enum : in string) : boolean
 +renvoyerLigneSansEspace (ligne : in Unbounded_string) : Unbounded_string
 +traiterProgramme(fileName : in string)
-+initialiserInstructions(instructions : in out T_List_Instruction; ligne : in Unbounded_string)
++recupererInstructions(instructions : in out T_List_Instruction; ligne : in Unbounded_string)
 +recupererVariables(variables : in out T_List_Variable; ligne : in Unbounded_string)
 +interpreterCommande (ptrLine : in T_Cell_Instruction; ptrVar : in out T_List_Variable)
 +rechercherVariable (variables : in T_List_Variable, nomVariable : in string) : T_List_Variable
