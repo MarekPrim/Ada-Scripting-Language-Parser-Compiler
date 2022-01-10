@@ -2,8 +2,8 @@ R0 : interpréter un code intermédiaire
 
 R1 : comment interpréter un code intermédiaire
 
-    R1.1 : récupérer les lignes utiles du code intermédiaire
-    R1.2 : récupérer les variables du code intermédiaire
+    R1.1 : récupérer les variables du code intermédiaire
+    R1.2 : récupérer les lignes utiles du code intermédiaire
     R1.3 : exécuter l'ensemble du code
 
 
@@ -18,7 +18,7 @@ R2 : comment récupérer les lignes utiles du code intermédiaire
         le pointeur passe a la ligne suivante
     fin tant que
 
-R3 : comment récupérer les variables du code intermédiaire
+R2 : comment récupérer les variables du code intermédiaire
 
     initialiser un compteur à 2 (les variables sont présentes à partir de la seconde ligne)
 
@@ -30,7 +30,7 @@ R3 : comment récupérer les variables du code intermédiaire
 
     fin tant que
 
-R4 : comment récupérer le type des variables contenues dans la ligne
+R3 : comment récupérer le type des variables contenues dans la ligne
 
     initialiser un compteur a 1
     tant que ligne(i) /= ':' faire
@@ -39,7 +39,7 @@ R4 : comment récupérer le type des variables contenues dans la ligne
 
     affecter à une variable le prochain mot rencontré
 
-R5 : comment affecter à une variable le prochain mot rencontré
+R4 : comment affecter à une variable le prochain mot rencontré
 
     tant que ligne(i) = ' ' faire
         incrémenter i
@@ -50,7 +50,7 @@ R5 : comment affecter à une variable le prochain mot rencontré
         typeVariable(i) := ligne(i)
     fin tant que
 
-R6 : comment récupérer le nom des variables contenues dans la ligne
+R3 : comment récupérer le nom des variables contenues dans la ligne
 
     initialiser un compteur entier i a 1
     tant que ligne(i) /= ':' faire
@@ -62,18 +62,18 @@ R6 : comment récupérer le nom des variables contenues dans la ligne
         incrémenter i
     fin tant que
 
-R7 : comment accéder au nom des variables
+R4 : comment accéder au nom des variables
 
     tant que ligne(i) est un chiffre ou une lettre (minuscule ou majuscule) faire
         nomVariable(i) := ligne(i)
     fin tant que
 
-R8 : comment insérer les variables et leur type dans un tableau 
+R5 : comment insérer les variables et leur type dans un tableau 
 
     vars(i).type := typeVariable
     vars(i).identificateur := nomVariable
 
-R9 : comment exécuter l'ensemble du code
+R2 : comment exécuter l'ensemble du code
 
     déplacer le compteur de ligne à la ligne suivante de la ligne commençant par 'Début'
 
@@ -81,7 +81,7 @@ R9 : comment exécuter l'ensemble du code
         interpréter la commande contenue dans la ligne courante
     fin tant que
 
-R10 : comment interpréter la commande contenue dans la ligne courante
+R3 : comment interpréter la commande contenue dans la ligne courante
 
     si la ligne courante contient l'oprérateur d'affectation alors
 
@@ -111,7 +111,7 @@ R10 : comment interpréter la commande contenue dans la ligne courante
 
     fin si
 
-R11 : comment évaluer le résultat à droite de l'affectation
+R4 : comment évaluer le résultat à droite de l'affectation
 
     si la ligne courante contient un opérateur logique alors
         initialiser une variable résultat de type booléen
@@ -126,7 +126,7 @@ R11 : comment évaluer le résultat à droite de l'affectation
         fin si
     fin si
 
-R12 : comment évaluer le résultat de l'opération entre les opérandes suivante et précédente de l'opérateur logique
+R5 : comment évaluer le résultat de l'opération entre les opérandes suivante et précédente de l'opérateur logique
 
     si op = '=' alors
         si précédente = suivante alors
@@ -162,7 +162,7 @@ R12 : comment évaluer le résultat de l'opération entre les opérandes suivant
         lever l'exception Operateur_Incorrect
     fin si
 
-R13 : comment évaluer le résultat de l'opération entre les opérandes suivante et précédente de l'opérateur arithmétique
+R5: comment évaluer le résultat de l'opération entre les opérandes suivante et précédente de l'opérateur arithmétique
  
     si op = '+' alors
         nombre := précédente + suivante 
@@ -176,7 +176,7 @@ R13 : comment évaluer le résultat de l'opération entre les opérandes suivant
         lever l'exception Operateur_Incorrect;
     fin si
 
-R14 : comment récupérer le nom de la variable à affecter
+R4 : comment récupérer le nom de la variable à affecter
 
     i := 1
     déclarer une variable nomVariable de type string 
@@ -190,7 +190,7 @@ R14 : comment récupérer le nom de la variable à affecter
         nomVariable(k) := ligne(i) 
     fin tant que
 
-R15 : comment récupérer la case du tableau associée à la variable à affecter
+R4 : comment récupérer l'indice du tableau variables associé à la variable à affecter
 
     indice = 0
     tant que i < CMAX et indice = 0 faire
