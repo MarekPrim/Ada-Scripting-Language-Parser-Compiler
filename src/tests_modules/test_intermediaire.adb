@@ -1,6 +1,6 @@
-with Text_IO; use Text_IO;
-with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
-with Ada.Float_Text_IO; use Ada.Float_Text_IO;
+with ada.Text_IO, ada.integer_Text_IO, Ada.Strings.Unbounded, Ada.Text_IO.Unbounded_IO, Ada.Characters.Handling;
+--with P_List_Double;
+use ada.Text_IO, ada.integer_Text_io, Ada.Strings.Unbounded, Ada.Text_IO.Unbounded_IO, Ada.Characters.Handling;
 with intermediaire; use intermediaire;
 
 procedure test_intermediaire is
@@ -10,16 +10,16 @@ fileName : constant string := "code_test.med";
 fileNameSansVariable : constant string := "code_exception_no_variable.med";
 fileNameSansType : constant string := "code_exception_no_type.med";
 fileNameDeuxDeclarations : constant string := "code_exception_two_declaration.med";
-line : ptrLigne;
+ligne : Unbounded_string;
 variables : T_List_Variable;
 variables_stub : T_List_Variable;
 search : T_List_Variable;
 instructions : T_List_Instruction; 
-
+F : File_Type;
 begin
 
 instructions := creer_liste_vide;
-search := new variable;
+search := creer_liste_vide;
 variables := creer_liste_vide;
         Open (F, In_File, fileName);
         loop
@@ -164,6 +164,8 @@ variables := creer_liste_vide;
                 ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
 
             exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut)));
+            end loop;
+            end loop;
             Close(F);
             exception
                 when Fichier_Non_Trouve => Put_Line("OK");
@@ -186,53 +188,53 @@ variables := creer_liste_vide;
             search := rechercherVariable(variables,"xyz");
 
             exception
-                when Variable_Non_Trouvée => Put_Line("OK");
+                when Variable_Non_Trouvee => Put_Line("OK");
         end;
 
     -- Test de l'initialisation des instructions
 
-        if(line.all.ptrInst.all.operation = "<-") then
+        if(instructions.all.ptrIns.all.operation.str(1..2) = "<-") then
             Put_Line("OK");
         else
             Put_Line("KO");
         end if;
-        if(line.all.ptrIns.all.operandes[1] = "5") then
+        if(instructions.all.ptrIns.all.operandes(1).all.valeurVariable = 5) then
             Put_Line("OK");
         else
             Put_Line("KO");
         end if;
-        if(line.all.ptrIns.all.operandes[0] = "n") then
+        if(instructions.all.ptrIns.all.operandes(1).all.nomVariable.str(1) = 'n') then
             Put_Line("OK");
         else
             Put_Line("KO");
         end if;
 
-        if(line.all.ptrIns.all.numInstruction = 1) then
+        if(instructions.all.ptrIns.all.numInstruction = 1) then
             Put_Line("OK");
         else
             Put_Line("KO");
         end if;
         
-        if(line.all.next.all.ptrIns.all.numInstruction = 2) then
+        if(instructions.all.next.all.ptrIns.all.numInstruction = 2) then
             Put_Line("OK");
         else
             Put_Line("KO");
         end if;
 
-        line := line.all.next;
+        instructions := instructions.all.next;
 
-        if(line.all.prev.all.ptrIns.all.operandes[1] = "5") then
+        if(instructions.all.prev.all.ptrIns.all.operandes(1).all.valeurVariable = 5) then
             Put_Line("OK");
         else
             Put_Line("KO");
         end if;
-        if(line.all.prev.all.ptrIns.all.numInstruction = 1) then
+        if(instructions.all.prev.all.ptrIns.all.numInstruction = 1) then
             Put_Line("OK");
         else
             Put_Line("KO");
         end if;
 
-        line := line.all.prev;
+        instructions := instructions.all.prev;
 
        
 
