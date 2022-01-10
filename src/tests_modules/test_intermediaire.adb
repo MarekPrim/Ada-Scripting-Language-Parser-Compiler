@@ -18,7 +18,7 @@ instructions : T_List_Instruction;
 
 begin
 
-line := new ligne;
+instructions := creer_liste_vide;
 search := new variable;
 variables := creer_liste_vide;
         Open (F, In_File, fileName);
@@ -236,7 +236,7 @@ variables := creer_liste_vide;
        
 
     -- Test de l'interprétation d'une commande/ligne d'instruction
-        interpreterCommande(line, variables);
+        interpreterCommande(instructions, variables);
 
         if(rechercherVariable(variables,"n").all.ptrVar.all.valeurVariable = 5) then
             Put_Line("OK");

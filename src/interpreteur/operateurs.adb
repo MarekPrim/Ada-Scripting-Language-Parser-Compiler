@@ -64,6 +64,12 @@ package body operateurs is
             when '>=' =>
                 resultat := op1.all.valeurVariable >= op2.all.valeurVariable;
                 null;
+            when '&' =>
+                resultat := op1.all.valeurVariable and op2.all.valeurVariable;
+                null;
+            when '|' =>
+                resultat := op1.all.valeurVariable or op2.all.valeurVariable;
+                null;
             when others =>
                 raise Operateur_Incorrect;
         end case;
@@ -76,7 +82,7 @@ package body operateurs is
         cp := line;
     end branchementBasic;
 
-    procedure branchementConditionel(op : in Character; cp : in out Integer; instructions : in T_Instruction; line : in Integer) is
+    procedure branchementConditionel(cp : in out Integer; instructions : in T_Instruction; line : in Integer) is
         branch : Boolean := False;
     begin
         operationLogique(instruction,cp,branch);

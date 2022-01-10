@@ -9,9 +9,12 @@ procedure test_operateurs is
     TYPE Tab_Boolean is array(1.. 2) of Boolean;
     TYPE Tab_Variables is array(1..2) of variable;
 
-    variables : ptrVariable;
+    variables : T_List_Variable;
+    search : T_List_Variable;
     package operateurs_int is new operateurs(T=>Integer);
     use operateurs_int;
+
+    instruction : T_List_Instruction;
 
     operateur : Character;
     op1 : Integer;
@@ -19,36 +22,51 @@ procedure test_operateurs is
     cp : Integer;
     resultat_arithmetique : Integer;
     resultat_logique : Boolean;
-    
-    tab_i : Tab_Entiers;
-    tab_b : Tab_Boolean;
-    tab_v : Tab_Variables;
+    chaine : Chaine;
+    operandes : T_Operandes;
+
 
     
 
 begin
+variables := creer_liste_vide;
+instruction := creer_liste_vide;
+search := creer_liste_vide;
+Open (F, In_File, fileName);
+        loop
+            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
+        exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Programme)));
+        end loop;
+        ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
+        loop
+            recupererVariables(variables, ligne);
+            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
+        exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut)));
+        end loop;
+        loop
 
-variables := new variable'(null,"entier","test",false, null, null);
-variables.all.next := new variable'(2,"entier","test2",false, null, variables);
-variables.all.next.all.next := new variable'(2,"entier","test_constant",false, null, variables.all.next);
+            recupererInstructions(instructions, ligne);
+        
+            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
+
+        exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Fin)));
+        end loop;
+
+        Close(F);
+
+
 
     -- Test affectation
-        affectation("entier","test",1,variables);
-        if(variables.all.valeur = 1) then
-            write("Affectation OK");
+        affectation("entier","n",variables, 5);
+        search := rechercherVariable(variables,"n");
+        if(search.all.ptrVar.all.valeurVariable = 5) then
+            Put_Line("OK");
         else
-            write("Affectation KO");
+            Put_Line("KO");
         end if;
 
-        begin
-            affectation("entier","test_constant",1,variables);
-
-            exception
-                when Variable_Constante => Put_Line("OK");
-                when others => Put_Line("NOK");
-        end;
-
     -- Test +;-;*;/
+
         cp :=0;
         op1 := 4;
         op2 := 2;
@@ -116,91 +134,101 @@ variables.all.next.all.next := new variable'(2,"entier","test_constant",false, n
                 when others => Put_Line("NOK");
         end;
 
+
     -- Test opérateur logique
-        tab_i:= (1,2);
-        tab_b:= (true,false);
-        resultat_logique := False;
-        operateur := '&';
-        
-        operationLogique(operateur,tab_i,cp,resultat_logique);
-        if(resultat_logique = true) then -- TRUE -> ∀x, x ≠ 0
-            write("Operation logique OK");
+        affectation("entier","i",variables, 5);
+        affectation("entier","n",variables, 2);
+
+        instruction := creer_liste_vide;
+        instruction := new T_Cell_Instruction(null,null,null);
+        chaine := new Chaine ("=",1);
+        operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
+        instruction.all.ptrIns := new T_Instruction(1,operandes,chaine);
+
+        operationLogique(instruction,cp,resultat_logique);
+        if(resultat_logique = false) then
+            write("OK");
         else
-            write("Operation logique KO");
+            write("KO");
         end if;
 
-        if(cp = 1) then
-            write("Operation logique OK");
+
+        instruction := creer_liste_vide;
+        instruction := new T_Cell_Instruction(null,null,null);
+        chaine := new Chaine (">",1);
+        operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
+        instruction.all.ptrIns := new T_Instruction(1,operandes,chaine);
+        operationLogique(operateur,instruction,cp,resultat_logique);
+        if(resultat_logique = true) then
+            write("OK");
         else
-            write("Operation logique KO");
+            write("KO");
         end if;
 
-        operationLogique(operateur,tab_b,cp,resultat_logique);
-        if(resultat_logique = false) then 
-            write("Operation logique OK");
+        instruction := creer_liste_vide;
+        instruction := new T_Cell_Instruction(null,null,null);
+        chaine := new Chaine ("<",1);
+        operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
+        instruction.all.ptrIns := new T_Instruction(1,operandes,chaine);
+        operationLogique(operateur,instruction,cp,resultat_logique);
+        if(resultat_logique = false) then
+            write("OK");
         else
-            write("Operation logique KO");
-        end if;
-        if(cp = 2) then
-            write("Operation logique OK");
-        else
-            write("Operation logique KO");
-        end if;
-
-        operateur := '|';
-        operationLogique(operateur,tab_b,cp,resultat_logique);
-        if(resultat_logique = true) then 
-            write("Operation logique OK");
-        else
-            write("Operation logique KO");
+            write("KO");
         end if;
 
-        if(cp = 3) then
-            write("Operation logique OK");
+
+instruction := creer_liste_vide;
+        instruction := new T_Cell_Instruction(null,null,null);
+        chaine := new Chaine (">=",2);
+        operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
+        instruction.all.ptrIns := new T_Instruction(1,operandes,chaine);
+        operateur := '>=';
+        operationLogique(operateur,instruction,cp,resultat_logique);
+        if(resultat_logique = true) then
+            write("OK");
         else
-            write("Operation logique KO");
+            write("KO");
         end if;
 
-        operateur := '=';
-        operationLogique(operateur,tab_i,cp,resultat_logique);
-        if(resultat_logique = false) then 
-            write("Operation logique OK");
+instruction := creer_liste_vide;
+        instruction := new T_Cell_Instruction(null,null,null);
+        chaine := new Chaine ("<=",2);
+        operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
+        instruction.all.ptrIns := new T_Instruction(1,operandes,chaine);
+        operateur := '<=';
+        operationLogique(operateur,instruction,cp,resultat_logique);
+        if(resultat_logique = false) then
+            write("OK");
         else
-            write("Operation logique KO");
-        end if;
-        
-        if(cp = 4) then
-            write("Operation logique OK");
-        else
-            write("Operation logique KO");
-        end if;
-
-        operateur := '<';
-        operationLogique(operateur,tab_i,cp,resultat_logique);
-        if(resultat_logique = true) then 
-            write("Operation logique OK");
-        else
-            write("Operation logique KO");
+            write("KO");
         end if;
 
-        operateur := '>';
-        operationLogique(operateur,tab_i,cp,resultat_logique);
-        if(resultat_logique = false) then 
-            write("Operation logique OK");
+        instruction := creer_liste_vide;
+        instruction := new T_Cell_Instruction(null,null,null);
+        chaine := new Chaine ("&",1);
+        operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
+        instruction.all.ptrIns := new T_Instruction(1,operandes,chaine);
+        operationLogique(operateur,instruction,cp,resultat_logique);
+        if(resultat_logique = false) then
+            write("OK");
         else
-            write("Operation logique KO");
+            write("KO");
         end if;
 
-        begin
-            operateur := "^";
-            operationLogique(operateur,tab_i,cp,resultat_logique);
+        instruction := creer_liste_vide;
+        instruction := new T_Cell_Instruction(null,null,null);
+        chaine := new Chaine ("|",1);
+        operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
+        instruction.all.ptrIns := new T_Instruction(1,operandes,chaine);
+        operationLogique(operateur,instruction,cp,resultat_logique);
+        if(resultat_logique = true) then
+            write("OK");
+        else
+            write("KO");
+        end if;
 
-            exception
-                when Operateur_Incorrect => Put_Line("OK");
-                when others => Put_Line("NOK");
-        end;
 
-    
     -- Test branchement basique
         cp := 0;
 
@@ -212,26 +240,23 @@ variables.all.next.all.next := new variable'(2,"entier","test_constant",false, n
         end if;
 
     -- Test branchement conditionnel
-
-        operateur := '=';
-        tab_v := (variables,variables.all.next);
+        instruction := creer_liste_vide;
+        instruction := new T_Cell_Instruction(null,null,null);
+        chaine := new Chaine ("=",1);
+        operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
+        instruction.all.ptrIns := new T_Instruction(1,operandes,chaine,)
         cp := 0;
+        affectation("entier","i",variables, 5);
+        affectation("entier","n",variables, 2);
 
-        branchementConditionel(operateur,cp,tab_v,33);
-
-        if(cp = 1) then
-            write("Branchement OK");
-        else
-            write("Branchement KO");
-        end if;
-
-        affectation("entier","test",2,variables);
-        branchementConditionel(operateur,cp,tab_v,33);
-
+        branchementConditionnel(cp,instruction,33);
         if(cp = 33) then
             write("Branchement OK");
         else
             write("Branchement KO");
         end if;
+
+
+        
 
 end test_operateurs;

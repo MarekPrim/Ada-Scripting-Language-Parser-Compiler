@@ -42,7 +42,7 @@ package operateurs is
     -- Préconditions : op est bien un opérateur logique
     -- Postconditions : 
     -- Exceptions : 
-    procedure operationLogique(op: in Character; variables : in T_List_Variable; cp : in out Integer, res : out Boolean);
+    procedure operationLogique(instructions : in T_Instruction; cp : in out Integer, res : out Boolean);
 
     -- branchementBasic
     -- Attribution d'un numéro de ligne à CP
@@ -56,6 +56,6 @@ package operateurs is
     -- Précondition : 
     -- Postcondition :
     -- Exceptions :
-    procedure branchementConditionel(op : in Character; cp : in out Integer; variables : in T_List_Variable; line : in Integer);
+    procedure branchementConditionel(cp : in out Integer; instructions : in T_Instruction; line : in Integer);
 
 end operateurs;
