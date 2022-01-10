@@ -21,24 +21,28 @@ begin
 line := new ligne;
 search := new variable;
 variables := creer_liste_vide;
-
         Open (F, In_File, fileName);
-
         loop
             ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
         exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Programme)));
         end loop;
-
         ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
-
+        loop
+            recupererVariables(variables, ligne);
+            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
+        exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut)));
+        end loop;
         loop
 
-            recupererVariables(variables, ligne);
+            recupererInstructions(instructions, ligne);
         
             ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
 
-        exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut)));
+        exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Fin)));
         end loop;
+
+        Close(F);
+
     -- variables = tête de la liste
         if(variables.all.ptrVar.all.nomVariable.str = "n") then
             Put_Line("OK");
@@ -66,94 +70,100 @@ variables := creer_liste_vide;
 
         begin
             variables_stub := creer_liste_vide;
-        Open (F, In_File, fileNameSansVariable);
 
-        loop
-            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
-        exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Programme)));
-        end loop;
+            Open (F, In_File, fileNameSansVariable);
 
-        ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
+            loop
+                ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
+            exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Programme)));
+            end loop;
 
-        loop
-
-            recupererVariables(variables_stub, ligne);
-        
             ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
 
-        exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut)));
-        end loop;
+            loop
+
+                recupererVariables(variables_stub, ligne);
+            
+                ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
+
+            exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut)));
+            end loop;
+            Close(F);
             exception
                 when Aucune_Variable_Definie => Put_Line("OK");
         end;
 
         begin
-        Open (F, In_File, fileNameSansType);
+            variables_stub := creer_liste_vide;
+            Open (F, In_File, fileNameSansType);
 
-        loop
-            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
-        exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Programme)));
-        end loop;
+            loop
+                ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
+            exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Programme)));
+            end loop;
 
-        ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
-
-        loop
-
-            recupererVariables(variables_stub, ligne);
-        
             ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
 
-        exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut)));
-        end loop;
+            loop
+
+                recupererVariables(variables_stub, ligne);
+            
+                ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
+
+            exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut)));
+            end loop;
+            Close(F);
             
             exception
                 when Type_Incorrect => Put_Line("OK");
         end;
 
         begin
-            
+            variables_stub := creer_liste_vide;
             Open (F, In_File, fileNameDeuxDeclarations);
 
-        loop
-            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
-        exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Programme)));
-        end loop;
+            loop
+                ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
+            exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Programme)));
+            end loop;
 
-        ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
-
-        loop
-
-            recupererVariables(variables_stub, ligne);
-        
             ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
 
-        exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut)));
-        end loop;
+            loop
+
+                recupererVariables(variables_stub, ligne);
+            
+                ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
+
+            exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut)));
+            end loop;
+            Close(F);
             exception
                 when Variable_Deja_Definie => Put_Line("OK");
         end;
 
         begin
             variables_stub := creer_liste_vide;
-        Open (F, In_File, "ce_fichier_n_existe_pas.med");
+            Open (F, In_File, "ce_fichier_n_existe_pas.med");
 
-        loop
+            loop
+                ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
+
+            loop
+                ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
+            exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Programme)));
+            end loop;
+
             ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
 
-        loop
-            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
-        exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Programme)));
-        end loop;
+            loop
 
-        ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
+                recupererVariables(variables_stub, ligne);
+            
+                ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
 
-        loop
-
-            recupererVariables(variables_stub, ligne);
-        
-            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
-
-        exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut)));
+            exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut)));
+            Close(F);
             exception
                 when Fichier_Non_Trouve => Put_Line("OK");
         end;
@@ -171,7 +181,7 @@ variables := creer_liste_vide;
             Put_Line("KO");
         end if;
 
-        begin
+        begin -- Recherche d'une variable inexistante
             search := rechercherVariable(variables,"xyz");
 
             exception
@@ -180,7 +190,6 @@ variables := creer_liste_vide;
 
     -- Test de l'initialisation des instructions
 
-        line := initialiserInstructions(fileName);
         if(line.all.ptrInst.all.operation = "<-") then
             Put_Line("OK");
         else
