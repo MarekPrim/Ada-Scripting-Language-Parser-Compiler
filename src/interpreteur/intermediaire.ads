@@ -18,18 +18,15 @@ package intermediaire is
     type T_Variable;
     type T_Instruction;
 
+    type Chaine is private;
+
     type T_List_Variable is access T_Cell_Variable;
     type T_List_Instruction is access T_Cell_Instruction;
 
     type T_Ptr_Variable is access T_Variable;
     type T_Ptr_Instruction is access T_Instruction;
 
-    type Chaine is record
-        str : String(1..100);
-        nbCharsEffectif : Integer;
-    end record;
-
-    type T_Operandes is array(1..3) of T_Ptr_Variable;
+    type T_Operandes is private;
 
     type T_Variable is record
         valeurVariable : Integer;
@@ -155,5 +152,13 @@ package intermediaire is
     --procedure ajouter(f_l : in out T_List_Variable; f_nouveau : in T_Ptr_Variable);
 
     procedure afficher_liste(f_l : in T_List_Variable);
+
+
+    private
+        type Chaine is record
+            str : String(1..100);
+            nbCharsEffectif : Integer;
+        end record;
+        type T_Operandes is array(1..3) of T_Ptr_Variable;
 
 end intermediaire;
