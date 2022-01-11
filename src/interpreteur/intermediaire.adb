@@ -63,7 +63,7 @@ package body intermediaire is
         F         : File_Type;
         ligne : Unbounded_string;
     begin
-        Put_Line("test");
+    
         variables := creer_liste_vide;
 
         instructions := creer_liste_vide;
@@ -74,14 +74,15 @@ package body intermediaire is
             ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
         exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Programme)));
         end loop;
-        
+
         ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
-        
-        if (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut))) then 
+
+        if (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut))) then
             raise Aucune_Variable_Definie;
         end if;
+
         loop
-            
+
             recupererVariables(variables, ligne);
         
             ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
@@ -93,7 +94,7 @@ package body intermediaire is
 
         loop
 
-            --recupererInstructions(instructions, ligne);
+            recupererInstructions(instructions, ligne);
         
             ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
 
@@ -121,7 +122,9 @@ package body intermediaire is
         while(element(ligne, i) /= ':') loop
             i := i+1;
         end loop;
-        i:=i+1;
+
+        i := i+1;
+
         j := 0;
         -- Récupérer le type de la variable
         while(i <= length(ligne)) loop
@@ -158,6 +161,27 @@ package body intermediaire is
         end loop;
 
     end recupererVariables;
+
+    procedure recupererInstructions(instructions : in out T_List_Instruction; ligne : in Unbounded_string) is
+        i : integer;
+        numInstruction : chaine;
+        operation : chaine; 
+    begin
+
+        i := 1;
+        while (Character'POS(element(ligne, i)) in 48..57) loop
+            numInstruction.str(i) := element(ligne, i);
+            i := i+1;
+        end loop;
+
+        numInstruction.nbCharsEffectif := i-1;
+
+        if (Slice(ligne, i, i+1) = "IF") then
+            operation.str(1..2) := "IF";
+            operation.nbCharsEffectif := 2;
+        end if;
+
+    end recupererInstructions;
 
 
     procedure ajouter(f_l : in out T_List_Variable; f_nouveau : in T_Ptr_Variable) is
@@ -196,20 +220,15 @@ package body intermediaire is
             l := l.all.prev;
         end loop;
         while (l /= null) loop
-            Put(l.all.ptrVar.all.nomVariable.str(1..l.all.ptrVar.all.nomVariable.nbCharsEffectif));
-            put(" : ");
-            Put_Line(l.all.ptrVar.all.typeVariable.str(1..l.all.ptrVar.all.typeVariable.nbCharsEffectif));
-            --if (l.all.next /= null) then
-                --null;
-            --end if;
+            put(l.all.ptrVar.all.nomVariable.str(1..l.all.ptrVar.all.nomVariable.nbCharsEffectif));
+            put(l.all.ptrVar.all.typeVariable.str(1..l.all.ptrVar.all.typeVariable.nbCharsEffectif));
+            if (l.all.next /= null) then
+                put(" -> ");
+            end if;
             l := l.all.next;
         end loop;
     end afficher_liste;
 
-    procedure recupererInstructions(instructions : in out T_List_Instruction; ligne : in Unbounded_string) is
-    begin
-        instructions := null;
-    end recupererInstructions;
 
     function rechercherVariable (variables : in T_List_Variable; nomVariable : in string) return T_List_Variable is
         copy : T_List_Variable;
