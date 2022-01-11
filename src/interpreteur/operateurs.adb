@@ -52,7 +52,7 @@ package body operateurs is
         op1 := instructions.all.ptrIns.all.operandes(1);
         op2 := instructions.all.ptrIns.all.operandes(2);
         resultat := false;
-        if op1.all.typeVariable.str(1..8) = "booleen" and op2.all.typeVariable.str(1..8) = "booleen" then
+        if op1.all.typeVariable.str(1..8) = "Booleen" and op2.all.typeVariable.str(1..8) = "Booleen" then
             if op(1) = '&' then
                 resultat := op1.all.valeurVariable + op2.all.valeurVariable = 2;
                 null;
