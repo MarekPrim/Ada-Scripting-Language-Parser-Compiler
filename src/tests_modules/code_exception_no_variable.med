@@ -1,7 +1,6 @@
 -- Test
 Programme Test est
-
-Début
+Debut
 1 n <- 5
 2 i <- 1
 3 Sum <- i+n

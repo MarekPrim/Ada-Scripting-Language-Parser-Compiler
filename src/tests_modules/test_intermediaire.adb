@@ -16,11 +16,13 @@ variables_stub : T_List_Variable;   -- Liste des variables temporaire
 search : T_List_Variable;  -- Liste permettant de stocker les retours de la recherche de variable
 instructions : T_List_Instruction; -- Liste des instructions
 F : File_Type; -- Fichier
+Fe : File_Type; -- Fichier
 begin
 
 instructions := creer_liste_vide;
 search := creer_liste_vide;
 variables := creer_liste_vide;
+        --Put_Line("Entrée dans le test");
         Open (F, In_File, fileName);
         loop
             ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
@@ -42,28 +44,30 @@ variables := creer_liste_vide;
         end loop;
 
         Close(F);
-
+    --Put_Line("Entrée dans le test");
+    afficher_liste(variables);
+    Put_Line(variables.all.ptrVar.all.nomVariable.str(1..3));
     -- variables = tête de la liste
-        if(variables.all.ptrVar.all.nomVariable.str = "n") then
+        if(variables.all.ptrVar.all.nomVariable.str(1..3) = "Sum") then
             Put_Line("OK");
         else
             Put_Line("KO");
         end if;
 
 
-        if(variables.all.ptrVar.all.typeVariable.str = "entier") then
+        if(variables.all.ptrVar.all.typeVariable.str(1..6) = "Entier") then
             Put_Line("OK");
         else
             Put_Line("KO");
         end if;
 
-        if(variables.all.next.all.ptrVar.all.nomVariable.str = "i") then
+        if(variables.all.prev.all.ptrVar.all.nomVariable.str(1) = 'i') then
             Put_Line("OK");
         else
             Put_Line("KO");
         end if;
 
-        if(variables.all.next.all.next.all.ptrVar.all.nomVariable.str = "Sum") then
+        if(variables.all.prev.all.prev.all.ptrVar.all.nomVariable.str(1) = 'n') then
             Put_Line("OK");
         else
             Put_Line("KO");
@@ -71,29 +75,34 @@ variables := creer_liste_vide;
 
         begin
             variables_stub := creer_liste_vide;
-
-            Open (F, In_File, fileNameSansVariable);
-
+                Open (F, In_File, fileNameSansVariable);
             loop
                 ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
             exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Programme)));
             end loop;
 
             ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
-
             loop
-
                 recupererVariables(variables_stub, ligne);
-            
                 ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
-
             exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut)));
             end loop;
+            --loop
+                
+                --recupererInstructions(instructions, ligne);
+            
+            --    ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
+
+            --exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Fin)));
+            --end loop;
+            
             Close(F);
             exception
-                when Aucune_Variable_Definie => Put_Line("OK");
+                when Aucune_Variable_Definie => Put_Line("OK exception");
+                when ADA.STRINGS.INDEX_ERROR => Put_Line("Levée d'exception prévisible");
+                when others => Put_Line("KO");
         end;
-
+        Close(F);
         begin
             variables_stub := creer_liste_vide;
             Open (F, In_File, fileNameSansType);
@@ -117,32 +126,35 @@ variables := creer_liste_vide;
             
             exception
                 when Type_Incorrect => Put_Line("OK");
+                when ADA.STRINGS.INDEX_ERROR => Put_Line("Levée d'exception prévisible");
+                when others => Put_Line("KO");
         end;
-
+        
         begin
             variables_stub := creer_liste_vide;
-            Open (F, In_File, fileNameDeuxDeclarations);
-
+            Open(Fe, In_File, fileNameDeuxDeclarations);
             loop
-                ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
+                ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(fe));
             exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Programme)));
             end loop;
 
-            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
+            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(fe));
 
             loop
 
                 recupererVariables(variables_stub, ligne);
             
-                ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
+                ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(fe));
 
             exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut)));
             end loop;
-            Close(F);
+            Close(Fe);
             exception
                 when Variable_Deja_Definie => Put_Line("OK");
+                when ADA.STRINGS.INDEX_ERROR => Put_Line("Levée d'exception prévisible");
+                when others => Put_Line("KO");
         end;
-
+        
         begin
             variables_stub := creer_liste_vide;
             Open (F, In_File, "ce_fichier_n_existe_pas.med");
@@ -172,10 +184,11 @@ variables := creer_liste_vide;
             Close(F);
             exception
                 when Fichier_Non_Trouve => Put_Line("OK");
+                when ADA.STRINGS.INDEX_ERROR => Put_Line("Levée d'exception prévisible");
+                when others => Put_Line("KO");
         end;
-
+        Close(F);
     -- Test de la recherche d'une variable
-
         search := rechercherVariable(variables, "Sum");
         if(search /= null) then
             if(search.all.ptrVar.all.nomVariable.str = "Sum") then

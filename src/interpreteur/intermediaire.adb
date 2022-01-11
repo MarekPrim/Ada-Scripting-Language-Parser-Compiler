@@ -63,7 +63,7 @@ package body intermediaire is
         F         : File_Type;
         ligne : Unbounded_string;
     begin
-    
+        Put_Line("test");
         variables := creer_liste_vide;
 
         instructions := creer_liste_vide;
@@ -74,11 +74,14 @@ package body intermediaire is
             ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
         exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Programme)));
         end loop;
-
+        
         ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
-
+        
+        if (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut))) then 
+            raise Aucune_Variable_Definie;
+        end if;
         loop
-
+            
             recupererVariables(variables, ligne);
         
             ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
@@ -118,7 +121,7 @@ package body intermediaire is
         while(element(ligne, i) /= ':') loop
             i := i+1;
         end loop;
-
+        i:=i+1;
         j := 0;
         -- Récupérer le type de la variable
         while(i <= length(ligne)) loop
@@ -193,11 +196,12 @@ package body intermediaire is
             l := l.all.prev;
         end loop;
         while (l /= null) loop
-            put(l.all.ptrVar.all.nomVariable.str(1..l.all.ptrVar.all.nomVariable.nbCharsEffectif));
-            put(l.all.ptrVar.all.typeVariable.str(1..l.all.ptrVar.all.typeVariable.nbCharsEffectif));
-            if (l.all.next /= null) then
-                put(" -> ");
-            end if;
+            Put(l.all.ptrVar.all.nomVariable.str(1..l.all.ptrVar.all.nomVariable.nbCharsEffectif));
+            put(" : ");
+            Put_Line(l.all.ptrVar.all.typeVariable.str(1..l.all.ptrVar.all.typeVariable.nbCharsEffectif));
+            --if (l.all.next /= null) then
+                --null;
+            --end if;
             l := l.all.next;
         end loop;
     end afficher_liste;

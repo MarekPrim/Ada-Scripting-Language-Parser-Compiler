@@ -2,6 +2,7 @@
 -- avec numéros de ligne
 Programme Facto est
 n, i, Fact, T1, T2, T3 : Entier
+Test : Booleen
 Debut
 1 n <- 5
 2 i <- 1

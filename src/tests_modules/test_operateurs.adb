@@ -58,7 +58,7 @@ Open (F, In_File, fileName);
 
 
     -- Test affectation
-        affectation("entier","n",5,variables);
+        affectation("Entier","n",5,variables);
         search := rechercherVariable(variables,"n");
         if(search.all.ptrVar.all.valeurVariable = 5) then
             Put_Line("OK");
@@ -137,8 +137,8 @@ Open (F, In_File, fileName);
 
 
     -- Test opérateur logique
-        affectation("entier","i",5, variables);
-        affectation("entier","n",2, variables);
+        affectation("Entier","i",5, variables);
+        affectation("Entier","n",2, variables);
 
         instruction := creer_liste_vide;
         instruction := new T_Cell_Instruction'(null,null,null);
@@ -254,8 +254,8 @@ instruction := creer_liste_vide;
         operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
         instruction.all.ptrIns := new T_Instruction'(1,operandes,chaine);
         cp := 0;
-        affectation("entier","i",5, variables);
-        affectation("entier","n",2, variables);
+        affectation("Entier","i",5, variables);
+        affectation("Entier","n",2, variables);
 
         branchementConditionel(cp,instruction,33);
         if(cp = 33) then
