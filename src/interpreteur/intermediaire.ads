@@ -177,7 +177,7 @@ package intermediaire is
 
     procedure ajouter(f_l : in out T_List_Variable; f_nouveau : in T_Ptr_Variable);
 
-    procedure ajouter(f_l : in out T_List_Variable; f_nouveau : in T_Ptr_Instruction);
+    procedure ajouter(f_l : in out T_List_Instruction; f_nouveau : in T_Ptr_Instruction);
 
     procedure afficher_liste(f_l : in T_List_Variable);
 

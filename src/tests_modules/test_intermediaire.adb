@@ -148,24 +148,27 @@ variables := creer_liste_vide;
             Open (F, In_File, "ce_fichier_n_existe_pas.med");
 
             loop
-                ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
-
-            loop
-                ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
+            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
             exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Programme)));
             end loop;
 
-            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
 
-            loop
+                loop
+                    ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
+                exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Programme)));
+                end loop;
 
-                recupererVariables(variables_stub, ligne);
-            
                 ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
 
-            exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut)));
-            end loop;
-            end loop;
+                loop
+
+                    recupererVariables(variables_stub, ligne);
+                
+                    ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
+
+                exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut)));
+                end loop;
+            
             Close(F);
             exception
                 when Fichier_Non_Trouve => Put_Line("OK");

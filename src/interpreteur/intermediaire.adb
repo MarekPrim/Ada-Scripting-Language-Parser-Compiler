@@ -155,28 +155,28 @@ package body intermediaire is
 
     end recupererVariables;
 
-    -- function creer_liste_vide return T_List_Variable is
-    --     p : T_List_Variable;
-    -- begin
-    --     p := null;
-    --     return p;
-    -- end creer_liste_vide;
 
-    -- function est_vide(p : in T_List_Variable) return boolean is
-    -- begin
-    --     return p = null;
-    -- end est_vide;
+    procedure ajouter(f_l : in out T_List_Variable; f_nouveau : in T_Ptr_Variable) is
+    begin
+        if (f_l = null) then
+            f_l := new T_Cell_Variable'(f_nouveau, null, null);
+        else
+            f_l.all.next := new T_Cell_Variable'(f_nouveau, null, null);
+            f_l.all.next.all.prev := f_l;  
+            f_l := f_l.all.next;
+        end if;
+    end ajouter;
 
-    -- procedure ajouter(f_l : in out T_List_Variable; f_nouveau : in T_Ptr_Variable) is
-    -- begin
-    --     if (f_l = null) then
-    --         f_l := new T_Cell_Variable'(f_nouveau, null, null);
-    --     else
-    --         f_l.all.next := new T_Cell_Variable'(f_nouveau, null, null);
-    --         f_l.all.next.all.prev := f_l;  
-    --         f_l := f_l.all.next;
-    --     end if;
-    -- end ajouter;
+    procedure ajouter(f_l : in out T_List_Instruction; f_nouveau : in T_Ptr_Instruction) is
+    begin
+        if (f_l = null) then
+            f_l := new T_Cell_Instruction'(f_nouveau, null, null);
+        else
+            f_l.all.next := new T_Cell_Instruction'(f_nouveau, null, null);
+            f_l.all.next.all.prev := f_l;  
+            f_l := f_l.all.next;
+        end if;
+    end ajouter;
 
     procedure afficher_liste(f_l : in T_List_Variable) is
         l : T_List_Variable;
@@ -205,10 +205,10 @@ package body intermediaire is
     end rechercherVariable;
 
     function creer_liste_vide return T_List_Variable is
+    p : T_List_Variable;
     begin
-
-        return null;
-
+        p := null;
+        return p;
     end creer_liste_vide;
 
     function est_vide(p : in T_List_Variable) return boolean is
@@ -216,14 +216,11 @@ package body intermediaire is
         return p = null;
     end est_vide;
 
-    procedure ajouter(f_l : in out T_List_Variable; f_nouveau : in T_Ptr_Variable) is
-    begin
-        null;
-    end ajouter;
-
     function creer_liste_vide return T_List_Instruction is
+    p : T_List_Instruction;
     begin
-        return null;
+        p := null;
+        return p;
     end creer_liste_vide;
 
     function est_vide(p : in T_List_Instruction) return boolean is
@@ -231,10 +228,6 @@ package body intermediaire is
         return p = null;
     end est_vide;
 
-    procedure ajouter(f_l : in out T_List_Variable; f_nouveau : in T_Ptr_Instruction) is
-    begin
-        null;
-    end ajouter;
 
     procedure interpreterCommande (ptrLine : in T_List_Instruction; ptrVar : in out T_List_Variable) is
     begin
