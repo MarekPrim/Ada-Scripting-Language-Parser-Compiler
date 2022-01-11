@@ -9,7 +9,7 @@ package intermediaire is
     Type_Incorrect : Exception; -- Le type de la variable n'est pas correct pour l'opération à effectuer
     Variable_Non_Declaree : Exception; -- La variable à utiliser n'est pas declaree dans le programme
     Variable_Deja_Definie : Exception; -- La variable a déjà été déclarée dans le programme
-    Variable_Non_Trouvee : Exception;
+    Variable_Non_Trouvee : Exception; -- Variable non trouvée dans la recherche d'une variable
     Acces_Limite : Exception; -- Le compteur CP est hors limite (Ex : Programme avec un corps de 10 lignes et CP = 11) dans le programme
     Fichier_Non_Lisible : Exception;
     Fichier_Non_Trouve : Exception;
@@ -32,7 +32,12 @@ package intermediaire is
     type T_Ptr_Instruction is access T_Instruction;
 
     --type T_Operandes is private;
-    type T_Operandes is array(1..3) of T_Ptr_Variable;
+    type T_Operandes is record
+        x : T_Ptr_Variable;
+        y : T_Ptr_Variable;
+        z : T_Ptr_Variable;
+    end record;
+
 
     type T_Variable is record
         valeurVariable : Integer;
@@ -67,10 +72,38 @@ package intermediaire is
     -- Préconditions
     procedure parseFile (fileName : in string; variables : in out T_List_Variable; instructions : in out T_List_Instruction);
 
+    -- Indique si la chaine de caractère est un mot réservé
+    -- Paramètres :
+    --  ligne in Unbounded_String : la chaine à tester
+    --  enum in String : le mot réservé à chercher
+    -- Préconditions
+    --  ligne ne doit pas être vide
+    -- Postconditions
+    --  renvoie true si la chaine est un mot réservé, false sinon
+    -- Exception
+    --  Aucune
     function ligneCommenceParMotReserve (ligne : in Unbounded_string; enum : in string) return boolean;
 
+    -- Renvoie une chaine de caracteres sans espace (trim)
+    -- Paramètres :
+    --  chaine in Unbounded_String : la chaine à traiter
+    -- Préconditions
+    --  Aucune
+    -- Postconditions
+    --  renvoie une chaine de caracteres sans espace
+    -- Exception
+    --  Aucune
     function renvoyerLigneSansEspace (ligne : in Unbounded_string) return Unbounded_string;
 
+    -- Wrapper pour le traitement du programme
+    -- Paramètres :
+    --  fileName in string : le nom du fichier à lire
+    -- Préconditions
+    --  Aucune
+    -- Postconditions
+    --  Aucune
+    -- Exception
+    --  Aucune
     procedure traiterProgramme(fileName : in string);
 
     -- nom : recupererVariables
@@ -175,8 +208,30 @@ package intermediaire is
     function est_vide(p : in T_List_Instruction) return boolean;
 
 
+    -- nom : ajouter
+    -- semantique : ajoute un élément en queue de liste
+    -- parametres :
+    --          f_l : in out T_List_Variable    // liste
+    --          f_nouveau : in T_Ptr_Variable   // élément à ajouter
+    -- préconditions
+    --          Aucune
+    -- post-conditions
+    --          f_l.all.ptrVar = f_nouveau
+    --          f_nouveau.all.prev = f_l
+    -- exception : /
     procedure ajouter(f_l : in out T_List_Variable; f_nouveau : in T_Ptr_Variable);
 
+    -- nom : ajouter
+    -- semantique : ajoute un élément en queue de liste
+    -- parametres :
+    --          f_l : in out T_List_Instruction    // liste
+    --          f_nouveau : in T_Ptr_Instruction   // élément à ajouter
+    -- préconditions
+    --          Aucune
+    -- post-conditions
+    --          f_l.all.ptrVar = f_nouveau
+    --          f_nouveau.all.prev = f_l
+    -- exception : /
     procedure ajouter(f_l : in out T_List_Instruction; f_nouveau : in T_Ptr_Instruction);
 
     procedure afficher_liste(f_l : in T_List_Variable);

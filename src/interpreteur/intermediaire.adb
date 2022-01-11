@@ -66,6 +66,8 @@ package body intermediaire is
     
         variables := creer_liste_vide;
 
+        instructions := creer_liste_vide;
+
         Open (F, In_File, fileName);
 
         loop
@@ -144,8 +146,7 @@ package body intermediaire is
             if (find) then
                 nomVariable.nbCharsEffectif := k;
                 ptrVariable := new T_Variable'(0, typeVariable, nomVariable, false);
-                record_ajout := new T_Cell_Variable'(ptrVariable, null, null);
-                --ajouter(variables, record_ajout);
+                ajouter(variables, ptrVariable);
             else
                 i := i+1;
             end if;
@@ -161,6 +162,9 @@ package body intermediaire is
         if (f_l = null) then
             f_l := new T_Cell_Variable'(f_nouveau, null, null);
         else
+            while f_l.all.next /= null loop -- Parcours de la liste jusqu'à la queue
+                f_l := f_l.all.next;
+            end loop;
             f_l.all.next := new T_Cell_Variable'(f_nouveau, null, null);
             f_l.all.next.all.prev := f_l;  
             f_l := f_l.all.next;
@@ -172,6 +176,9 @@ package body intermediaire is
         if (f_l = null) then
             f_l := new T_Cell_Instruction'(f_nouveau, null, null);
         else
+            while f_l.all.next /= null loop -- Parcours de la liste jusqu'à la queue
+                f_l := f_l.all.next;
+            end loop;
             f_l.all.next := new T_Cell_Instruction'(f_nouveau, null, null);
             f_l.all.next.all.prev := f_l;  
             f_l := f_l.all.next;
@@ -187,6 +194,7 @@ package body intermediaire is
         end loop;
         while (l /= null) loop
             put(l.all.ptrVar.all.nomVariable.str(1..l.all.ptrVar.all.nomVariable.nbCharsEffectif));
+            put(l.all.ptrVar.all.typeVariable.str(1..l.all.ptrVar.all.typeVariable.nbCharsEffectif));
             if (l.all.next /= null) then
                 put(" -> ");
             end if;
@@ -200,8 +208,20 @@ package body intermediaire is
     end recupererInstructions;
 
     function rechercherVariable (variables : in T_List_Variable; nomVariable : in string) return T_List_Variable is
+        copy : T_List_Variable;
     begin
-        return null;
+        copy := variables;
+        while copy.all.prev /= null loop -- Retour au début de la liste
+            copy := variables.all.prev;
+        end loop;
+        while copy /= null and then copy.all.ptrVar /= null and then copy.all.ptrVar.all.nomVariable.str(1..copy.all.ptrVar.all.nomVariable.nbCharsEffectif) /= nomVariable loop
+            copy := copy.all.next;
+        end loop;
+        if copy = null then
+            raise Variable_Non_Trouvee;
+        else 
+            return copy;
+        end if;
     end rechercherVariable;
 
     function creer_liste_vide return T_List_Variable is

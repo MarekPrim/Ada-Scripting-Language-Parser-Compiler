@@ -72,7 +72,7 @@ isConstant : Boolean
 --
 Tests unitaires</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>369</x><y>30</y><w>100</w><h>50</h></coordinates><panel_attributes>tests
 --
-Tests fonctionnels</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>479</x><y>30</y><w>100</w><h>50</h></coordinates><panel_attributes>code_test.md
+Tests fonctionnels</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>479</x><y>30</y><w>100</w><h>50</h></coordinates><panel_attributes>code_test.med
 --
 Fichier de test</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLNote</id><coordinates><x>19</x><y>610</y><w>140</w><h>100</h></coordinates><panel_attributes>Main</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>39</x><y>670</y><w>100</w><h>30</h></coordinates><panel_attributes>Interpréteur</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>39</x><y>630</y><w>100</w><h>30</h></coordinates><panel_attributes>Compilation</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>209</x><y>630</y><w>100</w><h>50</h></coordinates><panel_attributes>facto.med
 --

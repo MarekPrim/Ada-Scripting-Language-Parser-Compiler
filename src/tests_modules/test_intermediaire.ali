@@ -12,7 +12,7 @@ RV NO_STANDARD_STORAGE_POOLS
 RV NO_DEFAULT_INITIALIZATION
 RV SPARK_05
 
-U test_intermediaire%b	test_intermediaire.adb	3c5b1654 NE OO SU IL
+U test_intermediaire%b	test_intermediaire.adb	ce458703 NE OO SU IL
 W ada%s			ada.ads			ada.ali
 W ada.characters%s	a-charac.ads		a-charac.ali
 W ada.characters.handling%s  a-chahan.adb	a-chahan.ali
@@ -48,7 +48,7 @@ D a-tiunio.ads		20210408115627 759c6b0c ada.text_io.unbounded_io%s
 D a-unccon.ads		20210408115627 0e9b276f ada.unchecked_conversion%s
 D interfac.ads		20210408115627 5ab55268 interfaces%s
 D i-cstrea.ads		20210408115627 e53d8b8e interfaces.c_streams%s
-D intermediaire.ads	20220111071317 d3598016 intermediaire%s
+D intermediaire.ads	20220111074730 a10efd23 intermediaire%s
 D system.ads		20210408115627 4635ec04 system%s
 D s-atocou.ads		20210408115627 b45c2d8d system.atomic_counters%s
 D s-crtl.ads		20210408115627 0ebbdb71 system.crtl%s
@@ -70,17 +70,17 @@ D s-stratt.ads		20210408115627 aedef97e system.stream_attributes%s
 D s-traent.ads		20210408115627 005bf670 system.traceback_entries%s
 D s-unstyp.ads		20210408115627 34867c83 system.unsigned_types%s
 D s-wchcon.ads		20210408115627 1b7d22d2 system.wch_con%s
-D test_intermediaire.adb  20220111071649 c27674d3 test_intermediaire%b
+D test_intermediaire.adb  20220111074805 423f98b1 test_intermediaire%b
 G a e
 G c Z b b [test_intermediaire standard 6 11 none]
-G r c none [test_intermediaire standard 6 11 none] [creer_liste_vide intermediaire 155 14 none]
-G r c none [test_intermediaire standard 6 11 none] [creer_liste_vide intermediaire 144 14 none]
-G r c none [test_intermediaire standard 6 11 none] [renvoyerlignesansespace intermediaire 72 14 none]
-G r c none [test_intermediaire standard 6 11 none] [lignecommenceparmotreserve intermediaire 70 14 none]
-G r c none [test_intermediaire standard 6 11 none] [recuperervariables intermediaire 84 16 none]
-G r c none [test_intermediaire standard 6 11 none] [recupererinstructions intermediaire 95 15 none]
-G r c none [test_intermediaire standard 6 11 none] [recherchervariable intermediaire 117 14 none]
-G r c none [test_intermediaire standard 6 11 none] [interpretercommande intermediaire 105 15 none]
+G r c none [test_intermediaire standard 6 11 none] [creer_liste_vide intermediaire 188 14 none]
+G r c none [test_intermediaire standard 6 11 none] [creer_liste_vide intermediaire 177 14 none]
+G r c none [test_intermediaire standard 6 11 none] [renvoyerlignesansespace intermediaire 96 14 none]
+G r c none [test_intermediaire standard 6 11 none] [lignecommenceparmotreserve intermediaire 85 14 none]
+G r c none [test_intermediaire standard 6 11 none] [recuperervariables intermediaire 117 16 none]
+G r c none [test_intermediaire standard 6 11 none] [recupererinstructions intermediaire 128 15 none]
+G r c none [test_intermediaire standard 6 11 none] [recherchervariable intermediaire 150 14 none]
+G r c none [test_intermediaire standard 6 11 none] [interpretercommande intermediaire 138 15 none]
 X 1 ada.ads
 16K9*Ada 20e8 43|1r6 1r19 1r40 1r63 1r89 3r5 3r18 3r39 3r62 3r88 26r46 29r42
 . 32r46 39r46 78r50 82r46 88r50 102r50 106r46 112r50 127r50 131r46 137r50
@@ -114,7 +114,7 @@ X 17 a-tiunio.ads
 45V13*Get_Line=47:42{12|87R9} 43|26s71 29s67 32s71 39s71 78s75 82s71 88s75
 . 102s75 106s71 112s75 127s75 131s71 137s75 151s71 157s79 161s75 167s79
 X 21 intermediaire.ads
-4K9*intermediaire 189e18 43|4w6 4r25
+4K9*intermediaire 244e18 43|4w6 4r25
 6E10*Reserved_Langage_Word 6e57 43|27r54 33r54 41r54 79r58 90r58 103r58 114r58
 . 128r58 139r58 152r58 158r62 169r62
 6n36*Programme{6E10} 43|27r82 79r86 103r86 128r86 152r86 158r90
@@ -125,33 +125,34 @@ X 21 intermediaire.ads
 11X5*Variable_Deja_Definie 43|143r22
 12X5*Variable_Non_Trouvee 43|194r22
 15X5*Fichier_Non_Trouve 43|174r22
-24a13*str{string} 43|47r49 54r50 60r58 66r67 181r50 199r50 209r69
+24a13*str{string} 43|47r49 54r50 60r58 66r67 181r50 199r50 209r68
 28P10*T_List_Variable(17R10) 43|14r13 15r18 16r10
 29P10*T_List_Instruction(18R10) 43|17r16
 31P10*T_Ptr_Variable(19R10)
 32P10*T_Ptr_Instruction(20R10)
-35A10*T_Operandes(31P10)<integer>
-38i9*valeurVariable{integer} 43|204r57 229r66 247r61 253r61 259r63
-39r9*typeVariable{23R10} 43|54r37
-40r9*nomVariable{23R10} 43|47r37 60r46 66r55 181r38 209r57
-45i9*numInstruction{integer} 43|215r40 221r49 234r49
-46a9*operandes{35A10} 43|204r40 209r40 229r49
-47r9*operation{23R10} 43|199r40
-51p9*ptrIns{32P10} 43|199r29 204r29 209r29 215r29 221r38 229r38 234r38
-52p9*prev{29P10} 43|229r29 234r29 240r42
-53p9*next{29P10} 43|221r29 227r42
-57p9*ptrVar{31P10} 43|47r26 54r26 60r35 66r44 181r27 247r50 253r50 259r52
-58p9*next{28P10} 43|60r26 66r26 66r35
-70V14*ligneCommenceParMotReserve{boolean} 43|27s20 33s20 41s20 79s24 90s24
+36p9*x{31P10} 43|204r50 229r59
+37p9*y{31P10} 43|209r50
+43i9*valeurVariable{integer} 43|204r56 229r65 247r61 253r61 259r63
+44r9*typeVariable{23R10} 43|54r37
+45r9*nomVariable{23R10} 43|47r37 60r46 66r55 181r38 209r56
+50i9*numInstruction{integer} 43|215r40 221r49 234r49
+51r9*operandes{35R10} 43|204r40 209r40 229r49
+52r9*operation{23R10} 43|199r40
+56p9*ptrIns{32P10} 43|199r29 204r29 209r29 215r29 221r38 229r38 234r38
+57p9*prev{29P10} 43|229r29 234r29 240r42
+58p9*next{29P10} 43|221r29 227r42
+62p9*ptrVar{31P10} 43|47r26 54r26 60r35 66r44 181r27 247r50 253r50 259r52
+63p9*next{28P10} 43|60r26 66r26 66r35
+85V14*ligneCommenceParMotReserve{boolean} 43|27s20 33s20 41s20 79s24 90s24
 . 103s24 114s24 128s24 139s24 152s24 158s28 169s28
-72V14*renvoyerLigneSansEspace{12|87R9} 43|26s22 29s18 32s22 39s22 78s26 82s22
+96V14*renvoyerLigneSansEspace{12|87R9} 43|26s22 29s18 32s22 39s22 78s26 82s22
 . 88s26 102s26 106s22 112s26 127s26 131s22 137s26 151s22 157s30 161s26 167s30
-84U16*recupererVariables 43|31s13 86s17 110s17 135s17 165s21
-95U15*recupererInstructions 43|37s13
-105U15*interpreterCommande 43|245s9
-117V14*rechercherVariable{28P10} 43|179s19 191s23 247s12 253s12 259s12
-144V14*creer_liste_vide{28P10} 43|22s11 23s14 73s31 98s31 123s31 147s31
-155V14*creer_liste_vide{29P10} 43|21s17
+117U16*recupererVariables 43|31s13 86s17 110s17 135s17 165s21
+128U15*recupererInstructions 43|37s13
+138U15*interpreterCommande 43|245s9
+150V14*rechercherVariable{28P10} 43|179s19 191s23 247s12 253s12 259s12
+177V14*creer_liste_vide{28P10} 43|22s11 23s14 73s31 98s31 123s31 147s31
+188V14*creer_liste_vide{29P10} 43|21s17
 X 22 system.ads
 67M9*Address
 X 29 s-memory.ads

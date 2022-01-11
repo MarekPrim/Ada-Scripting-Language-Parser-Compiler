@@ -201,12 +201,12 @@ variables := creer_liste_vide;
         else
             Put_Line("KO");
         end if;
-        if(instructions.all.ptrIns.all.operandes(1).all.valeurVariable = 5) then
+        if(instructions.all.ptrIns.all.operandes.x.all.valeurVariable = 5) then
             Put_Line("OK");
         else
             Put_Line("KO");
         end if;
-        if(instructions.all.ptrIns.all.operandes(1).all.nomVariable.str(1) = 'n') then
+        if(instructions.all.ptrIns.all.operandes.y.all.nomVariable.str(1) = 'n') then
             Put_Line("OK");
         else
             Put_Line("KO");
@@ -226,7 +226,7 @@ variables := creer_liste_vide;
 
         instructions := instructions.all.next;
 
-        if(instructions.all.prev.all.ptrIns.all.operandes(1).all.valeurVariable = 5) then
+        if(instructions.all.prev.all.ptrIns.all.operandes.x.all.valeurVariable = 5) then
             Put_Line("OK");
         else
             Put_Line("KO");
