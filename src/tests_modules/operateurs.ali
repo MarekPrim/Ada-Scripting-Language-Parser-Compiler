@@ -2,6 +2,7 @@ V "GNAT Lib v10"
 P SS ZX
 
 RN
+RV NO_DIRECT_BOOLEAN_OPERATORS
 RV NO_EXCEPTIONS
 RV NO_STANDARD_STORAGE_POOLS
 RV NO_DEFAULT_INITIALIZATION
@@ -9,12 +10,12 @@ RV NO_DYNAMIC_SIZED_OBJECTS
 RV NO_ELABORATION_CODE
 RV SPARK_05
 
-U operateurs%b		operateurs.adb		b891d32e NE OO PK IL
+U operateurs%b		operateurs.adb		2f9b9911 NE OO PK IL
 Z ada.exceptions%s	a-except.adb		a-except.ali
 Z ada.tags%s		a-tags.adb		a-tags.ali
 W intermediaire%s	intermediaire.adb	intermediaire.ali
 
-U operateurs%s		operateurs.ads		c65913a4 EE OO PK IL
+U operateurs%s		operateurs.ads		63ed570f EE OO PK IL
 Z ada.tags%s		a-tags.adb		a-tags.ali
 W intermediaire%s	intermediaire.adb	intermediaire.ali
 Z system%s		system.ads		system.ali
@@ -32,9 +33,9 @@ D a-strmap.ads		20210408115627 e8bb714a ada.strings.maps%s
 D a-strunb.ads		20210408115627 1656705b ada.strings.unbounded%s
 D a-tags.ads		20210408115627 491b781d ada.tags%s
 D a-unccon.ads		20210408115627 0e9b276f ada.unchecked_conversion%s
-D intermediaire.ads	20220110163222 9cc548ab intermediaire%s
+D intermediaire.ads	20220110165909 39710c00 intermediaire%s
 D operateurs.ads	20220110162742 5a9c5b0f operateurs%s
-D operateurs.adb	20220110164144 7ec8c08a operateurs%b
+D operateurs.adb	20220111070829 4c76ce1e operateurs%b
 D system.ads		20210408115627 4635ec04 system%s
 D s-atocou.ads		20210408115627 b45c2d8d system.atomic_counters%s
 D s-exctab.ads		20210408115627 54135002 system.exception_table%s
@@ -57,36 +58,36 @@ G c Z s b [operationarithmetique operateurs 35 15 none]
 G c Z s b [operationlogique operateurs 48 15 none]
 G c Z s b [branchementbasic operateurs 55 15 none]
 G c Z s b [branchementconditionel operateurs 62 15 none]
-G r c none [affectation operateurs 22 15 none] [recherchervariable intermediaire 116 14 none]
+G r c none [affectation operateurs 22 15 none] [recherchervariable intermediaire 117 14 none]
 X 12 intermediaire.ads
-4K9*intermediaire 188e18 13|1w6 1r25 14|1w6 1r25
-22R10*Chaine 25e15 14|7r14
-23a13*str{string} 14|17m16 51r53
-24i13*nbCharsEffectif{integer} 14|18m16
-27P10*T_List_Variable(16R10) 13|23r26 14|5r121 6r15
-28P10*T_List_Instruction(17R10) 13|48r50 62r77 14|45r50 88r77
-30P10*T_Ptr_Variable(18R10) 14|48r15 49r15
-31P10*T_Ptr_Instruction(19R10)
-34A10*T_Operandes(30P10)<integer>
-37i9*valeurVariable{integer} 14|16m32 56r37 56r62 59r37 59r62 62r37 62r62
-. 65r37 65r63 68r37 68r63
-38r9*typeVariable{22R10} 14|19m32
-40b9*isConstant{boolean} 14|13r31
-45a9*operandes{34A10} 14|52r44 53r44
-46r9*operation{22R10} 14|51r43
-50p9*ptrIns{31P10} 14|51r32 52r33 53r33
-56p9*ptrVar{30P10} 14|13r20 16r21 19r21
-116V14*rechercherVariable{27P10} 14|9s16
+4K9*intermediaire 189e18 13|1w6 1r25 14|1w6 1r25
+23R10*Chaine 26e15 14|7r14
+24a13*str{string} 14|17m16 51r53 55r33 55r80
+25i13*nbCharsEffectif{integer} 14|18m16
+28P10*T_List_Variable(17R10) 13|23r26 14|5r121 6r15
+29P10*T_List_Instruction(18R10) 13|48r50 62r77 14|45r50 94r77
+31P10*T_Ptr_Variable(19R10) 14|48r15 49r15
+32P10*T_Ptr_Instruction(20R10)
+35A10*T_Operandes(31P10)<integer>
+38i9*valeurVariable{integer} 14|16m32 57r37 57r62 60r37 60r62 67r41 67r66
+. 70r41 70r66 73r41 73r66 76r41 76r67 79r41 79r67
+39r9*typeVariable{23R10} 14|19m32 55r20 55r67
+41b9*isConstant{boolean} 14|13r31
+46a9*operandes{35A10} 14|52r44 53r44
+47r9*operation{23R10} 14|51r43
+51p9*ptrIns{32P10} 14|51r32 52r33 53r33
+57p9*ptrVar{31P10} 14|13r20 16r21 19r21
+117V14*rechercherVariable{28P10} 14|9s16
 X 13 operateurs.ads
-3K9*operateurs 64l5 64e15 14|3b14 99l5 99t15
+3K9*operateurs 64l5 64e15 14|3b14 105l5 105t15
 5X5*Variable_Inconnue 14|11r19
 6X5*Variable_Constante 14|14r19
-7X5*Operateur_Incorrect 14|39r23 77r23
+7X5*Operateur_Incorrect 14|39r23 63r23 82r27
 22U15*affectation 22>27 22>53 22>81 23=7 14|5b15 21l9 21t20
 22a27 typeVariable{string} 14|5b27 17r26
 22a53 identificateur{string} 14|5b53 9r46
 22i81 valeur{integer} 14|5b81 16r50
-23p7 variables{12|27P10} 14|5b102 9r35
+23p7 variables{12|28P10} 14|5b102 9r35
 35U15*operationArithmetique 35>37 35>52 35>70 35=88 35<109 14|23b15 43l9
 . 43t30
 35a37 op{string} 14|23b37 26r12 29r15 32r15 35r15
@@ -94,24 +95,24 @@ X 13 operateurs.ads
 35i70 op2{integer} 14|23b70 27r35 30r35 33r35 36r35
 35i88 cp{integer} 14|23b88 42m9 42r15
 35i109 res{integer} 14|23b109 41m9
-48U15*operationLogique 48>32 48=70 48<91 14|45b15 81l9 81t25 91s9
-48p32 instructions{12|28P10} 14|45b32 51r15 52r16 53r16
-48i70 cp{integer} 14|45b70 79m9 79r15
-48b91 res{boolean} 14|45b91 80m9
-55U15*branchementBasic 55=32 55>53 14|83b15 86l9 86t25 93s13
-55i32 cp{integer} 14|83b32 85m9
-55i53 line{integer} 14|83b53 85r15
-62U15*branchementConditionel 62=38 62>59 62>97 14|88b15 97l9 97t31
-62i38 cp{integer} 14|88b38 91m39 93m30 95m13 95r19
-62p59 instructions{12|28P10} 14|88b59 91r26
-62i97 line{integer} 14|88b97 93r33
+48U15*operationLogique 48>32 48=70 48<91 14|45b15 87l9 87t25 97s9
+48p32 instructions{12|29P10} 14|45b32 51r15 52r16 53r16
+48i70 cp{integer} 14|45b70 85m9 85r15
+48b91 res{boolean} 14|45b91 86m9
+55U15*branchementBasic 55=32 55>53 14|89b15 92l9 92t25 99s13
+55i32 cp{integer} 14|89b32 91m9
+55i53 line{integer} 14|89b53 91r15
+62U15*branchementConditionel 62=38 62>59 62>97 14|94b15 103l9 103t31
+62i38 cp{integer} 14|94b38 97m39 99m30 101m13 101r19
+62p59 instructions{12|29P10} 14|94b59 97r26
+62i97 line{integer} 14|94b97 99r33
 X 14 operateurs.adb
-6p9 var{12|27P10} 9m9 10r12 13r12 16r13 19r13
-7r9 ch{12|22R10} 17m13 18m13 19r48
+6p9 var{12|28P10} 9m9 10r12 13r12 16r13 19r13
+7r9 ch{12|23R10} 17m13 18m13 19r48
 24i9 resultat{integer} 27m17 30m17 33m17 36m17 41r16
-46b9 resultat{boolean} 56m17 59m17 62m17 65m17 68m17 80r16
-47a9 op{string} 51m9 55r12 58r19 61r19 64r19 67r19
-48p9 op1{12|30P10} 52m9 56r29 59r29 62r29 65r29 68r29
-49p9 op2{12|30P10} 53m9 56r54 59r54 62r54 65r55 68r55
-89b9 branch{boolean} 91m42 92r12
+46b9 resultat{boolean} 54m9 57m17 60m17 67m21 70m21 73m21 76m21 79m21 86r16
+47a9 op{string} 51m9 56r16 59r19 66r16 69r23 72r23 75r23 78r23
+48p9 op1{12|31P10} 52m9 55r12 57r29 60r29 67r33 70r33 73r33 76r33 79r33
+49p9 op2{12|31P10} 53m9 55r59 57r54 60r54 67r58 70r58 73r58 76r59 79r59
+95b9 branch{boolean} 97m42 98r12
 

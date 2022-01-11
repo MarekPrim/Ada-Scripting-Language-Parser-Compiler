@@ -51,30 +51,36 @@ package body operateurs is
         op := instructions.all.ptrIns.all.operation.str(1..2);
         op1 := instructions.all.ptrIns.all.operandes(1);
         op2 := instructions.all.ptrIns.all.operandes(2);
-
-        if op = "=" then
-                resultat := op1.all.valeurVariable = op2.all.valeurVariable;
+        resultat := false;
+        if op1.all.typeVariable.str(1..8) = "booleen" and op2.all.typeVariable.str(1..8) = "booleen" then
+            if op(1) = '&' then
+                resultat := op1.all.valeurVariable + op2.all.valeurVariable = 2;
                 null;
-            elsif op="<" then
-                resultat := op1.all.valeurVariable < op2.all.valeurVariable;
+            elsif op(1) = '|' then
+                resultat := op1.all.valeurVariable + op2.all.valeurVariable > 1;
                 null;
-            elsif op= ">" then
-                resultat := op1.all.valeurVariable > op2.all.valeurVariable;
-                null;
-            elsif op= "<=" then
-                resultat := op1.all.valeurVariable <= op2.all.valeurVariable;
-                null;
-            elsif op= ">=" then
-                resultat := op1.all.valeurVariable >= op2.all.valeurVariable;
-                null;
-            --elsif op= "&" then
-            --    resultat := op1.all.valeurVariable and op2.all.valeurVariable;
-            --    null;
-            --elsif op= "|" then
-            --   resultat := op1.all.valeurVariable or op2.all.valeurVariable;
-            --    null;
-            else 
+            else
                 raise Operateur_Incorrect;
+            end if;
+        else 
+            if op(1) = '=' then
+                    resultat := op1.all.valeurVariable = op2.all.valeurVariable;
+                    null;
+                elsif op(1) = '<' then
+                    resultat := op1.all.valeurVariable < op2.all.valeurVariable;
+                    null;
+                elsif op(1) = '>' then
+                    resultat := op1.all.valeurVariable > op2.all.valeurVariable;
+                    null;
+                elsif op(1..2) = "<=" then
+                    resultat := op1.all.valeurVariable <= op2.all.valeurVariable;
+                    null;
+                elsif op(1..2) = ">=" then
+                    resultat := op1.all.valeurVariable >= op2.all.valeurVariable;
+                    null;
+                else 
+                    raise Operateur_Incorrect;
+            end if;
         end if;
         cp := cp + 1;
         res := resultat;
