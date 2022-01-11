@@ -6,16 +6,16 @@ with intermediaire; use intermediaire;
 procedure test_intermediaire is
 
 
-fileName : constant string := "code_test.med";
-fileNameSansVariable : constant string := "code_exception_no_variable.med";
-fileNameSansType : constant string := "code_exception_no_type.med";
-fileNameDeuxDeclarations : constant string := "code_exception_two_declaration.med";
-ligne : Unbounded_string;
-variables : T_List_Variable;
-variables_stub : T_List_Variable;
-search : T_List_Variable;
-instructions : T_List_Instruction; 
-F : File_Type;
+fileName : constant string := "code_test.med"; -- Fichier de test correctement formé
+fileNameSansVariable : constant string := "code_exception_no_variable.med"; -- Fichier de test sans variable
+fileNameSansType : constant string := "code_exception_no_type.med"; -- Fichier de test sans type
+fileNameDeuxDeclarations : constant string := "code_exception_two_declaration.med"; -- Fichier de test avec deux declarations de la meme variable
+ligne : Unbounded_string; -- Variable temporaire pour récupération des lignes du fichier
+variables : T_List_Variable;    -- Liste des variables
+variables_stub : T_List_Variable;   -- Liste des variables temporaire
+search : T_List_Variable;  -- Liste permettant de stocker les retours de la recherche de variable
+instructions : T_List_Instruction; -- Liste des instructions
+F : File_Type; -- Fichier
 begin
 
 instructions := creer_liste_vide;
