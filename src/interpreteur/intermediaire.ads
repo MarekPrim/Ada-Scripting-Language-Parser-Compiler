@@ -4,6 +4,7 @@ use Ada.Strings.Unbounded;
 package intermediaire is
     -- Enumerations
     type Reserved_Langage_Word is (Programme,Debut, Fin);
+    type Type_Defini is (Entier,Booleen); -- Soumis à modification pour la deuxième partie
     
     Aucune_Variable_Definie : Exception; -- Aucune variable n'est definie dans le programme
     Type_Incorrect : Exception; -- Le type de la variable n'est pas correct pour l'opération à effectuer
@@ -113,7 +114,7 @@ package intermediaire is
     -- ligne : in Unbounded_string : la ligne à analyser
     -- Préconditions : le programme est correctement formé [Non vérifié dans notre cas]
     -- Postconditions : la liste doublement chainée contient les variables du programme
-    -- Exceptions : Aucune_Variable_Definie, Type_Incorrect, Variable_Deja_Definie
+    -- Exceptions : Aucune_Variable_Definie, Variable_Deja_Definie
      procedure recupererVariables(variables : in out T_List_Variable; ligne : in Unbounded_string);
     
     -- nom : recupererInstructions

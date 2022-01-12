@@ -138,6 +138,7 @@ package body intermediaire is
             typeVariable.str(j) := element(ligne, i);
             i := i+1;
         end loop;
+        Put_Line(typeVariable.str(1..8));
 
         typeVariable.nbCharsEffectif := j;
 
@@ -158,6 +159,13 @@ package body intermediaire is
             if (find) then
                 nomVariable.nbCharsEffectif := k;
                 ptrVariable := new T_Variable'(0, typeVariable, nomVariable, false);
+                begin
+                if(variables /= null and then rechercherVariable(variables, nomVariable.str) /= null) then
+                    raise Variable_Deja_Definie;
+                end if;
+                    exception
+                        when Variable_Non_Trouvee => null; -- Si elle n'est pas trouvée, on ne fait rien
+                end;
                 ajouter(variables, ptrVariable);
             else
                 i := i+1;
@@ -238,11 +246,12 @@ package body intermediaire is
         copy : T_List_Variable;
     begin
         copy := variables;
+        
         while copy.all.prev /= null loop -- Retour au début de la liste
             --Put_Line(copy.all.ptrVar.all.nameVariable.str);
             copy := copy.all.prev;
         end loop;
-        while copy /= null and then copy.all.ptrVar /= null and then copy.all.ptrVar.all.nomVariable.str(1..copy.all.ptrVar.all.nomVariable.nbCharsEffectif) /= nomVariable loop
+        while copy /= null and then copy.all.ptrVar /= null and then copy.all.ptrVar.all.nomVariable.str(1..copy.all.ptrVar.all.nomVariable.nbCharsEffectif) /= nomVariable(1..copy.all.ptrVar.all.nomVariable.nbCharsEffectif) loop
             copy := copy.all.next;
         end loop;
         if copy = null then

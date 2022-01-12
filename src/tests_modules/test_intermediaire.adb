@@ -76,10 +76,14 @@ variables := creer_liste_vide;
                 Open (F, In_File, fileNameSansVariable);
             loop
                 ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
+                
             exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Programme)));
             end loop;
 
             ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
+            if (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut))) then
+                    raise Aucune_Variable_Definie;
+            end if;
             loop
                 recupererVariables(variables_stub, ligne);
                 ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
@@ -96,37 +100,12 @@ variables := creer_liste_vide;
             
             Close(F);
             exception
-                when Aucune_Variable_Definie => Put_Line("OK exception");
+                when Aucune_Variable_Definie => Put_Line("OK exception Pas de variable définie");
                 when ADA.STRINGS.INDEX_ERROR => Put_Line("Levée d'exception prévisible");
                 when others => Put_Line("KO");
         end;
         Close(F);
-        begin
-            variables_stub := creer_liste_vide;
-            Open (F, In_File, fileNameSansType);
-
-            loop
-                ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
-            exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Programme)));
-            end loop;
-
-            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
-
-            loop
-
-                recupererVariables(variables_stub, ligne);
-            
-                ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
-
-            exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut)));
-            end loop;
-            Close(F);
-            
-            exception
-                when Type_Incorrect => Put_Line("OK exception");
-                when ADA.STRINGS.INDEX_ERROR => Put_Line("Levée d'exception prévisible");
-                when others => Put_Line("KO");
-        end;
+        
         
         begin
             variables_stub := creer_liste_vide;
@@ -148,7 +127,9 @@ variables := creer_liste_vide;
             end loop;
             Close(Fe);
             exception
-                when Variable_Deja_Definie => Put_Line("OK exception");
+                when Variable_Deja_Definie => 
+                    Put_Line("OK exception deux fois même déclaration");
+                    
                 when ADA.STRINGS.INDEX_ERROR => Put_Line("Levée d'exception prévisible");
                 when others => Put_Line("KO");
         end;
@@ -156,7 +137,7 @@ variables := creer_liste_vide;
         begin
             begin
             variables_stub := creer_liste_vide;
-            Open (Fe, In_File, "ce_fichier_n_existe_pas.med");
+            Open (F, In_File, "ce_fichier_n_existe_pas.med");
 
             loop
             ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
@@ -180,16 +161,16 @@ variables := creer_liste_vide;
                 exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut)));
                 end loop;
             
-            Close(Fe);
+            Close(F);
             exception
                 when ADA.STRINGS.INDEX_ERROR => Put_Line("Levée d'exception prévisible");
                 when ADA.IO_EXCEPTIONS.NAME_ERROR => raise Fichier_Non_Trouve;
             end;
             exception
-                when Fichier_Non_Trouve => Put_Line("OK exception");
-                when others => Put_Line("KO");
+                when Fichier_Non_Trouve => Put_Line("OK exception fichier non trouve");
+                --when others => Put_Line("KOee");
         end;
-        Close(F);
+        
     -- Test de la recherche d'une variable
         search := rechercherVariable(variables, "Sum");
         if(search /= null) then
@@ -206,7 +187,7 @@ variables := creer_liste_vide;
             search := rechercherVariable(variables,"xyz");
 
             exception
-                when Variable_Non_Trouvee => Put_Line("OK exception");
+                when Variable_Non_Trouvee => Put_Line("OK exception variable non trouvee");
         end;
 
     -- Test de l'initialisation des instructions
