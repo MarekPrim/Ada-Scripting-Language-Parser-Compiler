@@ -1,4 +1,4 @@
-with ada.Text_IO, ada.integer_Text_IO, Ada.Strings.Unbounded, Ada.Text_IO.Unbounded_IO, Ada.Characters.Handling;
+with ada.Text_IO, ada.integer_Text_IO, Ada.Strings.Unbounded, Ada.Text_IO.Unbounded_IO, Ada.Characters.Handling, ADA.IO_EXCEPTIONS;
 --with P_List_Double;
 use ada.Text_IO, ada.integer_Text_io, Ada.Strings.Unbounded, Ada.Text_IO.Unbounded_IO, Ada.Characters.Handling;
 
@@ -102,6 +102,9 @@ package body intermediaire is
         end loop;
 
         Close(F);
+
+        exception
+            when ADA.IO_EXCEPTIONS.NAME_ERROR => raise Fichier_Non_Trouve;
 
     end parseFile;
 
@@ -235,7 +238,8 @@ package body intermediaire is
     begin
         copy := variables;
         while copy.all.prev /= null loop -- Retour au début de la liste
-            copy := variables.all.prev;
+            --Put_Line(copy.all.ptrVar.all.nameVariable.str);
+            copy := copy.all.prev;
         end loop;
         while copy /= null and then copy.all.ptrVar /= null and then copy.all.ptrVar.all.nomVariable.str(1..copy.all.ptrVar.all.nomVariable.nbCharsEffectif) /= nomVariable loop
             copy := copy.all.next;

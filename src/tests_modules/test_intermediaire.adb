@@ -1,4 +1,4 @@
-with ada.Text_IO, ada.integer_Text_IO, Ada.Strings.Unbounded, Ada.Text_IO.Unbounded_IO, Ada.Characters.Handling;
+with ada.Text_IO, ada.integer_Text_IO, Ada.Strings.Unbounded, Ada.Text_IO.Unbounded_IO, Ada.Characters.Handling,ADA.IO_EXCEPTIONS;
 --with P_List_Double;
 use ada.Text_IO, ada.integer_Text_io, Ada.Strings.Unbounded, Ada.Text_IO.Unbounded_IO, Ada.Characters.Handling;
 with intermediaire; use intermediaire;
@@ -156,8 +156,9 @@ variables := creer_liste_vide;
         end;
         
         begin
+            begin
             variables_stub := creer_liste_vide;
-            Open (F, In_File, "ce_fichier_n_existe_pas.med");
+            Open (Fe, In_File, "ce_fichier_n_existe_pas.med");
 
             loop
             ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
@@ -181,23 +182,26 @@ variables := creer_liste_vide;
                 exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut)));
                 end loop;
             
-            Close(F);
+            Close(Fe);
+            exception
+                when ADA.STRINGS.INDEX_ERROR => Put_Line("Levée d'exception prévisible");
+                when ADA.IO_EXCEPTIONS.NAME_ERROR => raise Fichier_Non_Trouve;
+            end;
             exception
                 when Fichier_Non_Trouve => Put_Line("OK");
-                when ADA.STRINGS.INDEX_ERROR => Put_Line("Levée d'exception prévisible");
                 when others => Put_Line("KO");
         end;
         Close(F);
     -- Test de la recherche d'une variable
         search := rechercherVariable(variables, "Sum");
         if(search /= null) then
-            if(search.all.ptrVar.all.nomVariable.str = "Sum") then
+            if(search.all.ptrVar.all.nomVariable.str(1..3) = "Sum") then
                 Put_Line("OK");
             else
                 Put_Line("KO");
             end if;
         else
-            Put_Line("KO");
+            Put_Line("KOe");
         end if;
 
         begin -- Recherche d'une variable inexistante
@@ -209,7 +213,7 @@ variables := creer_liste_vide;
 
     -- Test de l'initialisation des instructions
 
-        if(instructions.all.ptrIns.all.operation.str(1..2) = "<-") then
+        if( "<instructions.all.ptrIns.all.operation.str(1..2) =-") then
             Put_Line("OK");
         else
             Put_Line("KO");
