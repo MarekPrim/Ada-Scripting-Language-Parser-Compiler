@@ -4,8 +4,7 @@ use Ada.Strings.Unbounded;
 package intermediaire is
     -- Enumerations
     type Reserved_Langage_Word is (Programme,Debut, Fin);
-    type Type_Defini is (Entier,Booleen); -- Soumis à modification pour la deuxième partie
-    
+     type Type_Defini is (Entier,Booleen); -- Soumis à modification pour la deuxième partie
     Aucune_Variable_Definie : Exception; -- Aucune variable n'est definie dans le programme
     Type_Incorrect : Exception; -- Le type de la variable n'est pas correct pour l'opération à effectuer
     Variable_Non_Declaree : Exception; -- La variable à utiliser n'est pas declaree dans le programme
@@ -126,7 +125,7 @@ package intermediaire is
     --                  le fichier est fermé
     --                  le contenu entre 'Début' et 'Fin' n'est pas vide
     -- Postconditions : le fichier est fermé
-    procedure recupererInstructions(instructions : in out T_List_Instruction; ligne : in Unbounded_string);
+    procedure recupererInstructions(instructions : in out T_List_Instruction; variables : in out T_List_Variable; ligne : in Unbounded_string);
 
     -- nom : interpreterCommande
     -- semantique : interprete la ligne pointée par ptrLine
@@ -148,7 +147,7 @@ package intermediaire is
     -- Préconditions    : 
     -- Postconditions   :  
     -- Exceptions : Variable_Non_Trouvee
-    function rechercherVariable (variables : in T_List_Variable; nomVariable : in string) return T_List_Variable;
+    function rechercherVariable (variables : in T_List_Variable; nomVariable : in Chaine) return T_List_Variable;
 
     -- nom : pointerEnTeteVariables
     -- semantique : le pointeur pointe en tête de la liste doublement chaînée des variables
@@ -236,6 +235,8 @@ package intermediaire is
     procedure ajouter(f_l : in out T_List_Instruction; f_nouveau : in T_Ptr_Instruction);
 
     procedure afficher_liste(f_l : in T_List_Variable);
+
+    procedure afficher_liste(f_l : in T_List_Instruction);
 
 
     --private
