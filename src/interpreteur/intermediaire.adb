@@ -82,9 +82,12 @@ package body intermediaire is
         end if;
 
         loop
-
+            begin 
             recupererVariables(variables, ligne);
-        
+
+            exception
+                when ADA.STRINGS.INDEX_ERROR => raise Aucune_Variable_Definie;
+            end;
             ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
 
         exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut)));
@@ -225,9 +228,7 @@ package body intermediaire is
         while (l /= null) loop
             put(l.all.ptrVar.all.nomVariable.str(1..l.all.ptrVar.all.nomVariable.nbCharsEffectif));
             put(l.all.ptrVar.all.typeVariable.str(1..l.all.ptrVar.all.typeVariable.nbCharsEffectif));
-            if (l.all.next /= null) then
-                put(" -> ");
-            end if;
+            put(l.all.ptrVar.all.valeurVariable);
             l := l.all.next;
         end loop;
     end afficher_liste;

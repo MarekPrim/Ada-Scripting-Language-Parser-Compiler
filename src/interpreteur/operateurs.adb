@@ -1,4 +1,7 @@
 with intermediaire; use intermediaire; --Permet de partager les types définis dans intermediaire.ads
+with ada.Text_IO, ada.integer_Text_IO, Ada.Strings.Unbounded, Ada.Text_IO.Unbounded_IO, Ada.Characters.Handling, ADA.IO_EXCEPTIONS;
+--with P_List_Double;
+use ada.Text_IO, ada.integer_Text_io, Ada.Strings.Unbounded, Ada.Text_IO.Unbounded_IO, Ada.Characters.Handling;
 
 package body operateurs is
 
@@ -23,16 +26,16 @@ package body operateurs is
     procedure operationArithmetique(op: in String; op1 : in Integer; op2 : in Integer; cp : in out Integer; res : out Integer) is
         resultat : Integer;
     begin
-        if op = "+" then
+        if op(1) = '+' then
                 resultat := op1 + op2;
                 null;
-        elsif op = "-" then
+        elsif op(1) = '-' then
                 resultat := op1 - op2;
                 null;
-        elsif op =  "*" then
+        elsif op(1) =  '*' then--
                 resultat := op1 * op2;
                 null;
-        elsif op = "/" then
+        elsif op(1) = '/' then
                 resultat := op1 / op2;
                 null;
         else
@@ -49,10 +52,10 @@ package body operateurs is
         op2 : T_Ptr_Variable;
     begin
         op := instructions.all.ptrIns.all.operation.str(1..2);
-        op1 := instructions.all.ptrIns.all.operandes(1);
-        op2 := instructions.all.ptrIns.all.operandes(2);
+        op1 := instructions.all.ptrIns.all.operandes.x;
+        op2 := instructions.all.ptrIns.all.operandes.y;
         resultat := false;
-        if op1.all.typeVariable.str(1..8) = "Booleen" and op2.all.typeVariable.str(1..8) = "Booleen" then
+        if op1.all.typeVariable.str(1..7) = "Booleen" and op2.all.typeVariable.str(1..7) = "Booleen" then
             if op(1) = '&' then
                 resultat := op1.all.valeurVariable + op2.all.valeurVariable = 2;
                 null;

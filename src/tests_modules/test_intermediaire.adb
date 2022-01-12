@@ -44,33 +44,31 @@ variables := creer_liste_vide;
         end loop;
 
         Close(F);
-    --Put_Line("Entrée dans le test");
-    afficher_liste(variables);
     Put_Line(variables.all.ptrVar.all.nomVariable.str(1..3));
     -- variables = tête de la liste
         if(variables.all.ptrVar.all.nomVariable.str(1..3) = "Sum") then
-            Put_Line("OK");
+            Put_Line("OK recuperationVariables");
         else
-            Put_Line("KO");
+            Put_Line("KO recuperationVariables");
         end if;
 
 
         if(variables.all.ptrVar.all.typeVariable.str(1..6) = "Entier") then
-            Put_Line("OK");
+            Put_Line("OK recuperationType");
         else
-            Put_Line("KO");
+            Put_Line("KO recuperationType");
         end if;
 
         if(variables.all.prev.all.ptrVar.all.nomVariable.str(1) = 'i') then
-            Put_Line("OK");
+            Put_Line("OK recuperationNom");
         else
-            Put_Line("KO");
+            Put_Line("KO recuperationNom");
         end if;
 
         if(variables.all.prev.all.prev.all.ptrVar.all.nomVariable.str(1) = 'n') then
-            Put_Line("OK");
+            Put_Line("OK recuperationNom");
         else
-            Put_Line("KO");
+            Put_Line("KO recuperationNom");
         end if;
 
         begin
@@ -125,7 +123,7 @@ variables := creer_liste_vide;
             Close(F);
             
             exception
-                when Type_Incorrect => Put_Line("OK");
+                when Type_Incorrect => Put_Line("OK exception");
                 when ADA.STRINGS.INDEX_ERROR => Put_Line("Levée d'exception prévisible");
                 when others => Put_Line("KO");
         end;
@@ -150,7 +148,7 @@ variables := creer_liste_vide;
             end loop;
             Close(Fe);
             exception
-                when Variable_Deja_Definie => Put_Line("OK");
+                when Variable_Deja_Definie => Put_Line("OK exception");
                 when ADA.STRINGS.INDEX_ERROR => Put_Line("Levée d'exception prévisible");
                 when others => Put_Line("KO");
         end;
@@ -188,7 +186,7 @@ variables := creer_liste_vide;
                 when ADA.IO_EXCEPTIONS.NAME_ERROR => raise Fichier_Non_Trouve;
             end;
             exception
-                when Fichier_Non_Trouve => Put_Line("OK");
+                when Fichier_Non_Trouve => Put_Line("OK exception");
                 when others => Put_Line("KO");
         end;
         Close(F);
@@ -196,32 +194,31 @@ variables := creer_liste_vide;
         search := rechercherVariable(variables, "Sum");
         if(search /= null) then
             if(search.all.ptrVar.all.nomVariable.str(1..3) = "Sum") then
-                Put_Line("OK");
+                Put_Line("OK rechercheVariable");
             else
-                Put_Line("KO");
+                Put_Line("KO rechercheVariable");
             end if;
         else
-            Put_Line("KOe");
+            Put_Line("KO rechercheVariable pas trouvé");
         end if;
 
         begin -- Recherche d'une variable inexistante
             search := rechercherVariable(variables,"xyz");
 
             exception
-                when Variable_Non_Trouvee => Put_Line("OK");
+                when Variable_Non_Trouvee => Put_Line("OK exception");
         end;
 
     -- Test de l'initialisation des instructions
-
-        if( "<instructions.all.ptrIns.all.operation.str(1..2) =-") then
-            Put_Line("OK");
+        if(instructions.all.ptrIns.all.operation.str(1..2) = "<-") then
+            Put_Line("OK initialisation instructions");
         else
-            Put_Line("KO");
+            Put_Line("KO initialisation instructions");
         end if;
         if(instructions.all.ptrIns.all.operandes.x.all.valeurVariable = 5) then
-            Put_Line("OK");
+            Put_Line("OK initialisation instructions");
         else
-            Put_Line("KO");
+            Put_Line("KO initialisation instructions");
         end if;
         if(instructions.all.ptrIns.all.operandes.y.all.nomVariable.str(1) = 'n') then
             Put_Line("OK");
