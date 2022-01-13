@@ -151,6 +151,13 @@ package body intermediaire is
             if (find) then
                 nomVariable.nbCharsEffectif := k;
                 ptrVariable := new T_Variable'(0, typeVariable, nomVariable, false);
+                begin
+                if(variables /= null and then rechercherVariable(variables, nomVariable) /= null) then
+                    raise Variable_Deja_Definie;
+                end if;
+                    exception
+                        when Variable_Non_Trouvee => null; -- Si elle n'est pas trouvée, on ne fait rien
+                end;
                 ajouter(variables, ptrVariable);
             else
                 i := i+1;
