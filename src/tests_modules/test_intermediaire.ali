@@ -7,12 +7,11 @@ RV NO_EXCEPTION_HANDLERS
 RV NO_EXCEPTIONS
 RV NO_IO
 RV NO_NESTED_FINALIZATION
-RV NO_SECONDARY_STACK
 RV NO_STANDARD_STORAGE_POOLS
 RV NO_DEFAULT_INITIALIZATION
 RV SPARK_05
 
-U test_intermediaire%b	test_intermediaire.adb	ff18fa9a NE OO SU IL
+U test_intermediaire%b	test_intermediaire.adb	246056b1 NE OO SU IL
 W ada%s			ada.ads			ada.ali
 W ada.characters%s	a-charac.ads		a-charac.ali
 W ada.characters.handling%s  a-chahan.adb	a-chahan.ali
@@ -25,7 +24,6 @@ Z ada.tags%s		a-tags.adb		a-tags.ali
 W ada.text_io%s		a-textio.adb		a-textio.ali
 W ada.text_io.unbounded_io%s  a-tiunio.ads	a-tiunio.ali
 W intermediaire%s	intermediaire.adb	intermediaire.ali
-Z system.secondary_stack%s  s-secsta.adb	s-secsta.ali
 Z system.soft_links%s	s-soflin.adb		s-soflin.ali
 Z system.standard_library%s  s-stalib.adb	s-stalib.ali
 
@@ -49,7 +47,7 @@ D a-tiunio.ads		20210408115627 759c6b0c ada.text_io.unbounded_io%s
 D a-unccon.ads		20210408115627 0e9b276f ada.unchecked_conversion%s
 D interfac.ads		20210408115627 5ab55268 interfaces%s
 D i-cstrea.ads		20210408115627 e53d8b8e interfaces.c_streams%s
-D intermediaire.ads	20220112083936 8901705a intermediaire%s
+D intermediaire.ads	20220113070230 74978e57 intermediaire%s
 D system.ads		20210408115627 4635ec04 system%s
 D s-atocou.ads		20210408115627 b45c2d8d system.atomic_counters%s
 D s-crtl.ads		20210408115627 0ebbdb71 system.crtl%s
@@ -71,21 +69,17 @@ D s-stratt.ads		20210408115627 aedef97e system.stream_attributes%s
 D s-traent.ads		20210408115627 005bf670 system.traceback_entries%s
 D s-unstyp.ads		20210408115627 34867c83 system.unsigned_types%s
 D s-wchcon.ads		20210408115627 1b7d22d2 system.wch_con%s
-D test_intermediaire.adb  20220112084147 bfcd7735 test_intermediaire%b
+D test_intermediaire.adb  20220113072028 99232513 test_intermediaire%b
 G a e
 G c Z b b [test_intermediaire standard 6 11 none]
-G r c none [test_intermediaire standard 6 11 none] [creer_liste_vide intermediaire 189 14 none]
-G r c none [test_intermediaire standard 6 11 none] [creer_liste_vide intermediaire 178 14 none]
-G r c none [test_intermediaire standard 6 11 none] [renvoyerlignesansespace intermediaire 97 14 none]
-G r c none [test_intermediaire standard 6 11 none] [lignecommenceparmotreserve intermediaire 86 14 none]
-G r c none [test_intermediaire standard 6 11 none] [recuperervariables intermediaire 118 16 none]
-G r c none [test_intermediaire standard 6 11 none] [recupererinstructions intermediaire 129 15 none]
-G r c none [test_intermediaire standard 6 11 none] [recherchervariable intermediaire 151 14 none]
-G r c none [test_intermediaire standard 6 11 none] [interpretercommande intermediaire 139 15 none]
+G r c none [test_intermediaire standard 6 11 none] [creer_liste_vide intermediaire 188 14 none]
+G r c none [test_intermediaire standard 6 11 none] [creer_liste_vide intermediaire 177 14 none]
+G r c none [test_intermediaire standard 6 11 none] [parsefile intermediaire 73 15 none]
+G r c none [test_intermediaire standard 6 11 none] [recherchervariable intermediaire 150 14 none]
+G r c none [test_intermediaire standard 6 11 none] [interpretercommande intermediaire 138 15 none]
 X 1 ada.ads
-16K9*Ada 20e8 43|1r6 1r19 1r40 1r63 1r89 1r113 3r5 3r18 3r39 3r62 3r88 28r46
-. 31r42 34r46 41r46 78r50 83r46 89r50 104r22 114r50 118r46 124r50 133r22
-. 143r46 149r54 153r50 159r54 166r22 167r22
+16K9*Ada 20e8 43|1r6 1r19 1r40 1r63 1r89 1r113 3r5 3r18 3r39 3r62 3r88 62r22
+. 75r22 85r22 86r22
 X 2 a-charac.ads
 16K13*Characters 18e19 43|1r93 3r92
 X 3 a-chahan.ads
@@ -93,70 +87,55 @@ X 3 a-chahan.ads
 X 7 a-inteio.ads
 18K13*Integer_Text_IO[16|46] 43|1w23 3r22
 X 8 a-ioexce.ads
-18K13*IO_Exceptions 30e22 43|1w117 167r26
-23X4*Name_Error 43|167r40
+18K13*IO_Exceptions 30e22 43|1w117 86r26
+23X4*Name_Error 43|86r40
 X 10 a-string.ads
-16K13*Strings 35e16 43|1r44 3r43 104r26 133r26 166r26
-27X33*Index_Error 43|104r34 133r34 166r34
+16K13*Strings 35e16 43|1r44 3r43 62r26 75r26 85r26
+27X33*Index_Error 43|62r34 75r34 85r34
 X 12 a-strunb.ads
 82K21*Unbounded 756e26 43|1w52 3r51
 87R9*Unbounded_String<6|43R9> 739e14 43|13r9
 X 15 a-textio.ads
-57K13*Text_IO 727e16 43|1w10 1r67 3r9 3r66 28r50 31r46 34r50 41r50 78r54
-. 83r50 89r54 114r54 118r50 124r54 143r50 149r58 153r54 159r58
-64P9*File_Type 43|18r5 19r6
-66n23*In_File{66E9} 43|26r18 76r26 112r22 140r22
-114U14*Open 43|26s9 76s17 112s13 140s13
-129U14*Close 43|46s9 101s13 107s9 128s13 164s13
-508U14*Put_Line 43|47s5 50s13 52s13 57s13 59s13 63s13 65s13 69s13 71s13 103s49
-. 104s49 105s32 131s21 133s49 134s32 166s49 170s44 178s17 180s17 183s13 190s46
-. 195s13 197s13 200s13 202s13 205s13 207s13 211s13 213s13 217s13 219s13 225s13
-. 227s13 230s13 232s13 243s13 245s13 249s13 251s13 255s13 257s13
+57K13*Text_IO 727e16 43|1w10 1r67 3r9 3r66
+64P9*File_Type 43|19r5 20r6
+508U14*Put_Line 43|29s5 32s13 34s13 39s13 41s13 45s13 47s13 51s13 53s13 61s49
+. 62s49 63s32 73s21 75s49 76s32 85s49 89s44 99s17 101s17 104s13 113s46 118s13
+. 120s13 123s13 125s13 128s13 130s13 134s13 136s13 140s13 142s13 148s13 150s13
+. 153s13 155s13 167s13 169s13 174s13 176s13 180s13 182s13
 X 17 a-tiunio.ads
-25K21*Unbounded_IO 61e29 43|1w75 3r74 28r58 31r54 34r58 41r58 78r62 83r58
-. 89r62 114r62 118r58 124r62 143r58 149r66 153r62 159r66
-45V13*Get_Line=47:42{12|87R9} 43|28s71 31s67 34s71 41s71 78s75 83s71 89s75
-. 114s75 118s71 124s75 143s71 149s79 153s75 159s79
+25K21*Unbounded_IO 61e29 43|1w75 3r74
 X 21 intermediaire.ads
-4K9*intermediaire 245e18 43|4w6 4r25
-6E10*Reserved_Langage_Word 6e57 43|29r54 35r54 43r54 80r58 84r51 90r58 115r58
-. 126r58 144r58 150r62 161r62
-6n36*Programme{6E10} 43|29r82 80r86 115r86 144r86 150r90
-6n46*Debut{6E10} 43|35r82 84r79 90r86 126r86 161r90
-6n53*Fin{6E10} 43|43r82
-9X5*Aucune_Variable_Definie 43|85r27 103r22
-12X5*Variable_Deja_Definie 43|130r22
-13X5*Variable_Non_Trouvee 43|190r22
-16X5*Fichier_Non_Trouve 43|167r60 170r22
-25a13*str{string} 43|47r51 49r49 56r50 62r58 68r67 177r50 194r50 204r68
-29P10*T_List_Variable(18R10) 43|14r13 15r18 16r10
-30P10*T_List_Instruction(19R10) 43|17r16
-32P10*T_Ptr_Variable(20R10)
-33P10*T_Ptr_Instruction(21R10)
-37p9*x{32P10} 43|199r50 224r59
-38p9*y{32P10} 43|204r50
-44i9*valeurVariable{integer} 43|199r56 224r65 242r61 248r61 254r63
-45r9*typeVariable{24R10} 43|56r37
-46r9*nomVariable{24R10} 43|47r39 49r37 62r46 68r55 177r38 204r56
-51i9*numInstruction{integer} 43|210r40 216r49 229r49
-52r9*operandes{36R10} 43|199r40 204r40 224r49
-53r9*operation{24R10} 43|194r40
-57p9*ptrIns{33P10} 43|194r29 199r29 204r29 210r29 216r38 224r38 229r38
-58p9*prev{30P10} 43|224r29 229r29 235r42
-59p9*next{30P10} 43|216r29 222r42
-63p9*ptrVar{32P10} 43|47r28 49r26 56r26 62r35 68r44 177r27 242r50 248r50
-. 254r52
-65p9*prev{29P10} 43|62r26 68r26 68r35
-86V14*ligneCommenceParMotReserve{boolean} 43|29s20 35s20 43s20 80s24 84s17
-. 90s24 115s24 126s24 144s24 150s28 161s28
-97V14*renvoyerLigneSansEspace{12|87R9} 43|28s22 31s18 34s22 41s22 78s26 83s22
-. 89s26 114s26 118s22 124s26 143s22 149s30 153s26 159s30
-118U16*recupererVariables 43|33s13 88s17 122s17 157s21
-129U15*recupererInstructions 43|39s13
-139U15*interpreterCommande 43|240s9
-151V14*rechercherVariable{29P10} 43|175s19 187s23 242s12 248s12 254s12
-178V14*creer_liste_vide{29P10} 43|23s11 24s14 75s31 111s31 139s31
-189V14*creer_liste_vide{30P10} 43|22s17
+4K9*intermediaire 246e18 43|4w6 4r25
+8X5*Aucune_Variable_Definie 43|61r22
+11X5*Variable_Deja_Definie 43|72r22
+12X5*Variable_Non_Trouvee 43|113r22
+15X5*Fichier_Non_Trouve 43|86r60 89r22
+23R10*Chaine 26e15 43|22r8
+24a13*str{string} 43|29r51 31r49 38r50 44r58 50r67 95m14 98r50 109m18 117r50
+. 127r68 165m14 172m14
+25i13*nbCharsEffectif{integer} 43|94m14 108m18 164m14
+28P10*T_List_Variable(17R10) 43|14r13 15r18 16r10
+29P10*T_List_Instruction(18R10) 43|17r16 18r21
+31P10*T_Ptr_Variable(19R10)
+32P10*T_Ptr_Instruction(20R10)
+36p9*x{31P10} 43|122r50 147r59
+37p9*y{31P10} 43|127r50
+43i9*valeurVariable{integer} 43|122r56 147r65 166r62 173r62 179r62
+44r9*typeVariable{23R10} 43|38r37
+45r9*nomVariable{23R10} 43|29r39 31r37 44r46 50r55 98r38 127r56
+50i9*numInstruction{integer} 43|133r40 139r49 152r49
+51r9*operandes{35R10} 43|122r40 127r40 147r49
+52r9*operation{23R10} 43|117r40
+56p9*ptrIns{32P10} 43|117r29 122r29 127r29 133r29 139r38 147r38 152r38
+57p9*prev{29P10} 43|147r29 152r29 158r42
+58p9*next{29P10} 43|139r29 145r42
+62p9*ptrVar{31P10} 43|29r28 31r26 38r26 44r35 50r44 98r27 166r51 173r51 179r51
+64p9*prev{28P10} 43|44r26 50r26 50r35
+73U15*parseFile 43|28s5 59s13 70s13 83s13
+138U15*interpreterCommande 43|163s9
+150V14*rechercherVariable{28P10} 43|96s19 110s23 166s12 173s12 179s12
+177V14*creer_liste_vide{28P10} 43|26s11 27s14 57s31 68s31 81s31
+188V14*creer_liste_vide{29P10} 43|25s17 58s34 69s34 82s34
 X 22 system.ads
 67M9*Address
 X 29 s-memory.ads
@@ -166,23 +145,23 @@ X 29 s-memory.ads
 X 35 s-stalib.adb
 93U14 Break_Start 94i<c,__gnat_break_start>22
 X 43 test_intermediaire.adb
-6U11*test_intermediaire 6b11 265l5 265t23
-9a1 fileName{string} 26r27
-10a1 fileNameSansVariable{string} 76r35
-11a1 fileNameSansType{string}
-12a1 fileNameDeuxDeclarations{string} 112r31
-13r1 ligne{12|87R9} 28m13 29r47 31m9 33r43 34m13 35r47 39r49 41m13 43r47
-. 78m17 80r51 83m13 84r44 88r52 89m17 90r51 114m17 115r51 118m13 122r52 124m17
-. 126r51 143m13 144r51 149m21 150r55 153m17 157r56 159m21 161r55
-14p1 variables{21|29P10} 24m1 33m32 33r32 47r14 49r12 56r12 62r12 68r12 175r38
-. 187r42 240m43 240r43 242r31 248r31 254r31
-15p1 variables_stub{21|29P10} 75m13 88m36 88r36 111m13 122m36 122r36 139m13
-. 157m40 157r40
-16p1 search{21|29P10} 23m1 175m9 176r12 177r16 187m13
-17p1 instructions{21|30P10} 22m1 39m35 39r35 194r12 199r12 204r12 210r12
-. 216r12 222m9 222r25 224r12 229r12 235m9 235r25 240r29
-18p1 F{15|64P9} 26m15 26r15 28r80 31r76 34r80 41r80 46m15 46r15 76m23 76r23
-. 78r84 83r80 89r84 101m19 101r19 107m15 107r15 140m19 140r19 143r80 149r88
-. 153r84 159r88 164m19 164r19
-19p1 Fe{15|64P9} 112m18 112r18 114r84 118r80 124r84 128m19 128r19
+6U11*test_intermediaire 6b11 190l5 190t23
+9a1 fileName{string} 28r15
+10a1 fileNameSansVariable{string} 59r23
+11a1 fileNameSansType{string} 70r23
+12a1 fileNameDeuxDeclarations{string}
+13r1 ligne{12|87R9}
+14p1 variables{21|28P10} 27m1 28m25 28r25 29r14 31r12 38r12 44r12 50r12 96r38
+. 110r42 163m43 163r43 166r31 173r31 179r31
+15p1 variables_stub{21|28P10} 57m13 59m45 59r45 68m13 70m41 70r41 81m13 83m54
+. 83r54
+16p1 search{21|28P10} 26m1 96m9 97r12 98r16 110m13
+17p1 instructions{21|29P10} 25m1 28m36 28r36 117r12 122r12 127r12 133r12
+. 139r12 145m9 145r25 147r12 152r12 158m9 158r25 163r29
+18p1 instructions_stub{21|29P10} 58m13 59m61 59r61 69m13 70m57 70r57 82m13
+. 83m70 83r70
+19p1 F{15|64P9}
+20p1 Fe{15|64P9}
+22r1 chne{21|23R10} 94m9 95m9 96r49 108m13 109m13 110r52 164m9 165m9 166r41
+. 172m9 173r41 179r41
 

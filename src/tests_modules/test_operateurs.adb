@@ -23,6 +23,7 @@ procedure test_operateurs is
     F         : File_Type;
     fileName : constant string :=  "code_test.med";
     ligne : Unbounded_string;
+    chne : intermediaire.Chaine;
 
     
 
@@ -33,33 +34,15 @@ begin
 variables := creer_liste_vide;
 instruction := creer_liste_vide;
 search := creer_liste_vide;
-Open (F, In_File, fileName);
-        loop
-            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
-        exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Programme)));
-        end loop;
-        ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
-        loop
-            recupererVariables(variables, ligne);
-            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
-        exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut)));
-        end loop;
-        loop
-
-            recupererInstructions(instruction, ligne);
-        
-            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
-
-        exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Fin)));
-        end loop;
-
-        Close(F);
+parseFile(fileName, variables, instruction);
 
 
-
+        chne.nbCharsEffectif := 1;
+        chne.str(1) := 'n';
     -- Test affectation
-        affectation("Entier","n",5,variables);
-        search := rechercherVariable(variables,"n");
+        affectation("Entier",chne,5,variables);
+        
+        search := rechercherVariable(variables,chne);
         if(search.all.ptrVar.all.valeurVariable = 5) then
             Put_Line("OK affectation");
         else
@@ -141,8 +124,11 @@ Open (F, In_File, fileName);
             while(variables.all.prev /= null) loop
                 variables := variables.all.prev;
             end loop; 
-        affectation("Entier","i",5, variables);
-        affectation("Entier","n",2, variables);
+        chne.nbCharsEffectif := 1;
+        chne.str(1) := 'i';
+        affectation("Entier",chne,5, variables);
+        chne.str(1) := 'n';
+        affectation("Entier",chne,2, variables);
         
         instruction := creer_liste_vide;
         instruction := new T_Cell_Instruction'(null,null,null);
@@ -261,8 +247,12 @@ instruction := creer_liste_vide;
         operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
         instruction.all.ptrIns := new T_Instruction'(1,operandes,chaine);
         cp := 0;
-        affectation("Entier","i",5, variables);
-        affectation("Entier","n",2, variables);
+        chne.nbCharsEffectif := 1;
+        chne.str(1) := 'i';
+
+        affectation("Entier",chne,5, variables);
+        chne.str(1) := 'n';
+        affectation("Entier",chne,2, variables);
 
         branchementConditionel(cp,instruction,33);
         if(cp = 33) then

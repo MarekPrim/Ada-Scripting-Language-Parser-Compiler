@@ -19,7 +19,7 @@ package operateurs is
     --                  ptrVar.all.typeVariable = typeVariable
     --                  ptrVar.all.identificateur = identificateur
     -- Exceptions : Variable_Inconnue, Variable_Constante
-    procedure affectation(typeVariable : in String; identificateur : in String; valeur : in Integer --T
+    procedure affectation(typeVariable : in String; identificateur : in Chaine; valeur : in Integer --T
     ; variables : in out T_List_Variable);
 
     -- nom : operationArithmetique

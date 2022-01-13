@@ -5,7 +5,7 @@ use ada.Text_IO, ada.integer_Text_io, Ada.Strings.Unbounded, Ada.Text_IO.Unbound
 
 package body operateurs is
 
-    procedure affectation(typeVariable : in String; identificateur : in String; valeur : in Integer; variables : in out T_List_Variable) is
+    procedure affectation(typeVariable : in String; identificateur : in Chaine; valeur : in Integer; variables : in out T_List_Variable) is
         var : T_List_Variable;
         ch : Chaine;
     begin

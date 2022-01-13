@@ -15,35 +15,17 @@ variables : T_List_Variable;    -- Liste des variables
 variables_stub : T_List_Variable;   -- Liste des variables temporaire
 search : T_List_Variable;  -- Liste permettant de stocker les retours de la recherche de variable
 instructions : T_List_Instruction; -- Liste des instructions
+instructions_stub : T_List_Instruction; -- Liste des instructions temporaire
 F : File_Type; -- Fichier
 Fe : File_Type; -- Fichier
+
+chne : Chaine;
 begin
 
 instructions := creer_liste_vide;
 search := creer_liste_vide;
 variables := creer_liste_vide;
-        --Put_Line("Entrée dans le test");
-        Open (F, In_File, fileName);
-        loop
-            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
-        exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Programme)));
-        end loop;
-        ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
-        loop
-            recupererVariables(variables, ligne);
-            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
-        exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut)));
-        end loop;
-        loop
-
-            recupererInstructions(instructions, ligne);
-        
-            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
-
-        exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Fin)));
-        end loop;
-
-        Close(F);
+    parseFile(fileName, variables, instructions);
     Put_Line(variables.all.ptrVar.all.nomVariable.str(1..3));
     -- variables = tête de la liste
         if(variables.all.ptrVar.all.nomVariable.str(1..3) = "Sum") then
@@ -73,59 +55,19 @@ variables := creer_liste_vide;
 
         begin
             variables_stub := creer_liste_vide;
-                Open (F, In_File, fileNameSansVariable);
-            loop
-                ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
-                
-            exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Programme)));
-            end loop;
-
-            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
-            if (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut))) then
-                    raise Aucune_Variable_Definie;
-            end if;
-            loop
-                recupererVariables(variables_stub, ligne);
-                ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
-            exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut)));
-            end loop;
-            --loop
-                
-                --recupererInstructions(instructions, ligne);
-            
-            --    ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
-
-            --exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Fin)));
-            --end loop;
-            
-            Close(F);
+            instructions_stub := creer_liste_vide;
+            parseFile(fileNameSansVariable, variables_stub, instructions_stub);
             exception
                 when Aucune_Variable_Definie => Put_Line("OK exception Pas de variable définie");
                 when ADA.STRINGS.INDEX_ERROR => Put_Line("Levée d'exception prévisible");
                 when others => Put_Line("KO");
         end;
-        Close(F);
         
         
         begin
             variables_stub := creer_liste_vide;
-            Open(Fe, In_File, fileNameDeuxDeclarations);
-            loop
-                ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(fe));
-            exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Programme)));
-            end loop;
-
-            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(fe));
-
-            loop
-
-                recupererVariables(variables_stub, ligne);
-            
-                ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(fe));
-
-            exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut)));
-            end loop;
-            Close(Fe);
+            instructions_stub := creer_liste_vide;
+            parseFile(fileNameSansType, variables_stub, instructions_stub);
             exception
                 when Variable_Deja_Definie => 
                     Put_Line("OK exception deux fois même déclaration");
@@ -137,31 +79,8 @@ variables := creer_liste_vide;
         begin
             begin
             variables_stub := creer_liste_vide;
-            Open (F, In_File, "ce_fichier_n_existe_pas.med");
-
-            loop
-            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
-            exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Programme)));
-            end loop;
-
-
-                loop
-                    ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
-                exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Programme)));
-                end loop;
-
-                ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
-
-                loop
-
-                    recupererVariables(variables_stub, ligne);
-                
-                    ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
-
-                exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut)));
-                end loop;
-            
-            Close(F);
+            instructions_stub := creer_liste_vide;
+            parseFile("ce_fichier_n_existe_pas.med", variables_stub, instructions_stub);
             exception
                 when ADA.STRINGS.INDEX_ERROR => Put_Line("Levée d'exception prévisible");
                 when ADA.IO_EXCEPTIONS.NAME_ERROR => raise Fichier_Non_Trouve;
@@ -172,7 +91,9 @@ variables := creer_liste_vide;
         end;
         
     -- Test de la recherche d'une variable
-        search := rechercherVariable(variables, "Sum");
+        chne.nbCharsEffectif := 3;
+        chne.str(1..3) := "Sum";
+        search := rechercherVariable(variables, chne);
         if(search /= null) then
             if(search.all.ptrVar.all.nomVariable.str(1..3) = "Sum") then
                 Put_Line("OK rechercheVariable");
@@ -184,7 +105,9 @@ variables := creer_liste_vide;
         end if;
 
         begin -- Recherche d'une variable inexistante
-            search := rechercherVariable(variables,"xyz");
+            chne.nbCharsEffectif := 3;
+            chne.str(1..3) := "xyz";
+            search := rechercherVariable(variables,chne);
 
             exception
                 when Variable_Non_Trouvee => Put_Line("OK exception variable non trouvee");
@@ -202,34 +125,34 @@ variables := creer_liste_vide;
             Put_Line("KO initialisation instructions");
         end if;
         if(instructions.all.ptrIns.all.operandes.y.all.nomVariable.str(1) = 'n') then
-            Put_Line("OK");
+            Put_Line("OK valeur variable");
         else
-            Put_Line("KO");
+            Put_Line("KO valeur variable");
         end if;
 
         if(instructions.all.ptrIns.all.numInstruction = 1) then
-            Put_Line("OK");
+            Put_Line("OK numero instruction");
         else
-            Put_Line("KO");
+            Put_Line("KO numero instruction");
         end if;
         
         if(instructions.all.next.all.ptrIns.all.numInstruction = 2) then
-            Put_Line("OK");
+            Put_Line("OK numero instruction");
         else
-            Put_Line("KO");
+            Put_Line("KO numero instruction");
         end if;
 
         instructions := instructions.all.next;
 
         if(instructions.all.prev.all.ptrIns.all.operandes.x.all.valeurVariable = 5) then
-            Put_Line("OK");
+            Put_Line("OK initialisation instructions");
         else
-            Put_Line("KO");
+            Put_Line("KO initialisation instructions");
         end if;
         if(instructions.all.prev.all.ptrIns.all.numInstruction = 1) then
-            Put_Line("OK");
+            Put_Line("OK numero instruction");
         else
-            Put_Line("KO");
+            Put_Line("KO numero instruction");
         end if;
 
         instructions := instructions.all.prev;
@@ -238,23 +161,25 @@ variables := creer_liste_vide;
 
     -- Test de l'interprétation d'une commande/ligne d'instruction
         interpreterCommande(instructions, variables);
-
-        if(rechercherVariable(variables,"n").all.ptrVar.all.valeurVariable = 5) then
-            Put_Line("OK");
+        chne.nbCharsEffectif := 1;
+        chne.str(1) := 'n';
+        if(rechercherVariable(variables,chne).all.ptrVar.all.valeurVariable = 5) then
+            Put_Line("OK interpreterCommande");
         else
-            Put_Line("KO");
+            Put_Line("KO interpreterCommande");
         end if;
 
-        if(rechercherVariable(variables,"i").all.ptrVar.all.valeurVariable = 1) then
-            Put_Line("OK");
+        chne.str(1) := 'i';
+        if(rechercherVariable(variables,chne).all.ptrVar.all.valeurVariable = 1) then
+            Put_Line("OK interpreterCommande");
         else
-            Put_Line("KO");
+            Put_Line("KO interpreterCommande");
         end if;
 
-        if(rechercherVariable(variables,"Sum").all.ptrVar.all.valeurVariable = 6) then
-            Put_Line("OK");
+        if(rechercherVariable(variables,chne).all.ptrVar.all.valeurVariable = 6) then
+            Put_Line("OK interpreterCommande");
         else
-            Put_Line("KO");
+            Put_Line("KO interpreterCommande");
         end if;
 
         

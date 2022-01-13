@@ -11,7 +11,7 @@ RV NO_DYNAMIC_SIZED_OBJECTS
 RV NO_ELABORATION_CODE
 RV SPARK_05
 
-U operateurs%b		operateurs.adb		8c5150de NE OO PK IL
+U operateurs%b		operateurs.adb		b7911c5f NE OO PK IL
 W ada%s			ada.ads			ada.ali
 W ada.characters%s	a-charac.ads		a-charac.ali
 W ada.characters.handling%s  a-chahan.adb	a-chahan.ali
@@ -25,7 +25,7 @@ W ada.text_io%s		a-textio.adb		a-textio.ali
 W ada.text_io.unbounded_io%s  a-tiunio.ads	a-tiunio.ali
 W intermediaire%s	intermediaire.adb	intermediaire.ali
 
-U operateurs%s		operateurs.ads		fb92a62c EE OO PK IL
+U operateurs%s		operateurs.ads		5e52ba78 EE OO PK IL
 Z ada.tags%s		a-tags.adb		a-tags.ali
 W intermediaire%s	intermediaire.adb	intermediaire.ali
 Z system%s		system.ads		system.ali
@@ -52,9 +52,9 @@ D a-tiunio.ads		20210408115627 759c6b0c ada.text_io.unbounded_io%s
 D a-unccon.ads		20210408115627 0e9b276f ada.unchecked_conversion%s
 D interfac.ads		20210408115627 5ab55268 interfaces%s
 D i-cstrea.ads		20210408115627 e53d8b8e interfaces.c_streams%s
-D intermediaire.ads	20220111074730 a10efd23 intermediaire%s
-D operateurs.ads	20220110162742 5a9c5b0f operateurs%s
-D operateurs.adb	20220112074508 be170b07 operateurs%b
+D intermediaire.ads	20220113070230 74978e57 intermediaire%s
+D operateurs.ads	20220113072722 2ac5342f operateurs%s
+D operateurs.adb	20220113072616 20175bd2 operateurs%b
 D system.ads		20210408115627 4635ec04 system%s
 D s-atocou.ads		20210408115627 b45c2d8d system.atomic_counters%s
 D s-crtl.ads		20210408115627 0ebbdb71 system.crtl%s
@@ -100,8 +100,8 @@ X 15 a-textio.ads
 X 17 a-tiunio.ads
 25K21*Unbounded_IO 61e29 23|2w75 4r74
 X 21 intermediaire.ads
-4K9*intermediaire 244e18 22|1w6 1r25 23|1w6 1r25
-23R10*Chaine 26e15 23|10r14
+4K9*intermediaire 246e18 22|1w6 1r25 23|1w6 1r25
+23R10*Chaine 26e15 22|22r73 23|8r73 10r14
 24a13*str{string} 23|20m16 54r53 58r33 58r80
 25i13*nbCharsEffectif{integer} 23|21m16
 28P10*T_List_Variable(17R10) 22|23r26 23|8r121 9r15
@@ -126,7 +126,7 @@ X 22 operateurs.ads
 7X5*Operateur_Incorrect 23|42r23 66r23 85r27
 22U15*affectation 22>27 22>53 22>81 23=7 23|8b15 24l9 24t20
 22a27 typeVariable{string} 23|8b27 20r26
-22a53 identificateur{string} 23|8b53 12r46
+22r53 identificateur{21|23R10} 23|8b53 12r46
 22i81 valeur{integer} 23|8b81 19r50
 23p7 variables{21|28P10} 23|8b102 12r35
 35U15*operationArithmetique 35>37 35>52 35>70 35=88 35<109 23|26b15 46l9

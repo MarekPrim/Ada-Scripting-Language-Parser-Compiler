@@ -194,9 +194,7 @@ package body intermediaire is
         end loop;
 
         numInstruction.nbCharsEffectif := i-1;
-
         numInstructionEntier := Integer'Value(numInstruction.str(1..numInstruction.nbCharsEffectif));
-
         ptrInstruction.all.numInstruction := numInstructionEntier;
 
         if (Slice(ligne, i, i+1) = "IF") then
