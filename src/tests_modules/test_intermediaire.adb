@@ -114,12 +114,12 @@ variables := creer_liste_vide;
         end;
 
     -- Test de l'initialisation des instructions
-        if(instructions.all.ptrIns.all.operation.str(1..2) = "<-") then
-            Put_Line("OK initialisation instructions");
-        else
-            Put_Line("KO initialisation instructions");
-        end if;
-        if(instructions.all.ptrIns.all.operandes.x.all.valeurVariable = 5) then
+
+        while(instructions.prev /= null) loop
+            instructions := instructions.prev;
+        end loop;
+        afficher_liste(instructions);
+        if(instructions.all.ptrIns.all.operation.str(1..instructions.all.ptrIns.all.operation.nbCharsEffectif) = "AFFECTATION") then
             Put_Line("OK initialisation instructions");
         else
             Put_Line("KO initialisation instructions");
@@ -136,6 +136,7 @@ variables := creer_liste_vide;
             Put_Line("KO numero instruction");
         end if;
         
+        --afficher_liste(instructions);
         if(instructions.all.next.all.ptrIns.all.numInstruction = 2) then
             Put_Line("OK numero instruction");
         else
@@ -144,11 +145,6 @@ variables := creer_liste_vide;
 
         instructions := instructions.all.next;
 
-        if(instructions.all.prev.all.ptrIns.all.operandes.x.all.valeurVariable = 5) then
-            Put_Line("OK initialisation instructions");
-        else
-            Put_Line("KO initialisation instructions");
-        end if;
         if(instructions.all.prev.all.ptrIns.all.numInstruction = 1) then
             Put_Line("OK numero instruction");
         else
