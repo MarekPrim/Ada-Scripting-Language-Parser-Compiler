@@ -124,7 +124,7 @@ variables := creer_liste_vide;
         else
             Put_Line("KO initialisation instructions");
         end if;
-        if(instructions.all.ptrIns.all.operandes.y.all.nomVariable.str(1) = 'n') then
+        if(instructions.all.ptrIns.all.operandes.z.all.nomVariable.str(1) = 'n') then
             Put_Line("OK valeur variable");
         else
             Put_Line("KO valeur variable");
@@ -172,6 +172,8 @@ variables := creer_liste_vide;
             Put_Line("KO interpreterCommande");
         end if;
 
+        chne.nbCharsEffectif := 3;
+        chne.str(1..3) := "Sum";
         if(rechercherVariable(variables,chne).all.ptrVar.all.valeurVariable = 6) then
             Put_Line("OK interpreterCommande");
         else

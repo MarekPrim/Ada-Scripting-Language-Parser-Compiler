@@ -194,6 +194,8 @@ package body intermediaire is
         end loop;
 
         numInstruction.nbCharsEffectif := i-1;
+        Put_Line("test");
+        Put_Line(numInstruction.str(1..numInstruction.nbCharsEffectif));
         numInstructionEntier := Integer'Value(numInstruction.str(1..numInstruction.nbCharsEffectif));
         ptrInstruction.all.numInstruction := numInstructionEntier;
 
@@ -420,64 +422,49 @@ package body intermediaire is
             l := l.all.prev;
         end loop;
         while (l /= null) loop
-            put("numero de ligne : ");
-            put(l.all.ptrIns.all.numInstruction, 1);
-            new_line;
-            put("       ");
-            put("operation   : ");
-            put(l.all.ptrIns.all.operation.str(1..l.all.ptrIns.all.operation.nbCharsEffectif));
-            new_line;
-            put("       parametre z :");
-            if (l.all.ptrIns.all.operandes.z /= null) then
-                new_line;
-                put("                type    : ");
-                put(l.all.ptrIns.all.operandes.z.all.typeVariable.str(1..l.all.ptrIns.all.operandes.z.all.typeVariable.nbCharsEffectif));
-                new_line;
-                put("                nom     : ");
-                put(l.all.ptrIns.all.operandes.z.all.nomVariable.str(1..l.all.ptrIns.all.operandes.z.all.nomVariable.nbCharsEffectif));
-                new_line;
-                put("                valeur  : ");
-                put(l.all.ptrIns.all.operandes.z.all.valeurVariable, 1);
-            else
-                put(" /");
-            end if;
-            new_line;
-
-            put("       parametre x :");
-            if (l.all.ptrIns.all.operandes.x /= null) then
-                new_line;
-                put("                type    : ");
-                put(l.all.ptrIns.all.operandes.x.all.typeVariable.str(1..l.all.ptrIns.all.operandes.x.all.typeVariable.nbCharsEffectif));
-                new_line;
-                put("                nom     : ");
-                put(l.all.ptrIns.all.operandes.x.all.nomVariable.str(1..l.all.ptrIns.all.operandes.x.all.nomVariable.nbCharsEffectif));
-                new_line;
-                put("                valeur  : ");
-                put(l.all.ptrIns.all.operandes.x.all.valeurVariable, 1);
-            else
-                put(" /");
-            end if;
-            new_line;
-
-            put("       parametre y :");
-            if (l.all.ptrIns.all.operandes.y /= null) then
-                new_line;
-                put("                type    : ");
-                put(l.all.ptrIns.all.operandes.y.all.typeVariable.str(1..l.all.ptrIns.all.operandes.y.all.typeVariable.nbCharsEffectif));
-                new_line;
-                put("                nom     : ");
-                put(l.all.ptrIns.all.operandes.y.all.nomVariable.str(1..l.all.ptrIns.all.operandes.y.all.nomVariable.nbCharsEffectif));
-                new_line;
-                put("                valeur  : ");
-                put(l.all.ptrIns.all.operandes.y.all.valeurVariable, 1);
-            else
-                put(" /");
-            end if;
-            new_line;
-
+            afficherLigneInstruction(l.all.ptrIns);
             l := l.all.next;
         end loop;
     end afficher_liste;
+
+    procedure afficherLigneInstruction (ptrInstruction : T_Ptr_Instruction) is
+
+    begin
+        
+        put("numero de ligne : ");
+        put(ptrInstruction.all.numInstruction, 1);
+        new_line;
+        put("       operation   : ");
+        put_line(ptrInstruction.all.operation.str(1..ptrInstruction.all.operation.nbCharsEffectif));
+
+        put("       parametre z :");
+        afficherParametreLigneInstruction(ptrInstruction.all.operandes.z);
+
+        put("       parametre x :");
+        afficherParametreLigneInstruction(ptrInstruction.all.operandes.x);
+
+        put("       parametre y :");
+        afficherParametreLigneInstruction(ptrInstruction.all.operandes.y);
+
+    end afficherLigneInstruction;
+
+    procedure afficherParametreLigneInstruction (ptrVariable : T_Ptr_Variable) is
+    begin
+
+        if (ptrVariable /= null) then
+            new_line;
+            put("                type    : ");
+            put_line(ptrVariable.all.typeVariable.str(1..ptrVariable.all.typeVariable.nbCharsEffectif));
+            put("                nom     : ");
+            put_line(ptrVariable.all.nomVariable.str(1..ptrVariable.all.nomVariable.nbCharsEffectif));
+            put("                valeur  : ");
+            put(ptrVariable.all.valeurVariable, 1);
+        else
+            put(" /");
+        end if;
+        new_line;
+
+    end afficherParametreLigneInstruction;
 
     function rechercherVariable (variables : in T_List_Variable; nomVariable : in chaine) return T_List_Variable is
         copy : T_List_Variable;

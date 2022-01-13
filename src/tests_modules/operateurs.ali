@@ -11,7 +11,7 @@ RV NO_DYNAMIC_SIZED_OBJECTS
 RV NO_ELABORATION_CODE
 RV SPARK_05
 
-U operateurs%b		operateurs.adb		b7911c5f NE OO PK IL
+U operateurs%b		operateurs.adb		33814210 NE OO PK IL
 W ada%s			ada.ads			ada.ali
 W ada.characters%s	a-charac.ads		a-charac.ali
 W ada.characters.handling%s  a-chahan.adb	a-chahan.ali
@@ -25,7 +25,7 @@ W ada.text_io%s		a-textio.adb		a-textio.ali
 W ada.text_io.unbounded_io%s  a-tiunio.ads	a-tiunio.ali
 W intermediaire%s	intermediaire.adb	intermediaire.ali
 
-U operateurs%s		operateurs.ads		5e52ba78 EE OO PK IL
+U operateurs%s		operateurs.ads		da42e437 EE OO PK IL
 Z ada.tags%s		a-tags.adb		a-tags.ali
 W intermediaire%s	intermediaire.adb	intermediaire.ali
 Z system%s		system.ads		system.ali
@@ -52,7 +52,7 @@ D a-tiunio.ads		20210408115627 759c6b0c ada.text_io.unbounded_io%s
 D a-unccon.ads		20210408115627 0e9b276f ada.unchecked_conversion%s
 D interfac.ads		20210408115627 5ab55268 interfaces%s
 D i-cstrea.ads		20210408115627 e53d8b8e interfaces.c_streams%s
-D intermediaire.ads	20220113070230 74978e57 intermediaire%s
+D intermediaire.ads	20220113074051 f087d018 intermediaire%s
 D operateurs.ads	20220113072722 2ac5342f operateurs%s
 D operateurs.adb	20220113072616 20175bd2 operateurs%b
 D system.ads		20210408115627 4635ec04 system%s
@@ -100,7 +100,7 @@ X 15 a-textio.ads
 X 17 a-tiunio.ads
 25K21*Unbounded_IO 61e29 23|2w75 4r74
 X 21 intermediaire.ads
-4K9*intermediaire 246e18 22|1w6 1r25 23|1w6 1r25
+4K9*intermediaire 249e18 22|1w6 1r25 23|1w6 1r25
 23R10*Chaine 26e15 22|22r73 23|8r73 10r14
 24a13*str{string} 23|20m16 54r53 58r33 58r80
 25i13*nbCharsEffectif{integer} 23|21m16

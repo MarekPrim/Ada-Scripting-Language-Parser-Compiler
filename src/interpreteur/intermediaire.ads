@@ -238,6 +238,9 @@ package intermediaire is
 
     procedure afficher_liste(f_l : in T_List_Instruction);
 
+     procedure afficherLigneInstruction (ptrInstruction : T_Ptr_Instruction);
+
+    procedure afficherParametreLigneInstruction (ptrVariable : T_Ptr_Variable);
 
     --private
         

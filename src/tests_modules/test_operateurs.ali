@@ -13,7 +13,7 @@ RV NO_STANDARD_ALLOCATORS_AFTER_ELABORATION
 RV NO_DEFAULT_INITIALIZATION
 RV SPARK_05
 
-U test_operateurs%b	test_operateurs.adb	72eac7f4 NE OO SU IL
+U test_operateurs%b	test_operateurs.adb	f6fa99bb NE OO SU IL
 W ada%s			ada.ads			ada.ali
 W ada.characters%s	a-charac.ads		a-charac.ali
 W ada.characters.handling%s  a-chahan.adb	a-chahan.ali
@@ -49,7 +49,7 @@ D a-tiunio.ads		20210408115627 759c6b0c ada.text_io.unbounded_io%s
 D a-unccon.ads		20210408115627 0e9b276f ada.unchecked_conversion%s
 D interfac.ads		20210408115627 5ab55268 interfaces%s
 D i-cstrea.ads		20210408115627 e53d8b8e interfaces.c_streams%s
-D intermediaire.ads	20220113070230 74978e57 intermediaire%s
+D intermediaire.ads	20220113074051 f087d018 intermediaire%s
 D operateurs.ads	20220113072722 2ac5342f operateurs%s
 D system.ads		20210408115627 4635ec04 system%s
 D s-atocou.ads		20210408115627 b45c2d8d system.atomic_counters%s
@@ -108,7 +108,7 @@ X 15 a-textio.ads
 X 17 a-tiunio.ads
 25K21*Unbounded_IO 61e29 44|1w75 2r74
 X 21 intermediaire.ads
-4K9*intermediaire 246e18 44|4w6 4r25 21r13 26r12
+4K9*intermediaire 249e18 44|4w6 4r25 21r13 26r12
 18R10*T_Cell_Instruction 59e15 44|134r28 151r28 163r28 177r28 190r28 204r28
 . 219r28 244r28
 20R10*T_Instruction 53e15 44|140r39 154r39 167r39 181r39 194r39 210r39 223r39
