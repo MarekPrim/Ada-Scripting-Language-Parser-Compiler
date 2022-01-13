@@ -453,6 +453,8 @@ package body intermediaire is
         put("       parametre y :");
         afficherParametreLigneInstruction(ptrInstruction.all.operandes.y);
 
+        new_line;
+
     end afficherLigneInstruction;
 
     procedure afficherParametreLigneInstruction (ptrVariable : T_Ptr_Variable) is
