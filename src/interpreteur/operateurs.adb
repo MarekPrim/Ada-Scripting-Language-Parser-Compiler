@@ -47,19 +47,19 @@ package body operateurs is
 
     procedure operationLogique(instructions : in T_List_Instruction; cp : in out Integer; res : out Boolean) is
         resultat : Boolean;
-        op : String(1..2) := "  ";
+        op : String(1..3) := "   ";
         op1 : T_Ptr_Variable;
         op2 : T_Ptr_Variable;
     begin
-        op := instructions.all.ptrIns.all.operation.str(1..2);
+        op := instructions.all.ptrIns.all.operation.str(1..3);
         op1 := instructions.all.ptrIns.all.operandes.x;
         op2 := instructions.all.ptrIns.all.operandes.y;
         resultat := false;
         if op1.all.typeVariable.str(1..7) = "Booleen" and op2.all.typeVariable.str(1..7) = "Booleen" then
-            if op(1) = '&' then
+            if op(1..3) = "AND" then
                 resultat := op1.all.valeurVariable + op2.all.valeurVariable = 2;
                 null;
-            elsif op(1) = '|' then
+            elsif op(1..2) = "OR" then
                 resultat := op1.all.valeurVariable + op2.all.valeurVariable > 1;
                 null;
             else

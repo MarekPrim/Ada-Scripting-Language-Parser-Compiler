@@ -13,7 +13,7 @@ RV NO_STANDARD_ALLOCATORS_AFTER_ELABORATION
 RV NO_DEFAULT_INITIALIZATION
 RV SPARK_05
 
-U test_operateurs%b	test_operateurs.adb	f6fa99bb NE OO SU IL
+U test_operateurs%b	test_operateurs.adb	b4ab30eb NE OO SU IL
 W ada%s			ada.ads			ada.ali
 W ada.characters%s	a-charac.ads		a-charac.ali
 W ada.characters.handling%s  a-chahan.adb	a-chahan.ali
@@ -72,7 +72,7 @@ D s-stratt.ads		20210408115627 aedef97e system.stream_attributes%s
 D s-traent.ads		20210408115627 005bf670 system.traceback_entries%s
 D s-unstyp.ads		20210408115627 34867c83 system.unsigned_types%s
 D s-wchcon.ads		20210408115627 1b7d22d2 system.wch_con%s
-D test_operateurs.adb	20220113073031 01cc9f1d test_operateurs%b
+D test_operateurs.adb	20220113075618 439d364d test_operateurs%b
 G a e
 G c Z b b [test_operateurs standard 6 11 none]
 G r s t_operandes [test_operateurs standard 6 11 none] [t_operandesIP intermediaire 35 10 none]

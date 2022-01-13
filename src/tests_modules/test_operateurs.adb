@@ -202,8 +202,8 @@ instruction := creer_liste_vide;
 
         instruction := creer_liste_vide;
         instruction := new T_Cell_Instruction'(null,null,null);
-        chaine.str(1) := '&';
-        chaine.nbCharsEffectif := 1;
+        chaine.str(1..3) := "AND";
+        chaine.nbCharsEffectif := 3;
         variables.all.ptrVar.typeVariable.str(1..7) := "Booleen";
         variables.all.next.all.ptrVar.typeVariable.str(1..7) := "Booleen";
         operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
@@ -217,8 +217,8 @@ instruction := creer_liste_vide;
 
         instruction := creer_liste_vide;
         instruction := new T_Cell_Instruction'(null,null,null);
-        chaine.str(1) := '|';
-        chaine.nbCharsEffectif := 1;
+        chaine.str(1..2) := "OR";
+        chaine.nbCharsEffectif := 2;
         operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
         instruction.all.ptrIns := new T_Instruction'(1,operandes,chaine);
         operationLogique(instruction,cp,resultat_logique);
