@@ -1,7 +1,7 @@
 -- Ce code intermédiaire calcule la factorielle F d’un entier n
 -- avec numéros de ligne
 Programme Facto est
-n, i, Fact, T1, T2, T3 : Entier
+n, i, Fact, T1, T2, T3, T4 : Entier
 Debut
 1 n <- 5
 2 i <- 1
@@ -17,5 +17,6 @@ Debut
 12 T2 <- i = n
 13 T3 <- T1 OR T2
 14 GOTO 7
-15 NULL
+15 T4 <- Fact*Fact
+16 NULL
 Fin

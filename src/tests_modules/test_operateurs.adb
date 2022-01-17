@@ -18,13 +18,13 @@ procedure test_operateurs is
     cp : Integer;
     resultat_arithmetique : Integer;
     resultat_logique : Integer;
-    chaine: intermediaire.Chaine;
+    chaine: Unbounded_String;
     operandes : T_Operandes;
     F         : File_Type;
     fileName : constant string :=  "code_test.med";
     fileNameGoto : constant String := "code_test_goto.med";
     ligne : Unbounded_string;
-    chne : intermediaire.Chaine;
+    chne : Unbounded_String;
 
     
 
@@ -117,16 +117,15 @@ instruction := creer_liste_vide;
             end loop;
         op1 := 2;
         op2 := 4;
-        chne.nbCharsEffectif := 1;
-        chne.str(1) := 'i';
+        
+        chne := To_Unbounded_String("i");
         --affectation("Entier",chne,5, variables);
         --chne.str(1) := 'n';
         --affectation("Entier",chne,2, variables);
         
         instructions := creer_liste_vide;
         instructions := new T_Cell_Instruction'(null,null,null);
-        chaine.str(1) := '=';
-        chaine.nbCharsEffectif := 1;
+        chaine := To_Unbounded_String("=");
         operandes.x := variables.all.ptrVar;
         operandes.y := variables.all.next.all.ptrVar;
         operandes.z := null;
@@ -142,8 +141,7 @@ instruction := creer_liste_vide;
 
         instructions := creer_liste_vide;
         instructions := new T_Cell_Instruction'(null,null,null);
-        chaine.str(1) := '>';
-        chaine.nbCharsEffectif := 1;
+        chaine := To_Unbounded_String(">");
         instructions.all.ptrIns := new T_Instruction'(1,operandes,chaine);
         resultat_logique := operationLogique(chaine,op1,op2);
         if(resultat_logique = 0) then
@@ -154,8 +152,7 @@ instruction := creer_liste_vide;
 
         instructions := creer_liste_vide;
         instructions := new T_Cell_Instruction'(null,null,null);
-        chaine.str(1) := '<';
-        chaine.nbCharsEffectif := 1;
+        chaine := To_Unbounded_String("<");
         operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
         instructions.all.ptrIns := new T_Instruction'(1,operandes,chaine);
         resultat_logique := operationLogique(chaine,op1,op2);
@@ -168,8 +165,7 @@ instruction := creer_liste_vide;
 
 instructions := creer_liste_vide;
         instructions := new T_Cell_Instruction'(null,null,null);
-        chaine.str(1..2) := ">=";
-        chaine.nbCharsEffectif := 2;
+        chaine := To_Unbounded_String(">=");
         operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
         instructions.all.ptrIns := new T_Instruction'(1,operandes,chaine);
         resultat_logique := operationLogique(chaine,op1,op2);
@@ -181,8 +177,7 @@ instructions := creer_liste_vide;
 
         instructions := creer_liste_vide;
         instructions := new T_Cell_Instruction'(null,null,null);
-        chaine.str(1..2) := "<=";
-        chaine.nbCharsEffectif := 2;
+        chaine := To_Unbounded_String("<=");
         operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
         instructions.all.ptrIns := new T_Instruction'(1,operandes,chaine);
 
@@ -195,10 +190,10 @@ instructions := creer_liste_vide;
 
         instructions := creer_liste_vide;
         instructions := new T_Cell_Instruction'(null,null,null);
-        chaine.str(1..3) := "AND";
-        chaine.nbCharsEffectif := 3;
-        variables.all.ptrVar.typeVariable.str(1..7) := "Booleen";
-        variables.all.next.all.ptrVar.typeVariable.str(1..7) := "Booleen";
+        chaine := To_Unbounded_String("AND");
+
+        variables.all.ptrVar.typeVariable := To_Unbounded_String("Booleen");
+        variables.all.next.all.ptrVar.typeVariable := To_Unbounded_String("Booleen");
         operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
         instructions.all.ptrIns := new T_Instruction'(1,operandes,chaine);
         resultat_logique := operationLogique(chaine,op1,op2);
@@ -210,8 +205,7 @@ instructions := creer_liste_vide;
 
         instructions := creer_liste_vide;
         instructions := new T_Cell_Instruction'(null,null,null);
-        chaine.str(1..2) := "OR";
-        chaine.nbCharsEffectif := 2;
+        chaine := To_Unbounded_String("OR");
         operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
         instructions.all.ptrIns := new T_Instruction'(1,operandes,chaine);
         resultat_logique := operationLogique(chaine,op1,op2);

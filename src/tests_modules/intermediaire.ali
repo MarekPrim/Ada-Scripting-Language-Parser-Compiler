@@ -5,6 +5,7 @@ RN
 RV NO_ALLOCATORS
 RV NO_DIRECT_BOOLEAN_OPERATORS
 RV NO_EXCEPTION_HANDLERS
+RV NO_EXCEPTION_PROPAGATION
 RV NO_EXCEPTIONS
 RV NO_IO
 RV NO_IMPLICIT_CONDITIONALS
@@ -18,7 +19,7 @@ RV NO_DYNAMIC_SIZED_OBJECTS
 RV NO_ELABORATION_CODE
 RV SPARK_05
 
-U intermediaire%b	intermediaire.adb	65fc2c17 NE OO PK IL
+U intermediaire%b	intermediaire.adb	f7d98ed1 NE OO PK IL
 W ada%s			ada.ads			ada.ali
 W ada.characters%s	a-charac.ads		a-charac.ali
 W ada.characters.handling%s  a-chahan.adb	a-chahan.ali
@@ -33,19 +34,26 @@ Z interfaces%s		interfac.ads		interfac.ali
 W operateurs%s		operateurs.adb		operateurs.ali
 Z system%s		system.ads		system.ali
 Z system.exception_table%s  s-exctab.adb	s-exctab.ali
+Z system.pool_global%s	s-pooglo.adb		s-pooglo.ali
 Z system.secondary_stack%s  s-secsta.adb	s-secsta.ali
 Z system.soft_links%s	s-soflin.adb		s-soflin.ali
 Z system.standard_library%s  s-stalib.adb	s-stalib.ali
+Z system.storage_elements%s  s-stoele.adb	s-stoele.ali
+Z system.storage_pools%s  s-stopoo.adb		s-stopoo.ali
 Z system.storage_pools.subpools%s  s-stposu.adb	s-stposu.ali
 Z system.val_int%s	s-valint.adb		s-valint.ali
 
-U intermediaire%s	intermediaire.ads	52fc4c26 EE OO PK IL
+U intermediaire%s	intermediaire.ads	96dc6583 EE OO PF PK IL
 W ada%s			ada.ads			ada.ali
+Z ada.exceptions%s	a-except.adb		a-except.ali
 W ada.strings%s		a-string.ads		a-string.ali
 W ada.strings.unbounded%s  a-strunb.adb		a-strunb.ali
 Z ada.tags%s		a-tags.adb		a-tags.ali
 Z system%s		system.ads		system.ali
 Z system.exception_table%s  s-exctab.adb	s-exctab.ali
+Z system.finalization_masters%s  s-finmas.adb	s-finmas.ali
+Z system.pool_global%s	s-pooglo.adb		s-pooglo.ali
+Z system.soft_links%s	s-soflin.adb		s-soflin.ali
 Z system.standard_library%s  s-stalib.adb	s-stalib.ali
 
 D ada.ads		20210408115627 76789da1 ada%s
@@ -68,9 +76,9 @@ D a-tiunio.ads		20210408115627 759c6b0c ada.text_io.unbounded_io%s
 D a-unccon.ads		20210408115627 0e9b276f ada.unchecked_conversion%s
 D interfac.ads		20210408115627 5ab55268 interfaces%s
 D i-cstrea.ads		20210408115627 e53d8b8e interfaces.c_streams%s
-D intermediaire.ads	20220117102838 44aa3c7d intermediaire%s
-D intermediaire.adb	20220117103656 eba1a66f intermediaire%b
-D operateurs.ads	20220117100338 e7835494 operateurs%s
+D intermediaire.ads	20220117165613 808a15d8 intermediaire%s
+D intermediaire.adb	20220117165048 001942cf intermediaire%b
+D operateurs.ads	20220117165048 5a3e3b57 operateurs%s
 D system.ads		20210408115627 4635ec04 system%s
 D s-atocou.ads		20210408115627 b45c2d8d system.atomic_counters%s
 D s-crtl.ads		20210408115627 0ebbdb71 system.crtl%s
@@ -80,6 +88,7 @@ D s-finmas.ads		20210408115627 7811a767 system.finalization_masters%s
 D s-finroo.ads		20210408115627 4ff27390 system.finalization_root%s
 D s-memory.ads		20210408115627 597d6634 system.memory%s
 D s-parame.ads		20210408115627 48ec542b system.parameters%s
+D s-pooglo.ads		20210408115627 ede33ef8 system.pool_global%s
 D s-secsta.ads		20210408115627 20bbe636 system.secondary_stack%s
 D s-soflin.ads		20210408115627 a7318a92 system.soft_links%s
 D s-stache.ads		20210408115627 a37c21ec system.stack_checking%s
@@ -94,295 +103,292 @@ D s-unstyp.ads		20210408115627 34867c83 system.unsigned_types%s
 D s-valint.ads		20210408115627 b5ff6963 system.val_int%s
 D s-wchcon.ads		20210408115627 1b7d22d2 system.wch_con%s
 G a e
-G c Z s b [parsefile intermediaire 72 15 none]
-G c Z s b [lignecommenceparmotreserve intermediaire 84 14 none]
-G c Z s b [renvoyerlignesansespace intermediaire 95 14 none]
-G c Z s b [traiterprogramme intermediaire 106 15 none]
-G c Z s b [recuperervariables intermediaire 116 16 none]
-G c Z s b [recupererinstructions intermediaire 127 15 none]
-G c Z s b [interpretercommande intermediaire 137 15 none]
-G c Z s b [recherchervariable intermediaire 149 14 none]
-G c Z s b [pointerenteteinstructions intermediaire 167 15 none]
-G c Z s b [creer_liste_vide intermediaire 176 14 none]
-G c Z s b [creer_liste_vide intermediaire 187 14 none]
-G c Z s b [est_vide intermediaire 198 14 none]
-G c Z s b [est_vide intermediaire 207 14 none]
-G c Z s b [ajouter intermediaire 221 15 none]
-G c Z s b [ajouter intermediaire 234 15 none]
-G c Z s b [afficher_liste intermediaire 236 15 none]
-G c Z s b [afficher_liste intermediaire 238 15 none]
-G c Z s b [afficherligneinstruction intermediaire 240 16 none]
-G c Z s b [afficherparametreligneinstruction intermediaire 242 15 none]
-G c Z s b [changerinstructionparnumero intermediaire 244 15 none]
-G c Z s b [creer_variable_tmp intermediaire 246 14 none]
-G c Z s s [t_cell_variableIP intermediaire 60 10 none]
-G c Z s s [t_cell_instructionIP intermediaire 54 10 none]
-G c Z s s [chaineIP intermediaire 23 10 none]
-G c Z s s [t_variableIP intermediaire 41 10 none]
-G c Z s s [t_operandesIP intermediaire 35 10 none]
-G c Z s s [t_instructionIP intermediaire 48 10 none]
-G c Z b b [recuperernumeroinstructionligne intermediaire 183 14 none]
-G r c none [traiterprogramme intermediaire 106 15 none] [operationlogique operateurs 49 14 none]
-G r c none [traiterprogramme intermediaire 106 15 none] [operationarithmetique operateurs 34 14 none]
-G r c none [interpretercommande intermediaire 137 15 none] [operationlogique operateurs 49 14 none]
-G r c none [interpretercommande intermediaire 137 15 none] [operationarithmetique operateurs 34 14 none]
+G c Z s b [parsefile intermediaire 66 15 none]
+G c Z s b [lignecommenceparmotreserve intermediaire 78 14 none]
+G c Z s b [renvoyerlignesansespace intermediaire 89 14 none]
+G c Z s b [traiterprogramme intermediaire 100 15 none]
+G c Z s b [recuperervariables intermediaire 110 16 none]
+G c Z s b [recupererinstructions intermediaire 121 15 none]
+G c Z s b [interpretercommande intermediaire 131 15 none]
+G c Z s b [recherchervariable intermediaire 143 14 none]
+G c Z s b [pointerenteteinstructions intermediaire 161 15 none]
+G c Z s b [creer_liste_vide intermediaire 170 14 none]
+G c Z s b [creer_liste_vide intermediaire 181 14 none]
+G c Z s b [est_vide intermediaire 192 14 none]
+G c Z s b [est_vide intermediaire 201 14 none]
+G c Z s b [ajouter intermediaire 215 15 none]
+G c Z s b [ajouter intermediaire 228 15 none]
+G c Z s b [afficher_liste intermediaire 239 15 none]
+G c Z s b [afficher_liste intermediaire 250 15 none]
+G c Z s b [afficherligneinstruction intermediaire 261 15 none]
+G c Z s b [afficherparametreligneinstruction intermediaire 272 15 none]
+G c Z s b [changerinstructionparnumero intermediaire 284 15 none]
+G c Z s b [creer_variable_tmp intermediaire 296 14 none]
+G c Z s b [estligneutile intermediaire 308 14 none]
+G c Z s b [isanumber intermediaire 320 14 none]
+G c Z s s [t_cell_variableIP intermediaire 54 10 none]
+G c Z s s [t_cell_instructionIP intermediaire 48 10 none]
+G c Z s s [t_variableDI intermediaire 35 10 none]
+G c Z s s [t_variableDA intermediaire 35 10 none]
+G c Z s s [t_variableDF intermediaire 35 10 none]
+G c Z s s [t_variableIP intermediaire 35 10 none]
+G c Z s s [t_operandesIP intermediaire 29 10 none]
+G c Z s s [t_instructionDI intermediaire 42 10 none]
+G c Z s s [t_instructionDA intermediaire 42 10 none]
+G c Z s s [t_instructionDF intermediaire 42 10 none]
+G c Z s s [t_instructionIP intermediaire 42 10 none]
+G c Z b b [recuperernumeroinstructionligne intermediaire 191 14 none]
+G r c none [traiterprogramme intermediaire 100 15 none] [operationlogique operateurs 50 14 none]
+G r c none [traiterprogramme intermediaire 100 15 none] [operationarithmetique operateurs 35 14 none]
+G r c none [traiterprogramme intermediaire 100 15 none] [branchementconditionel operateurs 64 15 none]
+G r c none [traiterprogramme intermediaire 100 15 none] [branchementbasic operateurs 57 15 none]
+G r c none [interpretercommande intermediaire 131 15 none] [operationlogique operateurs 50 14 none]
+G r c none [interpretercommande intermediaire 131 15 none] [operationarithmetique operateurs 35 14 none]
+G r c none [interpretercommande intermediaire 131 15 none] [branchementconditionel operateurs 64 15 none]
+G r c none [interpretercommande intermediaire 131 15 none] [branchementbasic operateurs 57 15 none]
 X 1 ada.ads
 16K9*Ada 20e8 21|1r6 2r5 22|1r6 1r19 1r40 1r63 1r89 3r5 3r18 3r39 3r62 3r88
-. 86r46 90r42 100r46 105r42 111r46
+. 88r46 93r42 105r46 112r42 118r46
 X 2 a-charac.ads
 16K13*Characters 18e19 22|1r93 3r92
 X 3 a-chahan.ads
 36K24*Handling 159e28 22|1w104 3r103
-66V13*To_Lower{character} 22|45s32
+66V13*To_Lower{character} 22|46s32
 X 7 a-inteio.ads
 18K13*Integer_Text_IO[16|46] 22|1w23 3r22
 X 10 a-string.ads
 16K13*Strings 35e16 21|1r10 2r9 22|1r44 3r43
 X 12 a-strunb.ads
 82K21*Unbounded 756e26 21|1w18 2r17 22|1w52 3r51
-87R9*Unbounded_String<6|43R9> 739e14 21|84r53 95r50 95r75 116r82 127r126
-. 22|33r53 60r50 60r75 62r21 76r17 121r81 183r82 198r126
-92V13*Length{natural} 22|40s25 42s21 65s21 141s20 151s20 248s25 273s25 308s25
-. 309s27 309s90 337s22 339s26 343s29 354s29
-103V13*To_Unbounded_String{87R9} 22|40s32
-143U14*Append 22|67s17
-191V13*Element{character} 22|50s22 66s22 67s35 133s15 143s36 151s38 156s34
-. 156s81 159s39 187s30 188s42 236s35 236s82 238s40 248s63 250s40 265s34 267s37
-. 273s63 275s40 297s40 308s63 308s110 313s44 349s41 354s67 354s114 356s44
-207V13*Slice{string} 22|228s13 236s121 262s16 287s16 295s20 309s52 309s115
-. 339s51 343s54
+87R9*Unbounded_String<6|43R9> 739e14 21|37r24 38r23 45r21 78r53 89r50 89r75
+. 110r82 121r126 143r83 296r51 308r40 320r42 22|34r53 61r50 61r75 63r21 77r17
+. 127r40 140r81 143r24 144r23 191r82 192r26 204r126 207r24 208r24 209r25
+. 211r24 213r21 344r42 357r51 360r26 361r27 480r83 525r24
+92V13*Length{natural} 22|41s25 43s21 66s21 129s13 132s17 157s20 164s20 248s25
+. 266s25 294s25 295s27 295s90 310s22 312s26 315s29 323s29 348s20
+103V13*To_Unbounded_String{87R9} 22|41s32 183s32 232s26 254s30 255s30 272s29
+. 273s30 279s26 313s34 316s34 335s30 366s27 367s28
+116V13*To_String{string} 22|200s30 253s46 271s46 365s44
+143U14*Append 22|68s17 158s13 169s17 196s13 237s17 249s17 262s17 267s17 284s17
+. 298s21 319s21 324s21
+191V13*Element{character} 22|51s22 67s22 68s35 150s15 158s34 164s38 167s34
+. 167s81 169s37 195s30 196s36 236s35 236s82 237s38 248s63 249s38 261s34 262s35
+. 266s63 267s38 284s38 294s63 294s110 298s42 319s39 323s67 323s114 324s42
+. 349s31 539s21 539s82 539s143 539s204 540s103
+207V13*Slice{string} 22|132s45 230s13 236s121 259s16 277s16 283s20 295s52
+. 295s115 312s51 315s54
+238V14*"="{boolean} 22|489s102
+244V14*"="{boolean} 22|529s25 531s28 533s28
 X 15 a-textio.ads
-57K13*Text_IO 727e16 22|1w10 1r67 3r9 3r66 86r50 90r46 100r50 105r46 111r50
-64P9*File_Type 22|75r21
-66n23*In_File{66E9} 22|83r18
-114U14*Open 22|83s9
-129U14*Close 22|116s9
-264U14*New_Line 22|456s13 478s9 491s9 499s13 509s9
-465U14*Put 22|476s9 479s9 482s9 485s9 488s9 500s13 502s13 504s13 507s13 602s17
-508U14*Put_Line 22|453s13 454s13 480s9 501s13 503s13
+57K13*Text_IO 727e16 22|1w10 1r67 3r9 3r66 88r50 93r46 105r50 112r46 118r50
+64P9*File_Type 22|76r21
+66n23*In_File{66E9} 22|84r18
+114U14*Open 22|84s9
+129U14*Close 22|123s9
+264U14*New_Line 22|423s13 445s9 458s9 466s13 476s9
+465U14*Put 22|443s9 446s9 449s9 452s9 455s9 467s13 469s13 471s13 474s13 567s17
 X 16 a-tiinio.ads
-80U14*Put 22|455s13[7|18] 477s9[7|18] 505s13[7|18]
+80U14*Put 22|422s13[7|18] 444s9[7|18] 472s13[7|18]
 X 17 a-tiunio.ads
-25K21*Unbounded_IO 61e29 22|1w75 3r74 86r58 90r54 100r58 105r54 111r58
-45V13*Get_Line=47:42{12|87R9} 22|86s71 90s67 100s71 105s67 111s71
+25K21*Unbounded_IO 61e29 22|1w75 3r74 88r58 93r54 105r58 112r54 118r58
+41U14*Put_Line=43:42 22|420s13 421s13 447s9 468s13 470s13
+45V13*Get_Line=47:42{12|87R9} 22|88s71 93s67 105s71 112s67 118s71
 X 21 intermediaire.ads
-4K9*intermediaire 253l5 253e18 22|6b14 606l5 606t18
-6E10*Reserved_Langage_Word 6e57 22|87r54 92r47 102r54 113r54
-6n36*Programme{6E10} 22|87r82
-6n46*Debut{6E10} 22|92r75 102r82
-6n53*Fin{6E10} 22|113r82
+4K9*intermediaire 326l5 326e18 22|6b14 571l5 571t18
+6E10*Reserved_Langage_Word 6e57 22|89r54 95r47 107r54 120r54
+6n36*Programme{6E10} 22|89r82
+6n46*Debut{6E10} 22|95r75 107r82
+6n53*Fin{6E10} 22|120r82
 7E11*Type_Defini 7e42
 7n27*Entier{7E11}
 7n34*Booleen{7E11}
-8X5*Aucune_Variable_Definie 22|93r19
+8X5*Aucune_Variable_Definie 22|96r19
 9X5*Type_Incorrect
 10X5*Variable_Non_Declaree
-11X5*Variable_Deja_Definie 22|168r27
-12X5*Variable_Non_Trouvee 22|171r30 524r19
+11X5*Variable_Deja_Definie 22|177r27
+12X5*Variable_Non_Trouvee 22|180r30 493r19
 13X5*Acces_Limite
 14X5*Fichier_Non_Lisible
 15X5*Fichier_Non_Trouve
-17R10*T_Cell_Variable 28r36 60c10 64e15 22|420r24 425r33
-18R10*T_Cell_Instruction 29r39 54c10 58e15 22|434r24 439r33
-19R10*T_Variable 31r35 41c10 46e15 22|165r36 259r32 284r32 402r20
-20R10*T_Instruction 32r38 48c10 52e15 22|219r31
-23R10*Chaine 26e15 43r24 44r23 51r21 149r83 246r51 22|126r24 127r23 184r26
-. 202r24 203r24 204r25 205r25 208r24 210r21 388r51 391r26 392r27 513r83 556r24
-24a13*str{string} 22|143m26 159m29 188m28 194r45 230m23 238m30 250m30 254r59
-. 256m26 258m27 267m27 275m30 279r59 281m26 283m27 289m23 297m30 313m34 324r48
-. 341m31 345m31 349m31 356m34 365r52 378m27 396r56 398m24 400m25 453r51 454r52
-. 480r47 501r51 503r50 520r102 520r173 560r25 562r28 564r28 574r61 574r117
-. 574r173 574r229 575r143
-25i13*nbCharsEffectif{integer} 22|147m22 164m29 192m24 194r67 231m23 241m26
-. 253m26 254r79 255m26 256r46 257m27 258r48 270m23 278m26 279r79 280m26 281r46
-. 282m27 283r48 290m23 300m26 318m26 327r41 340m31 344m31 348m31 359m30 368r45
-. 379m27 396r75 397m24 398r46 399m25 400r48 453r87 454r89 480r83 501r87 503r85
-. 520r141 520r192 560r45 562r48 564r48
-28P10*T_List_Variable(17R10) 62r16 63r16 72r67 116r54 127r98 149r49 149r98
-. 176r38 198r30 221r36 236r39 22|14r21 74r67 121r53 198r98 214r25 417r36
-. 445r39 446r13 513r49 513r98 514r16 530r38 531r9 537r30
-29P10*T_List_Instruction(18R10) 56r16 57r16 72r106 127r59 137r60 167r66 187r38
-. 207r30 234r36 238r39 244r67 22|15r24 16r26 74r106 198r59 406r66 431r36
-. 461r39 462r13 542r38 543r9 549r30 555r60 585r67
-31P10*T_Ptr_Variable(19R10) 36r13 37r13 38r13 61r18 221r68 242r64 246r66
-. 22|128r23 213r23 388r66 417r68 495r64
-32P10*T_Ptr_Instruction(20R10) 55r18 234r71 240r59 22|211r26 431r71 472r58
-35R10*T_Operandes 39e15 50r21
-36p9*x{31P10} 22|243m42 331m46 334m46 486r72 565r57 572r121 575r191 577r179
-37p9*y{31P10} 22|372m50 375m50 489r72 571r57 575r249 577r237
-38p9*z{31P10} 22|260m42 285m42 302m42 483r72 563r97 566r101 572r57 575r61
-. 577r61
-42i9*valeurVariable{integer} 22|455r34 505r33 563r103 565r63 566r107 572m63
-. 572r127 575m63 575r193 575r251 577m63 577r181 577r239
-43r9*typeVariable{23R10} 22|454r39 454r76 501r38 501r74
-44r9*nomVariable{23R10} 22|453r39 453r75 503r38 503r73 520r90 520r129
-45b9*isConstant{boolean}
-49i9*numInstruction{integer} 22|226m28 477r32 590r46 593r46
-50r9*operandes{35R10} 22|243m32 260m32 285m32 302m32 331m36 334m36 372m40
-. 375m40 483r62 486r62 489r62 563r87 565r47 566r91 571r47 572r47 572r111
-. 575m51 575r181 575r239 577m51 577r169 577r227
-51r9*operation{23R10} 22|383m28 480r37 480r73 558r55 574r51 574r107 574r163
-. 574r219 575r133 577r128
-55p9*ptrIns{32P10} 22|467r44 558r44 563r76 565r36 566r80 571r36 572r36 572r100
-. 574r40 574r96 574r152 574r208 575r40 575r122 575r170 575r228 577r40 577r117
-. 577r158 577r216 590r35 593r35
-56p9*prev{29P10} 22|410r66 411r50 440m30 594r50
-57p9*next{29P10} 22|436r27 437r32 439m21 440r21 441r28 468r24 561r50 568r54
-. 580r50 591r50
-61p9*ptrVar{31P10} 22|243r65 302r65 334r69 375r73 453r28 453r64 454r28 454r65
-. 455r23 520r46 520r79 520r118
-62p9*next{28P10} 22|422r27 423r32 425m21 426r21 427r28 457r24 521r30
-63p9*prev{28P10} 22|426m30 449r21 450r24 517r24 518r30
-72U15*parseFile 72>26 72=48 72=84 22|18s9 74b15 118l9 118t18
-72a26 fileName{string} 22|74b26 83r27
-72p48 variables{28P10} 22|74b48 79m9 98m32 109m49
-72p84 instructions{29P10} 22|74b84 81m9 109m35
-84V14*ligneCommenceParMotReserve{boolean} 84>42 84>71 22|33b14 58l9 58t35
-. 87s20 92s13 102s20 113s20
-84r42 ligne{12|87R9} 22|33b42 42r28 50r30
-84a71 enum{string} 22|33b71 40r52 45r41 47r32
-95V14*renvoyerLigneSansEspace{12|87R9} 95>39 22|60b14 72l9 72t32 86s22 90s18
-. 100s22 105s18 111s22
-95r39 ligne{12|87R9} 22|60b39 65r28 66r30 67r43
-106U15*traiterProgramme 106>32 22|13b15 31l9 31t25
-106a32 fileName{string} 22|13b32 18r19
-116U16*recupererVariables 116=35 116>71 22|98s13 121b15 181l9 181t27
-116p35 variables{28P10} 22|121b34 167r20 167r66 173m25
-116r71 ligne{12|87R9} 22|121b70 133r23 141r27 143r44 151r27 151r46 156r42
-. 156r89 159r47
-127U15*recupererInstructions 127=37 127=79 127>115 22|109s13 198b15 386l9
-. 386t30
-127p37 instructions{29P10} 22|198b37 384m17
-127p79 variables{28P10} 22|198b79 242r49 301r49 333r53 374r57
-127r115 ligne{12|87R9} 22|198b115 224r61 228r19 236r43 236r90 236r127 238r48
-. 248r32 248r71 250r48 262r22 265r42 267r45 273r32 273r71 275r48 287r22 295r26
-. 297r48 308r32 308r71 308r118 309r34 309r58 309r97 309r121 313r52 337r29
-. 339r33 339r57 343r36 343r60 349r49 354r36 354r75 354r122 356r52
-137U15*interpreterCommande 137=36 22|25s13 555b15 583l9 583t28
-137p36 ptrInstruction{29P10} 22|555b36 558r25 561m13 561r31 563m41 563r57
-. 565r17 566m45 566r61 568m17 568r35 571r17 572r17 572r81 574r21 574r77 574r133
-. 574r189 575r21 575r103 575r151 575r209 577r21 577r98 577r139 577r197 580m13
-. 580r31
-149V14*rechercherVariable{28P10} 149>34 149>66 22|167s47 242s30 301s30 333s34
-. 374s38 513b14 528l9 528t27
-149p34 variables{28P10} 22|513b34 516r17
-149r66 nomVariable{23R10} 22|513b66 520r161 520r180
-167U15*pointerEnTeteInstructions 167=42 22|20s9 406b15 414l9 414t34 465s9
-167p42 ptrInstruction{29P10} 22|406b42 410r15 410r47 411m13 411r31
-176V14*creer_liste_vide{28P10} 22|79s22 530b14 535l9 535t25
-187V14*creer_liste_vide{29P10} 22|81s25 542b14 547l9 547t25
-198V14*est_vide{boolean} 178s16 198>23 22|537b14 540l9 540t17
-198p23 p{28P10} 22|537b23 539r16
-207V14*est_vide{boolean} 189s16 207>23 22|549b14 552l9 552t17
-207p23 p{29P10} 22|549b23 551r16
-221U15*ajouter 221=23 221>53 22|173s17 417b15 429l9 429t16
-221p23 f_l{28P10} 22|417b23 419r13 420m13 422r19 423m17 423r24 425r13 426r13
-. 426r38 427m13 427r20
-221p53 f_nouveau{31P10} 22|417b53 420r41 425r50
-234U15*ajouter 234=23 234>56 22|384s9 431b15 443l9 443t16
-234p23 f_l{29P10} 22|431b23 433r13 434m13 436r19 437m17 437r24 439r13 440r13
-. 440r38 441m13 441r20
-234p56 f_nouveau{32P10} 22|431b56 434r44 439r53
-236U15*afficher_liste 236>30 22|29s9 445b15 459l9 459t23
-236p30 f_l{28P10} 22|445b30 448r14
-238U15*afficher_liste 238>30 22|27s9 461b15 470l9 470t23
-238p30 f_l{29P10} 22|461b30 464r14
-240U16*afficherLigneInstruction 240>42 22|467s13 472b15 493l9 493t33
-240p42 ptrInstruction{32P10} 22|472b41 477r13 480r18 480r54 483r43 486r43
-. 489r43
-242U15*afficherParametreLigneInstruction 242>50 22|483s9 486s9 489s9 495b15
-. 511l9 511t42
-242p50 ptrVariable{31P10} 22|495b50 498r13 501r22 501r58 503r22 503r57 505r17
-244U15*changerInstructionParNumero 244=43 244>87 22|563s13 566s17 585b15
-. 592s13 595s13 604l9 604t36
-244p43 ptrInstruction{29P10} 22|585b43 588r13 590r16 591m13 591r31 592m41
-. 593r16 594m13 594r31 595m41
-244i87 numInstruction{integer} 22|585b87 590r63 592r57 593r63 595r57
-246V14*creer_variable_tmp{31P10} 246>34 22|331s51 372s55 388b14 404l9 404t27
-246r34 nomVariable{23R10} 22|388b34 396r44 396r63
+17R10*T_Cell_Variable 22r36 54c10 58e15 22|387r24 392r33
+18R10*T_Cell_Instruction 23r39 48c10 52e15 22|401r24 406r33
+19R10*T_Variable 25r35 35c10 40e15 22|174r36 256r32 274r32 369r20
+20R10*T_Instruction 26r38 42c10 46e15 22|221r31
+22P10*T_List_Variable(17R10) 56r16 57r16 66r67 110r54 121r98 143r49 143r108
+. 170r38 192r30 215r36 239r39 22|14r21 75r67 140r53 204r98 216r25 384r36
+. 412r39 413r13 480r49 480r108 481r16 499r38 500r9 506r30
+23P10*T_List_Instruction(18R10) 50r16 51r16 66r106 121r59 131r60 161r66 181r38
+. 201r30 228r36 250r39 284r67 22|15r24 16r26 75r106 204r59 373r66 398r36
+. 428r39 429r13 511r38 512r9 518r30 524r60 550r67
+25P10*T_Ptr_Variable(19R10) 30r13 31r13 32r13 55r18 215r68 272r64 296r76
+. 22|145r23 215r23 357r76 384r68 462r64
+26P10*T_Ptr_Instruction(20R10) 49r18 228r71 261r58 22|214r26 398r71 439r58
+29R10*T_Operandes 33e15 44r21
+30p9*x{25P10} 22|244m42 304m46 307m46 453r72 537r121 540r196 542r179
+31p9*y{25P10} 22|329m50 332m50 456r72 536r57 540r254 542r237
+32p9*z{25P10} 22|257m42 275m42 289m42 450r72 532r70 537r57 540r61 542r61
+36i9*valeurVariable{integer} 22|422r34 472r33 532r76 537m63 537r127 540m63
+. 540r198 540r256 542m63 542r181 542r239
+37r9*typeVariable{12|87R9} 22|421r39 468r38
+38r9*nomVariable{12|87R9} 22|420r39 470r38 489r90
+39b9*isConstant{boolean}
+43i9*numInstruction{integer} 22|228m28 444r32 530r60 555r46 558r46
+44r9*operandes{29R10} 22|244m32 257m32 275m32 289m32 304m36 307m36 329m40
+. 332m40 450r62 453r62 456r62 532r60 536r47 537r47 537r111 540m51 540r186
+. 540r244 542m51 542r169 542r227
+45r9*operation{12|87R9} 22|339m28 447r37 527r55 539r59 539r120 539r181 539r242
+. 540r141 542r128
+49p9*ptrIns{26P10} 22|434r44 527r44 530r49 532r49 536r36 537r36 537r100 539r48
+. 539r109 539r170 539r231 540r40 540r130 540r175 540r233 542r40 542r117 542r158
+. 542r216 555r35 558r35
+50p9*prev{23P10} 22|377r66 378r50 407m30 559r50
+51p9*next{23P10} 22|403r27 404r32 406m21 407r21 408r28 435r24 545r50 556r50
+55p9*ptrVar{25P10} 22|244r65 289r65 307r69 332r73 420r28 421r28 422r23 489r46
+. 489r79
+56p9*next{22P10} 22|389r27 390r32 392m21 393r21 394r28 424r24 490r30
+57p9*prev{22P10} 22|393m30 416r21 417r24 486r24 487r30
+66U15*parseFile 66>26 66=48 66=84 22|18s9 75b15 125l9 125t18
+66a26 fileName{string} 22|75b26 84r27
+66p48 variables{22P10} 22|75b48 80m9 102m36 110r24 116m53
+66p84 instructions{23P10} 22|75b84 82m9 116m39
+78V14*ligneCommenceParMotReserve{boolean} 78>42 78>71 22|34b14 59l9 59t35
+. 89s20 95s13 107s20 120s20
+78r42 ligne{12|87R9} 22|34b42 43r28 51r30
+78a71 enum{string} 22|34b71 41r52 46r41 48r32
+89V14*renvoyerLigneSansEspace{12|87R9} 89>39 22|61b14 73l9 73t32 88s22 93s18
+. 105s22 112s18 118s22
+89r39 ligne{12|87R9} 22|61b39 66r28 67r30 68r43
+100U15*traiterProgramme 100>32 22|13b15 32l9 32t25
+100a32 fileName{string} 22|13b32 18r19
+110U16*recupererVariables 110=35 110>71 22|102s17 140b15 189l9 189t27
+110p35 variables{22P10} 22|140b34 176r20 176r66 182m25
+110r71 ligne{12|87R9} 22|140b70 150r23 157r27 158r42 164r27 164r46 167r42
+. 167r89 169r45
+121U15*recupererInstructions 121=37 121=79 121>115 22|116s17 204b15 342l9
+. 342t30
+121p37 instructions{23P10} 22|204b37 340m17
+121p79 variables{22P10} 22|204b79 243r49 288r49 306r53 331r57
+121r115 ligne{12|87R9} 22|204b115 226r61 230r19 236r43 236r90 236r127 237r46
+. 248r32 248r71 249r46 259r22 261r42 262r43 266r32 266r71 267r46 277r22 283r26
+. 284r46 294r32 294r71 294r118 295r34 295r58 295r97 295r121 298r50 310r29
+. 312r33 312r57 315r36 315r60 319r47 323r36 323r75 323r122 324r50
+131U15*interpreterCommande 131=36 22|26s13 524b15 548l9 548t28
+131p36 ptrInstruction{23P10} 22|524b36 527r25 530r30 530m77 532r30 532m91
+. 534m36 536r17 537r17 537r81 539r29 539r90 539r151 539r212 540r21 540r111
+. 540r156 540r214 542r21 542r98 542r139 542r197 545m13 545r31
+143V14*rechercherVariable{22P10} 143>34 143>66 22|176s47 243s30 288s30 306s34
+. 331s38 480b14 497l9 497t27
+143p34 variables{22P10} 22|480b34 484r17
+143r66 nomVariable{12|87R9} 22|480b66 489r105
+161U15*pointerEnTeteInstructions 161=42 22|21s9 373b15 381l9 381t34 432s9
+161p42 ptrInstruction{23P10} 22|373b42 377r15 377r47 378m13 378r31
+170V14*creer_liste_vide{22P10} 22|80s22 499b14 504l9 504t25
+181V14*creer_liste_vide{23P10} 22|82s25 511b14 516l9 516t25
+192V14*est_vide{boolean} 172s16 192>23 22|506b14 509l9 509t17
+192p23 p{22P10} 22|506b23 508r16
+201V14*est_vide{boolean} 183s16 201>23 22|518b14 521l9 521t17
+201p23 p{23P10} 22|518b23 520r16
+215U15*ajouter 215=23 215>53 22|182s17 384b15 396l9 396t16
+215p23 f_l{22P10} 22|384b23 386r13 387m13 389r19 390m17 390r24 392r13 393r13
+. 393r38 394m13 394r20
+215p53 f_nouveau{25P10} 22|384b53 387r41 392r50
+228U15*ajouter 228=23 228>56 22|340s9 398b15 410l9 410t16
+228p23 f_l{23P10} 22|398b23 400r13 401m13 403r19 404m17 404r24 406r13 407r13
+. 407r38 408m13 408r20
+228p56 f_nouveau{26P10} 22|398b56 401r44 406r53
+239U15*afficher_liste 239>30 22|30s9 110s9 412b15 426l9 426t23
+239p30 f_l{22P10} 22|412b30 415r14
+250U15*afficher_liste 250>30 22|28s9 428b15 437l9 437t23
+250p30 f_l{23P10} 22|428b30 431r14
+261U15*afficherLigneInstruction 261>41 22|434s13 439b15 460l9 460t33
+261p41 ptrInstruction{26P10} 22|439b41 444r13 447r18 450r43 453r43 456r43
+272U15*afficherParametreLigneInstruction 272>50 22|450s9 453s9 456s9 462b15
+. 478l9 478t42
+272p50 ptrVariable{25P10} 22|462b50 465r13 468r22 470r22 472r17
+284U15*changerInstructionParNumero 284=43 284>87 22|550b15 557s13 560s13
+. 569l9 569t36
+284p43 ptrInstruction{23P10} 22|550b43 553r13 555r16 556m13 556r31 557m41
+. 558r16 559m13 559r31 560m41
+284i87 numInstruction{integer} 22|550b87 555r63 557r57 558r63 560r57
+296V14*creer_variable_tmp{25P10} 296>34 22|304s51 329s55 357b14 371l9 371t27
+296r34 nomVariable{12|87R9} 22|357b34 365r54
+308V14*estLigneUtile{boolean} 308>29 22|101s17 115s17 127b14 137l9 137t22
+308r29 ligne{12|87R9} 22|127b29 129r20 132r24 132r51
+320V14*isANumber{boolean} 320>25 22|303s17 328s21 344b14 355l9 355t18
+320r25 nomVariable{12|87R9} 22|344b25 348r27 349r39
 X 22 intermediaire.adb
-14p9 variables{21|28P10} 18m29 18r29 29r24
-15p9 instructions{21|29P10} 18m40 18r40 20m35 20r35 22r27 27r24
-16p9 l_instructions{21|29P10} 22m9 24r15 25m33 25r33
-34i9 i{integer} 38m9 42r16 42r39 44r17 45r46 47r37 50r37 53m13 53r18
-35i9 longueurEnum{integer} 40m9 42r44
-36e9 currentChar{character} 45m17 47m17 50r42
-61i9 j{integer} 64m9 68m17 68r22
-62r9 trimLigne{12|87R9} 67m24 67r24 71r16
-65i13 i{integer} 66r37 67r50
-75p9 F{15|64P9} 83m15 83r15 86r80 90r76 100r80 105r76 111r80 116m15 116r15
-76r9 ligne{12|87R9} 86m13 87r47 90m9 92r40 98r43 100m13 102r47 105m9 109r60
-. 111m13 113r47
-122b9 find{boolean} 155m13 158m17 163r17
-123i9 i{integer} 131m9 133r30 134m13 134r18 137m9 137r14 141r15 143r51 144m13
-. 144r18 149m9 151r15 151r53 156r49 156r96 159r54 160m17 160r22 175m17 175r22
-124i9 j{integer} 139m9 142m13 142r18 143r30 147r41
-125i9 k{integer} 153m13 157m17 157r22 159r33 164r48
-126r9 typeVariable{21|23R10} 143m13 147m9 165r51
-127r9 nomVariable{21|23R10} 159m17 164m17 165r65 167r77
-128p9 ptrVariable{21|31P10} 165m17 173r36
-183V14 recupererNumeroInstructionLigne{integer} 183b14 183=47 183>71 196l9
-. 196t40 224s27
-183i47 index{integer} 187r45 188r32 188r57 189m13 189r22 192r43
-183r71 ligne{12|87R9} 187r38 188r50
-184r9 numInstruction{21|23R10} 188m13 192m9 194r30 194r52
-200i9 i{integer} 222m9 224m59 224r59 228r26 228r29 233m13 233r18 236r50 236r97
-. 236r134 236r137 238r55 239m17 239r22 245m13 245r18 248r20 248r78 250r55
-. 251m17 251r22 262r29 262r32 265r49 267r52 268m17 268r22 273r20 273r78 275r55
-. 276m17 276r22 287r29 287r32 295r33 295r36 297r55 298m17 298r22 304m13 304r18
-. 308r20 308r78 308r125 309r22 309r65 309r68 309r85 309r128 309r131 313r59
-. 314m21 314r26 337r17 339r21 339r64 339r67 342m21 342r26 343r24 343r67 343r70
-. 346m21 346r26 349r56 350m21 350r26 354r24 354r82 354r129 356r59 357m21
-. 357r26
-201i9 j{integer} 235m13 237m17 237r22 238r34 241r45 247m13 249m17 249r22
-. 250r34 253r45 264m13 266m17 266r22 267r31 270r42 272m13 274m17 274r22 275r34
-. 278r45 294m13 296m17 296r22 297r34 300r45 307m13 312m21 312r26 313r38 318r45
-. 321m13 323m17 323r22 324r52 327r24 353m17 355m21 355r26 356r38 359r49 362m17
-. 364m21 364r26 365r56 368r28
-202r9 nomVariableZ{21|23R10} 250m17 253m13 254r46 254r66 255m13 256m13 256r33
-. 259r76 275m17 278m13 279r46 279r66 280m13 281m13 281r33 284r76 297m17 300m13
-. 301r60
-203r9 nomVariableX{21|23R10} 238m17 241m13 242r60 313m21 318m13 324r35 327r28
-. 331r70 333r64
-204r9 typeVariableZ{21|23R10} 257m13 258m13 258r34 259r61 282m13 283m13 283r34
-. 284r61
-205r9 typeVariableX{21|23R10}
-206i9 valeurVariableZ{integer} 254m13 259r44 279m13 284r44
-207i9 valeurVariableX{integer}
-208r9 nomVariableY{21|23R10} 356m21 359m17 365r39 368r32 372r74 374r68
-209i9 numInstruction{integer} 224m9 226r46
-210r9 operation{21|23R10} 230m13 231m13 267m17 270m13 289m13 290m13 340m21
-. 341m21 344m21 345m21 348m21 349m21 378m17 379m17 383r41
-211p9 ptrInstruction{21|32P10} 219m9 226r9 243r13 260r13 285r13 302r13 331r17
-. 334r17 372r21 375r21 383r9 384r31
-212b9 isANumber{boolean} 320m13 325m21 327r64 330r17 361m17 366m25 368r68
-. 371r21
-213p9 ptrVariable{21|31P10} 259m13 260r47 284m13 285r47
-214p9 tlistVariable{21|28P10} 242m13 243r47 301m13 302r47 333m17 334r51 374m21
-. 375r55
-215b9 operateurLogiqueTrouve{boolean} 306m13 308r153 310m21
-390i9 valeurVariableTmp{integer} 396m9 402r32
-391r9 nomVariableTmp{21|23R10} 397m9 398m9 398r31 402r68
-392r9 typeVariableTmp{21|23R10} 399m9 400m9 400r32 402r51
-446p9 l{21|28P10} 448m9 449r15 450m13 450r18 452r16 453r22 453r58 454r22
-. 454r59 455r17 457m13 457r18
-462p9 l{21|29P10} 464m9 465m35 465r35 466r16 467r38 468m13 468r18
-514p9 copy{21|28P10} 516m9 517r15 518m13 518r21 520r15 520r37 520r70 520r109
-. 521m13 521r21 523r12 526r20
-531p5 p{21|28P10} 533m9 534r16
-543p5 p{21|29P10} 545m9 546r16
-556r9 nomOperation{21|23R10} 558m9 560r12 560r32 562r15 562r35 564r15 564r35
-586X9 instuction_not_found 589r19 601r18
+14p9 variables{21|22P10} 18m29 18r29 30r24
+15p9 instructions{21|23P10} 18m40 18r40 21m35 21r35 23r27 28r24
+16p9 l_instructions{21|23P10} 23m9 25r15 26m33 26r33
+35i9 i{integer} 39m9 43r16 43r39 45r17 46r46 48r37 51r37 54m13 54r18
+36i9 longueurEnum{integer} 41m9 43r44
+37e9 currentChar{character} 46m17 48m17 51r42
+62i9 j{integer} 65m9 69m17 69r22
+63r9 trimLigne{12|87R9} 68m24 68r24 72r16
+66i13 i{integer} 67r37 68r50
+76p9 F{15|64P9} 84m15 84r15 88r80 93r76 105r80 112r76 118r80 123m15 123r15
+77r9 ligne{12|87R9} 88m13 89r47 93m9 95r40 101r31 102r47 105m13 107r47 112m9
+. 115r31 116r64 118m13 120r47
+141b9 find{boolean} 166m13 168m17 173r17
+142i9 i{integer} 148m9 150r30 151m13 151r18 154m9 154r14 157r15 158r49 159m13
+. 159r18 162m9 164r15 164r53 167r49 167r96 169r52 170m17 170r22 185m17 185r22
+143r9 typeVariable{12|87R9} 158m20 158r20 174r51
+144r9 nomVariable{12|87R9} 169m24 169r24 174r65 176r77 183m17
+145p9 ptrVariable{21|25P10} 174m17 182r36
+191V14 recupererNumeroInstructionLigne{integer} 191b14 191=47 191>71 202l9
+. 202t40 226s27
+191i47 index{integer} 195r45 196r51 197m13 197r22
+191r71 ligne{12|87R9} 195r38 196r44
+192r9 numInstruction{12|87R9} 196m20 196r20 200r40
+206i9 i{integer} 224m9 226m59 226r59 230r26 230r29 234m13 234r18 236r50 236r97
+. 236r134 236r137 237r53 238m17 238r22 246m13 246r18 248r20 248r78 249r53
+. 250m17 250r22 259r29 259r32 261r49 262r50 263m17 263r22 266r20 266r78 267r53
+. 268m17 268r22 277r29 277r32 283r33 283r36 284r53 285m17 285r22 291m13 291r18
+. 294r20 294r78 294r125 295r22 295r65 295r68 295r85 295r128 295r131 298r57
+. 299m21 299r26 310r17 312r21 312r64 312r67 314m21 314r26 315r24 315r67 315r70
+. 317m21 317r26 319r54 320m21 320r26 323r24 323r82 323r129 324r57 325m21
+. 325r26
+207r9 nomVariableZ{12|87R9} 249m24 249r24 253r56 254m13 256r76 267m24 267r24
+. 271r56 272m13 274r76 284m24 284r24 288r60
+208r9 nomVariableX{12|87R9} 237m24 237r24 243r60 298m28 298r28 303r27 304r70
+. 306r64
+209r9 typeVariableZ{12|87R9} 255m13 256r61 273m13 274r61
+210i9 valeurVariableZ{integer} 253m13 256r44 271m13 274r44
+211r9 nomVariableY{12|87R9} 324m28 324r28 328r31 329r74 331r68
+212i9 numInstruction{integer} 226m9 228r46
+213r9 operation{12|87R9} 232m13 262m24 262r24 279m13 313m21 316m21 319m28
+. 319r28 335m17 339r41
+214p9 ptrInstruction{21|26P10} 221m9 228r9 244r13 257r13 275r13 289r13 304r17
+. 307r17 329r21 332r21 339r9 340r31
+215p9 ptrVariable{21|25P10} 256m13 257r47 274m13 275r47
+216p9 tlistVariable{21|22P10} 243m13 244r47 288m13 289r47 306m17 307r51 331m21
+. 332r55
+217b9 operateurLogiqueTrouve{boolean} 293m13 294r153 296m21
+345i9 j{integer} 347m9 348r15 349r52 352m13 352r18
+359i9 valeurVariableTmp{integer} 365m9 369r32
+360r9 nomVariableTmp{12|87R9} 366m9 369r68
+361r9 typeVariableTmp{12|87R9} 367m9 369r51
+413p9 l{21|22P10} 415m9 416r15 417m13 417r18 419r16 420r22 421r22 422r17
+. 424m13 424r18
+429p9 l{21|23P10} 431m9 432m35 432r35 433r16 434r38 435m13 435r18
+481p9 copy{21|22P10} 484m9 486r15 487m13 487r21 489r15 489r37 489r70 490m13
+. 490r21 492r12 495r20
+500p5 p{21|22P10} 502m9 503r16
+512p5 p{21|23P10} 514m9 515r16
+525r9 nomOperation{12|87R9} 527m9 529r12 531r15 533r15
+551X9 instuction_not_found 554r19 566r18
 X 23 operateurs.ads
-3K9*operateurs 22|1w114 3r113 23|65e15
-34V14*operationArithmetique{integer} 22|575s81
-49V14*operationLogique{integer} 22|577s81
+4K9*operateurs 22|1w114 3r113 23|66e15
+35V14*operationArithmetique{integer} 22|540s81
+50V14*operationLogique{integer} 22|542s81
+57U15*branchementBasic 22|530s13 532s13
+64U15*branchementConditionel 22|534s13
 X 24 system.ads
 67M9*Address
 X 31 s-memory.ads
 53V13*Alloc{24|67M9} 103i<c,__gnat_malloc>22
 68U14*Free 104i<c,__gnat_free>22
 76V13*Realloc{24|67M9} 105i<c,__gnat_realloc>22
-X 37 s-stalib.adb
+X 38 s-stalib.adb
 93U14 Break_Start 94i<c,__gnat_break_start>22
 

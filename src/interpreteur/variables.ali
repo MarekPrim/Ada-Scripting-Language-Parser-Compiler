@@ -1,0 +1,79 @@
+V "GNAT Lib v10"
+P SS ZX
+
+RN
+RV SPARK_05
+
+U variables%b		variables.adb		79027463 NE OO PK GE IL
+
+U variables%s		variables.ads		371aa511 BN EE NE OO PK GE IL
+W ada%s			ada.ads			ada.ali
+W ada.strings%s		a-string.ads		a-string.ali
+W ada.strings.unbounded%s  a-strunb.adb		a-strunb.ali
+
+D ada.ads		20210408115627 76789da1 ada%s
+D a-charac.ads		20210408115627 2d3ec45b ada.characters%s
+D a-chlat1.ads		20210408115627 66457d31 ada.characters.latin_1%s
+D a-except.ads		20210408115627 a7106115 ada.exceptions%s
+D a-finali.ads		20210408115627 bf4f806b ada.finalization%s
+D a-stream.ads		20210408115627 119b8fb3 ada.streams%s
+D a-string.ads		20210408115627 90ac6797 ada.strings%s
+D a-strmap.ads		20210408115627 e8bb714a ada.strings.maps%s
+D a-strunb.ads		20210408115627 1656705b ada.strings.unbounded%s
+D a-tags.ads		20210408115627 491b781d ada.tags%s
+D a-unccon.ads		20210408115627 0e9b276f ada.unchecked_conversion%s
+D system.ads		20210408115627 4635ec04 system%s
+D s-atocou.ads		20210408115627 b45c2d8d system.atomic_counters%s
+D s-exctab.ads		20210408115627 54135002 system.exception_table%s
+D s-finmas.ads		20210408115627 7811a767 system.finalization_masters%s
+D s-finroo.ads		20210408115627 4ff27390 system.finalization_root%s
+D s-parame.ads		20210408115627 48ec542b system.parameters%s
+D s-secsta.ads		20210408115627 20bbe636 system.secondary_stack%s
+D s-soflin.ads		20210408115627 a7318a92 system.soft_links%s
+D s-stache.ads		20210408115627 a37c21ec system.stack_checking%s
+D s-stalib.ads		20210408115627 09bd3940 system.standard_library%s
+D s-stoele.ads		20210408115627 2dc34a04 system.storage_elements%s
+D s-stopoo.ads		20210408115627 b16154c2 system.storage_pools%s
+D s-stposu.ads		20210408115627 97a6219c system.storage_pools.subpools%s
+D s-stratt.ads		20210408115627 aedef97e system.stream_attributes%s
+D s-traent.ads		20210408115627 005bf670 system.traceback_entries%s
+D s-unstyp.ads		20210408115627 34867c83 system.unsigned_types%s
+D variables.ads		20220117164657 214cd54a variables%s
+D variables.adb		20220117164715 584ea129 variables%b
+G a e
+G c Z s b [variables standard 6 9 none]
+X 1 ada.ads
+16K9*Ada 20e8 28|1r6 2r5
+X 7 a-string.ads
+16K13*Strings 35e16 28|1r10 2r9
+X 9 a-strunb.ads
+82K21*Unbounded 756e26 28|1w18 2r17
+87R9*Unbounded_String<5|43R9> 739e14 28|10r24 11r23 18r55 19r71 21r54 22r69
+. 29|13r54 18r69 23r55 28r71
+X 28 variables.ads
+5+6 T 9r26 15r57 16r67 29|3r58 8r67
+6k9*variables 5z6 27l5 27e14 29|1b14 38l5 38t14
+8R10*T_Variable 13e15 15r38 16r43 18r36 19r41 21r35 22r40 24r39 29|3r39 8r43
+. 13r35 18r40 23r36 28r41 33r39
+9*9 valeurVariable{5+6} 29|5r25 10m18
+10r9 typeVariable{9|87R9} 29|25r25 30m18
+11r9 nomVariable{9|87R9} 29|15r25 20m18
+12b9 isConstant{boolean} 29|35r25
+15V14*getValeur{5+6} 15>24 29|3b15 6l9 6t18
+15r24 variable{8R10} 29|3b25 5r16
+16U15*setValeur 16=25 16>55 29|8b15 11l9 11t18
+16r25 variable{8R10} 29|8b25 10m9
+16*55 valeur{5+6} 29|8b55 10r36
+18V14*getType{9|87R9} 18>22 29|23b14 26l9 26t16
+18r22 variable{8R10} 29|23b22 25r16
+19U15*setType 19=23 19>53 29|28b15 31l9 31t16
+19r23 variable{8R10} 29|28b23 30m9
+19r53 typeVariable{9|87R9} 29|28b53 30r34
+21V14*getNom{9|87R9} 21>21 29|13b14 16l9 16t15
+21r21 variable{8R10} 29|13b21 15r16
+22U15*setNom 22=22 22>52 29|18b15 21l9 21t15
+22r22 variable{8R10} 29|18b22 20m9
+22r52 nomVariable{9|87R9} 29|18b52 20r33
+24V14*isConstant{boolean} 24>25 29|33b14 36l9 36t19
+24r25 variable{8R10} 29|33b25 35r16
+

@@ -9,11 +9,13 @@ RV NO_EXCEPTIONS
 RV NO_IO
 RV NO_LOCAL_ALLOCATORS
 RV NO_NESTED_FINALIZATION
+RV NO_SECONDARY_STACK
 RV NO_STANDARD_ALLOCATORS_AFTER_ELABORATION
+RV NO_STANDARD_STORAGE_POOLS
 RV NO_DEFAULT_INITIALIZATION
 RV SPARK_05
 
-U test_operateurs%b	test_operateurs.adb	02e61e66 NE OO SU IL
+U test_operateurs%b	test_operateurs.adb	1387a090 NE OO SU IL
 W ada%s			ada.ads			ada.ali
 W ada.characters%s	a-charac.ads		a-charac.ali
 W ada.characters.handling%s  a-chahan.adb	a-chahan.ali
@@ -26,8 +28,14 @@ W ada.text_io%s		a-textio.adb		a-textio.ali
 W ada.text_io.unbounded_io%s  a-tiunio.ads	a-tiunio.ali
 W intermediaire%s	intermediaire.adb	intermediaire.ali
 W operateurs%s		operateurs.adb		operateurs.ali
+Z system%s		system.ads		system.ali
+Z system.pool_global%s	s-pooglo.adb		s-pooglo.ali
+Z system.secondary_stack%s  s-secsta.adb	s-secsta.ali
 Z system.soft_links%s	s-soflin.adb		s-soflin.ali
 Z system.standard_library%s  s-stalib.adb	s-stalib.ali
+Z system.storage_elements%s  s-stoele.adb	s-stoele.ali
+Z system.storage_pools%s  s-stopoo.adb		s-stopoo.ali
+Z system.storage_pools.subpools%s  s-stposu.adb	s-stposu.ali
 
 D ada.ads		20210408115627 76789da1 ada%s
 D a-charac.ads		20210408115627 2d3ec45b ada.characters%s
@@ -49,8 +57,8 @@ D a-tiunio.ads		20210408115627 759c6b0c ada.text_io.unbounded_io%s
 D a-unccon.ads		20210408115627 0e9b276f ada.unchecked_conversion%s
 D interfac.ads		20210408115627 5ab55268 interfaces%s
 D i-cstrea.ads		20210408115627 e53d8b8e interfaces.c_streams%s
-D intermediaire.ads	20220117102838 44aa3c7d intermediaire%s
-D operateurs.ads	20220117100338 e7835494 operateurs%s
+D intermediaire.ads	20220117165613 808a15d8 intermediaire%s
+D operateurs.ads	20220117165048 5a3e3b57 operateurs%s
 D system.ads		20210408115627 4635ec04 system%s
 D s-atocou.ads		20210408115627 b45c2d8d system.atomic_counters%s
 D s-crtl.ads		20210408115627 0ebbdb71 system.crtl%s
@@ -60,6 +68,7 @@ D s-finmas.ads		20210408115627 7811a767 system.finalization_masters%s
 D s-finroo.ads		20210408115627 4ff27390 system.finalization_root%s
 D s-memory.ads		20210408115627 597d6634 system.memory%s
 D s-parame.ads		20210408115627 48ec542b system.parameters%s
+D s-pooglo.ads		20210408115627 ede33ef8 system.pool_global%s
 D s-secsta.ads		20210408115627 20bbe636 system.secondary_stack%s
 D s-soflin.ads		20210408115627 a7318a92 system.soft_links%s
 D s-stache.ads		20210408115627 a37c21ec system.stack_checking%s
@@ -72,124 +81,122 @@ D s-stratt.ads		20210408115627 aedef97e system.stream_attributes%s
 D s-traent.ads		20210408115627 005bf670 system.traceback_entries%s
 D s-unstyp.ads		20210408115627 34867c83 system.unsigned_types%s
 D s-wchcon.ads		20210408115627 1b7d22d2 system.wch_con%s
-D test_operateurs.adb	20220117102343 8cbb941e test_operateurs%b
+D test_operateurs.adb	20220117165541 e4476c8e test_operateurs%b
 G a e
 G c Z b b [test_operateurs standard 6 11 none]
-G r s t_operandes [test_operateurs standard 6 11 none] [t_operandesIP intermediaire 35 10 none]
-G r c none [test_operateurs standard 6 11 none] [creer_liste_vide intermediaire 176 14 none]
-G r c none [test_operateurs standard 6 11 none] [creer_liste_vide intermediaire 187 14 none]
-G r c none [test_operateurs standard 6 11 none] [parsefile intermediaire 72 15 none]
-G r c none [test_operateurs standard 6 11 none] [afficher_liste intermediaire 238 15 none]
-G r c none [test_operateurs standard 6 11 none] [pointerenteteinstructions intermediaire 167 15 none]
-G r c none [test_operateurs standard 6 11 none] [affectation operateurs 22 15 none]
-G r c none [test_operateurs standard 6 11 none] [operationarithmetique operateurs 34 14 none]
-G r c none [test_operateurs standard 6 11 none] [operationlogique operateurs 49 14 none]
-G r c none [test_operateurs standard 6 11 none] [branchementbasic operateurs 56 15 none]
-G r c none [test_operateurs standard 6 11 none] [branchementconditionel operateurs 63 15 none]
+G r s t_operandes [test_operateurs standard 6 11 none] [t_operandesIP intermediaire 29 10 none]
+G r c none [test_operateurs standard 6 11 none] [creer_liste_vide intermediaire 170 14 none]
+G r c none [test_operateurs standard 6 11 none] [creer_liste_vide intermediaire 181 14 none]
+G r c none [test_operateurs standard 6 11 none] [parsefile intermediaire 66 15 none]
+G r c none [test_operateurs standard 6 11 none] [afficher_liste intermediaire 250 15 none]
+G r c none [test_operateurs standard 6 11 none] [pointerenteteinstructions intermediaire 161 15 none]
+G r c none [test_operateurs standard 6 11 none] [affectation operateurs 23 15 none]
+G r c none [test_operateurs standard 6 11 none] [operationarithmetique operateurs 35 14 none]
+G r c none [test_operateurs standard 6 11 none] [operationlogique operateurs 50 14 none]
+G r c none [test_operateurs standard 6 11 none] [branchementbasic operateurs 57 15 none]
+G r c none [test_operateurs standard 6 11 none] [branchementconditionel operateurs 64 15 none]
 X 1 ada.ads
-16K9*Ada 20e8 44|1r6 1r19 1r40 1r63 1r89 2r5 2r18 2r39 2r62 2r88
+16K9*Ada 20e8 45|1r6 1r19 1r40 1r63 1r89 2r5 2r18 2r39 2r62 2r88
 X 2 a-charac.ads
-16K13*Characters 18e19 44|1r93 2r92
+16K13*Characters 18e19 45|1r93 2r92
 X 3 a-chahan.ads
-36K24*Handling 159e28 44|1w104 2r103
+36K24*Handling 159e28 45|1w104 2r103
 X 7 a-inteio.ads
-18K13*Integer_Text_IO[16|46] 44|1w23 2r22
+18K13*Integer_Text_IO[16|46] 45|1w23 2r22
 X 10 a-string.ads
-16K13*Strings 35e16 44|1r44 2r43
+16K13*Strings 35e16 45|1r44 2r43
 X 12 a-strunb.ads
-82K21*Unbounded 756e26 44|1w52 2r51
-87R9*Unbounded_String<6|43R9> 739e14 44|25r13
+82K21*Unbounded 756e26 45|1w52 2r51
+87R9*Unbounded_String<6|43R9> 739e14 45|21r13 26r13 27r12
+103V13*To_Unbounded_String{87R9} 45|121s17 128s19 144s19 155s19 168s19 180s19
+. 193s19 195s46 196s55 208s19
 X 15 a-textio.ads
-57K13*Text_IO 727e16 44|1w10 1r67 2r9 2r66
-64P9*File_Type 44|23r17
-264U14*New_Line 44|47s9 49s9 51s9
-508U14*Put_Line 44|53s13 55s13 68s13 70s13 78s13 80s13 87s13 89s13 96s13
-. 98s13 107s45 108s32 136s13 138s13 149s13 151s13 162s13 164s13 176s13 178s13
-. 190s13 192s13 205s13 207s13 218s13 220s13 229s13 231s13 251s13 253s13
+57K13*Text_IO 727e16 45|1w10 1r67 2r9 2r66
+64P9*File_Type 45|23r17
+264U14*New_Line 45|48s9 50s9 52s9
+508U14*Put_Line 45|54s13 56s13 69s13 71s13 79s13 81s13 88s13 90s13 97s13
+. 99s13 108s45 109s32 136s13 138s13 148s13 150s13 160s13 162s13 173s13 175s13
+. 186s13 188s13 201s13 203s13 213s13 215s13 227s13 229s13 234s13 236s13
 X 16 a-tiinio.ads
-80U14*Put 44|48s9[7|18] 50s9[7|18]
+80U14*Put 45|49s9[7|18] 51s9[7|18]
 X 17 a-tiunio.ads
-25K21*Unbounded_IO 61e29 44|1w75 2r74
+25K21*Unbounded_IO 61e29 45|1w75 2r74
 X 21 intermediaire.ads
-4K9*intermediaire 253e18 44|4w6 4r25 21r13 26r12
-18R10*T_Cell_Instruction 58e15 44|126r29 143r29 155r29 169r29 182r29 196r29
-. 211r29 236r29
-20R10*T_Instruction 52e15 44|132r40 146r40 159r40 173r40 186r40 202r40 215r40
-. 240r40
-23R10*Chaine 26e15 44|21r27 26r26
-24a13*str{string} 44|120m14 127m16 144m16 156m16 170m16 183m16 197m16 199m43
-. 200m52 212m16 237m16 243m14
-25i13*nbCharsEffectif{integer} 44|119m14 128m16 145m16 157m16 171m16 184m16
-. 198m16 213m16 238m16 242m14
-28P10*T_List_Variable(17R10) 44|8r17 9r14
-29P10*T_List_Instruction(18R10) 44|13r20 14r19
-31P10*T_Ptr_Variable(19R10)
-32P10*T_Ptr_Instruction(20R10)
-35R10*T_Operandes 39e15 44|22r17
-36p9*x{31P10} 44|48r50 52r49 129m19
-37p9*y{31P10} 44|130m19
-38p9*z{31P10} 44|50r50 131m19
-42i9*valeurVariable{integer} 44|48r56 50r56 52r55
-43r9*typeVariable{23R10} 44|199m30 200m39
-50r9*operandes{35R10} 44|48r40 50r40 52r39
-55p9*ptrIns{32P10} 44|48r29 50r29 52r28 132m26 146m26 159m26 173m26 186m26
-. 202m26 215m26 240m26
-61p9*ptrVar{31P10} 44|129r38 130r47 158r37 158r63 172r37 172r63 185r37 185r63
-. 199r23 200r32 201r37 201r63 214r37 214r63 239r37 239r63
-62p9*next{28P10} 44|130r38 158r58 172r58 185r58 200r23 201r58 214r58 239r58
-63p9*prev{28P10} 44|114r33 115r44
-72U15*parseFile 44|37s1
-167U15*pointerEnTeteInstructions 44|43s9
-176V14*creer_liste_vide{28P10} 44|34s14 36s11
-187V14*creer_liste_vide{29P10} 44|35s17 38s16 125s25 142s25 154s25 168s17
-. 181s25 195s25 210s25 235s25
-238U15*afficher_liste 44|40s9
+4K9*intermediaire 326e18 45|4w6 4r25
+18R10*T_Cell_Instruction 52e15 45|127r29 143r29 154r29 167r29 179r29 192r29
+. 207r29
+20R10*T_Instruction 46e15 45|132r40 145r40 157r40 170r40 182r40 198r40 210r40
+22P10*T_List_Variable(17R10) 45|8r17 9r14
+23P10*T_List_Instruction(18R10) 45|13r20 14r19
+25P10*T_Ptr_Variable(19R10)
+26P10*T_Ptr_Instruction(20R10)
+29R10*T_Operandes 33e15 45|22r17
+30p9*x{25P10} 45|49r50 53r49 129m19
+31p9*y{25P10} 45|130m19
+32p9*z{25P10} 45|51r50 131m19
+36i9*valeurVariable{integer} 45|49r56 51r56 53r55
+37r9*typeVariable{12|87R9} 45|195m30 196m39
+43i9*numInstruction{integer} 45|226r40 233r40
+44r9*operandes{29R10} 45|49r40 51r40 53r39
+49p9*ptrIns{26P10} 45|49r29 51r29 53r28 132m26 145m26 157m26 170m26 182m26
+. 198m26 210m26 226r29 233r29
+55p9*ptrVar{25P10} 45|129r38 130r47 156r37 156r63 169r37 169r63 181r37 181r63
+. 195r23 196r32 197r37 197r63 209r37 209r63
+56p9*next{22P10} 45|130r38 156r58 169r58 181r58 196r23 197r58 209r58
+57p9*prev{22P10} 45|115r33 116r44
+66U15*parseFile 45|38s1 223s9
+161U15*pointerEnTeteInstructions 45|44s9
+170V14*creer_liste_vide{22P10} 45|35s14 37s11 222s22
+181V14*creer_liste_vide{23P10} 45|36s17 39s16 126s25 142s25 153s25 166s17
+. 178s25 191s25 206s25 221s25
+250U15*afficher_liste 45|41s9
 X 22 operateurs.ads
-3K9*operateurs 65e15 44|3w6 3r22
-7X5*Operateur_Incorrect 44|107r22
-22U15*affectation 44|44s9
-34V14*operationArithmetique{integer} 44|66s34 76s34 85s34 94s34 104s39
-49V14*operationLogique{integer} 44|134s29 147s29 160s29 174s29 188s29 203s29
-. 216s29
-56U15*branchementBasic 44|227s9
-63U15*branchementConditionel 44|249s9
+4K9*operateurs 66e15 45|3w6 3r22
+8X5*Operateur_Incorrect 45|108r22
+23U15*affectation 45|45s9
+35V14*operationArithmetique{integer} 45|67s34 77s34 86s34 95s34 105s39
+50V14*operationLogique{integer} 45|134s29 146s29 158s29 171s29 184s29 199s29
+. 211s29
+57U15*branchementBasic 45|225s9
+64U15*branchementConditionel 45|232s9
 X 23 system.ads
 67M9*Address
 X 30 s-memory.ads
 53V13*Alloc{23|67M9} 103i<c,__gnat_malloc>22
 68U14*Free 104i<c,__gnat_free>22
 76V13*Realloc{23|67M9} 105i<c,__gnat_realloc>22
-X 36 s-stalib.adb
+X 37 s-stalib.adb
 93U14 Break_Start 94i<c,__gnat_break_start>22
-X 44 test_operateurs.adb
-6U11*test_operateurs 6b11 259l5 259t20
-8p5 variables{21|28P10} 34m1 37m21 37r21 114r19 115m17 115r30 129r24 130r24
-. 158r23 158r44 172r23 172r44 185r23 185r44 199r9 200r9 201r23 201r44 214r23
-. 214r44 239r23 239r44
-9p5 search{21|28P10} 36m1
-13p5 instructions{21|29P10} 35m1 37m32 37r32 40r24 42r24 125m9 126m9 132r9
-. 142m9 143m9 146r9 154m9 155m9 159r9 168m1 169m9 173r9 181m9 182m9 186r9
-. 195m9 196m9 202r9 210m9 211m9 215r9 235m9 236m9 240r9 249r35
-14p5 instruction{21|29P10} 38m1 42m9 43m35 43r35 44m21 44r21 48r13 50r13
-. 52r12
-15a5 operateur{string} 103m13
-16i5 op1{integer} 61m9 66r60 76r60 85r60 94r60 104r65 117m9 134r53 147r53
-. 160r53 174r53 188r53 203r53 216r53
-17i5 op2{integer} 62m9 66r64 76r64 85r64 94r64 104r69 118m9 134r57 147r57
-. 160r57 174r57 188r57 203r57 216r57
-18i5 cp{integer} 60m9 225m9 227m26 227r26 228r12 241m9 249m32 249r32 250r12
-19i5 resultat_arithmetique{integer} 63m9 66m9 67r12 76m9 77r12 85m9 86r12
-. 94m9 95r12 104m14
-20i5 resultat_logique{integer} 134m9 135r12 147m9 148r12 160m9 161r12 174m9
-. 175r12 188m9 189r12 203m9 204r12 216m9 217r12
-21r5 chaine{21|23R10} 127m9 128m9 132r67 134r46 144m9 145m9 146r67 147r46
-. 156m9 157m9 159r67 160r46 170m9 171m9 173r67 174r46 183m9 184m9 186r67
-. 188r46 197m9 198m9 202r67 203r46 212m9 213m9 215r67 216r46 237m9 238m9
-. 240r67
-22r5 operandes{21|35R10} 129m9 130m9 131m9 132r57 146r57 158m9 159r57 172m9
-. 173r57 185m9 186r57 201m9 202r57 214m9 215r57 239m9 240r57
+X 45 test_operateurs.adb
+6U11*test_operateurs 6b11 238l5 238t20
+8p5 variables{21|22P10} 35m1 38m21 38r21 115r19 116m17 116r30 129r24 130r24
+. 156r23 156r44 169r23 169r44 181r23 181r44 195r9 196r9 197r23 197r44 209r23
+. 209r44 222m9 223m33 223r33
+9p5 search{21|22P10} 37m1
+13p5 instructions{21|23P10} 36m1 38m32 38r32 41r24 43r24 126m9 127m9 132r9
+. 142m9 143m9 145r9 153m9 154m9 157r9 166m1 167m9 170r9 178m9 179m9 182r9
+. 191m9 192m9 198r9 206m9 207m9 210r9 221m9 223m44 223r44 225m28 225r28 226r12
+. 232m32 232r32 233r12
+14p5 instruction{21|23P10} 39m1 43m9 44m35 44r35 45m21 45r21 49r13 51r13
+. 53r12
+15a5 operateur{string} 104m13
+16i5 op1{integer} 62m9 67r60 77r60 86r60 95r60 105r65 118m9 134r53 146r53
+. 158r53 171r53 184r53 199r53 211r53
+17i5 op2{integer} 63m9 67r64 77r64 86r64 95r64 105r69 119m9 134r57 146r57
+. 158r57 171r57 184r57 199r57 211r57
+18i5 cp{integer} 61m9
+19i5 resultat_arithmetique{integer} 64m9 67m9 68r12 77m9 78r12 86m9 87r12
+. 95m9 96r12 105m14
+20i5 resultat_logique{integer} 134m9 135r12 146m9 147r12 158m9 159r12 171m9
+. 172r12 184m9 185r12 199m9 200r12 211m9 212r12
+21r5 chaine{12|87R9} 128m9 132r67 134r46 144m9 145r67 146r46 155m9 157r67
+. 158r46 168m9 170r67 171r46 180m9 182r67 184r46 193m9 198r67 199r46 208m9
+. 210r67 211r46
+22r5 operandes{21|29R10} 129m9 130m9 131m9 132r57 145r57 156m9 157r57 169m9
+. 170r57 181m9 182r57 197m9 198r57 209m9 210r57
 23p5 F{15|64P9}
-24a5 fileName{string} 37r11
-25r5 ligne{12|87R9}
-26r5 chne{21|23R10} 119m9 120m9 242m9 243m9
+24a5 fileName{string} 38r11
+25a5 fileNameGoto{string} 223r19
+26r5 ligne{12|87R9}
+27r5 chne{12|87R9} 121m9
 

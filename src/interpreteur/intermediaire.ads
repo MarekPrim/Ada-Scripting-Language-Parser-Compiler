@@ -227,22 +227,97 @@ package intermediaire is
     -- exception : /
     procedure ajouter(f_l : in out T_List_Instruction; f_nouveau : in T_Ptr_Instruction);
 
+       -- nom : afficher_liste
+    -- semantique : affiche une liste
+    -- parametres :
+    --          f_l : in T_List_Variable    // liste
+    -- préconditions
+    --          Aucune
+    -- post-conditions
+    --          Aucune
+    -- exception : /
     procedure afficher_liste(f_l : in T_List_Variable);
 
+    -- nom : afficher_liste
+    -- semantique : affiche une liste
+    -- parametres :
+    --          f_l : in T_List_Instruction    // liste
+    -- préconditions
+    --          Aucune
+    -- post-conditions
+    --          Aucune
+    -- exception : /
     procedure afficher_liste(f_l : in T_List_Instruction);
 
-     procedure afficherLigneInstruction (ptrInstruction : T_Ptr_Instruction);
+    -- nom : afficherLigneInstruction
+    -- semantique : affiche une ligne d'instruction
+    -- parametres :
+    --          ptrInstruction : T_Ptr_Instruction
+    -- préconditions
+    --          Aucune
+    -- post-conditions
+    --          Aucune
+    -- exception : /
+    procedure afficherLigneInstruction (ptrInstruction : T_Ptr_Instruction);
 
+    -- nom : afficherParametreLigneInstruction
+    -- semantique : affiche les paramètres d'une ligne d'instruction
+    -- parametres :
+    --          ptrVariable : T_Ptr_Variable
+    -- préconditions
+    --          Aucune
+    -- post-conditions
+    --          Aucune
+    -- exception : /
     procedure afficherParametreLigneInstruction (ptrVariable : T_Ptr_Variable);
 
+    -- nom : changerInstructionParNumero
+    -- semantique : change l'instruction à executer par une autre ligne d'instruction (EX : GOTO)
+    -- parametres :
+    --          ptrInstruction : T_List_Instruction
+    --          numeroInstruction : in integer
+    -- préconditions
+    --          Aucune
+    -- post-conditions
+    --          Aucune
+    -- exception : /
     procedure changerInstructionParNumero(ptrInstruction : in out T_List_Instruction; numInstruction : in integer);
 
+    -- nom : creer_variable_tmp
+    -- semantique : crée une variable temporaire
+    -- parametres :
+    --          nomVariable : in chaine
+    -- type retour : T_Ptr_Variable
+    -- préconditions
+    --          Aucune
+    -- post-conditions
+    --          Aucune
+    -- exception : /
     function creer_variable_tmp (nomVariable : in Unbounded_String) return T_Ptr_Variable;
 
+    -- nom : estLigneUtile
+    -- semantique : teste si une ligne d'instruction est utile
+    -- parametres :
+    --          ligne : Unbounded_String
+    -- type retour : boolean
+    -- préconditions
+    --          Aucune
+    -- post-conditions
+    --          Aucune
+    -- exception : /
     function estLigneUtile (ligne : in Unbounded_String) return boolean;
 
+    -- nom : isANumber
+    -- semantique : teste si une chaine est un nombre
+    -- parametres :
+    --          chaine : in chaine
+    -- type retour : boolean
+    -- préconditions
+    --          Aucune
+    -- post-conditions
+    --          Aucune
+    -- exception : /
     function isANumber (nomVariable : in Unbounded_String) return boolean;
-
 
     --private
         

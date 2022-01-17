@@ -19,35 +19,35 @@ instructions_stub : T_List_Instruction; -- Liste des instructions temporaire
 F : File_Type; -- Fichier
 Fe : File_Type; -- Fichier
 
-chne : Chaine;
+chne : Unbounded_String;
 begin
 
 instructions := creer_liste_vide;
 search := creer_liste_vide;
 variables := creer_liste_vide;
     parseFile(fileName, variables, instructions);
-    Put_Line(variables.all.ptrVar.all.nomVariable.str(1..3));
+    Put_Line(variables.all.ptrVar.all.nomVariable);
     -- variables = tête de la liste
-        if(variables.all.ptrVar.all.nomVariable.str(1..3) = "Sum") then
+        if(variables.all.ptrVar.all.nomVariable = "Sum") then
             Put_Line("OK recuperationVariables");
         else
             Put_Line("KO recuperationVariables");
         end if;
 
 
-        if(variables.all.ptrVar.all.typeVariable.str(1..6) = "Entier") then
+        if(variables.all.ptrVar.all.typeVariable = "Entier") then
             Put_Line("OK recuperationType");
         else
             Put_Line("KO recuperationType");
         end if;
 
-        if(variables.all.prev.all.ptrVar.all.nomVariable.str(1) = 'i') then
+        if(variables.all.prev.all.ptrVar.all.nomVariable = "i") then
             Put_Line("OK recuperationNom");
         else
             Put_Line("KO recuperationNom");
         end if;
 
-        if(variables.all.prev.all.prev.all.ptrVar.all.nomVariable.str(1) = 'n') then
+        if(variables.all.prev.all.prev.all.ptrVar.all.nomVariable = "n") then
             Put_Line("OK recuperationNom");
         else
             Put_Line("KO recuperationNom");
@@ -91,11 +91,11 @@ variables := creer_liste_vide;
         end;
         
     -- Test de la recherche d'une variable
-        chne.nbCharsEffectif := 3;
-        chne.str(1..3) := "Sum";
+        
+        chne := To_Unbounded_String("Sum");
         search := rechercherVariable(variables, chne);
         if(search /= null) then
-            if(search.all.ptrVar.all.nomVariable.str(1..3) = "Sum") then
+            if(search.all.ptrVar.all.nomVariable = "Sum") then
                 Put_Line("OK rechercheVariable");
             else
                 Put_Line("KO rechercheVariable");
@@ -105,8 +105,8 @@ variables := creer_liste_vide;
         end if;
 
         begin -- Recherche d'une variable inexistante
-            chne.nbCharsEffectif := 3;
-            chne.str(1..3) := "xyz";
+           
+            chne := To_Unbounded_String("xyz");
             search := rechercherVariable(variables,chne);
 
             exception
@@ -118,12 +118,12 @@ variables := creer_liste_vide;
         while(instructions.prev /= null) loop
             instructions := instructions.prev;
         end loop;
-        if(instructions.all.ptrIns.all.operation.str(1..instructions.all.ptrIns.all.operation.nbCharsEffectif) = "AFFECTATION") then
+        if(instructions.all.ptrIns.all.operation = "AFFECTATION") then
             Put_Line("OK initialisation instructions");
         else
             Put_Line("KO initialisation instructions");
         end if;
-        if(instructions.all.ptrIns.all.operandes.z.all.nomVariable.str(1) = 'n') then
+        if(instructions.all.ptrIns.all.operandes.z.all.nomVariable = "n") then
             Put_Line("OK valeur variable");
         else
             Put_Line("KO valeur variable");
@@ -159,23 +159,21 @@ variables := creer_liste_vide;
         while(instructions /= null) loop
             interpreterCommande(instructions);
         end loop;
-        chne.nbCharsEffectif := 1;
-        chne.str(1) := 'n';
+        chne := To_Unbounded_String("n");
         if(rechercherVariable(variables,chne).all.ptrVar.all.valeurVariable = 5) then
             Put_Line("OK interpreterCommande");
         else
             Put_Line("KO interpreterCommande");
         end if;
 
-        chne.str(1) := 'i';
+        chne := To_Unbounded_String("i");
         if(rechercherVariable(variables,chne).all.ptrVar.all.valeurVariable = 1) then
             Put_Line("OK interpreterCommande");
         else
             Put_Line("KO interpreterCommande");
         end if;
 
-        chne.nbCharsEffectif := 3;
-        chne.str(1..3) := "Sum";
+        chne := To_Unbounded_String("Sum");
         if(rechercherVariable(variables,chne).all.ptrVar.all.valeurVariable = 6) then
             Put_Line("OK interpreterCommande");
         else
