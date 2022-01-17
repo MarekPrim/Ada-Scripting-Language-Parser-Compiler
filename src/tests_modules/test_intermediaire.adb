@@ -118,7 +118,6 @@ variables := creer_liste_vide;
         while(instructions.prev /= null) loop
             instructions := instructions.prev;
         end loop;
-        afficher_liste(instructions);
         if(instructions.all.ptrIns.all.operation.str(1..instructions.all.ptrIns.all.operation.nbCharsEffectif) = "AFFECTATION") then
             Put_Line("OK initialisation instructions");
         else
@@ -156,6 +155,7 @@ variables := creer_liste_vide;
        
 
     -- Test de l'interprétation d'une commande/ligne d'instruction
+        instructions_stub := instructions;
         while(instructions /= null) loop
             interpreterCommande(instructions);
         end loop;
@@ -182,9 +182,9 @@ variables := creer_liste_vide;
             Put_Line("KO interpreterCommande");
         end if;
 
+        afficher_liste(instructions_stub);
+
+
         
-
-
-    
 
 end test_intermediaire;
