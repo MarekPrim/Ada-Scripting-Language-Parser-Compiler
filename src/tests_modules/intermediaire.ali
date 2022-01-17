@@ -18,7 +18,7 @@ RV NO_DYNAMIC_SIZED_OBJECTS
 RV NO_ELABORATION_CODE
 RV SPARK_05
 
-U intermediaire%b	intermediaire.adb	29f798c4 NE OO PK IL
+U intermediaire%b	intermediaire.adb	da335e33 NE OO PK IL
 W ada%s			ada.ads			ada.ali
 W ada.characters%s	a-charac.ads		a-charac.ali
 W ada.characters.handling%s  a-chahan.adb	a-chahan.ali
@@ -70,7 +70,7 @@ D interfac.ads		20210408115627 5ab55268 interfaces%s
 D i-cstrea.ads		20210408115627 e53d8b8e interfaces.c_streams%s
 D intermediaire.ads	20220117093317 e0bb1b45 intermediaire%s
 D intermediaire.adb	20220117093259 f07ff373 intermediaire%b
-D operateurs.ads	20220117093335 14479263 operateurs%s
+D operateurs.ads	20220117100338 e7835494 operateurs%s
 D system.ads		20210408115627 4635ec04 system%s
 D s-atocou.ads		20210408115627 b45c2d8d system.atomic_counters%s
 D s-crtl.ads		20210408115627 0ebbdb71 system.crtl%s
@@ -120,10 +120,10 @@ G c Z s s [chaineIP intermediaire 23 10 none]
 G c Z s s [t_variableIP intermediaire 42 10 none]
 G c Z s s [t_operandesIP intermediaire 35 10 none]
 G c Z s s [t_instructionIP intermediaire 49 10 none]
-G r c none [traiterprogramme intermediaire 107 15 none] [operationlogique operateurs 50 14 none]
-G r c none [traiterprogramme intermediaire 107 15 none] [operationarithmetique operateurs 35 14 none]
-G r c none [interpretercommande intermediaire 138 15 none] [operationlogique operateurs 50 14 none]
-G r c none [interpretercommande intermediaire 138 15 none] [operationarithmetique operateurs 35 14 none]
+G r c none [traiterprogramme intermediaire 107 15 none] [operationlogique operateurs 49 14 none]
+G r c none [traiterprogramme intermediaire 107 15 none] [operationarithmetique operateurs 34 14 none]
+G r c none [interpretercommande intermediaire 138 15 none] [operationlogique operateurs 49 14 none]
+G r c none [interpretercommande intermediaire 138 15 none] [operationarithmetique operateurs 34 14 none]
 X 1 ada.ads
 16K9*Ada 20e8 21|1r6 2r5 22|1r6 1r19 1r40 1r63 1r89 3r5 3r18 3r39 3r62 3r88
 . 86r46 90r42 100r46 105r42 111r46
@@ -367,9 +367,9 @@ X 22 intermediaire.adb
 545r9 nomOperation{21|23R10} 547m9 549r12 549r32 551r15 551r35 553r15 553r35
 575X9 instuction_not_found 578r19 590r18
 X 23 operateurs.ads
-3K9*operateurs 22|1w114 3r113 23|66e15
-35V14*operationArithmetique{integer} 22|564s81
-50V14*operationLogique{integer} 22|566s81
+3K9*operateurs 22|1w114 3r113 23|65e15
+34V14*operationArithmetique{integer} 22|564s81
+49V14*operationLogique{integer} 22|566s81
 X 24 system.ads
 67M9*Address
 X 31 s-memory.ads

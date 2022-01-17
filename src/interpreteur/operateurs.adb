@@ -5,21 +5,16 @@ use ada.Text_IO, ada.integer_Text_io, Ada.Strings.Unbounded, Ada.Text_IO.Unbound
 
 package body operateurs is
 
-    procedure affectation(typeVariable : in String; identificateur : in Chaine; valeur : in Integer; variables : in out T_List_Variable) is
-        var : T_List_Variable;
-        ch : Chaine;
+    procedure affectation(ptrInstruction : in out T_List_Instruction) is
     begin
-        var := rechercherVariable(variables, identificateur);
-        if var = null then
-            raise Variable_Inconnue;
-        end if;
-        if(var.all.ptrVar.all.isConstant) then
-            raise Variable_Constante;
+        if ptrInstruction.all.ptrIns.all.operandes.z.all.isConstant then
+           raise Variable_Constante;
         else
-            var.all.ptrVar.all.valeurVariable := valeur;
-            ch.str(1) := typeVariable(1);
-            ch.nbCharsEffectif := 2;
-            var.all.ptrVar.all.typeVariable := ch;
+            if ptrInstruction.all.ptrIns.all.operandes.z.all.typeVariable.str(1..ptrInstruction.all.ptrIns.all.operandes.z.all.typeVariable.nbCharsEffectif) = ptrInstruction.all.ptrIns.all.operandes.x.all.typeVariable.str(1..ptrInstruction.all.ptrIns.all.operandes.x.all.typeVariable.nbCharsEffectif) then
+                ptrInstruction.all.ptrIns.all.operandes.z.all.valeurVariable := ptrInstruction.all.ptrIns.all.operandes.x.all.valeurVariable;
+            else
+                raise Type_Incorrect;
+            end if;
         end if;
     end affectation;
 

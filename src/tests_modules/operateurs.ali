@@ -7,11 +7,10 @@ RV NO_EXCEPTIONS
 RV NO_IO
 RV NO_STANDARD_STORAGE_POOLS
 RV NO_DEFAULT_INITIALIZATION
-RV NO_DYNAMIC_SIZED_OBJECTS
 RV NO_ELABORATION_CODE
 RV SPARK_05
 
-U operateurs%b		operateurs.adb		f9ccd442 NE OO PK IL
+U operateurs%b		operateurs.adb		562c50a3 NE OO PK IL
 W ada%s			ada.ads			ada.ali
 W ada.characters%s	a-charac.ads		a-charac.ali
 W ada.characters.handling%s  a-chahan.adb	a-chahan.ali
@@ -25,7 +24,7 @@ W ada.text_io%s		a-textio.adb		a-textio.ali
 W ada.text_io.unbounded_io%s  a-tiunio.ads	a-tiunio.ali
 W intermediaire%s	intermediaire.adb	intermediaire.ali
 
-U operateurs%s		operateurs.ads		f4fc8926 EE OO PK IL
+U operateurs%s		operateurs.ads		07384fd1 EE OO PK IL
 Z ada.tags%s		a-tags.adb		a-tags.ali
 W intermediaire%s	intermediaire.adb	intermediaire.ali
 Z system%s		system.ads		system.ali
@@ -53,8 +52,8 @@ D a-unccon.ads		20210408115627 0e9b276f ada.unchecked_conversion%s
 D interfac.ads		20210408115627 5ab55268 interfaces%s
 D i-cstrea.ads		20210408115627 e53d8b8e interfaces.c_streams%s
 D intermediaire.ads	20220117093317 e0bb1b45 intermediaire%s
-D operateurs.ads	20220117093335 14479263 operateurs%s
-D operateurs.adb	20220117094739 c4e4a091 operateurs%b
+D operateurs.ads	20220117100338 e7835494 operateurs%s
+D operateurs.adb	20220117100326 98c0e287 operateurs%b
 D system.ads		20210408115627 4635ec04 system%s
 D s-atocou.ads		20210408115627 b45c2d8d system.atomic_counters%s
 D s-crtl.ads		20210408115627 0ebbdb71 system.crtl%s
@@ -76,12 +75,11 @@ D s-unstyp.ads		20210408115627 34867c83 system.unsigned_types%s
 D s-wchcon.ads		20210408115627 1b7d22d2 system.wch_con%s
 G a e
 G c Z s b [affectation operateurs 22 15 none]
-G c Z s b [operationarithmetique operateurs 35 14 none]
-G c Z s b [operationlogique2 operateurs 48 15 none]
-G c Z s b [operationlogique operateurs 50 14 none]
-G c Z s b [branchementbasic operateurs 57 15 none]
-G c Z s b [branchementconditionel operateurs 64 15 none]
-G r c none [affectation operateurs 22 15 none] [recherchervariable intermediaire 150 14 none]
+G c Z s b [operationarithmetique operateurs 34 14 none]
+G c Z s b [operationlogique2 operateurs 47 15 none]
+G c Z s b [operationlogique operateurs 49 14 none]
+G c Z s b [branchementbasic operateurs 56 15 none]
+G c Z s b [branchementconditionel operateurs 63 15 none]
 X 1 ada.ads
 16K9*Ada 20e8 23|2r6 2r19 2r40 2r63 2r89 2r114 4r5 4r18 4r39 4r62 4r88
 X 2 a-charac.ads
@@ -102,65 +100,61 @@ X 17 a-tiunio.ads
 25K21*Unbounded_IO 61e29 23|2w75 4r74
 X 21 intermediaire.ads
 4K9*intermediaire 252e18 22|1w6 1r25 23|1w6 1r25
-23R10*Chaine 26e15 22|22r73 50r40 23|8r73 10r14 47r40
-24a13*str{string} 23|20m16 51r16 53r19 55r19 57r19 59r19 61r19 63r19 82r53
-. 86r33 86r80
-25i13*nbCharsEffectif{integer} 23|21m16 51r26 53r29 55r29 57r29 59r29 61r29
-. 63r29
-28P10*T_List_Variable(17R10) 22|23r26 23|8r121 9r15
-29P10*T_List_Instruction(18R10) 22|48r51 64r77 23|76r51 125r77
-31P10*T_Ptr_Variable(19R10) 23|79r15 80r15
+9X5*Type_Incorrect 23|16r23
+23R10*Chaine 26e15 22|49r40 23|42r40
+24a13*str{string} 23|13r75 13r219 46r16 48r19 50r19 52r19 54r19 56r19 58r19
+. 77r53 81r33 81r80
+25i13*nbCharsEffectif{integer} 23|13r141 13r285 46r26 48r29 50r29 52r29 54r29
+. 56r29 58r29
+29P10*T_List_Instruction(18R10) 22|22r51 47r51 63r77 23|8r51 71r51 120r77
+31P10*T_Ptr_Variable(19R10) 23|74r15 75r15
 32P10*T_Ptr_Instruction(20R10)
-36p9*x{31P10} 23|83r54
-37p9*y{31P10} 23|84r54
-43i9*valeurVariable{integer} 23|19m32 88r37 88r62 91r37 91r62 98r41 98r66
-. 101r41 101r66 104r41 104r66 107r41 107r67 110r41 110r67
-44r9*typeVariable{23R10} 23|22m32 86r20 86r67
-46b9*isConstant{boolean} 23|16r31
-51r9*operandes{35R10} 23|83r44 84r44
-52r9*operation{23R10} 23|82r43
-56p9*ptrIns{32P10} 23|82r32 83r33 84r33
-62p9*ptrVar{31P10} 23|16r20 19r21 22r21
-150V14*rechercherVariable{28P10} 23|12s16
+36p9*x{31P10} 23|13r200 13r266 14r121 78r54
+37p9*y{31P10} 23|79r54
+38p9*z{31P10} 23|10r52 13r56 13r122 14r57
+43i9*valeurVariable{integer} 23|14m63 14r127 83r37 83r62 86r37 86r62 93r41
+. 93r66 96r41 96r66 99r41 99r66 102r41 102r67 105r41 105r67
+44r9*typeVariable{23R10} 23|13r62 13r128 13r206 13r272 81r20 81r67
+46b9*isConstant{boolean} 23|10r58
+51r9*operandes{35R10} 23|10r42 13r46 13r112 13r190 13r256 14r47 14r111 78r44
+. 79r44
+52r9*operation{23R10} 23|77r43
+56p9*ptrIns{32P10} 23|10r31 13r35 13r101 13r179 13r245 14r36 14r100 77r32
+. 78r33 79r33
 X 22 operateurs.ads
-3K9*operateurs 66l5 66e15 23|6b14 136l5 136t15
-5X5*Variable_Inconnue 23|14r19
-6X5*Variable_Constante 23|17r19
-7X5*Operateur_Incorrect 23|41r23 66r19 94r23 113r27
-22U15*affectation 22>27 22>53 22>81 23=7 23|8b15 24l9 24t20
-22a27 typeVariable{string} 23|8b27 20r26
-22r53 identificateur{21|23R10} 23|8b53 12r46
-22i81 valeur{integer} 23|8b81 19r50
-23p7 variables{21|28P10} 23|8b102 12r35
-35V14*operationArithmetique{integer} 35>36 35>54 35>72 23|26b14 45l9 45t30
-35e36 op{character} 23|26b36 30r14
-35i54 op1{integer} 23|26b54 33r29 35r29 37r29 39r29
-35i72 op2{integer} 23|26b72 33r35 35r35 37r35 39r35
-48U15*operationLogique2 48>33 48=71 48<92 23|76b15 118l9 118t26 128s9
-48p33 instructions{21|29P10} 23|76b33 82r15 83r16 84r16
-48i71 cp{integer} 23|76b71 116m9 116r15
-48b92 res{boolean} 23|76b92 117m9
-50V14*operationLogique{integer} 50>32 50>48 50>66 23|47b14 74l9 74t25
-50r32 op{21|23R10} 23|47b32 51r13 51r23 53r16 53r26 55r16 55r26 57r16 57r26
-. 59r16 59r26 61r16 61r26 63r16 63r26
-50i48 op1{integer} 23|47b48 52r26 54r26 56r25 58r25 60r25 62r25 64r25
-50i66 op2{integer} 23|47b66 52r32 54r32 56r31 58r31 60r32 62r32 64r32
-57U15*branchementBasic 57=32 57>53 23|120b15 123l9 123t25 130s13
-57i32 cp{integer} 23|120b32 122m9
-57i53 line{integer} 23|120b53 122r15
-64U15*branchementConditionel 64=38 64>59 64>97 23|125b15 134l9 134t31
-64i38 cp{integer} 23|125b38 128m40 130m30 132m13 132r19
-64p59 instructions{21|29P10} 23|125b59 128r27
-64i97 line{integer} 23|125b97 130r33
+3K9*operateurs 65l5 65e15 23|6b14 131l5 131t15
+5X5*Variable_Inconnue
+6X5*Variable_Constante 23|11r18
+7X5*Operateur_Incorrect 23|36r23 61r19 89r23 108r27
+22U15*affectation 22=27 23|8b15 19l9 19t20
+22p27 ptrInstruction{21|29P10} 23|8b27 10r12 13r16 13r82 13r160 13r226 14r17
+. 14r81
+34V14*operationArithmetique{integer} 34>36 34>54 34>72 23|21b14 40l9 40t30
+34e36 op{character} 23|21b36 25r14
+34i54 op1{integer} 23|21b54 28r29 30r29 32r29 34r29
+34i72 op2{integer} 23|21b72 28r35 30r35 32r35 34r35
+47U15*operationLogique2 47>33 47=71 47<92 23|71b15 113l9 113t26 123s9
+47p33 instructions{21|29P10} 23|71b33 77r15 78r16 79r16
+47i71 cp{integer} 23|71b71 111m9 111r15
+47b92 res{boolean} 23|71b92 112m9
+49V14*operationLogique{integer} 49>32 49>48 49>66 23|42b14 69l9 69t25
+49r32 op{21|23R10} 23|42b32 46r13 46r23 48r16 48r26 50r16 50r26 52r16 52r26
+. 54r16 54r26 56r16 56r26 58r16 58r26
+49i48 op1{integer} 23|42b48 47r26 49r26 51r25 53r25 55r25 57r25 59r25
+49i66 op2{integer} 23|42b66 47r32 49r32 51r31 53r31 55r32 57r32 59r32
+56U15*branchementBasic 56=32 56>53 23|115b15 118l9 118t25 125s13
+56i32 cp{integer} 23|115b32 117m9
+56i53 line{integer} 23|115b53 117r15
+63U15*branchementConditionel 63=38 63>59 63>97 23|120b15 129l9 129t31
+63i38 cp{integer} 23|120b38 123m40 125m30 127m13 127r19
+63p59 instructions{21|29P10} 23|120b59 123r27
+63i97 line{integer} 23|120b97 125r33
 X 23 operateurs.adb
-9p9 var{21|28P10} 12m9 13r12 16r12 19r13 22r13
-10r9 ch{21|23R10} 20m13 21m13 22r48
-27i9 resultat{integer} 33m17 35m17 37m17 39m17 44r16
-48b9 resultat{boolean} 52m13 54m13 56m13 58m13 60m13 62m13 64m13 69r13
-77b9 resultat{boolean} 85m9 88m17 91m17 98m21 101m21 104m21 107m21 110m21
-. 117r16
-78a9 op{string} 82m9 87r16 90r19 97r16 100r23 103r23 106r23 109r23
-79p9 op1{21|31P10} 83m9 86r12 88r29 91r29 98r33 101r33 104r33 107r33 110r33
-80p9 op2{21|31P10} 84m9 86r59 88r54 91r54 98r58 101r58 104r58 107r59 110r59
-126b9 branch{boolean} 128m43 129r12
+22i9 resultat{integer} 28m17 30m17 32m17 34m17 39r16
+43b9 resultat{boolean} 47m13 49m13 51m13 53m13 55m13 57m13 59m13 64r13
+72b9 resultat{boolean} 80m9 83m17 86m17 93m21 96m21 99m21 102m21 105m21 112r16
+73a9 op{string} 77m9 82r16 85r19 92r16 95r23 98r23 101r23 104r23
+74p9 op1{21|31P10} 78m9 81r12 83r29 86r29 93r33 96r33 99r33 102r33 105r33
+75p9 op2{21|31P10} 79m9 81r59 83r54 86r54 93r58 96r58 99r58 102r59 105r59
+121b9 branch{boolean} 123m43 124r12
 
