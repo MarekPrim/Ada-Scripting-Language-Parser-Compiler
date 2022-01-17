@@ -399,7 +399,7 @@ package body intermediaire is
         typeVariableTmp.nbCharsEffectif := 6;
         typeVariableTmp.str(1..typeVariableTmp.nbCharsEffectif) := "Entier";
 
-        return new T_Variable'(valeurVariableTmp, nomVariableTmp, typeVariableTmp, false);
+        return new T_Variable'(valeurVariableTmp, typeVariableTmp, nomVariableTmp, false);
 
     end creer_variable_tmp;
 
@@ -558,15 +558,11 @@ package body intermediaire is
         nomOperation := ptrInstruction.all.ptrIns.all.operation;
 
         if(nomOperation.str(1..nomOperation.nbCharsEffectif) = "NULL") then
-            ptrInstruction := ptrInstruction.all.next;
+            branchementBasic(ptrInstruction.all.ptrIns.all.numInstruction+1,ptrInstruction);
         elsif(nomOperation.str(1..nomOperation.nbCharsEffectif) = "GOTO") then
-            changerInstructionParNumero(ptrInstruction, ptrInstruction.all.ptrIns.all.operandes.z.all.valeurVariable);
+            branchementBasic(ptrInstruction.all.ptrIns.all.operandes.z.all.valeurVariable,ptrInstruction);
         elsif(nomOperation.str(1..nomOperation.nbCharsEffectif) = "IF") then
-            if (ptrInstruction.all.ptrIns.all.operandes.x.all.valeurVariable = 1) then
-                changerInstructionParNumero(ptrInstruction, ptrInstruction.all.ptrIns.all.operandes.z.all.valeurVariable);
-            else
-                ptrInstruction := ptrInstruction.all.next;
-            end if;
+            branchementConditionel(ptrInstruction);
         else
             if (ptrInstruction.all.ptrIns.all.operandes.y = null) then
                 ptrInstruction.all.ptrIns.all.operandes.z.all.valeurVariable := ptrInstruction.all.ptrIns.all.operandes.x.all.valeurVariable;
