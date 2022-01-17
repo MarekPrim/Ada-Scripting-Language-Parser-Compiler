@@ -22,6 +22,7 @@ procedure test_operateurs is
     operandes : T_Operandes;
     F         : File_Type;
     fileName : constant string :=  "code_test.med";
+    fileNameGoto : constant String := "code_test_goto.med";
     ligne : Unbounded_string;
     chne : intermediaire.Chaine;
 
@@ -222,38 +223,22 @@ instructions := creer_liste_vide;
 
 
     -- Test branchement basique
-        cp := 0;
 
-        branchementBasic(cp,3);
-        if(cp = 3) then
-            Put_Line("Branchement OK");
-        else
-            Put_Line("Branchement KO");
-        end if;
-
-    -- Test branchement conditionnel
         instructions := creer_liste_vide;
-        instructions := new T_Cell_Instruction'(null,null,null);
-        chaine.str(1) := '<';
-        chaine.nbCharsEffectif := 1;
-        operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
-        instructions.all.ptrIns := new T_Instruction'(1,operandes,chaine);
-        cp := 0;
-        chne.nbCharsEffectif := 1;
-        chne.str(1) := 'i';
+        variables := creer_liste_vide;
+        parseFile(fileNameGoto, variables, instructions);
 
-        --affectation("Entier",chne,5, variables);
-        --chne.str(1) := 'n';
-        --affectation("Entier",chne,2, variables);
-
-        branchementConditionel(cp,instructions,33);
-        if(cp = 33) then
-            Put_Line("Branchement conditionel OK");
+        branchementBasic(3,instructions);
+        if(instructions.all.ptrIns.all.numInstruction = 3) then
+            Put_Line("OK branchement basique");
         else
-            Put_Line("Branchement conditionel KO");
+            Put_Line("KO branchement basique");
         end if;
 
-
-        
-
+        branchementConditionel(instructions);
+        if(instructions.all.ptrIns.all.numInstruction = 4) then
+            Put_Line("OK branchement conditionnel");
+        else
+            Put_Line("KO branchement conditionnel");
+        end if;
 end test_operateurs;
