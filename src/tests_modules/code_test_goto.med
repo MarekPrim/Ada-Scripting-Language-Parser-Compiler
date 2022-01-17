@@ -1,0 +1,9 @@
+Programme Test est
+n, i, Sum : Entier
+Debut
+1 n <- 5
+2 i <- 1
+3 Sum <- i+n
+4 GOTO 5
+5 NULL
+Fin
