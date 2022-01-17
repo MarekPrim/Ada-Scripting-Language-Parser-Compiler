@@ -17,7 +17,7 @@ procedure test_operateurs is
     op2 : Integer;
     cp : Integer;
     resultat_arithmetique : Integer;
-    resultat_logique : Boolean;
+    resultat_logique : Integer;
     chaine: intermediaire.Chaine;
     operandes : T_Operandes;
     F         : File_Type;
@@ -56,62 +56,46 @@ parseFile(fileName, variables, instruction);
         op2 := 2;
         resultat_arithmetique := 0;
 
-        operateur(1) := '+';
-        operationArithmetique(operateur,op1,op2,cp, resultat_arithmetique);
+        --operateur(1) := '+';
+        resultat_arithmetique := operationArithmetique('+',op1,op2);
         if(resultat_arithmetique = 6) then
             Put_Line("Operation arithmetique + OK");
         else
             Put_Line("Operation arithmetique + KO");
         end if;
 
-        if(cp = 1) then
-            Put_Line("Operation arithmetique + OK : cp");
-        else
-            Put_Line("Operation arithmetique + KO : cp");
-        end if;
 
-        operateur(1) := '-';
-        operationArithmetique(operateur,op1,op2,cp, resultat_arithmetique);
+
+        --operateur(1) := '-';
+        resultat_arithmetique := operationArithmetique('-',op1,op2);
         if(resultat_arithmetique = 2) then
             Put_Line("Operation arithmetique - OK");
         else
             Put_Line("Operation arithmetique - KO");
         end if;
-        if(cp = 2) then
-            Put_Line("Operation arithmetique - OK : cp");
-        else
-            Put_Line("Operation arithmetique - KO : cp");
-        end if;
 
-        operateur(1) := '*';
-        operationArithmetique(operateur,op1,op2,cp,resultat_arithmetique);
+
+        --operateur(1) := '*';
+        resultat_arithmetique := operationArithmetique('*',op1,op2);
         if(resultat_arithmetique = 8) then
             Put_Line("Operation arithmetique * OK");
         else
             Put_Line("Operation arithmetique * KO");
         end if;
-        if(cp = 3) then
-            Put_Line("Operation arithmetique * OK : cp");
-        else
-            Put_Line("Operation arithmetique * KO : cp");
-        end if;
 
-        operateur(1) := '/';
-        operationArithmetique(operateur,op1,op2,cp,resultat_arithmetique);
+
+        --operateur(1) := '/';
+        resultat_arithmetique := operationArithmetique('/',op1,op2);
         if(resultat_arithmetique = 2) then
             Put_Line("Operation arithmetique / OK ");
         else
             Put_Line("Operation arithmetique / KO ");
         end if;
-        if(cp = 4) then
-            Put_Line("Operation arithmetique / OK : cp");
-        else
-            Put_Line("Operation arithmetique / KO : cp");
-        end if;
+
 
         begin
             operateur(1) := '^';
-            operationArithmetique(operateur,op1,op2,cp, resultat_arithmetique);
+             resultat_arithmetique := operationArithmetique(':',op1,op2);
 
             exception
                 when Operateur_Incorrect => Put_Line("OK exception : Operateur_Incorrect");
@@ -123,7 +107,9 @@ parseFile(fileName, variables, instruction);
         -- Retour au début de la liste de variables
             while(variables.all.prev /= null) loop
                 variables := variables.all.prev;
-            end loop; 
+            end loop;
+        op1 := 2;
+        op2 := 4;
         chne.nbCharsEffectif := 1;
         chne.str(1) := 'i';
         affectation("Entier",chne,5, variables);
@@ -139,8 +125,8 @@ parseFile(fileName, variables, instruction);
         operandes.z := null;
         instruction.all.ptrIns := new T_Instruction'(1,operandes,chaine);
 
-        operationLogique(instruction,cp,resultat_logique);
-        if(resultat_logique = false) then
+        resultat_logique := operationLogique(chaine,op1,op2);
+        if(resultat_logique = 0) then
             Put_Line("OK operation logique ="); 
         else
             Put_Line("KO  operation logique =");
@@ -152,8 +138,8 @@ parseFile(fileName, variables, instruction);
         chaine.str(1) := '>';
         chaine.nbCharsEffectif := 1;
         instruction.all.ptrIns := new T_Instruction'(1,operandes,chaine);
-        operationLogique(instruction,cp,resultat_logique);
-        if(resultat_logique = false) then
+        resultat_logique := operationLogique(chaine,op1,op2);
+        if(resultat_logique = 0) then
             Put_Line("OK operation logique >");
         else
             Put_Line("KO operation logique >");
@@ -165,8 +151,8 @@ parseFile(fileName, variables, instruction);
         chaine.nbCharsEffectif := 1;
         operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
         instruction.all.ptrIns := new T_Instruction'(1,operandes,chaine);
-        operationLogique(instruction,cp,resultat_logique);
-        if(resultat_logique = true) then
+        resultat_logique := operationLogique(chaine,op1,op2);
+        if(resultat_logique = 1) then
             Put_Line("OK operation logique <");
         else
             Put_Line("KO operation logique <");
@@ -179,8 +165,8 @@ instruction := creer_liste_vide;
         chaine.nbCharsEffectif := 2;
         operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
         instruction.all.ptrIns := new T_Instruction'(1,operandes,chaine);
-        operationLogique(instruction,cp,resultat_logique);
-        if(resultat_logique = false) then
+        resultat_logique := operationLogique(chaine,op1,op2);
+        if(resultat_logique = 0) then
             Put_Line("OK operation logique >= ");
         else
             Put_Line("KO operation logique >= ");
@@ -193,8 +179,8 @@ instruction := creer_liste_vide;
         operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
         instruction.all.ptrIns := new T_Instruction'(1,operandes,chaine);
 
-        operationLogique(instruction,cp,resultat_logique);
-        if(resultat_logique = true) then
+        resultat_logique := operationLogique(chaine,op1,op2);
+        if(resultat_logique = 1) then
             Put_Line("OK operation logique <= ");
         else
             Put_Line("KO operation logique <= ");
@@ -208,8 +194,8 @@ instruction := creer_liste_vide;
         variables.all.next.all.ptrVar.typeVariable.str(1..7) := "Booleen";
         operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
         instruction.all.ptrIns := new T_Instruction'(1,operandes,chaine);
-        operationLogique(instruction,cp,resultat_logique);
-        if(resultat_logique = false) then
+        resultat_logique := operationLogique(chaine,op1,op2);
+        if(resultat_logique = 0) then
             Put_Line("OK operation logique & ");
         else
             Put_Line("KO operation logique & ");
@@ -221,8 +207,8 @@ instruction := creer_liste_vide;
         chaine.nbCharsEffectif := 2;
         operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
         instruction.all.ptrIns := new T_Instruction'(1,operandes,chaine);
-        operationLogique(instruction,cp,resultat_logique);
-        if(resultat_logique = true) then
+        resultat_logique := operationLogique(chaine,op1,op2);
+        if(resultat_logique = 1) then
             Put_Line("OK operation logique | ");
         else
             Put_Line("KO operation logique | ");
