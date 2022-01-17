@@ -245,6 +245,10 @@ package intermediaire is
 
     function creer_variable_tmp (nomVariable : in chaine) return T_Ptr_Variable;
 
+    function estLigneUtile (ligne : in Unbounded_String) return boolean;
+
+    function isANumber (nomVariable : in chaine) return boolean;
+
 
     --private
         
