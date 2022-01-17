@@ -78,7 +78,9 @@ package body operateurs is
         op1 := instructions.all.ptrIns.all.operandes.x;
         op2 := instructions.all.ptrIns.all.operandes.y;
         resultat := false;
+
         if op1.all.typeVariable.str(1..7) = "Booleen" and op2.all.typeVariable.str(1..7) = "Booleen" then
+            Put_Line("Bool");
             if op(1..3) = "AND" then
                 resultat := op1.all.valeurVariable + op2.all.valeurVariable = 2;
                 null;
@@ -112,19 +114,23 @@ package body operateurs is
         res := resultat;
     end operationLogique2;
 
-    procedure branchementBasic(cp : in out Integer; line : in Integer) is
+    procedure branchementBasic(line : in Integer; instructions : in out T_List_Instruction) is
     begin
-        cp := line;
+        changerInstructionParNumero(instructions,line);
     end branchementBasic;
 
-    procedure branchementConditionel(cp : in out Integer; instructions : in T_List_Instruction; line : in Integer) is
-        branch : Boolean := False;
+    procedure branchementConditionel(instructions : in out T_List_Instruction) is
+        x : Integer;
+        z : Integer;
+        currentLine : Integer;
     begin
-        operationLogique2(instructions,cp,branch);
-        if(branch) then
-            branchementBasic(cp,line);
+        x := instructions.all.ptrIns.all.operandes.x.all.valeurVariable;
+        z := instructions.all.ptrIns.all.operandes.z.all.valeurVariable;
+        currentLine := instructions.all.ptrIns.all.numInstruction;
+        if(x = 1) then
+            branchementBasic(z,instructions);
         else
-            cp := cp + 1;
+            branchementBasic(currentLine+1, instructions);
         end if;
     end branchementConditionel;
 

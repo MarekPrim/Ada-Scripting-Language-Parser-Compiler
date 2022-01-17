@@ -53,13 +53,13 @@ package operateurs is
     -- Précondition : 
     -- Postcondition :
     -- Exceptions :
-    procedure branchementBasic(cp : in out Integer; line : in Integer);
+    procedure branchementBasic(line : in Integer; instructions : in out T_List_Instruction);
 
     -- branchementConditionel
     -- Evaluation d'une condition, affectation à CP de line si la condition est vraie sinon incrémentation de CP
     -- Précondition : 
     -- Postcondition :
     -- Exceptions :
-    procedure branchementConditionel(cp : in out Integer; instructions : in T_List_Instruction; line : in Integer);
+    procedure branchementConditionel(instructions : in out T_List_Instruction);
 
 end operateurs;
