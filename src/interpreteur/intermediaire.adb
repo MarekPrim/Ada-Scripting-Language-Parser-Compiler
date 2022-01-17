@@ -1,6 +1,6 @@
-with ada.Text_IO, ada.integer_Text_IO, Ada.Strings.Unbounded, Ada.Text_IO.Unbounded_IO, Ada.Characters.Handling;
+with ada.Text_IO, ada.integer_Text_IO, Ada.Strings.Unbounded, Ada.Text_IO.Unbounded_IO, Ada.Characters.Handling, operateurs;
 --with P_List_Double;
-use ada.Text_IO, ada.integer_Text_io, Ada.Strings.Unbounded, Ada.Text_IO.Unbounded_IO, Ada.Characters.Handling;
+use ada.Text_IO, ada.integer_Text_io, Ada.Strings.Unbounded, Ada.Text_IO.Unbounded_IO, Ada.Characters.Handling, operateurs;
 
 
 package body intermediaire is
@@ -12,10 +12,22 @@ package body intermediaire is
 
     procedure traiterProgramme(fileName : in string) is
         variables : T_List_Variable;
-        instructions : T_List_Instruction; 
+        instructions : T_List_Instruction;
+        l_instructions : T_List_Instruction;
     begin
         parseFile(fileName, variables, instructions);
+
+        pointerEnTeteInstructions(instructions);
+
+        l_instructions := instructions;
+
+        while(l_instructions /= null) loop
+            interpreterCommande(l_instructions);
+        end loop;
         afficher_liste(instructions);
+
+        afficher_liste(variables);
+
     end traiterProgramme;
 
     function ligneCommenceParMotReserve (ligne : in Unbounded_string; enum : in string) return boolean is
@@ -100,6 +112,8 @@ package body intermediaire is
 
         exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Fin)));
         end loop;
+
+        
 
         Close(F);
 
@@ -201,8 +215,8 @@ package body intermediaire is
         end loop;
 
         numInstruction.nbCharsEffectif := i-1;
-        Put_Line("test");
-        Put_Line(numInstruction.str(1..numInstruction.nbCharsEffectif));
+        --Put_Line("test");
+        --Put_Line(numInstruction.str(1..numInstruction.nbCharsEffectif));
         numInstructionEntier := Integer'Value(numInstruction.str(1..numInstruction.nbCharsEffectif));
         ptrInstruction.all.numInstruction := numInstructionEntier;
 
@@ -315,6 +329,7 @@ package body intermediaire is
                 typeVariableX.nbCharsEffectif := 6;
                 typeVariableX.str(1..typeVariableX.nbCharsEffectif) := "Entier";
                 ptrVariable := new T_Variable'(valeurVariableX, nomVariableX, typeVariableX, false);
+                ptrInstruction.all.operandes.x := ptrVariable;
             else
                 tlistVariable := rechercherVariable(variables, nomVariableX);
                 ptrInstruction.all.operandes.x := tlistVariable.all.ptrVar;
@@ -361,6 +376,7 @@ package body intermediaire is
                     typeVariableY.nbCharsEffectif := 6;
                     typeVariableY.str(1..typeVariableY.nbCharsEffectif) := "Entier";
                     ptrVariable := new T_Variable'(valeurVariableY, nomVariableY, typeVariableY, false);
+                    ptrInstruction.all.operandes.y := ptrVariable;
                 else
                     tlistVariable := rechercherVariable(variables, nomVariableY);
                     ptrInstruction.all.operandes.y := tlistVariable.all.ptrVar;
@@ -375,6 +391,17 @@ package body intermediaire is
         ajouter(instructions, ptrInstruction);
 
     end recupererInstructions;
+
+    procedure pointerEnTeteInstructions (ptrInstruction : in out T_List_Instruction) is
+
+    begin
+
+        while(ptrInstruction /= null and then ptrInstruction.all.prev /= null) loop
+            ptrInstruction := ptrInstruction.all.prev;
+        end loop;
+
+    end pointerEnTeteInstructions;
+
 
     procedure ajouter(f_l : in out T_List_Variable; f_nouveau : in T_Ptr_Variable) is
     begin
@@ -412,11 +439,10 @@ package body intermediaire is
             l := l.all.prev;
         end loop;
         while (l /= null) loop
-            put(l.all.ptrVar.all.nomVariable.str(1..l.all.ptrVar.all.nomVariable.nbCharsEffectif));
-            put(l.all.ptrVar.all.typeVariable.str(1..l.all.ptrVar.all.typeVariable.nbCharsEffectif));
-            if (l.all.next /= null) then
-                put(" -> ");
-            end if;
+            put_line(l.all.ptrVar.all.nomVariable.str(1..l.all.ptrVar.all.nomVariable.nbCharsEffectif));
+            put_line(l.all.ptrVar.all.typeVariable.str(1..l.all.ptrVar.all.typeVariable.nbCharsEffectif));
+            put(l.all.ptrVar.all.valeurVariable, 1);
+            new_line;
             l := l.all.next;
         end loop;
     end afficher_liste;
@@ -425,9 +451,7 @@ package body intermediaire is
         l : T_List_Instruction;
     begin
         l := f_l;
-        while(l.all.prev /= null) loop
-            l := l.all.prev;
-        end loop;
+        pointerEnTeteInstructions(l);
         while (l /= null) loop
             afficherLigneInstruction(l.all.ptrIns);
             l := l.all.next;
@@ -517,10 +541,56 @@ package body intermediaire is
     end est_vide;
 
 
-    procedure interpreterCommande (ptrLine : in T_List_Instruction; ptrVar : in out T_List_Variable) is
+    procedure interpreterCommande (ptrInstruction : in out T_List_Instruction) is
+        nomOperation : chaine;
     begin
-        null;
+        nomOperation := ptrInstruction.all.ptrIns.all.operation;
+
+        if(nomOperation.str(1..nomOperation.nbCharsEffectif) = "NULL") then
+            ptrInstruction := ptrInstruction.all.next;
+        elsif(nomOperation.str(1..nomOperation.nbCharsEffectif) = "GOTO") then
+            changerInstructionParNumero(ptrInstruction, ptrInstruction.all.ptrIns.all.operandes.z.all.valeurVariable);
+        elsif(nomOperation.str(1..nomOperation.nbCharsEffectif) = "IF") then
+            if (ptrInstruction.all.ptrIns.all.operandes.x.all.valeurVariable = 1) then
+                changerInstructionParNumero(ptrInstruction, ptrInstruction.all.ptrIns.all.operandes.z.all.valeurVariable);
+            else
+                ptrInstruction := ptrInstruction.all.next;
+            end if;
+        else
+            if (ptrInstruction.all.ptrIns.all.operandes.y = null) then
+                ptrInstruction.all.ptrIns.all.operandes.z.all.valeurVariable := ptrInstruction.all.ptrIns.all.operandes.x.all.valeurVariable;
+            else
+                if (ptrInstruction.all.ptrIns.all.operation.str(1) = '+' or ptrInstruction.all.ptrIns.all.operation.str(1) = '*' or ptrInstruction.all.ptrIns.all.operation.str(1) = '/' or ptrInstruction.all.ptrIns.all.operation.str(1) = '-') then
+                    ptrInstruction.all.ptrIns.all.operandes.z.valeurVariable := operationArithmetique(ptrInstruction.all.ptrIns.all.operation.str(1), ptrInstruction.all.ptrIns.all.operandes.x.valeurVariable, ptrInstruction.all.ptrIns.all.operandes.y.valeurVariable);
+                else
+                    ptrInstruction.all.ptrIns.all.operandes.z.valeurVariable := operationLogique(ptrInstruction.all.ptrIns.all.operation, ptrInstruction.all.ptrIns.all.operandes.x.valeurVariable, ptrInstruction.all.ptrIns.all.operandes.y.valeurVariable);
+                end if;
+            end if;
+            ptrInstruction := ptrInstruction.all.next;
+        end if;
+
     end interpreterCommande;
+
+    procedure changerInstructionParNumero(ptrInstruction : in out T_List_Instruction; numInstruction : in integer) is
+        instuction_not_found: Exception;
+    begin
+        if (ptrInstruction = null) then
+            raise instuction_not_found;
+        elsif (ptrInstruction.all.ptrIns.all.numInstruction < numInstruction) then
+            ptrInstruction := ptrInstruction.all.next;
+            changerInstructionParNumero(ptrInstruction, numInstruction);
+        elsif (ptrInstruction.all.ptrIns.all.numInstruction > numInstruction) then
+            ptrInstruction := ptrInstruction.all.prev;
+            changerInstructionParNumero(ptrInstruction, numInstruction);
+        else
+            null;
+        end if;
+
+        exception
+            when instuction_not_found => 
+                put("GOTO : la ligne précisée n'existe pas dans le fichier");
+
+    end changerInstructionParNumero;
 
 
 end intermediaire;

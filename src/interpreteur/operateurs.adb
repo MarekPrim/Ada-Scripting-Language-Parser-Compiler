@@ -23,29 +23,57 @@ package body operateurs is
         end if;
     end affectation;
 
-    procedure operationArithmetique(op: in String; op1 : in Integer; op2 : in Integer; cp : in out Integer; res : out Integer) is
+    function operationArithmetique(op: in Character; op1 : in Integer; op2 : in Integer) return integer is
         resultat : Integer;
     begin
-        if op(1) = '+' then
+
+        case op is
+
+            when '+' =>
                 resultat := op1 + op2;
-                null;
-        elsif op(1) = '-' then
+            when '-' =>
                 resultat := op1 - op2;
-                null;
-        elsif op(1) =  '*' then--
+            when '*' =>
                 resultat := op1 * op2;
-                null;
-        elsif op(1) = '/' then
+            when '/' =>
                 resultat := op1 / op2;
-                null;
-        else
+            when others =>
                 raise Operateur_Incorrect;
-        end if;
-        res := resultat;
-        cp := cp + 1;
+        end case;
+
+        return resultat;
     end operationArithmetique;
 
-    procedure operationLogique(instructions : in T_List_Instruction; cp : in out Integer; res : out Boolean) is
+    function operationLogique (op : in chaine; op1 : in Integer; op2 : in integer) return integer is
+        resultat : boolean;
+    begin
+
+        if (op.str(1..op.nbCharsEffectif) = "AND") then
+            resultat := (op1 + op2 = 2);
+        elsif (op.str(1..op.nbCharsEffectif) = "OR") then
+            resultat := (op1 + op2 > 0);
+        elsif (op.str(1..op.nbCharsEffectif) = "=") then
+            resultat := op1 = op2;
+        elsif (op.str(1..op.nbCharsEffectif) = "<") then
+            resultat := op1 < op2;
+        elsif (op.str(1..op.nbCharsEffectif) = "<=") then
+            resultat := op1 <= op2;
+        elsif (op.str(1..op.nbCharsEffectif) = ">") then
+            resultat := op1 <= op2;
+        elsif (op.str(1..op.nbCharsEffectif) = ">=") then
+            resultat := op1 >= op2;
+        else
+            raise Operateur_Incorrect;
+        end if;
+
+        if (resultat) then
+            return 1;
+        end if;
+        return 0;
+
+    end operationLogique;
+
+    procedure operationLogique2(instructions : in T_List_Instruction; cp : in out Integer; res : out Boolean) is
         resultat : Boolean;
         op : String(1..3) := "   ";
         op1 : T_Ptr_Variable;
@@ -87,7 +115,7 @@ package body operateurs is
         end if;
         cp := cp + 1;
         res := resultat;
-    end operationLogique;
+    end operationLogique2;
 
     procedure branchementBasic(cp : in out Integer; line : in Integer) is
     begin
@@ -97,7 +125,7 @@ package body operateurs is
     procedure branchementConditionel(cp : in out Integer; instructions : in T_List_Instruction; line : in Integer) is
         branch : Boolean := False;
     begin
-        operationLogique(instructions,cp,branch);
+        operationLogique2(instructions,cp,branch);
         if(branch) then
             branchementBasic(cp,line);
         else

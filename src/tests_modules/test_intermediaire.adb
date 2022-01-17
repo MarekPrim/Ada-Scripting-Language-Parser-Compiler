@@ -25,7 +25,7 @@ begin
 instructions := creer_liste_vide;
 search := creer_liste_vide;
 variables := creer_liste_vide;
-    parseFile(fileName, variables, instructions);
+    parseFile(fileName, variables, instructions, false);
     Put_Line(variables.all.ptrVar.all.nomVariable.str(1..3));
     -- variables = tête de la liste
         if(variables.all.ptrVar.all.nomVariable.str(1..3) = "Sum") then
@@ -56,7 +56,7 @@ variables := creer_liste_vide;
         begin
             variables_stub := creer_liste_vide;
             instructions_stub := creer_liste_vide;
-            parseFile(fileNameSansVariable, variables_stub, instructions_stub);
+            parseFile(fileNameSansVariable, variables_stub, instructions_stub,   false);
             exception
                 when Aucune_Variable_Definie => Put_Line("OK exception Pas de variable définie");
                 when ADA.STRINGS.INDEX_ERROR => Put_Line("Levée d'exception prévisible");
@@ -67,7 +67,7 @@ variables := creer_liste_vide;
         begin
             variables_stub := creer_liste_vide;
             instructions_stub := creer_liste_vide;
-            parseFile(fileNameSansType, variables_stub, instructions_stub);
+            parseFile(fileNameSansType, variables_stub, instructions_stub ,  false);
             exception
                 when Variable_Deja_Definie => 
                     Put_Line("OK exception deux fois même déclaration");
@@ -80,7 +80,7 @@ variables := creer_liste_vide;
             begin
             variables_stub := creer_liste_vide;
             instructions_stub := creer_liste_vide;
-            parseFile("ce_fichier_n_existe_pas.med", variables_stub, instructions_stub);
+            parseFile("ce_fichier_n_existe_pas.med", variables_stub, instructions_stub ,   false);
             exception
                 when ADA.STRINGS.INDEX_ERROR => Put_Line("Levée d'exception prévisible");
                 when ADA.IO_EXCEPTIONS.NAME_ERROR => raise Fichier_Non_Trouve;

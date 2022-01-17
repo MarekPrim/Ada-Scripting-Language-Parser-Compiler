@@ -135,7 +135,7 @@ package intermediaire is
     -- Préconditions    : ptrLigne n'est pas null
     -- Postconditions   : le numéro de la ligne pointée par ptrLine change pendant la procédure
     -- Exceptions       : Acces_Limite
-    procedure interpreterCommande (ptrLine : in T_List_Instruction; ptrVar : in out T_List_Variable);
+    procedure interpreterCommande (ptrInstruction : in out T_List_Instruction);
 
     -- nom : rechercherVariable
     -- semantique : retourne un pointeur sur la variable recherchée
@@ -165,7 +165,7 @@ package intermediaire is
     -- Préconditions    : la liste des lignes n'est pas vide
     -- Postconditions   : ptr.all.prev = null 
     -- Exceptions :                 
-    -- procedure pointerEnTeteLignes (ptr : in T_List_Instruction);
+    procedure pointerEnTeteInstructions (ptrInstruction : in out T_List_Instruction);
 
     -- nom : creer_liste_vide
     -- semantique : creer une liste vide
@@ -241,6 +241,9 @@ package intermediaire is
      procedure afficherLigneInstruction (ptrInstruction : T_Ptr_Instruction);
 
     procedure afficherParametreLigneInstruction (ptrVariable : T_Ptr_Variable);
+
+    procedure changerInstructionParNumero(ptrInstruction : in out T_List_Instruction; numInstruction : in integer);
+
 
     --private
         

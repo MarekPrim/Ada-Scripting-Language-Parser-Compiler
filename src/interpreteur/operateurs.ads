@@ -32,8 +32,8 @@ package operateurs is
     -- Précondition : la liste des variables est bien formée; op est un operateur arithmetique
     -- Postcondition : CP est incrémenté de 1
     -- Exceptions : Operateur_Incorrect
-    procedure operationArithmetique(op: in String; op1 : in Integer; op2 : in Integer; cp : in out Integer; res : out Integer);
-
+    function operationArithmetique(op: in Character; op1 : in Integer; op2 : in Integer) return integer;
+    
     -- operationLogique
     -- Retourne si une opération logique est vraie ou fausse
     -- Paramètres :
@@ -45,7 +45,9 @@ package operateurs is
     -- Préconditions : op est bien un opérateur logique
     -- Postconditions : 
     -- Exceptions : 
-    procedure operationLogique(instructions : in T_List_Instruction; cp : in out Integer; res : out Boolean);
+    procedure operationLogique2(instructions : in T_List_Instruction; cp : in out Integer; res : out Boolean);
+
+    function operationLogique (op : in chaine; op1 : in Integer; op2 : in integer) return integer;
 
     -- branchementBasic
     -- Attribution d'un numéro de ligne à CP
