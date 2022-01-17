@@ -13,7 +13,7 @@ RV NO_STANDARD_ALLOCATORS_AFTER_ELABORATION
 RV NO_DEFAULT_INITIALIZATION
 RV SPARK_05
 
-U test_operateurs%b	test_operateurs.adb	cf33ecb7 NE OO SU IL
+U test_operateurs%b	test_operateurs.adb	a6f7395e NE OO SU IL
 W ada%s			ada.ads			ada.ali
 W ada.characters%s	a-charac.ads		a-charac.ali
 W ada.characters.handling%s  a-chahan.adb	a-chahan.ali
@@ -50,7 +50,7 @@ D a-unccon.ads		20210408115627 0e9b276f ada.unchecked_conversion%s
 D interfac.ads		20210408115627 5ab55268 interfaces%s
 D i-cstrea.ads		20210408115627 e53d8b8e interfaces.c_streams%s
 D intermediaire.ads	20220117093317 e0bb1b45 intermediaire%s
-D operateurs.ads	20220117093335 14479263 operateurs%s
+D operateurs.ads	20220117100338 e7835494 operateurs%s
 D system.ads		20210408115627 4635ec04 system%s
 D s-atocou.ads		20210408115627 b45c2d8d system.atomic_counters%s
 D s-crtl.ads		20210408115627 0ebbdb71 system.crtl%s
@@ -72,19 +72,20 @@ D s-stratt.ads		20210408115627 aedef97e system.stream_attributes%s
 D s-traent.ads		20210408115627 005bf670 system.traceback_entries%s
 D s-unstyp.ads		20210408115627 34867c83 system.unsigned_types%s
 D s-wchcon.ads		20210408115627 1b7d22d2 system.wch_con%s
-D test_operateurs.adb	20220117094937 16bb8700 test_operateurs%b
+D test_operateurs.adb	20220117102343 8cbb941e test_operateurs%b
 G a e
 G c Z b b [test_operateurs standard 6 11 none]
 G r s t_operandes [test_operateurs standard 6 11 none] [t_operandesIP intermediaire 35 10 none]
 G r c none [test_operateurs standard 6 11 none] [creer_liste_vide intermediaire 177 14 none]
 G r c none [test_operateurs standard 6 11 none] [creer_liste_vide intermediaire 188 14 none]
 G r c none [test_operateurs standard 6 11 none] [parsefile intermediaire 73 15 none]
+G r c none [test_operateurs standard 6 11 none] [afficher_liste intermediaire 239 15 none]
+G r c none [test_operateurs standard 6 11 none] [pointerenteteinstructions intermediaire 168 15 none]
 G r c none [test_operateurs standard 6 11 none] [affectation operateurs 22 15 none]
-G r c none [test_operateurs standard 6 11 none] [recherchervariable intermediaire 150 14 none]
-G r c none [test_operateurs standard 6 11 none] [operationarithmetique operateurs 35 14 none]
-G r c none [test_operateurs standard 6 11 none] [operationlogique operateurs 50 14 none]
-G r c none [test_operateurs standard 6 11 none] [branchementbasic operateurs 57 15 none]
-G r c none [test_operateurs standard 6 11 none] [branchementconditionel operateurs 64 15 none]
+G r c none [test_operateurs standard 6 11 none] [operationarithmetique operateurs 34 14 none]
+G r c none [test_operateurs standard 6 11 none] [operationlogique operateurs 49 14 none]
+G r c none [test_operateurs standard 6 11 none] [branchementbasic operateurs 56 15 none]
+G r c none [test_operateurs standard 6 11 none] [branchementconditionel operateurs 63 15 none]
 X 1 ada.ads
 16K9*Ada 20e8 44|1r6 1r19 1r40 1r63 1r89 2r5 2r18 2r39 2r62 2r88
 X 2 a-charac.ads
@@ -101,51 +102,57 @@ X 12 a-strunb.ads
 X 15 a-textio.ads
 57K13*Text_IO 727e16 44|1w10 1r67 2r9 2r66
 64P9*File_Type 44|23r17
-508U14*Put_Line 44|47s13 49s13 62s13 64s13 72s13 74s13 81s13 83s13 90s13
-. 92s13 101s45 102s32 130s13 132s13 143s13 145s13 156s13 158s13 170s13 172s13
-. 184s13 186s13 199s13 201s13 212s13 214s13 223s13 225s13 245s13 247s13
+264U14*New_Line 44|47s9 49s9 51s9
+508U14*Put_Line 44|53s13 55s13 68s13 70s13 78s13 80s13 87s13 89s13 96s13
+. 98s13 107s45 108s32 136s13 138s13 149s13 151s13 162s13 164s13 176s13 178s13
+. 190s13 192s13 205s13 207s13 218s13 220s13 229s13 231s13 251s13 253s13
+X 16 a-tiinio.ads
+80U14*Put 44|48s9[7|18] 50s9[7|18]
 X 17 a-tiunio.ads
 25K21*Unbounded_IO 61e29 44|1w75 2r74
 X 21 intermediaire.ads
 4K9*intermediaire 252e18 44|4w6 4r25 21r13 26r12
-18R10*T_Cell_Instruction 59e15 44|120r28 137r28 149r28 163r28 176r28 190r28
-. 205r28 230r28
-20R10*T_Instruction 53e15 44|126r39 140r39 153r39 167r39 180r39 196r39 209r39
-. 234r39
+18R10*T_Cell_Instruction 59e15 44|126r29 143r29 155r29 169r29 182r29 196r29
+. 211r29 236r29
+20R10*T_Instruction 53e15 44|132r40 146r40 159r40 173r40 186r40 202r40 215r40
+. 240r40
 23R10*Chaine 26e15 44|21r27 26r26
-24a13*str{string} 44|41m14 114m14 116m14 121m16 138m16 150m16 164m16 177m16
-. 191m16 193m43 194m52 206m16 231m16 237m14 240m14
-25i13*nbCharsEffectif{integer} 44|40m14 113m14 122m16 139m16 151m16 165m16
-. 178m16 192m16 207m16 232m16 236m14
+24a13*str{string} 44|120m14 127m16 144m16 156m16 170m16 183m16 197m16 199m43
+. 200m52 212m16 237m16 243m14
+25i13*nbCharsEffectif{integer} 44|119m14 128m16 145m16 157m16 171m16 184m16
+. 198m16 213m16 238m16 242m14
 28P10*T_List_Variable(17R10) 44|8r17 9r14
-29P10*T_List_Instruction(18R10) 44|13r19
+29P10*T_List_Instruction(18R10) 44|13r20 14r19
 31P10*T_Ptr_Variable(19R10)
 32P10*T_Ptr_Instruction(20R10)
 35R10*T_Operandes 39e15 44|22r17
-36p9*x{31P10} 44|123m19
-37p9*y{31P10} 44|124m19
-38p9*z{31P10} 44|125m19
-43i9*valeurVariable{integer} 44|46r34
-44r9*typeVariable{23R10} 44|193m30 194m39
-56p9*ptrIns{32P10} 44|126m25 140m25 153m25 167m25 180m25 196m25 209m25 234m25
-62p9*ptrVar{31P10} 44|46r23 123r38 124r47 152r37 152r63 166r37 166r63 179r37
-. 179r63 193r23 194r32 195r37 195r63 208r37 208r63 233r37 233r63
-63p9*next{28P10} 44|124r38 152r58 166r58 179r58 194r23 195r58 208r58 233r58
-64p9*prev{28P10} 44|108r33 109r44
+36p9*x{31P10} 44|48r50 52r49 129m19
+37p9*y{31P10} 44|130m19
+38p9*z{31P10} 44|50r50 131m19
+43i9*valeurVariable{integer} 44|48r56 50r56 52r55
+44r9*typeVariable{23R10} 44|199m30 200m39
+51r9*operandes{35R10} 44|48r40 50r40 52r39
+56p9*ptrIns{32P10} 44|48r29 50r29 52r28 132m26 146m26 159m26 173m26 186m26
+. 202m26 215m26 240m26
+62p9*ptrVar{31P10} 44|129r38 130r47 158r37 158r63 172r37 172r63 185r37 185r63
+. 199r23 200r32 201r37 201r63 214r37 214r63 239r37 239r63
+63p9*next{28P10} 44|130r38 158r58 172r58 185r58 200r23 201r58 214r58 239r58
+64p9*prev{28P10} 44|114r33 115r44
 73U15*parseFile 44|37s1
-150V14*rechercherVariable{28P10} 44|45s19
+168U15*pointerEnTeteInstructions 44|43s9
 177V14*creer_liste_vide{28P10} 44|34s14 36s11
-188V14*creer_liste_vide{29P10} 44|35s16 119s24 136s24 148s24 162s16 175s24
-. 189s24 204s24 229s24
+188V14*creer_liste_vide{29P10} 44|35s17 38s16 125s25 142s25 154s25 168s17
+. 181s25 195s25 210s25 235s25
+239U15*afficher_liste 44|40s9
 X 22 operateurs.ads
-3K9*operateurs 66e15 44|3w6 3r22
-7X5*Operateur_Incorrect 44|101r22
-22U15*affectation 44|43s9 115s9 117s9 239s9 241s9
-35V14*operationArithmetique{integer} 44|60s34 70s34 79s34 88s34 98s39
-50V14*operationLogique{integer} 44|128s29 141s29 154s29 168s29 182s29 197s29
-. 210s29
-57U15*branchementBasic 44|221s9
-64U15*branchementConditionel 44|243s9
+3K9*operateurs 65e15 44|3w6 3r22
+7X5*Operateur_Incorrect 44|107r22
+22U15*affectation 44|44s9
+34V14*operationArithmetique{integer} 44|66s34 76s34 85s34 94s34 104s39
+49V14*operationLogique{integer} 44|134s29 147s29 160s29 174s29 188s29 203s29
+. 216s29
+56U15*branchementBasic 44|227s9
+63U15*branchementConditionel 44|249s9
 X 23 system.ads
 67M9*Address
 X 30 s-memory.ads
@@ -155,34 +162,34 @@ X 30 s-memory.ads
 X 36 s-stalib.adb
 93U14 Break_Start 94i<c,__gnat_break_start>22
 X 44 test_operateurs.adb
-6U11*test_operateurs 6b11 253l5 253t20
-8p5 variables{21|28P10} 34m1 37m21 37r21 43m37 43r37 45r38 108r19 109m17
-. 109r30 115m38 115r38 117m38 117r38 123r24 124r24 152r23 152r44 166r23 166r44
-. 179r23 179r44 193r9 194r9 195r23 195r44 208r23 208r44 233r23 233r44 239m38
-. 239r38 241m38 241r38
-9p5 search{21|28P10} 36m1 45m9 46r12
-13p5 instruction{21|29P10} 35m1 37m32 37r32 119m9 120m9 126r9 136m9 137m9
-. 140r9 148m9 149m9 153r9 162m1 163m9 167r9 175m9 176m9 180r9 189m9 190m9
-. 196r9 204m9 205m9 209r9 229m9 230m9 234r9 243r35
-15a5 operateur{string} 97m13
-16i5 op1{integer} 55m9 60r60 70r60 79r60 88r60 98r65 111m9 128r53 141r53
-. 154r53 168r53 182r53 197r53 210r53
-17i5 op2{integer} 56m9 60r64 70r64 79r64 88r64 98r69 112m9 128r57 141r57
-. 154r57 168r57 182r57 197r57 210r57
-18i5 cp{integer} 54m9 219m9 221m26 221r26 222r12 235m9 243m32 243r32 244r12
-19i5 resultat_arithmetique{integer} 57m9 60m9 61r12 70m9 71r12 79m9 80r12
-. 88m9 89r12 98m14
-20i5 resultat_logique{integer} 128m9 129r12 141m9 142r12 154m9 155r12 168m9
-. 169r12 182m9 183r12 197m9 198r12 210m9 211r12
-21r5 chaine{21|23R10} 121m9 122m9 126r66 128r46 138m9 139m9 140r66 141r46
-. 150m9 151m9 153r66 154r46 164m9 165m9 167r66 168r46 177m9 178m9 180r66
-. 182r46 191m9 192m9 196r66 197r46 206m9 207m9 209r66 210r46 231m9 232m9
-. 234r66
-22r5 operandes{21|35R10} 123m9 124m9 125m9 126r56 140r56 152m9 153r56 166m9
-. 167r56 179m9 180r56 195m9 196r56 208m9 209r56 233m9 234r56
+6U11*test_operateurs 6b11 259l5 259t20
+8p5 variables{21|28P10} 34m1 37m21 37r21 114r19 115m17 115r30 129r24 130r24
+. 158r23 158r44 172r23 172r44 185r23 185r44 199r9 200r9 201r23 201r44 214r23
+. 214r44 239r23 239r44
+9p5 search{21|28P10} 36m1
+13p5 instructions{21|29P10} 35m1 37m32 37r32 40r24 42r24 125m9 126m9 132r9
+. 142m9 143m9 146r9 154m9 155m9 159r9 168m1 169m9 173r9 181m9 182m9 186r9
+. 195m9 196m9 202r9 210m9 211m9 215r9 235m9 236m9 240r9 249r35
+14p5 instruction{21|29P10} 38m1 42m9 43m35 43r35 44m21 44r21 48r13 50r13
+. 52r12
+15a5 operateur{string} 103m13
+16i5 op1{integer} 61m9 66r60 76r60 85r60 94r60 104r65 117m9 134r53 147r53
+. 160r53 174r53 188r53 203r53 216r53
+17i5 op2{integer} 62m9 66r64 76r64 85r64 94r64 104r69 118m9 134r57 147r57
+. 160r57 174r57 188r57 203r57 216r57
+18i5 cp{integer} 60m9 225m9 227m26 227r26 228r12 241m9 249m32 249r32 250r12
+19i5 resultat_arithmetique{integer} 63m9 66m9 67r12 76m9 77r12 85m9 86r12
+. 94m9 95r12 104m14
+20i5 resultat_logique{integer} 134m9 135r12 147m9 148r12 160m9 161r12 174m9
+. 175r12 188m9 189r12 203m9 204r12 216m9 217r12
+21r5 chaine{21|23R10} 127m9 128m9 132r67 134r46 144m9 145m9 146r67 147r46
+. 156m9 157m9 159r67 160r46 170m9 171m9 173r67 174r46 183m9 184m9 186r67
+. 188r46 197m9 198m9 202r67 203r46 212m9 213m9 215r67 216r46 237m9 238m9
+. 240r67
+22r5 operandes{21|35R10} 129m9 130m9 131m9 132r57 146r57 158m9 159r57 172m9
+. 173r57 185m9 186r57 201m9 202r57 214m9 215r57 239m9 240r57
 23p5 F{15|64P9}
 24a5 fileName{string} 37r11
 25r5 ligne{12|87R9}
-26r5 chne{21|23R10} 40m9 41m9 43r30 45r48 113m9 114m9 115r30 116m9 117r30
-. 236m9 237m9 239r30 240m9 241r30
+26r5 chne{21|23R10} 119m9 120m9 242m9 243m9
 

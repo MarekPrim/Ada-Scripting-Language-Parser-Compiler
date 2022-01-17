@@ -10,8 +10,8 @@ procedure test_operateurs is
     --package operateurs_int is new operateurs(T=>Integer);
     --use operateurs_int;
 
+    instructions : T_List_Instruction;
     instruction : T_List_Instruction;
-
     operateur : String(1..2);
     op1 : Integer;
     op2 : Integer;
@@ -32,18 +32,24 @@ begin
 
 
 variables := creer_liste_vide;
-instruction := creer_liste_vide;
+instructions := creer_liste_vide;
 search := creer_liste_vide;
-parseFile(fileName, variables, instruction);
+parseFile(fileName, variables, instructions);
+instruction := creer_liste_vide;
 
-
-        chne.nbCharsEffectif := 1;
-        chne.str(1) := 'n';
+        afficher_liste(instructions);
     -- Test affectation
-        affectation("Entier",chne,5,variables);
+        instruction := instructions;
+        pointerEnTeteInstructions(instruction);
+        affectation(instruction);
         
-        search := rechercherVariable(variables,chne);
-        if(search.all.ptrVar.all.valeurVariable = 5) then
+        --search := rechercherVariable(variables,chne);
+        new_line;
+        Put(instruction.all.ptrIns.all.operandes.x.all.valeurVariable);
+        new_line;
+        Put(instruction.all.ptrIns.all.operandes.z.all.valeurVariable);
+        new_line;
+        if(instruction.all.ptrIns.all.operandes.x.all.valeurVariable = 5) then
             Put_Line("OK affectation");
         else
             Put_Line("KO affectation");
@@ -112,18 +118,18 @@ parseFile(fileName, variables, instruction);
         op2 := 4;
         chne.nbCharsEffectif := 1;
         chne.str(1) := 'i';
-        affectation("Entier",chne,5, variables);
-        chne.str(1) := 'n';
-        affectation("Entier",chne,2, variables);
+        --affectation("Entier",chne,5, variables);
+        --chne.str(1) := 'n';
+        --affectation("Entier",chne,2, variables);
         
-        instruction := creer_liste_vide;
-        instruction := new T_Cell_Instruction'(null,null,null);
+        instructions := creer_liste_vide;
+        instructions := new T_Cell_Instruction'(null,null,null);
         chaine.str(1) := '=';
         chaine.nbCharsEffectif := 1;
         operandes.x := variables.all.ptrVar;
         operandes.y := variables.all.next.all.ptrVar;
         operandes.z := null;
-        instruction.all.ptrIns := new T_Instruction'(1,operandes,chaine);
+        instructions.all.ptrIns := new T_Instruction'(1,operandes,chaine);
 
         resultat_logique := operationLogique(chaine,op1,op2);
         if(resultat_logique = 0) then
@@ -133,11 +139,11 @@ parseFile(fileName, variables, instruction);
         end if;
 
 
-        instruction := creer_liste_vide;
-        instruction := new T_Cell_Instruction'(null,null,null);
+        instructions := creer_liste_vide;
+        instructions := new T_Cell_Instruction'(null,null,null);
         chaine.str(1) := '>';
         chaine.nbCharsEffectif := 1;
-        instruction.all.ptrIns := new T_Instruction'(1,operandes,chaine);
+        instructions.all.ptrIns := new T_Instruction'(1,operandes,chaine);
         resultat_logique := operationLogique(chaine,op1,op2);
         if(resultat_logique = 0) then
             Put_Line("OK operation logique >");
@@ -145,12 +151,12 @@ parseFile(fileName, variables, instruction);
             Put_Line("KO operation logique >");
         end if;
 
-        instruction := creer_liste_vide;
-        instruction := new T_Cell_Instruction'(null,null,null);
+        instructions := creer_liste_vide;
+        instructions := new T_Cell_Instruction'(null,null,null);
         chaine.str(1) := '<';
         chaine.nbCharsEffectif := 1;
         operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
-        instruction.all.ptrIns := new T_Instruction'(1,operandes,chaine);
+        instructions.all.ptrIns := new T_Instruction'(1,operandes,chaine);
         resultat_logique := operationLogique(chaine,op1,op2);
         if(resultat_logique = 1) then
             Put_Line("OK operation logique <");
@@ -159,12 +165,12 @@ parseFile(fileName, variables, instruction);
         end if;
 
 
-instruction := creer_liste_vide;
-        instruction := new T_Cell_Instruction'(null,null,null);
+instructions := creer_liste_vide;
+        instructions := new T_Cell_Instruction'(null,null,null);
         chaine.str(1..2) := ">=";
         chaine.nbCharsEffectif := 2;
         operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
-        instruction.all.ptrIns := new T_Instruction'(1,operandes,chaine);
+        instructions.all.ptrIns := new T_Instruction'(1,operandes,chaine);
         resultat_logique := operationLogique(chaine,op1,op2);
         if(resultat_logique = 0) then
             Put_Line("OK operation logique >= ");
@@ -172,12 +178,12 @@ instruction := creer_liste_vide;
             Put_Line("KO operation logique >= ");
         end if;
 
-        instruction := creer_liste_vide;
-        instruction := new T_Cell_Instruction'(null,null,null);
+        instructions := creer_liste_vide;
+        instructions := new T_Cell_Instruction'(null,null,null);
         chaine.str(1..2) := "<=";
         chaine.nbCharsEffectif := 2;
         operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
-        instruction.all.ptrIns := new T_Instruction'(1,operandes,chaine);
+        instructions.all.ptrIns := new T_Instruction'(1,operandes,chaine);
 
         resultat_logique := operationLogique(chaine,op1,op2);
         if(resultat_logique = 1) then
@@ -186,14 +192,14 @@ instruction := creer_liste_vide;
             Put_Line("KO operation logique <= ");
         end if;
 
-        instruction := creer_liste_vide;
-        instruction := new T_Cell_Instruction'(null,null,null);
+        instructions := creer_liste_vide;
+        instructions := new T_Cell_Instruction'(null,null,null);
         chaine.str(1..3) := "AND";
         chaine.nbCharsEffectif := 3;
         variables.all.ptrVar.typeVariable.str(1..7) := "Booleen";
         variables.all.next.all.ptrVar.typeVariable.str(1..7) := "Booleen";
         operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
-        instruction.all.ptrIns := new T_Instruction'(1,operandes,chaine);
+        instructions.all.ptrIns := new T_Instruction'(1,operandes,chaine);
         resultat_logique := operationLogique(chaine,op1,op2);
         if(resultat_logique = 0) then
             Put_Line("OK operation logique & ");
@@ -201,12 +207,12 @@ instruction := creer_liste_vide;
             Put_Line("KO operation logique & ");
         end if;
 
-        instruction := creer_liste_vide;
-        instruction := new T_Cell_Instruction'(null,null,null);
+        instructions := creer_liste_vide;
+        instructions := new T_Cell_Instruction'(null,null,null);
         chaine.str(1..2) := "OR";
         chaine.nbCharsEffectif := 2;
         operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
-        instruction.all.ptrIns := new T_Instruction'(1,operandes,chaine);
+        instructions.all.ptrIns := new T_Instruction'(1,operandes,chaine);
         resultat_logique := operationLogique(chaine,op1,op2);
         if(resultat_logique = 1) then
             Put_Line("OK operation logique | ");
@@ -226,21 +232,21 @@ instruction := creer_liste_vide;
         end if;
 
     -- Test branchement conditionnel
-        instruction := creer_liste_vide;
-        instruction := new T_Cell_Instruction'(null,null,null);
+        instructions := creer_liste_vide;
+        instructions := new T_Cell_Instruction'(null,null,null);
         chaine.str(1) := '<';
         chaine.nbCharsEffectif := 1;
         operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
-        instruction.all.ptrIns := new T_Instruction'(1,operandes,chaine);
+        instructions.all.ptrIns := new T_Instruction'(1,operandes,chaine);
         cp := 0;
         chne.nbCharsEffectif := 1;
         chne.str(1) := 'i';
 
-        affectation("Entier",chne,5, variables);
-        chne.str(1) := 'n';
-        affectation("Entier",chne,2, variables);
+        --affectation("Entier",chne,5, variables);
+        --chne.str(1) := 'n';
+        --affectation("Entier",chne,2, variables);
 
-        branchementConditionel(cp,instruction,33);
+        branchementConditionel(cp,instructions,33);
         if(cp = 33) then
             Put_Line("Branchement conditionel OK");
         else
