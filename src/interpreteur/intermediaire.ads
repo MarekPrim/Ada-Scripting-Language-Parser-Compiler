@@ -38,7 +38,6 @@ package intermediaire is
         z : T_Ptr_Variable;
     end record;
 
-
     type T_Variable is record
         valeurVariable : Integer;
         typeVariable : Chaine;
@@ -243,6 +242,8 @@ package intermediaire is
     procedure afficherParametreLigneInstruction (ptrVariable : T_Ptr_Variable);
 
     procedure changerInstructionParNumero(ptrInstruction : in out T_List_Instruction; numInstruction : in integer);
+
+    function creer_variable_tmp (nomVariable : in chaine) return T_Ptr_Variable;
 
 
     --private

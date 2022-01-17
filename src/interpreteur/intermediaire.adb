@@ -113,8 +113,6 @@ package body intermediaire is
         exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Fin)));
         end loop;
 
-        
-
         Close(F);
 
     end parseFile;
@@ -182,6 +180,7 @@ package body intermediaire is
 
     end recupererVariables;
 
+
     procedure recupererInstructions(instructions : in out T_List_Instruction; variables : in out T_List_Variable; ligne : in Unbounded_string) is
      
         i : integer;
@@ -193,8 +192,6 @@ package body intermediaire is
         valeurVariableZ : integer;
         valeurVariableX : integer;
         nomVariableY : chaine;
-        typeVariableY : chaine;
-        valeurVariableY : integer;
         numInstruction : chaine;
         numInstructionEntier : integer;
         operation : chaine;
@@ -208,16 +205,9 @@ package body intermediaire is
 
         ptrInstruction := new T_Instruction;
 
+        -- recuperation du numero de l'instruction
         i := 1;
-        while (Character'POS(element(ligne, i)) in 48..57) loop
-            numInstruction.str(i) := element(ligne, i);
-            i := i+1;
-        end loop;
-
-        numInstruction.nbCharsEffectif := i-1;
-        --Put_Line("test");
-        --Put_Line(numInstruction.str(1..numInstruction.nbCharsEffectif));
-        numInstructionEntier := Integer'Value(numInstruction.str(1..numInstruction.nbCharsEffectif));
+        
         ptrInstruction.all.numInstruction := numInstructionEntier;
 
         if (Slice(ligne, i, i+1) = "IF") then
@@ -323,13 +313,7 @@ package body intermediaire is
             end loop;
 
             if (isANumber) then
-                valeurVariableX := Integer'Value(nomVariableX.str(1..nomVariableX.nbCharsEffectif));
-                nomVariableX.nbCharsEffectif := 3;
-                nomVariableX.str(1..nomVariableX.nbCharsEffectif) := "Tmp";
-                typeVariableX.nbCharsEffectif := 6;
-                typeVariableX.str(1..typeVariableX.nbCharsEffectif) := "Entier";
-                ptrVariable := new T_Variable'(valeurVariableX, nomVariableX, typeVariableX, false);
-                ptrInstruction.all.operandes.x := ptrVariable;
+                ptrInstruction.all.operandes.x := creer_variable_tmp(nomVariableX);
             else
                 tlistVariable := rechercherVariable(variables, nomVariableX);
                 ptrInstruction.all.operandes.x := tlistVariable.all.ptrVar;
@@ -370,13 +354,7 @@ package body intermediaire is
                 end loop;
 
                 if (isANumber) then
-                    valeurVariableY := Integer'Value(nomVariableY.str(1..nomVariableY.nbCharsEffectif));
-                    nomVariableY.nbCharsEffectif := 3;
-                    nomVariableY.str(1..nomVariableY.nbCharsEffectif) := "Tmp";
-                    typeVariableY.nbCharsEffectif := 6;
-                    typeVariableY.str(1..typeVariableY.nbCharsEffectif) := "Entier";
-                    ptrVariable := new T_Variable'(valeurVariableY, nomVariableY, typeVariableY, false);
-                    ptrInstruction.all.operandes.y := ptrVariable;
+                    ptrInstruction.all.operandes.y := creer_variable_tmp(nomVariableY);
                 else
                     tlistVariable := rechercherVariable(variables, nomVariableY);
                     ptrInstruction.all.operandes.y := tlistVariable.all.ptrVar;
@@ -391,6 +369,24 @@ package body intermediaire is
         ajouter(instructions, ptrInstruction);
 
     end recupererInstructions;
+
+    function creer_variable_tmp (nomVariable : in chaine) return T_Ptr_Variable is
+        
+        valeurVariableTmp : integer;
+        nomVariableTmp : chaine;
+        typeVariableTmp : chaine;
+    
+    begin
+
+        valeurVariableTmp := Integer'Value(nomVariable.str(1..nomVariable.nbCharsEffectif));
+        nomVariableTmp.nbCharsEffectif := 3;
+        nomVariableTmp.str(1..nomVariableTmp.nbCharsEffectif) := "Tmp";
+        typeVariableTmp.nbCharsEffectif := 6;
+        typeVariableTmp.str(1..typeVariableTmp.nbCharsEffectif) := "Entier";
+
+        return new T_Variable'(valeurVariableTmp, nomVariableTmp, typeVariableTmp, false);
+
+    end creer_variable_tmp;
 
     procedure pointerEnTeteInstructions (ptrInstruction : in out T_List_Instruction) is
 
@@ -591,6 +587,5 @@ package body intermediaire is
                 put("GOTO : la ligne précisée n'existe pas dans le fichier");
 
     end changerInstructionParNumero;
-
 
 end intermediaire;
