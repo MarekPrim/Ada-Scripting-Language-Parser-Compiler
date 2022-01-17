@@ -17,7 +17,7 @@ package body variables is
 
     procedure setNom(variable : in out T_Variable; nomVariable : in Unbounded_String) is
     begin
-        variable.nomVariable := nom;
+        variable.nomVariable := nomVariable;
     end setNom;
 
     function getType(variable : in T_Variable) return Unbounded_String is
