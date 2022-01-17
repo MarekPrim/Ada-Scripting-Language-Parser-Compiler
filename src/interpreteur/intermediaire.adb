@@ -17,6 +17,7 @@ package body intermediaire is
     begin
         parseFile(fileName, variables, instructions);
 
+
         pointerEnTeteInstructions(instructions);
 
         l_instructions := instructions;
@@ -82,10 +83,12 @@ package body intermediaire is
 
         Open (F, In_File, fileName);
 
+
         loop
             ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
         exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Programme)));
         end loop;
+
 
         ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
 
@@ -104,12 +107,14 @@ package body intermediaire is
         exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut)));
         end loop;
 
+        afficher_liste(variables);
+
         ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
 
         loop
-
-            recupererInstructions(instructions, variables, ligne);
-        
+            if (estLigneUtile(ligne)) then
+                recupererInstructions(instructions, variables, ligne);
+            end if;
             ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
 
         exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Fin)));
@@ -135,10 +140,8 @@ package body intermediaire is
     procedure recupererVariables(variables : in out T_List_Variable; ligne : in Unbounded_string) is
         find : boolean;
         i : integer; 
-        j : integer; 
-        k : integer;
-        typeVariable : chaine;
-        nomVariable : chaine;
+        typeVariable : Unbounded_String;
+        nomVariable : Unbounded_String;
         ptrVariable : T_Ptr_Variable;
     begin
     
@@ -150,32 +153,24 @@ package body intermediaire is
 
         i := i+1;
 
-        j := 0;
         -- Récupérer le type de la variable
         while(i <= length(ligne)) loop
-            j := j+1;
-            typeVariable.str(j) := element(ligne, i);
+            append(typeVariable, element(ligne, i));
             i := i+1;
         end loop;
-
-        typeVariable.nbCharsEffectif := j;
 
         i := 1;
         -- Parcourir la ligne pour trouver le nom de la variable
         while(i <= length(ligne) and element(ligne, i) /= ':') loop
 
-            k := 0;
-
             find := false;
             while (Character'POS(element(ligne, i)) in 65..122 or Character'POS(element(ligne, i)) in 48..57) loop
-                k := k+1;
                 find := true;
-                nomVariable.str(k) := element(ligne, i);
+                append(nomVariable, element(ligne, i));
                 i := i+1;
             end loop;
 
             if (find) then
-                nomVariable.nbCharsEffectif := k;
                 ptrVariable := new T_Variable'(0, typeVariable, nomVariable, false);
                 begin
                 if(variables /= null and then rechercherVariable(variables, nomVariable) /= null) then
@@ -185,43 +180,37 @@ package body intermediaire is
                         when Variable_Non_Trouvee => null; -- Si elle n'est pas trouvée, on ne fait rien
                 end;
                 ajouter(variables, ptrVariable);
+                nomVariable := To_Unbounded_String("");
             else
                 i := i+1;
             end if;
-
-
         end loop;
 
     end recupererVariables;
 
     function recupererNumeroInstructionLigne (index : in out integer; ligne : in Unbounded_String) return integer is
-        numInstruction : chaine;
+        numInstruction : Unbounded_String;
     begin
 
         while (Character'POS(element(ligne, index)) in 48..57) loop
-            numInstruction.str(index) := element(ligne, index);
+            append(numInstruction, element(ligne, index));
             index := index+1;
         end loop;
 
-        numInstruction.nbCharsEffectif := index-1;
-
-        return Integer'Value(numInstruction.str(1..numInstruction.nbCharsEffectif));
+        return Integer'Value(To_String(numInstruction));
 
     end recupererNumeroInstructionLigne;
 
     procedure recupererInstructions(instructions : in out T_List_Instruction; variables : in out T_List_Variable; ligne : in Unbounded_string) is
      
         i : integer;
-        j : integer;
-        nomVariableZ : chaine;
-        nomVariableX : chaine;
-        typeVariableZ : chaine;
-        typeVariableX : chaine;
+        nomVariableZ : Unbounded_String;
+        nomVariableX : Unbounded_String;
+        typeVariableZ : Unbounded_String;
         valeurVariableZ : integer;
-        valeurVariableX : integer;
-        nomVariableY : chaine;
+        nomVariableY : Unbounded_String;
         numInstruction : integer;
-        operation : chaine;
+        operation : Unbounded_String;
         ptrInstruction : T_Ptr_Instruction; 
         ptrVariable : T_Ptr_Variable;
         tlistVariable : T_List_Variable;
@@ -240,95 +229,76 @@ package body intermediaire is
 
         if (Slice(ligne, i, i+1) = "IF") then
 
-            operation.str(1..2) := "IF";
-            operation.nbCharsEffectif := 2;
+            operation := To_Unbounded_String("IF");
             
             i := i+2;
 
-            j := 0;
             while ((Character'POS(element(ligne, i)) in 65..122 or Character'POS(element(ligne, i)) in 48..57) and then slice(ligne, i, i+3) /= "GOTO") loop
-                j := j+1;
-                nomVariableX.str(j) := element(ligne, i);
+                append(nomVariableX, element(ligne, i));
                 i := i+1;
             end loop;
-            nomVariableX.nbCharsEffectif := j;
+            
+
+
             tlistVariable := rechercherVariable(variables, nomVariableX);
             ptrInstruction.all.operandes.x := tlistVariable.all.ptrVar;
 
             i := i+4;
 
-            j := 0;
             while (i <= length(ligne) and then (Character'POS(element(ligne, i)) in 48..57)) loop
-                j := j+1;
-                nomVariableZ.str(j) := element(ligne, i);
+                append(nomVariableZ, element(ligne, i));
                 i := i+1;
             end loop;
-            nomVariableZ.nbCharsEffectif := j;
-            valeurVariableZ := Integer'Value(nomVariableZ.str(1..nomVariableZ.nbCharsEffectif));
-            nomVariableZ.nbCharsEffectif := 15;
-            nomVariableZ.str(1..nomVariableZ.nbCharsEffectif) := "numeroLigneGOTO";
-            typeVariableZ.nbCharsEffectif := 6;
-            typeVariableZ.str(1..typeVariableZ.nbCharsEffectif) := "Entier";
+
+            valeurVariableZ := Integer'Value(To_String(nomVariableZ));
+            nomVariableZ  := To_Unbounded_String("numeroLigneGOTO");
+            typeVariableZ := To_Unbounded_String("Entier");
             ptrVariable := new T_Variable'(valeurVariableZ, typeVariableZ, nomVariableZ, false);
             ptrInstruction.all.operandes.z := ptrVariable;
 
         elsif (Slice(ligne, i, i+3) = "GOTO") then
 
-            j := 0;
             while (Character'POS(element(ligne, i)) in 65..122) loop
-                j := j+1;
-                operation.str(j) := element(ligne, i);
+                append(operation, element(ligne, i));
                 i := i+1;
             end loop;
-            operation.nbCharsEffectif := j;
 
-            j := 0;
             while (i <= length(ligne) and then (Character'POS(element(ligne, i)) in 48..57)) loop
-                j := j+1;
-                nomVariableZ.str(j) := element(ligne, i);
+                append(nomVariableZ, element(ligne, i));
                 i := i+1;
             end loop;
-            nomVariableZ.nbCharsEffectif := j;
-            valeurVariableZ := Integer'Value(nomVariableZ.str(1..nomVariableZ.nbCharsEffectif));
-            nomVariableZ.nbCharsEffectif := 15;
-            nomVariableZ.str(1..nomVariableZ.nbCharsEffectif) := "numeroLigneGOTO";
-            typeVariableZ.nbCharsEffectif := 6;
-            typeVariableZ.str(1..typeVariableZ.nbCharsEffectif) := "Entier";
+
+            valeurVariableZ := Integer'Value(To_String(nomVariableZ));
+            nomVariableZ := To_Unbounded_String("numeroLigneGOTO");
+            typeVariableZ := To_Unbounded_String("Entier");
             ptrVariable := new T_Variable'(valeurVariableZ, typeVariableZ, nomVariableZ, false);
             ptrInstruction.all.operandes.z := ptrVariable;
 
         elsif (Slice(ligne, i, i+3) = "NULL") then
             
-            operation.str(1..4) := "NULL";
-            operation.nbCharsEffectif := 4;
+            operation := To_Unbounded_String("NULL");
 
         else
 
-            j := 0;
             while (slice(ligne, i, i+1) /= "<-") loop
-                j := j+1;
-                nomVariableZ.str(j) := element(ligne, i);
+                append(nomVariableZ, element(ligne, i));
                 i := i+1;
             end loop;
-            nomVariableZ.nbCharsEffectif := j;
+
             tlistVariable := rechercherVariable(variables, nomVariableZ);
             ptrInstruction.all.operandes.z := tlistVariable.all.ptrVar;
             
             i := i+2;
 
             operateurLogiqueTrouve := false;
-            j := 0;
             while (i <= length(ligne) and then (Character'POS(element(ligne, i)) in 65..122 or Character'POS(element(ligne, i)) in 48..57) and then not operateurLogiqueTrouve) loop
                 if ((i <= length(ligne)-1 and then slice(ligne, i, i+1) = "OR") or (i <= length(ligne)-2 and then slice(ligne, i, i+2) = "AND")) then
                     operateurLogiqueTrouve := true;
                 else
-                    j := j+1;
-                    nomVariableX.str(j) := element(ligne, i);
+                    append(nomVariableX, element(ligne, i));
                     i := i+1;
                 end if;
             end loop;
-
-            nomVariableX.nbCharsEffectif := j;
 
             if (isANumber(nomVariableX)) then
                 ptrInstruction.all.operandes.x := creer_variable_tmp(nomVariableX);
@@ -340,36 +310,29 @@ package body intermediaire is
             if (i <= length(ligne)) then
 
                 if (i <= length(ligne)-2 and then slice(ligne, i, i+2) = "AND") then
-                    operation.nbCharsEffectif := 3;
-                    operation.str(1..3) := "AND";
+                    operation := To_Unbounded_String("AND");
                     i := i+3; 
                 elsif (i <= length(ligne)-1 and then slice(ligne, i, i+1) = "OR") then
-                    operation.nbCharsEffectif := 2;
-                    operation.str(1..2) := "OR";
+                    operation := To_Unbounded_String("OR");
                     i := i+2; 
                 else
-                    operation.nbCharsEffectif := 1;
-                    operation.str(1) := element(ligne, i);
+                    append(operation, element(ligne, i));
                     i := i+1; 
                 end if;
 
-                j := 0;
                 while (i <= length(ligne) and then (Character'POS(element(ligne, i)) in 65..122 or Character'POS(element(ligne, i)) in 48..57)) loop
-                    j := j+1;
-                    nomVariableY.str(j) := element(ligne, i);
+                    append(nomVariableY, element(ligne, i));
                     i := i+1;
                 end loop;
-                nomVariableY.nbCharsEffectif := j;
 
-                if (isANumber(nomVariableY)) then
+                if (isANumber(nomVariableY) = true) then
                     ptrInstruction.all.operandes.y := creer_variable_tmp(nomVariableY);
                 else
                     tlistVariable := rechercherVariable(variables, nomVariableY);
                     ptrInstruction.all.operandes.y := tlistVariable.all.ptrVar;
                 end if;
             else
-                operation.str(1..11) := "AFFECTATION";
-                operation.nbCharsEffectif := 11;
+                operation := To_Unbounded_String("AFFECTATION");
             end if;
         end if;
 
@@ -378,12 +341,12 @@ package body intermediaire is
 
     end recupererInstructions;
 
-    function isANumber (nomVariable : in chaine) return boolean is
+    function isANumber (nomVariable : in Unbounded_String) return boolean is
         j : integer;
     begin
         j := 1;
-        while(j <= nomVariable.nbCharsEffectif) loop
-            if (Character'POS(nomVariable.str(j)) in 65..122) then
+        while(j <= length(nomVariable)) loop
+            if (Character'POS(element(nomVariable, j)) in 65..122) then
                 return false;
             end if;
             j := j+1;
@@ -391,19 +354,17 @@ package body intermediaire is
         return true;
     end isANumber;
 
-    function creer_variable_tmp (nomVariable : in chaine) return T_Ptr_Variable is
+    function creer_variable_tmp (nomVariable : in Unbounded_String) return T_Ptr_Variable is
         
         valeurVariableTmp : integer;
-        nomVariableTmp : chaine;
-        typeVariableTmp : chaine;
+        nomVariableTmp : Unbounded_String;
+        typeVariableTmp : Unbounded_String;
     
     begin
 
-        valeurVariableTmp := Integer'Value(nomVariable.str(1..nomVariable.nbCharsEffectif));
-        nomVariableTmp.nbCharsEffectif := 3;
-        nomVariableTmp.str(1..nomVariableTmp.nbCharsEffectif) := "Tmp";
-        typeVariableTmp.nbCharsEffectif := 6;
-        typeVariableTmp.str(1..typeVariableTmp.nbCharsEffectif) := "Entier";
+        valeurVariableTmp := Integer'Value(To_String(nomVariable));
+        nomVariableTmp := To_Unbounded_String("Tmp");
+        typeVariableTmp := To_Unbounded_String("Entier");
 
         return new T_Variable'(valeurVariableTmp, typeVariableTmp, nomVariableTmp, false);
 
@@ -456,8 +417,8 @@ package body intermediaire is
             l := l.all.prev;
         end loop;
         while (l /= null) loop
-            put_line(l.all.ptrVar.all.nomVariable.str(1..l.all.ptrVar.all.nomVariable.nbCharsEffectif));
-            put_line(l.all.ptrVar.all.typeVariable.str(1..l.all.ptrVar.all.typeVariable.nbCharsEffectif));
+            put_line(l.all.ptrVar.all.nomVariable);
+            put_line(l.all.ptrVar.all.typeVariable);
             put(l.all.ptrVar.all.valeurVariable, 1);
             new_line;
             l := l.all.next;
@@ -483,7 +444,7 @@ package body intermediaire is
         put(ptrInstruction.all.numInstruction, 1);
         new_line;
         put("       operation   : ");
-        put_line(ptrInstruction.all.operation.str(1..ptrInstruction.all.operation.nbCharsEffectif));
+        put_line(ptrInstruction.all.operation);
 
         put("       parametre z :");
         afficherParametreLigneInstruction(ptrInstruction.all.operandes.z);
@@ -504,9 +465,9 @@ package body intermediaire is
         if (ptrVariable /= null) then
             new_line;
             put("                type    : ");
-            put_line(ptrVariable.all.typeVariable.str(1..ptrVariable.all.typeVariable.nbCharsEffectif));
+            put_line(ptrVariable.all.typeVariable);
             put("                nom     : ");
-            put_line(ptrVariable.all.nomVariable.str(1..ptrVariable.all.nomVariable.nbCharsEffectif));
+            put_line(ptrVariable.all.nomVariable);
             put("                valeur  : ");
             put(ptrVariable.all.valeurVariable, 1);
         else
@@ -516,14 +477,16 @@ package body intermediaire is
 
     end afficherParametreLigneInstruction;
 
-    function rechercherVariable (variables : in T_List_Variable; nomVariable : in chaine) return T_List_Variable is
+    function rechercherVariable (variables : in T_List_Variable; nomVariable : in Unbounded_String) return T_List_Variable is
         copy : T_List_Variable;
     begin
+        
         copy := variables;
+
         while copy.all.prev /= null loop -- Retour au début de la liste
             copy := copy.all.prev;
         end loop;
-        while copy /= null and then copy.all.ptrVar /= null and then copy.all.ptrVar.all.nomVariable.str(1..copy.all.ptrVar.all.nomVariable.nbCharsEffectif) /= nomVariable.str(1..nomVariable.nbCharsEffectif) loop
+        while copy /= null and then copy.all.ptrVar /= null and then copy.all.ptrVar.all.nomVariable /= nomVariable loop
             copy := copy.all.next;
         end loop;
         if copy = null then
@@ -559,22 +522,22 @@ package body intermediaire is
 
 
     procedure interpreterCommande (ptrInstruction : in out T_List_Instruction) is
-        nomOperation : chaine;
+        nomOperation : Unbounded_String;
     begin
         nomOperation := ptrInstruction.all.ptrIns.all.operation;
 
-        if(nomOperation.str(1..nomOperation.nbCharsEffectif) = "NULL") then
+        if(nomOperation = "NULL") then
             branchementBasic(ptrInstruction.all.ptrIns.all.numInstruction+1,ptrInstruction);
-        elsif(nomOperation.str(1..nomOperation.nbCharsEffectif) = "GOTO") then
+        elsif(nomOperation = "GOTO") then
             branchementBasic(ptrInstruction.all.ptrIns.all.operandes.z.all.valeurVariable,ptrInstruction);
-        elsif(nomOperation.str(1..nomOperation.nbCharsEffectif) = "IF") then
+        elsif(nomOperation = "IF") then
             branchementConditionel(ptrInstruction);
         else
             if (ptrInstruction.all.ptrIns.all.operandes.y = null) then
                 ptrInstruction.all.ptrIns.all.operandes.z.all.valeurVariable := ptrInstruction.all.ptrIns.all.operandes.x.all.valeurVariable;
             else
-                if (ptrInstruction.all.ptrIns.all.operation.str(1) = '+' or ptrInstruction.all.ptrIns.all.operation.str(1) = '*' or ptrInstruction.all.ptrIns.all.operation.str(1) = '/' or ptrInstruction.all.ptrIns.all.operation.str(1) = '-') then
-                    ptrInstruction.all.ptrIns.all.operandes.z.valeurVariable := operationArithmetique(ptrInstruction.all.ptrIns.all.operation.str(1), ptrInstruction.all.ptrIns.all.operandes.x.valeurVariable, ptrInstruction.all.ptrIns.all.operandes.y.valeurVariable);
+                if (element(ptrInstruction.all.ptrIns.all.operation, 1) = '+' or element(ptrInstruction.all.ptrIns.all.operation, 1) = '*' or element(ptrInstruction.all.ptrIns.all.operation, 1) = '/' or element(ptrInstruction.all.ptrIns.all.operation, 1) = '-') then
+                    ptrInstruction.all.ptrIns.all.operandes.z.valeurVariable := operationArithmetique(element(ptrInstruction.all.ptrIns.all.operation, 1), ptrInstruction.all.ptrIns.all.operandes.x.valeurVariable, ptrInstruction.all.ptrIns.all.operandes.y.valeurVariable);
                 else
                     ptrInstruction.all.ptrIns.all.operandes.z.valeurVariable := operationLogique(ptrInstruction.all.ptrIns.all.operation, ptrInstruction.all.ptrIns.all.operandes.x.valeurVariable, ptrInstruction.all.ptrIns.all.operandes.y.valeurVariable);
                 end if;

@@ -1,4 +1,5 @@
-with intermediaire; use intermediaire;
+with intermediaire, Ada.Strings.Unbounded; 
+use intermediaire, Ada.Strings.Unbounded;
 --generic type T is private;
 package operateurs is
 
@@ -46,7 +47,7 @@ package operateurs is
     -- Exceptions : 
     procedure operationLogique2(instructions : in T_List_Instruction; cp : in out Integer; res : out Boolean);
 
-    function operationLogique (op : in chaine; op1 : in Integer; op2 : in integer) return integer;
+    function operationLogique (op : in Unbounded_String; op1 : in Integer; op2 : in integer) return integer;
 
     -- branchementBasic
     -- Attribution d'un numéro de ligne à CP

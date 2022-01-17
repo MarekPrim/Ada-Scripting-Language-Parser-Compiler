@@ -10,7 +10,7 @@ package body operateurs is
         if ptrInstruction.all.ptrIns.all.operandes.z.all.isConstant then
            raise Variable_Constante;
         else
-            if ptrInstruction.all.ptrIns.all.operandes.z.all.typeVariable.str(1..ptrInstruction.all.ptrIns.all.operandes.z.all.typeVariable.nbCharsEffectif) = ptrInstruction.all.ptrIns.all.operandes.x.all.typeVariable.str(1..ptrInstruction.all.ptrIns.all.operandes.x.all.typeVariable.nbCharsEffectif) then
+            if (ptrInstruction.all.ptrIns.all.operandes.z.all.typeVariable = ptrInstruction.all.ptrIns.all.operandes.x.all.typeVariable) then
                 ptrInstruction.all.ptrIns.all.operandes.z.all.valeurVariable := ptrInstruction.all.ptrIns.all.operandes.x.all.valeurVariable;
             else
                 raise Type_Incorrect;
@@ -39,23 +39,23 @@ package body operateurs is
         return resultat;
     end operationArithmetique;
 
-    function operationLogique (op : in chaine; op1 : in Integer; op2 : in integer) return integer is
+    function operationLogique (op : in Unbounded_String; op1 : in Integer; op2 : in integer) return integer is
         resultat : boolean;
     begin
 
-        if (op.str(1..op.nbCharsEffectif) = "AND") then
+        if (op = "AND") then
             resultat := (op1 + op2 = 2);
-        elsif (op.str(1..op.nbCharsEffectif) = "OR") then
+        elsif (op = "OR") then
             resultat := (op1 + op2 > 0);
-        elsif (op.str(1..op.nbCharsEffectif) = "=") then
+        elsif (op = "=") then
             resultat := op1 = op2;
-        elsif (op.str(1..op.nbCharsEffectif) = "<") then
+        elsif (op = "<") then
             resultat := op1 < op2;
-        elsif (op.str(1..op.nbCharsEffectif) = "<=") then
+        elsif (op = "<=") then
             resultat := op1 <= op2;
-        elsif (op.str(1..op.nbCharsEffectif) = ">") then
+        elsif (op = ">") then
             resultat := op1 <= op2;
-        elsif (op.str(1..op.nbCharsEffectif) = ">=") then
+        elsif (op = ">=") then
             resultat := op1 >= op2;
         else
             raise Operateur_Incorrect;
@@ -70,40 +70,40 @@ package body operateurs is
 
     procedure operationLogique2(instructions : in T_List_Instruction; cp : in out Integer; res : out Boolean) is
         resultat : Boolean;
-        op : String(1..3) := "   ";
+        op : Unbounded_String;
         op1 : T_Ptr_Variable;
         op2 : T_Ptr_Variable;
     begin
-        op := instructions.all.ptrIns.all.operation.str(1..3);
+        op := instructions.all.ptrIns.all.operation;
         op1 := instructions.all.ptrIns.all.operandes.x;
         op2 := instructions.all.ptrIns.all.operandes.y;
         resultat := false;
 
-        if op1.all.typeVariable.str(1..7) = "Booleen" and op2.all.typeVariable.str(1..7) = "Booleen" then
+        if op1.all.typeVariable = "Booleen" and op2.all.typeVariable = "Booleen" then
             Put_Line("Bool");
-            if op(1..3) = "AND" then
+            if op = "AND" then
                 resultat := op1.all.valeurVariable + op2.all.valeurVariable = 2;
                 null;
-            elsif op(1..2) = "OR" then
+            elsif op = "OR" then
                 resultat := op1.all.valeurVariable + op2.all.valeurVariable > 1;
                 null;
             else
                 raise Operateur_Incorrect;
             end if;
         else 
-            if op(1) = '=' then
+            if op = "=" then
                     resultat := op1.all.valeurVariable = op2.all.valeurVariable;
                     null;
-                elsif op(1) = '<' then
+                elsif op = "<" then
                     resultat := op1.all.valeurVariable < op2.all.valeurVariable;
                     null;
-                elsif op(1) = '>' then
+                elsif op = ">" then
                     resultat := op1.all.valeurVariable > op2.all.valeurVariable;
                     null;
-                elsif op(1..2) = "<=" then
+                elsif op = "<=" then
                     resultat := op1.all.valeurVariable <= op2.all.valeurVariable;
                     null;
-                elsif op(1..2) = ">=" then
+                elsif op = ">=" then
                     resultat := op1.all.valeurVariable >= op2.all.valeurVariable;
                     null;
                 else 

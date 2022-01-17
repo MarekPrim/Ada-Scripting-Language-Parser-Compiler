@@ -19,12 +19,6 @@ package intermediaire is
     type T_Variable;
     type T_Instruction;
 
-    --type Chaine is private;
-    type Chaine is record
-            str : String(1..100);
-            nbCharsEffectif : Integer;
-    end record;
-
     type T_List_Variable is access T_Cell_Variable;
     type T_List_Instruction is access T_Cell_Instruction;
 
@@ -40,15 +34,15 @@ package intermediaire is
 
     type T_Variable is record
         valeurVariable : Integer;
-        typeVariable : Chaine;
-        nomVariable : Chaine;
+        typeVariable : Unbounded_String;
+        nomVariable : Unbounded_String;
         isConstant : Boolean;
     end record;
 
     type T_Instruction is record
         numInstruction : Integer;
         operandes : T_Operandes;
-        operation : Chaine;
+        operation : Unbounded_String;
     end record;
 
     type T_Cell_Instruction is record
@@ -146,7 +140,7 @@ package intermediaire is
     -- Préconditions    : 
     -- Postconditions   :  
     -- Exceptions : Variable_Non_Trouvee
-    function rechercherVariable (variables : in T_List_Variable; nomVariable : in Chaine) return T_List_Variable;
+    function rechercherVariable (variables : in T_List_Variable; nomVariable : in Unbounded_String) return T_List_Variable;
 
     -- nom : pointerEnTeteVariables
     -- semantique : le pointeur pointe en tête de la liste doublement chaînée des variables
@@ -243,11 +237,11 @@ package intermediaire is
 
     procedure changerInstructionParNumero(ptrInstruction : in out T_List_Instruction; numInstruction : in integer);
 
-    function creer_variable_tmp (nomVariable : in chaine) return T_Ptr_Variable;
+    function creer_variable_tmp (nomVariable : in Unbounded_String) return T_Ptr_Variable;
 
     function estLigneUtile (ligne : in Unbounded_String) return boolean;
 
-    function isANumber (nomVariable : in chaine) return boolean;
+    function isANumber (nomVariable : in Unbounded_String) return boolean;
 
 
     --private
