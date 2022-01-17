@@ -95,7 +95,9 @@ package body intermediaire is
 
         loop
 
-            recupererVariables(variables, ligne);
+            if (estLigneUtile(ligne)) then
+                recupererVariables(variables, ligne);
+            end if;
         
             ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
 
@@ -116,6 +118,18 @@ package body intermediaire is
         Close(F);
 
     end parseFile;
+
+    function estLigneUtile (ligne : in Unbounded_String) return boolean is
+    begin
+        if (length(ligne) = 0) then
+            return false;
+        else
+            if (length(ligne) >= 2 and then slice(ligne, 1, 2) = "--") then
+                return false;
+            end if;
+        end if;
+        return true;
+    end estLigneUtile;
 
 
     procedure recupererVariables(variables : in out T_List_Variable; ligne : in Unbounded_string) is
@@ -209,7 +223,6 @@ package body intermediaire is
         numInstruction : integer;
         operation : chaine;
         ptrInstruction : T_Ptr_Instruction; 
-        isANumber : boolean;
         ptrVariable : T_Ptr_Variable;
         tlistVariable : T_List_Variable;
         operateurLogiqueTrouve : boolean;
@@ -317,17 +330,7 @@ package body intermediaire is
 
             nomVariableX.nbCharsEffectif := j;
 
-            isANumber := true;
-            j := 0;
-            loop
-                j := j+1;
-                if (Character'POS(nomVariableX.str(j)) in 65..122) then
-                    isANumber := false;
-                end if;
-            exit when (j = nomVariableX.nbCharsEffectif or not isANumber);
-            end loop;
-
-            if (isANumber) then
+            if (isANumber(nomVariableX)) then
                 ptrInstruction.all.operandes.x := creer_variable_tmp(nomVariableX);
             else
                 tlistVariable := rechercherVariable(variables, nomVariableX);
@@ -358,17 +361,7 @@ package body intermediaire is
                 end loop;
                 nomVariableY.nbCharsEffectif := j;
 
-                isANumber := true;
-                j := 0;
-                loop
-                    j := j+1;
-                    if (Character'POS(nomVariableY.str(j)) in 65..122) then
-                        isANumber := false;
-                    end if;
-                exit when (j = nomVariableY.nbCharsEffectif or not isANumber);
-                end loop;
-
-                if (isANumber) then
+                if (isANumber(nomVariableY)) then
                     ptrInstruction.all.operandes.y := creer_variable_tmp(nomVariableY);
                 else
                     tlistVariable := rechercherVariable(variables, nomVariableY);
@@ -384,6 +377,19 @@ package body intermediaire is
         ajouter(instructions, ptrInstruction);
 
     end recupererInstructions;
+
+    function isANumber (nomVariable : in chaine) return boolean is
+        j : integer;
+    begin
+        j := 1;
+        while(j <= nomVariable.nbCharsEffectif) loop
+            if (Character'POS(nomVariable.str(j)) in 65..122) then
+                return false;
+            end if;
+            j := j+1;
+        end loop;
+        return true;
+    end isANumber;
 
     function creer_variable_tmp (nomVariable : in chaine) return T_Ptr_Variable is
         
