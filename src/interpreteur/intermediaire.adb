@@ -180,6 +180,20 @@ package body intermediaire is
 
     end recupererVariables;
 
+    function recupererNumeroInstructionLigne (index : in out integer; ligne : in Unbounded_String) return integer is
+        numInstruction : chaine;
+    begin
+
+        while (Character'POS(element(ligne, index)) in 48..57) loop
+            numInstruction.str(index) := element(ligne, index);
+            index := index+1;
+        end loop;
+
+        numInstruction.nbCharsEffectif := index-1;
+
+        return Integer'Value(numInstruction.str(1..numInstruction.nbCharsEffectif));
+
+    end recupererNumeroInstructionLigne;
 
     procedure recupererInstructions(instructions : in out T_List_Instruction; variables : in out T_List_Variable; ligne : in Unbounded_string) is
      
@@ -192,8 +206,7 @@ package body intermediaire is
         valeurVariableZ : integer;
         valeurVariableX : integer;
         nomVariableY : chaine;
-        numInstruction : chaine;
-        numInstructionEntier : integer;
+        numInstruction : integer;
         operation : chaine;
         ptrInstruction : T_Ptr_Instruction; 
         isANumber : boolean;
@@ -207,8 +220,10 @@ package body intermediaire is
 
         -- recuperation du numero de l'instruction
         i := 1;
+
+        numInstruction := recupererNumeroInstructionLigne(i,ligne);
         
-        ptrInstruction.all.numInstruction := numInstructionEntier;
+        ptrInstruction.all.numInstruction := numInstruction;
 
         if (Slice(ligne, i, i+1) = "IF") then
 
