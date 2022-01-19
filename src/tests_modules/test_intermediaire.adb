@@ -182,6 +182,8 @@ variables := creer_liste_vide;
 
         afficher_liste(instructions_stub);
 
+        afficher_liste(variables);
+
 
         
 

@@ -97,7 +97,7 @@ package intermediaire is
     --  Aucune
     -- Exception
     --  Aucune
-    procedure traiterProgramme(fileName : in string);
+    procedure traiterProgramme(fileName : in string; choice : Integer);
 
     -- nom : recupererVariables
     -- semantique : récupère les variables d'un programme en langage intermédiaire contenues entre 'Début' (exclu) et 'Programme' (exclue)

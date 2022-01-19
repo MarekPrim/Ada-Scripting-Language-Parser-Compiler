@@ -10,7 +10,7 @@ package body intermediaire is
     --package Liste_Instructions is new P_List_Double(pointeur => T_List_Instruction);
     --use Liste_Instructions;
 
-    procedure traiterProgramme(fileName : in string) is
+    procedure traiterProgramme(fileName : in string; choice : in Integer) is
         variables : T_List_Variable;
         instructions : T_List_Instruction;
         l_instructions : T_List_Instruction;
@@ -23,10 +23,19 @@ package body intermediaire is
         l_instructions := instructions;
 
         while(l_instructions /= null) loop
+            if(choice = 1) then
+                    Put_Line("Numéro de l'instruction en cours : ");
+                    Put(l_instructions.all.ptrIns.all.numInstruction);
+                    new_line;
+                    --afficher_liste(variables);
+            end if;
             interpreterCommande(l_instructions);
+            new_line;
         end loop;
-        afficher_liste(instructions);
 
+        
+        afficher_liste(instructions);
+        Put_Line("Etat des variables en terminaison du programme");
         afficher_liste(variables);
 
     end traiterProgramme;

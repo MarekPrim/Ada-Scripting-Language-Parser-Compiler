@@ -12,7 +12,7 @@ RV NO_DEFAULT_INITIALIZATION
 RV NO_ELABORATION_CODE
 RV SPARK_05
 
-U operateurs%b		operateurs.adb		8d123c0b NE OO PK IL
+U operateurs%b		operateurs.adb		245acec9 NE OO PK IL
 W ada%s			ada.ads			ada.ali
 W ada.characters%s	a-charac.ads		a-charac.ali
 W ada.characters.handling%s  a-chahan.adb	a-chahan.ali
@@ -28,7 +28,7 @@ W intermediaire%s	intermediaire.adb	intermediaire.ali
 Z system.soft_links%s	s-soflin.adb		s-soflin.ali
 Z system.standard_library%s  s-stalib.adb	s-stalib.ali
 
-U operateurs%s		operateurs.ads		cce25ed4 EE OO PK IL
+U operateurs%s		operateurs.ads		65aaac16 EE OO PK IL
 W ada%s			ada.ads			ada.ali
 W ada.strings%s		a-string.ads		a-string.ali
 W ada.strings.unbounded%s  a-strunb.adb		a-strunb.ali
@@ -58,8 +58,8 @@ D a-tiunio.ads		20210408115627 759c6b0c ada.text_io.unbounded_io%s
 D a-unccon.ads		20210408115627 0e9b276f ada.unchecked_conversion%s
 D interfac.ads		20210408115627 5ab55268 interfaces%s
 D i-cstrea.ads		20210408115627 e53d8b8e interfaces.c_streams%s
-D intermediaire.ads	20220117165613 808a15d8 intermediaire%s
-D operateurs.ads	20220117165048 5a3e3b57 operateurs%s
+D intermediaire.ads	20220119101528 29c2e71a intermediaire%s
+D operateurs.ads	20220119092853 5a3e3b57 operateurs%s
 D operateurs.adb	20220117165048 9e72ef71 operateurs%b
 D system.ads		20210408115627 4635ec04 system%s
 D s-atocou.ads		20210408115627 b45c2d8d system.atomic_counters%s

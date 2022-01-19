@@ -3,14 +3,16 @@ P SS ZX
 
 RN
 RV NO_DIRECT_BOOLEAN_OPERATORS
+RV NO_EXCEPTION_HANDLERS
 RV NO_EXCEPTIONS
 RV NO_IO
+RV NO_NESTED_FINALIZATION
 RV NO_STANDARD_STORAGE_POOLS
 RV NO_DEFAULT_INITIALIZATION
 RV NO_ELABORATION_CODE
 RV SPARK_05
 
-U operateurs%b		operateurs.adb		464a9450 NE OO PK IL
+U operateurs%b		operateurs.adb		245acec9 NE OO PK IL
 W ada%s			ada.ads			ada.ali
 W ada.characters%s	a-charac.ads		a-charac.ali
 W ada.characters.handling%s  a-chahan.adb	a-chahan.ali
@@ -23,8 +25,13 @@ Z ada.tags%s		a-tags.adb		a-tags.ali
 W ada.text_io%s		a-textio.adb		a-textio.ali
 W ada.text_io.unbounded_io%s  a-tiunio.ads	a-tiunio.ali
 W intermediaire%s	intermediaire.adb	intermediaire.ali
+Z system.soft_links%s	s-soflin.adb		s-soflin.ali
+Z system.standard_library%s  s-stalib.adb	s-stalib.ali
 
-U operateurs%s		operateurs.ads		47277b69 EE OO PK IL
+U operateurs%s		operateurs.ads		65aaac16 EE OO PK IL
+W ada%s			ada.ads			ada.ali
+W ada.strings%s		a-string.ads		a-string.ali
+W ada.strings.unbounded%s  a-strunb.adb		a-strunb.ali
 Z ada.tags%s		a-tags.adb		a-tags.ali
 W intermediaire%s	intermediaire.adb	intermediaire.ali
 Z system%s		system.ads		system.ali
@@ -51,9 +58,9 @@ D a-tiunio.ads		20210408115627 759c6b0c ada.text_io.unbounded_io%s
 D a-unccon.ads		20210408115627 0e9b276f ada.unchecked_conversion%s
 D interfac.ads		20210408115627 5ab55268 interfaces%s
 D i-cstrea.ads		20210408115627 e53d8b8e interfaces.c_streams%s
-D intermediaire.ads	20220117102838 44aa3c7d intermediaire%s
-D operateurs.ads	20220117105617 038d4714 operateurs%s
-D operateurs.adb	20220117105411 c8b912cc operateurs%b
+D intermediaire.ads	20220119101528 29c2e71a intermediaire%s
+D operateurs.ads	20220119092853 5a3e3b57 operateurs%s
+D operateurs.adb	20220117165048 9e72ef71 operateurs%b
 D system.ads		20210408115627 4635ec04 system%s
 D s-atocou.ads		20210408115627 b45c2d8d system.atomic_counters%s
 D s-crtl.ads		20210408115627 0ebbdb71 system.crtl%s
@@ -61,11 +68,14 @@ D s-exctab.ads		20210408115627 54135002 system.exception_table%s
 D s-ficobl.ads		20210408115627 078245e4 system.file_control_block%s
 D s-finmas.ads		20210408115627 7811a767 system.finalization_masters%s
 D s-finroo.ads		20210408115627 4ff27390 system.finalization_root%s
+D s-memory.ads		20210408115627 597d6634 system.memory%s
 D s-parame.ads		20210408115627 48ec542b system.parameters%s
+D s-pooglo.ads		20210408115627 ede33ef8 system.pool_global%s
 D s-secsta.ads		20210408115627 20bbe636 system.secondary_stack%s
 D s-soflin.ads		20210408115627 a7318a92 system.soft_links%s
 D s-stache.ads		20210408115627 a37c21ec system.stack_checking%s
 D s-stalib.ads		20210408115627 09bd3940 system.standard_library%s
+D s-stalib.adb		20210408115627 f2fe2716 system.standard_library%b
 D s-stoele.ads		20210408115627 2dc34a04 system.storage_elements%s
 D s-stopoo.ads		20210408115627 b16154c2 system.storage_pools%s
 D s-stposu.ads		20210408115627 97a6219c system.storage_pools.subpools%s
@@ -74,16 +84,17 @@ D s-traent.ads		20210408115627 005bf670 system.traceback_entries%s
 D s-unstyp.ads		20210408115627 34867c83 system.unsigned_types%s
 D s-wchcon.ads		20210408115627 1b7d22d2 system.wch_con%s
 G a e
-G c Z s b [affectation operateurs 22 15 none]
-G c Z s b [operationarithmetique operateurs 34 14 none]
-G c Z s b [operationlogique2 operateurs 47 15 none]
-G c Z s b [operationlogique operateurs 49 14 none]
-G c Z s b [branchementbasic operateurs 56 15 none]
-G c Z s b [branchementconditionel operateurs 63 15 none]
-G r c none [branchementbasic operateurs 56 15 none] [changerinstructionparnumero intermediaire 244 15 none]
-G r c none [branchementconditionel operateurs 63 15 none] [changerinstructionparnumero intermediaire 244 15 none]
+G c Z s b [affectation operateurs 23 15 none]
+G c Z s b [operationarithmetique operateurs 35 14 none]
+G c Z s b [operationlogique2 operateurs 48 15 none]
+G c Z s b [operationlogique operateurs 50 14 none]
+G c Z s b [branchementbasic operateurs 57 15 none]
+G c Z s b [branchementconditionel operateurs 64 15 none]
+G r c none [branchementbasic operateurs 57 15 none] [changerinstructionparnumero intermediaire 284 15 none]
+G r c none [branchementconditionel operateurs 64 15 none] [changerinstructionparnumero intermediaire 284 15 none]
 X 1 ada.ads
-16K9*Ada 20e8 23|2r6 2r19 2r40 2r63 2r89 2r114 4r5 4r18 4r39 4r62 4r88
+16K9*Ada 20e8 22|1r21 2r20 23|2r6 2r19 2r40 2r63 2r89 2r114 4r5 4r18 4r39
+. 4r62 4r88
 X 2 a-charac.ads
 16K13*Characters 18e19 23|2r93 4r92
 X 3 a-chahan.ads
@@ -93,75 +104,80 @@ X 7 a-inteio.ads
 X 8 a-ioexce.ads
 18K13*IO_Exceptions 30e22 23|2w118
 X 10 a-string.ads
-16K13*Strings 35e16 23|2r44 4r43
+16K13*Strings 35e16 22|1r25 2r24 23|2r44 4r43
 X 12 a-strunb.ads
-82K21*Unbounded 756e26 23|2w52 4r51
+82K21*Unbounded 756e26 22|1w33 2r32 23|2w52 4r51
+87R9*Unbounded_String<6|43R9> 739e14 22|50r40 23|42r40 73r14
+238V14*"="{boolean} 23|13s76
+244V14*"="{boolean} 23|46s16 48s19 50s19 52s19 54s19 56s19 58s19 82s33 82s70
+. 84s19 87s22 94s19 97s26 100s26 103s26 106s26
 X 15 a-textio.ads
 57K13*Text_IO 727e16 23|2w10 2r67 4r9 4r66
 508U14*Put_Line 23|83s13
 X 17 a-tiunio.ads
 25K21*Unbounded_IO 61e29 23|2w75 4r74
 X 21 intermediaire.ads
-4K9*intermediaire 253e18 22|1w6 1r25 23|1w6 1r25
+4K9*intermediaire 326e18 22|1w6 2r5 23|1w6 1r25
 9X5*Type_Incorrect 23|16r23
-23R10*Chaine 26e15 22|49r40 23|42r40
-24a13*str{string} 23|13r75 13r219 46r16 48r19 50r19 52r19 54r19 56r19 58r19
-. 77r53 82r33 82r80
-25i13*nbCharsEffectif{integer} 23|13r141 13r285 46r26 48r29 50r29 52r29 54r29
-. 56r29 58r29
-29P10*T_List_Instruction(18R10) 22|22r51 47r51 56r73 63r60 23|8r51 71r51
+23P10*T_List_Instruction(18R10) 22|23r51 48r51 57r73 64r60 23|8r51 71r51
 . 117r73 122r60
-31P10*T_Ptr_Variable(19R10) 23|74r15 75r15
-32P10*T_Ptr_Instruction(20R10)
-36p9*x{31P10} 23|13r200 13r266 14r121 78r54 127r52
-37p9*y{31P10} 23|79r54
-38p9*z{31P10} 23|10r52 13r56 13r122 14r57 128r52
-42i9*valeurVariable{integer} 23|14m63 14r127 85r37 85r62 88r37 88r62 95r41
+25P10*T_Ptr_Variable(19R10) 23|74r15 75r15
+26P10*T_Ptr_Instruction(20R10)
+30p9*x{25P10} 23|13r118 14r121 78r54 127r52
+31p9*y{25P10} 23|79r54
+32p9*z{25P10} 23|10r52 13r57 14r57 128r52
+36i9*valeurVariable{integer} 23|14m63 14r127 85r37 85r62 88r37 88r62 95r41
 . 95r66 98r41 98r66 101r41 101r66 104r41 104r67 107r41 107r67 127r58 128r58
-43r9*typeVariable{23R10} 23|13r62 13r128 13r206 13r272 82r20 82r67
-45b9*isConstant{boolean} 23|10r58
-49i9*numInstruction{integer} 23|129r52
-50r9*operandes{35R10} 23|10r42 13r46 13r112 13r190 13r256 14r47 14r111 78r44
-. 79r44 127r42 128r42
-51r9*operation{23R10} 23|77r43
-55p9*ptrIns{32P10} 23|10r31 13r35 13r101 13r179 13r245 14r36 14r100 77r32
-. 78r33 79r33 127r31 128r31 129r41
-244U15*changerInstructionParNumero 23|119s9
+37r9*typeVariable{12|87R9} 23|13r63 13r124 82r20 82r57
+39b9*isConstant{boolean} 23|10r58
+43i9*numInstruction{integer} 23|129r52
+44r9*operandes{29R10} 23|10r42 13r47 13r108 14r47 14r111 78r44 79r44 127r42
+. 128r42
+45r9*operation{12|87R9} 23|77r43
+49p9*ptrIns{26P10} 23|10r31 13r36 13r97 14r36 14r100 77r32 78r33 79r33 127r31
+. 128r31 129r41
+284U15*changerInstructionParNumero 23|119s9
 X 22 operateurs.ads
-3K9*operateurs 65l5 65e15 23|6b14 137l5 137t15
-5X5*Variable_Inconnue
-6X5*Variable_Constante 23|11r18
-7X5*Operateur_Incorrect 23|36r23 61r19 91r23 110r27
-22U15*affectation 22=27 23|8b15 19l9 19t20
-22p27 ptrInstruction{21|29P10} 23|8b27 10r12 13r16 13r82 13r160 13r226 14r17
-. 14r81
-34V14*operationArithmetique{integer} 34>36 34>54 34>72 23|21b14 40l9 40t30
-34e36 op{character} 23|21b36 25r14
-34i54 op1{integer} 23|21b54 28r29 30r29 32r29 34r29
-34i72 op2{integer} 23|21b72 28r35 30r35 32r35 34r35
-47U15*operationLogique2 47>33 47=71 47<92 23|71b15 115l9 115t26
-47p33 instructions{21|29P10} 23|71b33 77r15 78r16 79r16
-47i71 cp{integer} 23|71b71 113m9 113r15
-47b92 res{boolean} 23|71b92 114m9
-49V14*operationLogique{integer} 49>32 49>48 49>66 23|42b14 69l9 69t25
-49r32 op{21|23R10} 23|42b32 46r13 46r23 48r16 48r26 50r16 50r26 52r16 52r26
-. 54r16 54r26 56r16 56r26 58r16 58r26
-49i48 op1{integer} 23|42b48 47r26 49r26 51r25 53r25 55r25 57r25 59r25
-49i66 op2{integer} 23|42b66 47r32 49r32 51r31 53r31 55r32 57r32 59r32
-56U15*branchementBasic 56>32 56=51 23|117b15 120l9 120t25 131s13 133s13
-56i32 line{integer} 23|117b32 119r50
-56p51 instructions{21|29P10} 23|117b51 119m37
-63U15*branchementConditionel 63=38 23|122b15 135l9 135t31
-63p38 instructions{21|29P10} 23|122b38 127r14 128r14 129r24 131m32 133m45
+4K9*operateurs 66l5 66e15 23|6b14 137l5 137t15
+6X5*Variable_Inconnue
+7X5*Variable_Constante 23|11r18
+8X5*Operateur_Incorrect 23|36r23 61r19 91r23 110r27
+23U15*affectation 23=27 23|8b15 19l9 19t20
+23p27 ptrInstruction{21|23P10} 23|8b27 10r12 13r17 13r78 14r17 14r81
+35V14*operationArithmetique{integer} 35>36 35>54 35>72 23|21b14 40l9 40t30
+35e36 op{character} 23|21b36 25r14
+35i54 op1{integer} 23|21b54 28r29 30r29 32r29 34r29
+35i72 op2{integer} 23|21b72 28r35 30r35 32r35 34r35
+48U15*operationLogique2 48>33 48=71 48<92 23|71b15 115l9 115t26
+48p33 instructions{21|23P10} 23|71b33 77r15 78r16 79r16
+48i71 cp{integer} 23|71b71 113m9 113r15
+48b92 res{boolean} 23|71b92 114m9
+50V14*operationLogique{integer} 50>32 50>58 50>76 23|42b14 69l9 69t25
+50r32 op{12|87R9} 23|42b32 46r13 48r16 50r16 52r16 54r16 56r16 58r16
+50i58 op1{integer} 23|42b58 47r26 49r26 51r25 53r25 55r25 57r25 59r25
+50i76 op2{integer} 23|42b76 47r32 49r32 51r31 53r31 55r32 57r32 59r32
+57U15*branchementBasic 57>32 57=51 23|117b15 120l9 120t25 131s13 133s13
+57i32 line{integer} 23|117b32 119r50
+57p51 instructions{21|23P10} 23|117b51 119m37
+64U15*branchementConditionel 64=38 23|122b15 135l9 135t31
+64p38 instructions{21|23P10} 23|122b38 127r14 128r14 129r24 131m32 133m45
 X 23 operateurs.adb
 22i9 resultat{integer} 28m17 30m17 32m17 34m17 39r16
 43b9 resultat{boolean} 47m13 49m13 51m13 53m13 55m13 57m13 59m13 64r13
 72b9 resultat{boolean} 80m9 85m17 88m17 95m21 98m21 101m21 104m21 107m21
 . 114r16
-73a9 op{string} 77m9 84r16 87r19 94r16 97r23 100r23 103r23 106r23
-74p9 op1{21|31P10} 78m9 82r12 85r29 88r29 95r33 98r33 101r33 104r33 107r33
-75p9 op2{21|31P10} 79m9 82r59 85r54 88r54 95r58 98r58 101r58 104r59 107r59
+73r9 op{12|87R9} 77m9 84r16 87r19 94r16 97r23 100r23 103r23 106r23
+74p9 op1{21|25P10} 78m9 82r12 85r29 88r29 95r33 98r33 101r33 104r33 107r33
+75p9 op2{21|25P10} 79m9 82r49 85r54 88r54 95r58 98r58 101r58 104r59 107r59
 123i9 x{integer} 127m9 130r12
 124i9 z{integer} 128m9 131r30
 125i9 currentLine{integer} 129m9 133r30
+X 24 system.ads
+67M9*Address
+X 31 s-memory.ads
+53V13*Alloc{24|67M9} 103i<c,__gnat_malloc>22
+68U14*Free 104i<c,__gnat_free>22
+76V13*Realloc{24|67M9} 105i<c,__gnat_realloc>22
+X 38 s-stalib.adb
+93U14 Break_Start 94i<c,__gnat_break_start>22
 
