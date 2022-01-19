@@ -3,7 +3,7 @@ Programme Facto est
 i : entier
 j : entier
 swap : entier
-A : [Entier]
+A : [Entier, 8]
 Début
 i <- 1
     Tant Que i<8 Faire

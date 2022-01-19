@@ -68,51 +68,21 @@ package body operateurs is
 
     end operationLogique;
 
-    procedure operationLogique2(instructions : in T_List_Instruction; cp : in out Integer; res : out Boolean) is
-        resultat : Boolean;
-        op : Unbounded_String;
-        op1 : T_Ptr_Variable;
-        op2 : T_Ptr_Variable;
+    function successeur(char : in Character) return Character is
+        temporary : Integer;
     begin
-        op := instructions.all.ptrIns.all.operation;
-        op1 := instructions.all.ptrIns.all.operandes.x;
-        op2 := instructions.all.ptrIns.all.operandes.y;
-        resultat := false;
+        temporary := Character'POS(char);
+        temporary := temporary + 1;
+        return Character'VAL(temporary);
+    end successeur;
 
-        if op1.all.typeVariable = "Booleen" and op2.all.typeVariable = "Booleen" then
-            Put_Line("Bool");
-            if op = "AND" then
-                resultat := op1.all.valeurVariable + op2.all.valeurVariable = 2;
-                null;
-            elsif op = "OR" then
-                resultat := op1.all.valeurVariable + op2.all.valeurVariable > 1;
-                null;
-            else
-                raise Operateur_Incorrect;
-            end if;
-        else 
-            if op = "=" then
-                    resultat := op1.all.valeurVariable = op2.all.valeurVariable;
-                    null;
-                elsif op = "<" then
-                    resultat := op1.all.valeurVariable < op2.all.valeurVariable;
-                    null;
-                elsif op = ">" then
-                    resultat := op1.all.valeurVariable > op2.all.valeurVariable;
-                    null;
-                elsif op = "<=" then
-                    resultat := op1.all.valeurVariable <= op2.all.valeurVariable;
-                    null;
-                elsif op = ">=" then
-                    resultat := op1.all.valeurVariable >= op2.all.valeurVariable;
-                    null;
-                else 
-                    raise Operateur_Incorrect;
-            end if;
-        end if;
-        cp := cp + 1;
-        res := resultat;
-    end operationLogique2;
+    function predecesseur(char : in Character) return Character is
+        temporary : Integer;
+    begin
+        temporary := Character'POS(char);
+        temporary := temporary - 1;
+        return Character'VAL(temporary);
+    end predecesseur;
 
     procedure branchementBasic(line : in Integer; instructions : in out T_List_Instruction) is
     begin

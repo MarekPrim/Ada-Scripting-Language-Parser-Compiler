@@ -26,6 +26,8 @@ procedure test_operateurs is
     ligne : Unbounded_string;
     chne : Unbounded_String;
 
+    charac : Character;
+
     
 
 begin
@@ -235,4 +237,23 @@ instructions := creer_liste_vide;
         else
             Put_Line("KO branchement conditionnel");
         end if;
+
+
+
+    -- Test opérations character
+        
+        charac := 'c';
+        if(successeur(charac) = 'd') then
+            Put_Line("OK successeur");
+        else
+            Put_Line("KO successeur");
+        end if;
+
+        if(predecesseur(charac) = 'b') then
+            Put_Line("OK predecesseur");
+        else
+            Put_Line("KO predecesseur");
+        end if;
+        
+
 end test_operateurs;

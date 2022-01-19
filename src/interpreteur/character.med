@@ -1,0 +1,13 @@
+Programme Facto est
+T1 : Entier
+char, lettre  : Character
+Debut
+1 char <- 'a'
+2 lettre <- 'c'
+3 T1 <- char < lettre
+4 IF T1 GOTO 6
+5 GOTO 8
+6 char <- char succ
+7 GOTO 4
+8 NULL
+Fin

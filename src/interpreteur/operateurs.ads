@@ -45,9 +45,29 @@ package operateurs is
     -- Préconditions : op est bien un opérateur logique
     -- Postconditions : 
     -- Exceptions : 
-    procedure operationLogique2(instructions : in T_List_Instruction; cp : in out Integer; res : out Boolean);
-
     function operationLogique (op : in Unbounded_String; op1 : in Integer; op2 : in integer) return integer;
+
+    -- successeur
+    -- Retourne le successeur d'un charactère
+    -- Paramètres :
+        -- char : in Character
+    -- Retourne :
+        -- le successeur du charactère
+    -- Préconditions : /
+    -- Postconditions : /
+    -- Exceptions : /
+    function successeur(char : in Character) return Character;
+
+    -- predecesseur
+    -- Retourne le predecesseur d'un charactère
+    -- Paramètres :
+        -- char : in Character
+    -- Retourne :
+        -- le predecesseur du charactère
+    -- Préconditions : /
+    -- Postconditions : /
+    -- Exceptions : /
+    function predecesseur(char : in Character) return Character;
 
     -- branchementBasic
     -- Attribution d'un numéro de ligne à CP
