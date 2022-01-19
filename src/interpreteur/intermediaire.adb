@@ -23,11 +23,11 @@ package body intermediaire is
         l_instructions := instructions;
 
         while(l_instructions /= null) loop
-            if(choice = 1) then
+            if(choice = 1 and l_instructions.next /= null) then
                     Put_Line("Numéro de l'instruction en cours : ");
                     Put(l_instructions.all.ptrIns.all.numInstruction);
                     new_line;
-                    --afficher_liste(variables);
+                    afficher_liste(variables);
             end if;
             interpreterCommande(l_instructions);
             new_line;
@@ -49,12 +49,12 @@ package body intermediaire is
 
         longueurEnum := length(To_Unbounded_String(enum));
 
-        while (i <= length(ligne) and i <= longueurEnum) loop
+        while (i <= length(ligne) and i <= longueurEnum) loop -- On parcourt toute l'énumération et la ligne
 
-            if (i > 1) then
+            if (i > 1) then -- Les caractères à comparer doivent être une lettre miniscule
                 currentChar := To_Lower(enum(i));
             else
-                currentChar := enum(i);
+                currentChar := enum(i); -- Le premier caractère de l'énumération doit être une lettre majuscule
             end if;
 
             if (not (element(ligne, i) = currentChar)) then
@@ -63,7 +63,7 @@ package body intermediaire is
             i := i+1;
         end loop;
 
-        return true;
+        return true; -- Si on a parcouru toute l'énumération sans rencontrer de caractère différent, on retourne vrai
 
     end ligneCommenceParMotReserve;
 
@@ -72,9 +72,9 @@ package body intermediaire is
         trimLigne : Unbounded_string;
     begin
         j := 1;
-        for i in 1..length(ligne) loop
-            if (not (element(ligne, i) = ' ')) then
-                append(trimLigne, element(ligne, i));
+        for i in 1..length(ligne) loop -- Parcours de la ligne
+            if (not (element(ligne, i) = ' ')) then -- Si le caractère n'est pas un espace
+                append(trimLigne, element(ligne, i)); -- On ajoute le caractère à la chaîne de caractère temporaire
                 j := j+1;
             end if;
         end loop;
@@ -90,43 +90,42 @@ package body intermediaire is
 
         instructions := creer_liste_vide;
 
-        Open (F, In_File, fileName);
+        Open (F, In_File, fileName);    -- Ouverture du fichier en lecture
 
 
         loop
-            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
-        exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Programme)));
+            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));     -- Lecture de la ligne courante sans espace
+        exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Programme)));  -- Tant que la ligne ne commence par un mot réservé
         end loop;
 
 
-        ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
+        ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f)); -- Lecture de la ligne courante sans espace
 
-        if (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut))) then
-            raise Aucune_Variable_Definie;
+        if (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut))) then -- Si la ligne commence par un mot réservé
+            raise Aucune_Variable_Definie;  -- On lève une exception car cela indique qu'il n'y a pas de variable
         end if;
 
         loop
-
-            if (estLigneUtile(ligne)) then
-                recupererVariables(variables, ligne);
+            if (estLigneUtile(ligne)) then  -- Si la ligne est utile (ie. pas un commentaire )
+                recupererVariables(variables, ligne);   -- Récupération des variables
             end if;
         
-            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
+            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f)); -- Lecture de la ligne courante sans espace
 
-        exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut)));
+        exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut))); -- Jusqu'à arriver à 'Debut'
         end loop;
 
-        afficher_liste(variables);
+        afficher_liste(variables);  -- On affiche les variables récupérées
 
         ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
 
         loop
             if (estLigneUtile(ligne)) then
-                recupererInstructions(instructions, variables, ligne);
+                recupererInstructions(instructions, variables, ligne);  -- Récupération des instructions
             end if;
             ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
 
-        exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Fin)));
+        exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Fin)));    -- Jusqu'à arriver à 'Fin'
         end loop;
 
         Close(F);
@@ -179,7 +178,7 @@ package body intermediaire is
                 i := i+1;
             end loop;
 
-            if (find) then
+            if (find) then -- Ajout de la variable
                 ptrVariable := new T_Variable'(0, typeVariable, nomVariable, false);
                 begin
                 if(variables /= null and then rechercherVariable(variables, nomVariable) /= null) then

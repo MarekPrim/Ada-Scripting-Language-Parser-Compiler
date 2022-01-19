@@ -19,7 +19,7 @@ RV NO_DYNAMIC_SIZED_OBJECTS
 RV NO_ELABORATION_CODE
 RV SPARK_05
 
-U intermediaire%b	intermediaire.adb	7f6a73d0 NE OO PK IL
+U intermediaire%b	intermediaire.adb	a7a454ce NE OO PK IL
 W ada%s			ada.ads			ada.ali
 W ada.characters%s	a-charac.ads		a-charac.ali
 W ada.characters.handling%s  a-chahan.adb	a-chahan.ali
@@ -77,8 +77,8 @@ D a-unccon.ads		20210408115627 0e9b276f ada.unchecked_conversion%s
 D interfac.ads		20210408115627 5ab55268 interfaces%s
 D i-cstrea.ads		20210408115627 e53d8b8e interfaces.c_streams%s
 D intermediaire.ads	20220119101528 29c2e71a intermediaire%s
-D intermediaire.adb	20220119101632 21e24d0c intermediaire%b
-D operateurs.ads	20220119092853 5a3e3b57 operateurs%s
+D intermediaire.adb	20220119102039 854fc89c intermediaire%b
+D operateurs.ads	20220119103319 265d99d9 operateurs%s
 D system.ads		20210408115627 4635ec04 system%s
 D s-atocou.ads		20210408115627 b45c2d8d system.atomic_counters%s
 D s-crtl.ads		20210408115627 0ebbdb71 system.crtl%s
@@ -138,14 +138,14 @@ G c Z s s [t_instructionDA intermediaire 42 10 none]
 G c Z s s [t_instructionDF intermediaire 42 10 none]
 G c Z s s [t_instructionIP intermediaire 42 10 none]
 G c Z b b [recuperernumeroinstructionligne intermediaire 200 14 none]
-G r c none [traiterprogramme intermediaire 100 15 none] [operationlogique operateurs 50 14 none]
+G r c none [traiterprogramme intermediaire 100 15 none] [operationlogique operateurs 48 14 none]
 G r c none [traiterprogramme intermediaire 100 15 none] [operationarithmetique operateurs 35 14 none]
-G r c none [traiterprogramme intermediaire 100 15 none] [branchementconditionel operateurs 64 15 none]
-G r c none [traiterprogramme intermediaire 100 15 none] [branchementbasic operateurs 57 15 none]
-G r c none [interpretercommande intermediaire 131 15 none] [operationlogique operateurs 50 14 none]
+G r c none [traiterprogramme intermediaire 100 15 none] [branchementconditionel operateurs 84 15 none]
+G r c none [traiterprogramme intermediaire 100 15 none] [branchementbasic operateurs 77 15 none]
+G r c none [interpretercommande intermediaire 131 15 none] [operationlogique operateurs 48 14 none]
 G r c none [interpretercommande intermediaire 131 15 none] [operationarithmetique operateurs 35 14 none]
-G r c none [interpretercommande intermediaire 131 15 none] [branchementconditionel operateurs 64 15 none]
-G r c none [interpretercommande intermediaire 131 15 none] [branchementbasic operateurs 57 15 none]
+G r c none [interpretercommande intermediaire 131 15 none] [branchementconditionel operateurs 84 15 none]
+G r c none [interpretercommande intermediaire 131 15 none] [branchementbasic operateurs 77 15 none]
 X 1 ada.ads
 16K9*Ada 20e8 21|1r6 2r5 22|1r6 1r19 1r40 1r63 1r89 3r5 3r18 3r39 3r62 3r88
 . 97r46 102r42 114r46 121r42 127r46
@@ -243,7 +243,8 @@ X 21 intermediaire.ads
 . 548r48 548r109 548r170 548r231 549r40 549r130 549r175 549r233 551r40 551r117
 . 551r158 551r216 564r35 567r35
 50p9*prev{23P10} 22|386r66 387r50 416m30 568r50
-51p9*next{23P10} 22|412r27 413r32 415m21 416r21 417r28 444r24 554r50 565r50
+51p9*next{23P10} 22|26r46 412r27 413r32 415m21 416r21 417r28 444r24 554r50
+. 565r50
 55p9*ptrVar{25P10} 22|253r65 298r65 316r69 341r73 429r28 430r28 431r23 498r46
 . 498r79
 56p9*next{22P10} 22|398r27 399r32 401m21 402r21 403r28 433r24 499r30
@@ -298,7 +299,7 @@ X 21 intermediaire.ads
 228p23 f_l{23P10} 22|407b23 409r13 410m13 412r19 413m17 413r24 415r13 416r13
 . 416r38 417m13 417r20
 228p56 f_nouveau{26P10} 22|407b56 410r44 415r53
-239U15*afficher_liste 239>30 22|39s9 119s9 421b15 435l9 435t23
+239U15*afficher_liste 239>30 22|30s21 39s9 119s9 421b15 435l9 435t23
 239p30 f_l{22P10} 22|421b30 424r14
 250U15*afficher_liste 250>30 22|37s9 437b15 446l9 446t23
 250p30 f_l{23P10} 22|437b30 440r14
@@ -319,9 +320,9 @@ X 21 intermediaire.ads
 320V14*isANumber{boolean} 320>25 22|312s17 337s21 353b14 364l9 364t18
 320r25 nomVariable{12|87R9} 22|353b25 357r27 358r39
 X 22 intermediaire.adb
-14p9 variables{21|22P10} 18m29 18r29 39r24
+14p9 variables{21|22P10} 18m29 18r29 30r36 39r24
 15p9 instructions{21|23P10} 18m40 18r40 21m35 21r35 23r27 37r24
-16p9 l_instructions{21|23P10} 23m9 25r15 28r25 32m33 32r33
+16p9 l_instructions{21|23P10} 23m9 25r15 26r31 28r25 32m33 32r33
 44i9 i{integer} 48m9 52r16 52r39 54r17 55r46 57r37 60r37 63m13 63r18
 45i9 longueurEnum{integer} 50m9 52r44
 46e9 currentChar{character} 55m17 57m17 60r42
@@ -380,11 +381,11 @@ X 22 intermediaire.adb
 534r9 nomOperation{12|87R9} 536m9 538r12 540r15 542r15
 560X9 instuction_not_found 563r19 575r18
 X 23 operateurs.ads
-4K9*operateurs 22|1w114 3r113 23|66e15
+4K9*operateurs 22|1w114 3r113 23|86e15
 35V14*operationArithmetique{integer} 22|549s81
-50V14*operationLogique{integer} 22|551s81
-57U15*branchementBasic 22|539s13 541s13
-64U15*branchementConditionel 22|543s13
+48V14*operationLogique{integer} 22|551s81
+77U15*branchementBasic 22|539s13 541s13
+84U15*branchementConditionel 22|543s13
 X 24 system.ads
 67M9*Address
 X 31 s-memory.ads
