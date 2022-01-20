@@ -332,6 +332,15 @@ package body intermediaire is
             
             operation := To_Unbounded_String("NULL");
 
+        elsif (Slice(ligne, i, i+5) = "ECRIRE") then
+            operation := To_Unbounded_String("ECRIRE");
+            --i := i+1;
+            --put(i);
+            put(element(ligne,i+7));
+            put_line(ligne);
+
+        elsif (Slice(ligne, i, i+3) = "LIRE") then
+            operation := To_Unbounded_String("LIRE");
         else
 
             while (slice(ligne, i, i+1) /= "<-") loop
@@ -389,7 +398,6 @@ package body intermediaire is
                 end loop;
 
                 if (isANumber(nomVariableY) = true) then
-                    Put_Line("her");
                     ptrInstruction.all.operandes.y := creer_variable_tmp(nomVariableY);
                 else
                     tlistVariable := rechercherVariable(variables, nomVariableY);
@@ -596,13 +604,14 @@ package body intermediaire is
         nomOperation : Unbounded_String;
     begin
         nomOperation := ptrInstruction.all.ptrIns.all.operation;
-
+        put_line(nomOperation);
         if(nomOperation = "NULL") then
             branchementBasic(ptrInstruction.all.ptrIns.all.numInstruction+1,ptrInstruction);
         elsif(nomOperation = "GOTO") then
             branchementBasic(ptrInstruction.all.ptrIns.all.operandes.z.all.valeurVariable,ptrInstruction);
         elsif(nomOperation = "IF") then
             branchementConditionel(ptrInstruction);
+       --elsif(nomOperation = "PRINT") then
         else
             if (ptrInstruction.all.ptrIns.all.operandes.y = null) then
                 afficherLigneInstruction(ptrInstruction.all.ptrIns);

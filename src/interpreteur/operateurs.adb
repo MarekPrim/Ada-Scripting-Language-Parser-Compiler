@@ -42,7 +42,9 @@ package body operateurs is
     function operationLogique (op : in Unbounded_String; op1 : in Integer; op2 : in integer) return integer is
         resultat : boolean;
     begin
-
+        put(op1);
+        put(op2);
+        
         if (op = "AND") then
             resultat := (op1 + op2 = 2);
         elsif (op = "OR") then
