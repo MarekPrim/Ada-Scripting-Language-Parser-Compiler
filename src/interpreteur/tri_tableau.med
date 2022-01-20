@@ -1,6 +1,6 @@
 -- Ce programme trie un tableau par insertion
 Programme Facto est
-i ,j ,swap : Entier
+i ,j ,swap ,k : Entier
 A : [Entier, 8]
 Debut
 1 i <- 1
@@ -17,23 +17,24 @@ Debut
 12 i <- 1
 13 T1 <- i < 8
 14 IF T1 GOTO 16
-15 GOTO 27
+15 GOTO 28
 16 j <- i
 17 IF T3 GOTO 19
-18 GOTO 27
+18 GOTO 28
 19 swap <- A[j]
-20 A[j] <- A[j-1]
-21 A[j-1] <- swap
-22 j <- j - 1
-23 T1 <- i>8
-24 T2 <- j>0
-25 T3 <- T1 AND T2
-26 i <- i+1
-27 i <- 1
-28 IF T1 GOTO 30
-29 GOTO 33
-30 Ecrire(A[i])
-31 i <- i+1
-32 T1 <- i<8
-33 NULL
+20 k <- A[j-1]
+21 A[j] <- k
+22 A[j-1] <- swap
+23 j <- j - 1
+24 T1 <- i>8
+25 T2 <- j>0
+26 T3 <- T1 AND T2
+27 i <- i+1
+28 i <- 1
+29 IF T1 GOTO 30
+30 GOTO 34
+31 Ecrire(A[i])
+32 i <- i+1
+33 T1 <- i<8
+34 NULL
 Fin

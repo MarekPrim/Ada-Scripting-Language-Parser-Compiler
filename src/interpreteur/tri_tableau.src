@@ -16,7 +16,8 @@ i <- 1
         j <- i
         Tant Que j>0 et A[j-1] > A[j] Faire
             swap <- A[j]
-            A[j] <- A[j-1]
+            temp <- A[j-1]
+            A[j] <- temp
             A[j-1] <- swap
             j <- j-1
         Fin Tant Que

@@ -22,12 +22,15 @@ package body intermediaire is
 
         l_instructions := instructions;
 
+        --afficher_liste(l_instructions);
+        --afficher_liste(variables);
+
         while(l_instructions /= null) loop
             if(choice = 1 and l_instructions.next /= null) then
                     Put_Line("Numéro de l'instruction en cours : ");
                     Put(l_instructions.all.ptrIns.all.numInstruction);
                     new_line;
-                    afficher_liste(variables);
+                    --afficher_liste(variables);
             end if;
             interpreterCommande(l_instructions);
             new_line;
@@ -150,9 +153,13 @@ package body intermediaire is
         i : integer; 
         typeVariable : Unbounded_String;
         nomVariable : Unbounded_String;
+        nomVariableTableau : Unbounded_String;
         ptrVariable : T_Ptr_Variable;
+        estUnTableau : boolean;
+        nbElementsTableau : Unbounded_String;
     begin
-    
+
+
         i := 1;
         -- Parcourir la ligne jusqu'à trouver la déclaration de type
         while(element(ligne, i) /= ':') loop
@@ -162,15 +169,31 @@ package body intermediaire is
         i := i+1;
 
         -- Récupérer le type de la variable
-        while(i <= length(ligne)) loop
+
+        if (element(ligne, i) = '[') then
+            estUnTableau := true;
+            i := i+1;
+        else
+            estUnTableau := false;
+        end if;
+
+        while(i <= length(ligne) and then element(ligne, i) /= ',') loop
             append(typeVariable, element(ligne, i));
             i := i+1;
         end loop;
 
+        if (estUnTableau) then
+            i := i+1;
+            while(Character'POS(element(ligne, i)) in 48..57) loop
+                append(nbElementsTableau, element(ligne,i));
+                i := i+1;
+            end loop;
+        end if;
+
         i := 1;
-        -- Parcourir la ligne pour trouver le nom de la variable
         while(i <= length(ligne) and element(ligne, i) /= ':') loop
 
+            -- Parcourir la ligne pour trouver le nom de la variable
             find := false;
             while (Character'POS(element(ligne, i)) in 65..122 or Character'POS(element(ligne, i)) in 48..57) loop
                 find := true;
@@ -179,15 +202,36 @@ package body intermediaire is
             end loop;
 
             if (find) then -- Ajout de la variable
-                ptrVariable := new T_Variable'(0, typeVariable, nomVariable, false);
-                begin
-                if(variables /= null and then rechercherVariable(variables, nomVariable) /= null) then
-                    raise Variable_Deja_Definie;
+                if (estUnTableau) then
+                    for i in 1..Integer'value(to_string(nbElementsTableau)) loop
+                        nomVariableTableau := nomVariable;
+                        append(nomVariableTableau,'[');
+                        append(nomVariableTableau, Integer'Image(i)(2..Integer'Image(i)'length));
+                        append(nomVariableTableau,']');
+                        begin
+                        if(variables /= null and then rechercherVariable(variables, nomVariable) /= null) then
+                            raise Variable_Deja_Definie;
+                        end if;
+                            exception
+                                when Variable_Non_Trouvee => null; -- Si elle n'est pas trouvée, on ne fait rien
+                                when Variable_Deja_Definie => put_line("La variable à insérer est déjà définie");
+                        end;
+                        ptrVariable := new T_Variable'(0, typeVariable, nomVariableTableau, false);
+                        ajouter(variables, ptrVariable);
+                    end loop;
+                else
+                    begin
+                    if(variables /= null and then rechercherVariable(variables, nomVariable) /= null) then
+                        raise Variable_Deja_Definie;
+                    end if;
+                        exception
+                            when Variable_Non_Trouvee => null; -- Si elle n'est pas trouvée, on ne fait rien
+                            when Variable_Deja_Definie => put_line("La variable à insérer est déjà définie");
+                    end;
+                    ptrVariable := new T_Variable'(0, typeVariable, nomVariable, false);
+                    ajouter(variables, ptrVariable);
                 end if;
-                    exception
-                        when Variable_Non_Trouvee => null; -- Si elle n'est pas trouvée, on ne fait rien
-                end;
-                ajouter(variables, ptrVariable);
+               
                 nomVariable := To_Unbounded_String("");
             else
                 i := i+1;
@@ -223,6 +267,7 @@ package body intermediaire is
         ptrVariable : T_Ptr_Variable;
         tlistVariable : T_List_Variable;
         operateurLogiqueTrouve : boolean;
+        isCaractere : boolean := false;
 
     begin
 
@@ -254,10 +299,12 @@ package body intermediaire is
             i := i+4;
 
             while (i <= length(ligne) and then (Character'POS(element(ligne, i)) in 48..57)) loop
+                put(element(ligne, i));
                 append(nomVariableZ, element(ligne, i));
                 i := i+1;
             end loop;
-
+            
+            Put_Line(nomVariableZ);
             valeurVariableZ := Integer'Value(To_String(nomVariableZ));
             nomVariableZ  := To_Unbounded_String("numeroLigneGOTO");
             typeVariableZ := To_Unbounded_String("Entier");
@@ -275,7 +322,6 @@ package body intermediaire is
                 append(nomVariableZ, element(ligne, i));
                 i := i+1;
             end loop;
-
             valeurVariableZ := Integer'Value(To_String(nomVariableZ));
             nomVariableZ := To_Unbounded_String("numeroLigneGOTO");
             typeVariableZ := To_Unbounded_String("Entier");
@@ -299,6 +345,12 @@ package body intermediaire is
             i := i+2;
 
             operateurLogiqueTrouve := false;
+            if(element(ligne,i) = ''') then
+                isCaractere := true;
+                i:=i+1;
+            end if;
+
+
             while (i <= length(ligne) and then (Character'POS(element(ligne, i)) in 65..122 or Character'POS(element(ligne, i)) in 48..57) and then not operateurLogiqueTrouve) loop
                 if ((i <= length(ligne)-1 and then slice(ligne, i, i+1) = "OR") or (i <= length(ligne)-2 and then slice(ligne, i, i+2) = "AND")) then
                     operateurLogiqueTrouve := true;
@@ -307,16 +359,19 @@ package body intermediaire is
                     i := i+1;
                 end if;
             end loop;
-
-            if (isANumber(nomVariableX)) then
+            if(isCaractere) then
+                i:=i+1;
+                ptrVariable := new T_Variable'(Character'Pos(element(nomVariableX,1)), To_Unbounded_String("Charactere"), To_Unbounded_String("Tmp"), false);
+                ptrInstruction.all.operandes.x := ptrVariable;
+            elsif(isANumber(nomVariableX)) then
                 ptrInstruction.all.operandes.x := creer_variable_tmp(nomVariableX);
             else
                 tlistVariable := rechercherVariable(variables, nomVariableX);
                 ptrInstruction.all.operandes.x := tlistVariable.all.ptrVar;
             end if;
 
+            
             if (i <= length(ligne)) then
-
                 if (i <= length(ligne)-2 and then slice(ligne, i, i+2) = "AND") then
                     operation := To_Unbounded_String("AND");
                     i := i+3; 
@@ -334,6 +389,7 @@ package body intermediaire is
                 end loop;
 
                 if (isANumber(nomVariableY) = true) then
+                    Put_Line("her");
                     ptrInstruction.all.operandes.y := creer_variable_tmp(nomVariableY);
                 else
                     tlistVariable := rechercherVariable(variables, nomVariableY);
@@ -354,7 +410,7 @@ package body intermediaire is
     begin
         j := 1;
         while(j <= length(nomVariable)) loop
-            if (Character'POS(element(nomVariable, j)) in 65..122) then
+            if (not(Character'POS(element(nomVariable, j)) in 48..57)) then
                 return false;
             end if;
             j := j+1;
@@ -369,7 +425,6 @@ package body intermediaire is
         typeVariableTmp : Unbounded_String;
     
     begin
-
         valeurVariableTmp := Integer'Value(To_String(nomVariable));
         nomVariableTmp := To_Unbounded_String("Tmp");
         typeVariableTmp := To_Unbounded_String("Entier");
@@ -427,7 +482,15 @@ package body intermediaire is
         while (l /= null) loop
             put_line(l.all.ptrVar.all.nomVariable);
             put_line(l.all.ptrVar.all.typeVariable);
-            put(l.all.ptrVar.all.valeurVariable, 1);
+            if(l.all.ptrVar.all.typeVariable /= "Charactere") then
+                put(l.all.ptrVar.all.valeurVariable, 1);
+            else
+                put(l.all.ptrVar.all.valeurVariable);
+                put(':');
+                put("'");
+                put(Character'Val(l.all.ptrVar.all.valeurVariable));
+                put("'");
+            end if;
             new_line;
             l := l.all.next;
         end loop;
@@ -542,6 +605,7 @@ package body intermediaire is
             branchementConditionel(ptrInstruction);
         else
             if (ptrInstruction.all.ptrIns.all.operandes.y = null) then
+                afficherLigneInstruction(ptrInstruction.all.ptrIns);
                 ptrInstruction.all.ptrIns.all.operandes.z.all.valeurVariable := ptrInstruction.all.ptrIns.all.operandes.x.all.valeurVariable;
             else
                 if (element(ptrInstruction.all.ptrIns.all.operation, 1) = '+' or element(ptrInstruction.all.ptrIns.all.operation, 1) = '*' or element(ptrInstruction.all.ptrIns.all.operation, 1) = '/' or element(ptrInstruction.all.ptrIns.all.operation, 1) = '-') then
