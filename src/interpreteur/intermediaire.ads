@@ -13,6 +13,7 @@ package intermediaire is
     Acces_Limite : Exception; -- Le compteur CP est hors limite (Ex : Programme avec un corps de 10 lignes et CP = 11) dans le programme
     Fichier_Non_Lisible : Exception;
     Fichier_Non_Trouve : Exception;
+    Element_Tableau_Deja_Utilise : Exception;
 
     type T_Cell_Variable;
     type T_Cell_Instruction;
@@ -320,7 +321,23 @@ package intermediaire is
     function isANumber (nomVariable : in Unbounded_String) return boolean;
 
     --private
-        
-        
+
+    procedure ifOperation (ligne : in Unbounded_String; i : in out integer; ptrInstruction : in out T_Ptr_Instruction; operation : out Unbounded_String; variables : in T_List_Variable);
+    
+    procedure gotoOperation (ligne : in Unbounded_String; i : in out integer; ptrInstruction : in out T_Ptr_Instruction; operation : out Unbounded_String; variables : in T_List_Variable);
+
+    procedure nullOperation (operation : out Unbounded_String);
+
+    procedure affectationOperation (ligne : in Unbounded_String; i : in out integer; ptrInstruction : in out T_Ptr_Instruction; operation : out Unbounded_String; variables : in T_List_Variable);
+
+    procedure creer_variables_tableau (ligne : in Unbounded_String; i : in out integer; nomVariable : in out Unbounded_String; variables : in T_List_Variable; ptrVariable : out T_Ptr_Variable);
+
+    procedure recupererNomVariable(nomVariable : out Unbounded_String; ligne : in Unbounded_String; i : in out integer; condition : in integer);
+
+     procedure recupererNomVariable(nomVariable : out Unbounded_String; ligne : in Unbounded_String; i : in out integer; condition : in integer; chaineReservee : in Unbounded_String);
+
+    procedure creerEtAjouterVariable(variables : in out T_List_Variable; typeVariable : in Unbounded_String; nomVariable : in Unbounded_String);
+
+    function creer_variable(variables : in T_List_Variable; nomVariable : in Unbounded_String) return T_Ptr_Variable;
 
 end intermediaire;
