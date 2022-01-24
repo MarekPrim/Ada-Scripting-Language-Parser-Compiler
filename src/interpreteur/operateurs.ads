@@ -81,6 +81,9 @@ package operateurs is
     -- Précondition : 
     -- Postcondition :
     -- Exceptions :
-    procedure branchementConditionel(instructions : in out T_List_Instruction);
+    procedure branchementConditionel(instructions : in out T_List_Instruction; variables : in T_List_Variable);
+
+    procedure ecrire(instructions : in out T_List_Instruction; variables : in T_List_Variable);
+    procedure lire(instructions : in out T_List_Instruction; variables : in T_List_Variable);
 
 end operateurs;

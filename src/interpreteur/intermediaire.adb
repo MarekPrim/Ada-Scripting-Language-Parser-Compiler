@@ -1,5 +1,4 @@
 with ada.Text_IO, ada.integer_Text_IO, Ada.Strings.Unbounded, Ada.Text_IO.Unbounded_IO, Ada.Characters.Handling, operateurs;
---with P_List_Double;
 use ada.Text_IO, ada.integer_Text_io, Ada.Strings.Unbounded, Ada.Text_IO.Unbounded_IO, Ada.Characters.Handling, operateurs;
 
 
@@ -24,8 +23,6 @@ package body intermediaire is
 
         l_instructions := instructions;
 
-        afficher_liste(instructions);
-
         while(l_instructions /= null) loop
             if(choice = 1 and l_instructions.next /= null) then
                 Put("Numéro de l'instruction en cours : ");
@@ -33,11 +30,11 @@ package body intermediaire is
                 new_line;
                 --afficher_liste(variables);
             end if;
-            interpreterCommande(l_instructions);
+            interpreterCommande(l_instructions, variables);
         end loop;
 
-        --afficher_liste(instructions);
-        --Put_Line("Etat des variables en terminaison du programme");
+        afficher_liste(instructions);
+        Put_Line("Etat des variables en terminaison du programme");
         afficher_liste(variables);
 
     end traiterProgramme;
@@ -98,7 +95,6 @@ package body intermediaire is
         instructions := creer_liste_vide;
 
         Open (F, In_File, fileName);    -- Ouverture du fichier en lecture
-
 
         loop
             ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));     -- Lecture de la ligne courante sans espace
@@ -187,16 +183,16 @@ package body intermediaire is
         if (isArray) then
             i := i+1;
         end if;
-        recupererNomVariable(typeVariable, ligne, i, 2);
+        recupererChaine(typeVariable, ligne, i, 2);
         if (isArray) then
             i := i+1;
-            recupererNomVariable(nbElementsTableau, ligne, i, 1);
+            recupererChaine(nbElementsTableau, ligne, i, 1);
         end if;
         i := 1;
         while(i <= length(ligne) and element(ligne, i) /= ':') loop
             -- Parcourir la ligne pour trouver le nom de la variable
             if (element(ligne, i) /= ',') then
-                recupererNomVariable(nomVariable, ligne, i, 3);
+                recupererChaine(nomVariable, ligne, i, 3);
                 if (isArray) then
                     for i in 1..Integer'value(to_string(nbElementsTableau)) loop
                         nomVariableTableau := nomVariable;
@@ -214,7 +210,7 @@ package body intermediaire is
 
     end recupererVariables;
 
-    procedure recupererNomVariable(nomVariable : out Unbounded_String; ligne : in Unbounded_String; i : in out integer; condition : in integer) is
+    procedure recupererChaine(nomVariable : out Unbounded_String; ligne : in Unbounded_String; i : in out integer; condition : in integer) is
 
         conditionVerifiee : boolean;
 
@@ -234,11 +230,12 @@ package body intermediaire is
             end if;
         end loop;
 
-    end recupererNomVariable;
+    end recupererChaine;
 
-     procedure recupererNomVariable(nomVariable : out Unbounded_String; ligne : in Unbounded_String; i : in out integer; condition : in integer; chaineReservee : in Unbounded_String) is
+     procedure recupererChaine(nomVariable : out Unbounded_String; ligne : in Unbounded_String; i : in out integer; condition : in integer; chainesReservees : in T_Chaines_Reservees) is
 
         conditionVerifiee : boolean;
+        j : integer;
 
     begin
 
@@ -248,15 +245,26 @@ package body intermediaire is
 
         conditionVerifiee := true;
         while (i <= length(ligne) and conditionVerifiee) loop
-            if ((((condition = 1 or condition = 3) and then Character'POS(element(ligne, i)) in 48..57) or ((condition = 2 or condition = 3) and then ((Character'POS(element(ligne, i)) in 65..90) or (Character'POS(element(ligne, i)) in 97..122)))) and then not(i <= i+length(chaineReservee)-1 and then slice(ligne, i, i+length(chaineReservee)-1) = chaineReservee)) then
+            --if ((((condition = 1 or condition = 3) and then Character'POS(element(ligne, i)) in 48..57) or ((condition = 2 or condition = 3) and then ((Character'POS(element(ligne, i)) in 65..90) or (Character'POS(element(ligne, i)) in 97..122)))) and then not(i <= i+length(chaineReservee)-1 and then slice(ligne, i, i+length(chaineReservee)-1) = chaineReservee)) then
+            j := 1;
+            while(j <= chainesReservees.nbElements and conditionVerifiee) loop
+                if (i+length(chainesReservees.chaines(j))-1 <= length(ligne) and then slice(ligne, i, i+length(chainesReservees.chaines(j))-1) = chainesReservees.chaines(j)) then
+                    conditionVerifiee := false;
+                end if;
+                j := j+1;
+            end loop;
+
+            if (not (((condition = 1 or condition = 3) and then Character'POS(element(ligne, i)) in 48..57) or ((condition = 2 or condition = 3) and then ((Character'POS(element(ligne, i)) in 65..90) or (Character'POS(element(ligne, i)) in 97..122)))) and then conditionVerifiee) then
+                conditionVerifiee := false;                
+            end if;
+
+            if (conditionVerifiee) then
                 append(nomVariable, element(ligne, i));
                 i := i+1;
-            else
-                conditionVerifiee := false;
             end if;
         end loop;
 
-    end recupererNomVariable;
+    end recupererChaine;
 
     procedure creer_variables_tableau (ligne : in Unbounded_String; i : in out integer; nomVariable : in out Unbounded_String; variables : in T_List_Variable; ptrVariable : out T_Ptr_Variable) is
 
@@ -267,7 +275,7 @@ package body intermediaire is
 
         append(nomVariable, "[1]");
         i := i+1;
-        recupererNomVariable(nomIndice, ligne, i, 3);
+        recupererChaine(nomIndice, ligne, i, 3);
         valeurVariableY := rechercherVariable(variables, nomIndice).all.ptrVar.all.valeurVariable;
         if (element(ligne, i) /= ']') then
             append(nomIndice, element(ligne, i) & element(ligne, i+1));
@@ -285,21 +293,72 @@ package body intermediaire is
         nomVariableY : Unbounded_String;
         nomVariableZ : Unbounded_String;
         nomIndice : Unbounded_String;
+        chainesReservees : T_Chaines_Reservees;
     
     begin
     
         operation := To_Unbounded_String("IF");
         i := i+2;
-        recupererNomVariable(nomVariableX, ligne, i, 3, To_Unbounded_String("GOTO"));
+
+        chainesReservees.chaines(1) := To_Unbounded_String("GOTO");
+        chainesReservees.nbElements := 1;
+        
+        recupererChaine(nomVariableX, ligne, i, 3, chainesReservees);
+
         if (element(ligne, i) = '[') then
             creer_variables_tableau(ligne, i, nomVariableX, variables, ptrInstruction.all.operandes.y);
         end if;
         ptrInstruction.all.operandes.x := rechercherVariable(variables, nomVariableX).all.ptrVar;
         i := i+4;
-        recupererNomVariable(nomVariableZ, ligne, i, 1);
+        recupererChaine(nomVariableZ, ligne, i, 1);
         ptrInstruction.all.operandes.z := new T_Variable'(Integer'Value(To_String(nomVariableZ)), To_Unbounded_String("Entier"), To_Unbounded_String("numeroLigneGOTO"), false);
 
     end ifOperation;
+
+    procedure ecrireOperation (ligne : in Unbounded_String; i : in out integer; ptrInstruction : in out T_Ptr_Instruction; operation : out Unbounded_String; variables : in T_List_Variable) is
+    
+        nomVariableZ : Unbounded_String;
+        nomVariableX : Unbounded_String;
+        isCaractere : boolean;
+
+    begin
+
+        operation := To_Unbounded_String("ECRIRE");
+        i := i+7;
+
+        isCaractere := element(ligne,i) = ''';
+        if (isCaractere) then
+            i := i+1;
+        end if;
+        
+        recupererChaine(nomVariableZ, ligne, i, 3);
+
+        if (element(ligne, i) = '[') then
+            creer_variables_tableau(ligne, i, nomVariableZ, variables, ptrInstruction.all.operandes.x);
+        end if;
+
+        ptrInstruction.all.operandes.z := creer_variable(variables, nomVariableZ, isCaractere);
+
+    end ecrireOperation;
+
+    procedure lireOperation (ligne : in Unbounded_String; i : in out integer; ptrInstruction : in out T_Ptr_Instruction; operation : out Unbounded_String; variables : in T_List_Variable) is
+    
+        nomVariableZ : Unbounded_String;
+        nomVariableX : Unbounded_String;
+
+    begin
+
+        operation := To_Unbounded_String("LIRE");
+        i := i+5;
+        recupererChaine(nomVariableZ, ligne, i, 3);
+
+        if (element(ligne, i) = '[') then
+            creer_variables_tableau(ligne, i, nomVariableZ, variables, ptrInstruction.all.operandes.x);
+        end if;
+
+        ptrInstruction.all.operandes.z := creer_variable(variables, nomVariableZ, false);
+
+    end lireOperation;
 
     procedure gotoOperation (ligne : in Unbounded_String; i : in out integer; ptrInstruction : in out T_Ptr_Instruction; operation : out Unbounded_String; variables : in T_List_Variable) is
     
@@ -309,7 +368,7 @@ package body intermediaire is
 
         operation := To_Unbounded_String("GOTO");
         i := i+4;
-        recupererNomVariable(nomVariableZ, ligne, i, 1);
+        recupererChaine(nomVariableZ, ligne, i, 1);
         ptrInstruction.all.operandes.z := new T_Variable'(Integer'Value(To_String(nomVariableZ)), To_Unbounded_String("Entier"), To_Unbounded_String("numeroLigneGOTO"), false);
 
     end gotoOperation;
@@ -322,12 +381,12 @@ package body intermediaire is
 
     end nullOperation;
 
-    function creer_variable(variables : in T_List_Variable; nomVariable : in Unbounded_String) return T_Ptr_Variable is
+    function creer_variable(variables : in T_List_Variable; nomVariable : in Unbounded_String; isCaractere : in boolean) return T_Ptr_Variable is
 
     begin
-        Put_Line(nomVariable);
-        if (isANumber(nomVariable)) then
-            return creer_variable_tmp(nomVariable);
+
+        if (isCaractere or isANumber(nomVariable)) then
+            return creer_variable_tmp(nomVariable, isCaractere);
         else
             return rechercherVariable(variables, nomVariable).all.ptrVar;
         end if;
@@ -341,12 +400,12 @@ package body intermediaire is
         nomVariableZ : Unbounded_String;
         isArray : boolean;
         nomIndice : Unbounded_String;
-        operateurLogiqueTrouve : boolean;
-        isCaractere : boolean := false;
+        chainesReservees : T_Chaines_Reservees;
+        isCaractere : boolean;
 
     begin
 
-        recupererNomVariable(nomVariableZ, ligne, i, 3);
+        recupererChaine(nomVariableZ, ligne, i, 3);
         isArray := element(ligne, i) = '[';
         if (isArray) then
             creer_variables_tableau(ligne, i, nomVariableZ, variables, ptrInstruction.all.operandes.x);
@@ -354,60 +413,65 @@ package body intermediaire is
         ptrInstruction.all.operandes.z := rechercherVariable(variables, nomVariableZ).all.ptrVar;
         i := i+2;
 
-        if(element(ligne,i) = ''') then
-            isCaractere := true;
-            i:=i+1;
-        end if;
-
         if (isArray) then
-            recupererNomVariable(nomVariableY, ligne, i, 3);
-            ptrInstruction.all.operandes.y := creer_variable(variables, nomVariableY);
+            isCaractere := element(ligne,i) = ''';
+            if (isCaractere) then
+                i := i+1;
+            end if;
+            recupererChaine(nomVariableY, ligne, i, 3);
+            ptrInstruction.all.operandes.y := creer_variable(variables, nomVariableY, isCaractere);
         else
-            operateurLogiqueTrouve := false;
-            while (i <= length(ligne) and then (Character'POS(element(ligne, i)) in 65..90 or Character'POS(element(ligne, i)) in 97..122 or Character'POS(element(ligne, i)) in 48..57) and then not operateurLogiqueTrouve) loop
-                if ((i <= length(ligne)-1 and then slice(ligne, i, i+1) = "OR") or (i <= length(ligne)-2 and then slice(ligne, i, i+2) = "AND")) then
-                    operateurLogiqueTrouve := true;
-                else
-                    append(nomVariableX, element(ligne, i));
-                    i := i+1;
-                end if;
-            end loop;
+            chainesReservees.chaines(1..2) := (To_Unbounded_String("OR"), To_Unbounded_String("AND"));
+            chainesReservees.nbElements := 2;
+
+            isCaractere := element(ligne,i) = ''';
+            if (isCaractere) then
+                i := i+1;
+            end if;
+
+            recupererChaine(nomVariableX, ligne, i, 3, chainesReservees);
+            
             if (i<= length(ligne) and then element(ligne, i) = '[') then
-                isArray := true;
-                creer_variables_tableau(ligne, i, nomVariableX, variables, ptrInstruction.all.operandes.y);
-                ptrInstruction.all.operandes.x := rechercherVariable(variables, nomVariableX).all.ptrVar;
-            else
-                if(not(isCaractere)) then
-                    ptrInstruction.all.operandes.x := creer_variable(variables, nomVariableX);
+                if (isArray) then
+                    raise Element_Tableau_Deja_Utilise;
                 else
-                    i:=i+1;
-                    ptrInstruction.all.operandes.x := new T_Variable'(Character'Pos(element(nomVariableX,1)), To_Unbounded_String("Charactere"), To_Unbounded_String("Tmp"), false);
+                    isArray := true;
+                    creer_variables_tableau(ligne, i, nomVariableX, variables, ptrInstruction.all.operandes.y);
+                    ptrInstruction.all.operandes.x := rechercherVariable(variables, nomVariableX).all.ptrVar;
+                end if;
+            else
+                ptrInstruction.all.operandes.x := creer_variable(variables, nomVariableX, isCaractere);
+                if (isCaractere) then
+                    i := i+1;
                 end if;
             end if;
         end if;
 
         --if(isCaractere) then
-           -- i:=i+1;
-          --  --ptrVariable := new T_Variable'(Character'Pos(element(nomVariableX,1)), To_Unbounded_String("Charactere"), To_Unbounded_String("Tmp"), false);
-           -- ptrInstruction.all.operandes.x := new T_Variable'(Character'Pos(element(nomVariableX,1)), To_Unbounded_String("Charactere"), To_Unbounded_String("Tmp"), false);
-        --end if;
+            --  i:=i+1;
+            --ptrVariable := new T_Variable'(Character'Pos(element(nomVariableX,1)), To_Unbounded_String("Charactere"), To_Unbounded_String("Tmp"), false);
+            --ptrInstruction.all.operandes.x := ptrVariable;
+            
         if (i <= length(ligne)) then
             if (isArray) then
                 raise Element_Tableau_Deja_Utilise;
             else
                 if (i <= length(ligne)-2 and then slice(ligne, i, i+2) = "AND") then
                     operation := To_Unbounded_String("AND");
-                    i := i+3; 
+                    i := i+3;
                 elsif (i <= length(ligne)-1 and then slice(ligne, i, i+1) = "OR") then
                     operation := To_Unbounded_String("OR");
-                    i := i+2; 
+                    i := i+2;
                 else
-                    append(operation, element(ligne, i));
-                    i := i+1; 
+                    loop
+                        append(operation, element(ligne, i));
+                        i := i+1;
+                    exit when (element(ligne,i) /= '<' and element(ligne,i) /= '>' and element(ligne,i) /= '=') ;
+                    end loop;
                 end if;
 
-                recupererNomVariable(nomVariableY, ligne, i, 3);
-                ptrInstruction.all.operandes.y := creer_variable(variables, nomVariableY);
+                recupererChaine(nomVariableY, ligne, i, 3);
+                ptrInstruction.all.operandes.y := creer_variable(variables, nomVariableY, false);
             end if;
         else
             operation := To_Unbounded_String("AFFECTATION");
@@ -462,16 +526,13 @@ package body intermediaire is
             
             nullOperation(operation);
 
-        elsif (i <= length(ligne)-5 and then Slice(ligne, i, i+5) = "ECRIRE") then
-            operation := To_Unbounded_String("ECRIRE");
-            --i := i+1;
-            --put(i);
-            put(element(ligne,i+7));
-            put_line(ligne);
+        elsif (i <= length(ligne)-5 and then Slice(ligne, i, i+5) = "Ecrire") then
+            
+            ecrireOperation(ligne, i, ptrInstruction, operation, variables);
 
-        elsif (i <= length(ligne)-3 and then Slice(ligne, i, i+3) = "LIRE") then
+        elsif (i <= length(ligne)-3 and then Slice(ligne, i, i+3) = "Lire") then
 
-            operation := To_Unbounded_String("LIRE");
+            lireOperation(ligne, i, ptrInstruction, operation, variables);
 
         else
 
@@ -482,14 +543,12 @@ package body intermediaire is
         ptrInstruction.all.operation := operation;
         ajouter(instructions, ptrInstruction);
 
-        
-
     end recupererInstructions;
 
     function isANumber (nomVariable : in Unbounded_String) return boolean is
         j : integer;
     begin
-        Put_Line(nomVariable);
+
         if (length(nomVariable) = 0) then
             return false;
         else
@@ -504,16 +563,23 @@ package body intermediaire is
         return true;
     end isANumber;
 
-    function creer_variable_tmp (nomVariable : in Unbounded_String) return T_Ptr_Variable is
+    function creer_variable_tmp (nomVariable : in Unbounded_String; isCaractere : in boolean) return T_Ptr_Variable is
         
         valeurVariableTmp : integer;
         nomVariableTmp : Unbounded_String;
         typeVariableTmp : Unbounded_String;
     
     begin
-        valeurVariableTmp := Integer'Value(To_String(nomVariable));
+
+        if (isCaractere) then 
+            valeurVariableTmp := Character'Pos(element(nomVariable,1));
+            typeVariableTmp := To_Unbounded_String("Caractere");
+        else
+            valeurVariableTmp := Integer'Value(To_String(nomVariable));
+            typeVariableTmp := To_Unbounded_String("Entier");
+        end if;
+
         nomVariableTmp := To_Unbounded_String("Tmp");
-        typeVariableTmp := To_Unbounded_String("Entier");
 
         return new T_Variable'(valeurVariableTmp, typeVariableTmp, nomVariableTmp, false);
 
@@ -568,10 +634,10 @@ package body intermediaire is
         while (l /= null) loop
             put_line(l.all.ptrVar.all.nomVariable);
             put_line(l.all.ptrVar.all.typeVariable);
-            if(l.all.ptrVar.all.typeVariable /= "Charactere") then
+            if(l.all.ptrVar.all.typeVariable /= "Caractere") then
                 put(l.all.ptrVar.all.valeurVariable, 1);
             else
-                put(l.all.ptrVar.all.valeurVariable);
+                put(l.all.ptrVar.all.valeurVariable, 1);
                 put(':');
                 put("'");
                 put(Character'Val(l.all.ptrVar.all.valeurVariable));
@@ -639,9 +705,8 @@ package body intermediaire is
         copy : T_List_Variable;
     
     begin
-        
-        copy := variables;
 
+        copy := variables;
         while copy.all.prev /= null loop -- Retour au début de la liste
             copy := copy.all.prev;
         end loop;
@@ -653,6 +718,7 @@ package body intermediaire is
         else 
             return copy;
         end if;
+
     end rechercherVariable;
 
     function creer_liste_vide return T_List_Variable is
@@ -680,29 +746,100 @@ package body intermediaire is
     end est_vide;
 
 
-    procedure interpreterCommande (ptrInstruction : in out T_List_Instruction) is
+    procedure interpreterCommande (ptrInstruction : in out T_List_Instruction; variables : in T_List_Variable) is
         
         nomOperation : Unbounded_String;
+
+        nomVariable : Unbounded_String;
+        nomIndice : Unbounded_String;
+        nomIndiceReel : Unbounded_String;
+        valeurIndice : Integer;
+        op : character;
+        op2 : integer;
+        indiceDebutRecherche : integer;
+        chaineLue : Unbounded_String;
+        Variable : T_Ptr_Variable;
     
     begin
         
         nomOperation := ptrInstruction.all.ptrIns.all.operation;
+
         if(nomOperation = "NULL") then
             ptrInstruction := ptrInstruction.all.next;
         elsif(nomOperation = "GOTO") then
             branchementBasic(ptrInstruction.all.ptrIns.all.operandes.z.all.valeurVariable,ptrInstruction);
         elsif(nomOperation = "IF") then
-            branchementConditionel(ptrInstruction);
-       --elsif(nomOperation = "PRINT") then
+            branchementConditionel(ptrInstruction, variables);
+        elsif(nomOperation = "ECRIRE") then
+            ecrire(ptrInstruction, variables);
+        elsif(nomOperation = "LIRE") then
+            lire(ptrInstruction, variables);
+            ptrInstruction := ptrInstruction.all.next;
         else
             if (ptrInstruction.all.ptrIns.all.operandes.y = null) then
                 ptrInstruction.all.ptrIns.all.operandes.z.all.valeurVariable := ptrInstruction.all.ptrIns.all.operandes.x.all.valeurVariable;
             else
-                if (element(ptrInstruction.all.ptrIns.all.operation, 1) = '+' or element(ptrInstruction.all.ptrIns.all.operation, 1) = '*' or element(ptrInstruction.all.ptrIns.all.operation, 1) = '/' or element(ptrInstruction.all.ptrIns.all.operation, 1) = '-') then
-                    ptrInstruction.all.ptrIns.all.operandes.z.valeurVariable := operationArithmetique(element(ptrInstruction.all.ptrIns.all.operation, 1), ptrInstruction.all.ptrIns.all.operandes.x.valeurVariable, ptrInstruction.all.ptrIns.all.operandes.y.valeurVariable);
+
+                if (ptrInstruction.all.ptrIns.all.operandes.x.all.typeVariable = "Indice Tableau") then
+                    
+                    indiceDebutRecherche := 1;
+
+                    nomIndice := ptrInstruction.all.ptrIns.all.operandes.x.all.nomVariable;
+                    recupererChaine(nomIndiceReel, nomIndice, indiceDebutRecherche, 3);
+                    valeurIndice := rechercherVariable(variables, nomIndiceReel).all.ptrVar.all.valeurVariable;
+
+                    if (nomIndice /= nomIndiceReel) then
+                        op := element(nomIndice, length(nomIndice)-1);
+                        op2 := Integer'Value((1 => element(nomIndice, length(nomIndice))));
+                        valeurIndice := operationArithmetique(op, valeurIndice, op2);
+                    end if;
+
+                    indiceDebutRecherche := 1;
+
+                    recupererChaine(nomVariable, ptrInstruction.all.ptrIns.all.operandes.z.all.nomVariable, indiceDebutRecherche, 3);
+
+                    append(nomVariable, "[" & Integer'Image(valeurIndice)(2..Integer'Image(valeurIndice)'length) & "]");
+
+                    variable := rechercherVariable(variables, nomVariable).all.ptrVar;
+
+                    variable.all.valeurVariable := ptrInstruction.all.ptrIns.all.operandes.y.all.valeurVariable;
+
                 else
-                    ptrInstruction.all.ptrIns.all.operandes.z.valeurVariable := operationLogique(ptrInstruction.all.ptrIns.all.operation, ptrInstruction.all.ptrIns.all.operandes.x.valeurVariable, ptrInstruction.all.ptrIns.all.operandes.y.valeurVariable);
+
+                    if (ptrInstruction.all.ptrIns.all.operandes.y.all.typeVariable = "Indice Tableau") then
+
+                        indiceDebutRecherche := 1;
+
+                        nomIndice := ptrInstruction.all.ptrIns.all.operandes.y.all.nomVariable;
+                        recupererChaine(nomIndiceReel, nomIndice, indiceDebutRecherche, 3);
+                        valeurIndice := rechercherVariable(variables, nomIndiceReel).all.ptrVar.all.valeurVariable;
+                        if (nomIndice /= nomIndiceReel) then
+                            op := element(nomIndice, length(nomIndice)-1);
+                            op2 := Integer'Value((1 => element(nomIndice, length(nomIndice))));
+                            valeurIndice := operationArithmetique(op, valeurIndice, op2);
+                        end if;
+
+                        indiceDebutRecherche := 1;
+
+
+                        recupererChaine(nomVariable, ptrInstruction.all.ptrIns.all.operandes.x.all.nomVariable, indiceDebutRecherche, 3);
+
+                        append(nomVariable, "[" & Integer'Image(valeurIndice)(2..Integer'Image(valeurIndice)'length) & "]");
+
+                        variable := rechercherVariable(variables, nomVariable).all.ptrVar;
+
+                        ptrInstruction.all.ptrIns.all.operandes.z.all.valeurVariable := variable.all.valeurVariable;
+                    else
+                        
+                        if (element(ptrInstruction.all.ptrIns.all.operation, 1) = '+' or element(ptrInstruction.all.ptrIns.all.operation, 1) = '*' or element(ptrInstruction.all.ptrIns.all.operation, 1) = '/' or element(ptrInstruction.all.ptrIns.all.operation, 1) = '-') then
+                            ptrInstruction.all.ptrIns.all.operandes.z.valeurVariable := operationArithmetique(element(ptrInstruction.all.ptrIns.all.operation, 1), ptrInstruction.all.ptrIns.all.operandes.x.valeurVariable, ptrInstruction.all.ptrIns.all.operandes.y.valeurVariable);
+                        else
+                            ptrInstruction.all.ptrIns.all.operandes.z.valeurVariable := operationLogique(ptrInstruction.all.ptrIns.all.operation, ptrInstruction.all.ptrIns.all.operandes.x.valeurVariable, ptrInstruction.all.ptrIns.all.operandes.y.valeurVariable);
+                        end if;
+                    end if;
+
                 end if;
+
             end if;
             ptrInstruction := ptrInstruction.all.next;
         end if;

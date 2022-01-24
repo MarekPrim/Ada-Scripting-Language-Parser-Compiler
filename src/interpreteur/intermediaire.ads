@@ -15,6 +15,13 @@ package intermediaire is
     Fichier_Non_Trouve : Exception;
     Element_Tableau_Deja_Utilise : Exception;
 
+    type Tab_Chaines is array(1..2) of Unbounded_String;
+
+    type T_Chaines_Reservees is record
+        chaines : Tab_Chaines;
+        nbElements : integer;
+    end record;
+
     type T_Cell_Variable;
     type T_Cell_Instruction;
     type T_Variable;
@@ -129,7 +136,7 @@ package intermediaire is
     -- Préconditions    : ptrLigne n'est pas null
     -- Postconditions   : le numéro de la ligne pointée par ptrLine change pendant la procédure
     -- Exceptions       : Acces_Limite
-    procedure interpreterCommande (ptrInstruction : in out T_List_Instruction);
+    procedure interpreterCommande (ptrInstruction : in out T_List_Instruction; variables : in T_List_Variable);
 
     -- nom : rechercherVariable
     -- semantique : retourne un pointeur sur la variable recherchée
@@ -294,7 +301,7 @@ package intermediaire is
     -- post-conditions
     --          Aucune
     -- exception : /
-    function creer_variable_tmp (nomVariable : in Unbounded_String) return T_Ptr_Variable;
+    function creer_variable_tmp (nomVariable : in Unbounded_String; isCaractere : in boolean) return T_Ptr_Variable;
 
     -- nom : estLigneUtile
     -- semantique : teste si une ligne d'instruction est utile
@@ -328,16 +335,20 @@ package intermediaire is
 
     procedure nullOperation (operation : out Unbounded_String);
 
+    procedure lireOperation (ligne : in Unbounded_String; i : in out integer; ptrInstruction : in out T_Ptr_Instruction; operation : out Unbounded_String; variables : in T_List_Variable);
+
+    procedure ecrireOperation (ligne : in Unbounded_String; i : in out integer; ptrInstruction : in out T_Ptr_Instruction; operation : out Unbounded_String; variables : in T_List_Variable);
+
     procedure affectationOperation (ligne : in Unbounded_String; i : in out integer; ptrInstruction : in out T_Ptr_Instruction; operation : out Unbounded_String; variables : in T_List_Variable);
 
     procedure creer_variables_tableau (ligne : in Unbounded_String; i : in out integer; nomVariable : in out Unbounded_String; variables : in T_List_Variable; ptrVariable : out T_Ptr_Variable);
 
-    procedure recupererNomVariable(nomVariable : out Unbounded_String; ligne : in Unbounded_String; i : in out integer; condition : in integer);
+    procedure recupererChaine(nomVariable : out Unbounded_String; ligne : in Unbounded_String; i : in out integer; condition : in integer);
 
-     procedure recupererNomVariable(nomVariable : out Unbounded_String; ligne : in Unbounded_String; i : in out integer; condition : in integer; chaineReservee : in Unbounded_String);
+     procedure recupererChaine(nomVariable : out Unbounded_String; ligne : in Unbounded_String; i : in out integer; condition : in integer; chainesReservees : in T_Chaines_Reservees);
 
     procedure creerEtAjouterVariable(variables : in out T_List_Variable; typeVariable : in Unbounded_String; nomVariable : in Unbounded_String);
 
-    function creer_variable(variables : in T_List_Variable; nomVariable : in Unbounded_String) return T_Ptr_Variable;
+    function creer_variable(variables : in T_List_Variable; nomVariable : in Unbounded_String; isCaractere : in boolean) return T_Ptr_Variable;
 
 end intermediaire;

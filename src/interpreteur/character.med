@@ -1,13 +1,15 @@
 Programme Facto est
 T1 : Entier
-char, lettre  : Character
+char, lettre  : Caractere
 Debut
 1 char <- 'a'
-2 lettre <- 'c'
+2 Lire(lettre)
 3 T1 <- char < lettre
 4 IF T1 GOTO 6
-5 GOTO 8
-6 char <- char succ
-7 GOTO 4
+5 GOTO 9
+6 char <- char + 1
+7 lettre <- lettre + 1
 8 NULL
+9 lettre <- lettre + 1
+10 NULL
 Fin

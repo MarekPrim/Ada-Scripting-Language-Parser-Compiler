@@ -1,11 +1,11 @@
 -- Ce programme trie un tableau par insertion
 Programme Facto est
-i : entier
-j : entier
-swap : entier
-A : [Entier, 8]
-Début
-i <- 1
+    i : entier
+    j : entier
+    swap : entier
+    A : [Entier, 8]
+Debut
+    i <- 1
     Tant Que i<8 Faire
         Lire(j)
         A[i] <- j

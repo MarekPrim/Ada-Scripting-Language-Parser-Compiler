@@ -1,8 +1,8 @@
 -- Ce code intermédiaire calcule la factorielle F d’un entier n
 -- avec numéros de ligne
 Programme Facto est
-char : Charactere
-ch : Charactere
+char : Caractere
+ch : Caractere
 T1, T2, T3 : Entier 
 Debut
 1 char <- 'a'
@@ -13,6 +13,6 @@ Debut
 6 ch <- ch - 1
 7 T1 <- ch = char
 8 GOTO 4
-9 ECRIRE ch
+9 Ecrire(ch)
 10 NULL
 Fin
