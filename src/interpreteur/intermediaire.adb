@@ -20,33 +20,33 @@ package body intermediaire is
     
     begin
 
-    begin
-    loop
-        fileName := To_Unbounded_String(Argument(1));
-    exit when (Argument_Count /= 0);
-    end loop;
+        begin
+            loop
+                fileName := To_Unbounded_String(Argument(1));
+            exit when (Argument_Count /= 0);
+            end loop;
 
-    exception
-    when Constraint_Error => Put_Line("Vous n'avez pas renseigné le fichier à interpréter;");
-    Put_Line("Utilisation du programme : ./main ./chemin_vers_fichier/fichier_souhaité");
-    raise Program_Error;
-    end;
-    
-    if(Argument_Count = 2) then
-        choice := (if Argument(2) = "--DEBUG"
-        then 1
-        else 0);
-    else
-        choice := 0;
-    end if;
+            exception
+            when Constraint_Error => Put_Line("Vous n'avez pas renseigné le fichier à interpréter;");
+            Put_Line("Utilisation du programme : ./main ./chemin_vers_fichier/fichier_souhaité");
+            raise Program_Error;
+        end;
+        
+        if(Argument_Count = 2) then
+            choice := (if Argument(2) = "--DEBUG"
+            then 1
+            else 0);
+        else
+            choice := 0;
+        end if;
 
-    skip_line;
+        skip_line;
 
         begin
-        parseFile(To_String(fileName), variables, instructions);
+            parseFile(To_String(fileName), variables, instructions);
 
-        exception
-        when Ada.IO_EXCEPTIONS.DEVICE_ERROR => Put_Line("Fichier inexistant/invalide");
+            exception
+            when Ada.IO_EXCEPTIONS.DEVICE_ERROR => Put_Line("Fichier inexistant/invalide");
         end;
 
         pointerEnTeteInstructions(instructions);
@@ -58,7 +58,6 @@ package body intermediaire is
                 Put("Numéro de l'instruction en cours : ");
                 Put(l_instructions.all.ptrIns.all.numInstruction, 1);
                 new_line;
-                --afficher_liste(variables);
             end if;
             interpreterCommande(l_instructions, variables);
         end loop;
@@ -69,7 +68,6 @@ package body intermediaire is
 
     end traiterProgramme;
 
-    
 
     procedure parseFile (fileName : in string; variables : in out T_List_Variable; instructions : in out T_List_Instruction) is
         F         : File_Type;
@@ -112,6 +110,7 @@ package body intermediaire is
             if (estLigneUtile(ligne)) then
                 recupererInstructions(instructions, variables, ligne);  -- Récupération des instructions
             end if;
+
             ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
         exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Fin)));    -- Jusqu'à arriver à 'Fin'
         end loop;
@@ -119,10 +118,6 @@ package body intermediaire is
         Close(F);
 
     end parseFile;
-
-    
-
-    
 
     procedure recupererVariables(variables : in out T_List_Variable; ligne : in Unbounded_string) is
         
@@ -172,7 +167,6 @@ package body intermediaire is
         end loop;
 
     end recupererVariables;
-
     
 
     function recupererNumeroInstructionLigne (index : in out integer; ligne : in Unbounded_String) return integer is
@@ -238,9 +232,6 @@ package body intermediaire is
 
     end recupererInstructions;
 
-    
-
-    
 
     procedure interpreterCommande (ptrInstruction : in out T_List_Instruction; variables : in T_List_Variable) is
         
@@ -257,7 +248,7 @@ package body intermediaire is
         Variable : T_Ptr_Variable;
     
     begin
-        
+
         nomOperation := ptrInstruction.all.ptrIns.all.operation;
 
         if(nomOperation = "NULL") then

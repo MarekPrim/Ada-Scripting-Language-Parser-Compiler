@@ -114,11 +114,13 @@ package body operations is
     begin
 
         recupererChaine(nomVariableZ, ligne, i, 3);
+
         isArray := element(ligne, i) = '[';
         if (isArray) then
             creer_variables_tableau(ligne, i, nomVariableZ, variables, ptrInstruction.all.operandes.x);
         end if;
         ptrInstruction.all.operandes.z := rechercherVariable(variables, nomVariableZ).all.ptrVar;
+
         i := i+2;
 
         if (isArray) then
@@ -138,7 +140,7 @@ package body operations is
             end if;
 
             recupererChaine(nomVariableX, ligne, i, 3, chainesReservees);
-            
+
             if (i<= length(ligne) and then element(ligne, i) = '[') then
                 if (isArray) then
                     raise Element_Tableau_Deja_Utilise;
@@ -161,6 +163,7 @@ package body operations is
             --ptrInstruction.all.operandes.x := ptrVariable;
             
         if (i <= length(ligne)) then
+
             if (isArray) then
                 raise Element_Tableau_Deja_Utilise;
             else
@@ -179,7 +182,9 @@ package body operations is
                 end if;
 
                 recupererChaine(nomVariableY, ligne, i, 3);
+
                 ptrInstruction.all.operandes.y := creer_variable(variables, nomVariableY, false);
+
             end if;
         else
             operation := To_Unbounded_String("AFFECTATION");

@@ -29,13 +29,18 @@ package body variables is
 
         append(nomVariable, "[1]");
         i := i+1;
-        recupererChaine(nomIndice, ligne, i, 4);
+
+        while (i < length(ligne) and then element(ligne, i) /= ']') loop
+            append(nomIndice, element(ligne, i));
+            i := i+1;
+        end loop;
+
+        i := i+1;
 
         if (isANumber(nomIndice)) then
             nomIndice := To_Unbounded_String("Tmp");
         end if;
 
-        i := i+1;
         ptrVariable := new T_Variable'(0, To_Unbounded_String("Indice Tableau"), nomIndice, false);
 
     end creer_variables_tableau;

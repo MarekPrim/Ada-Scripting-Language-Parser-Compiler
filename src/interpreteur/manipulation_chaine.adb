@@ -72,10 +72,12 @@ package body manipulation_chaine is
 
         if (length(nomVariable) = 0) then
             return false;
+        elsif ((element(nomVariable, 1) /= '-') and not (Character'POS(element(nomVariable,1)) in 48..57)) then
+            return false;
         else
-            j := 1;
+            j := 2;
             while(j <= length(nomVariable)) loop
-                if (not(Character'POS(element(nomVariable, j)) in 48..57) and element(nomVariable,j) /= '-') then
+                if (not(Character'POS(element(nomVariable, j)) in 48..57)) then
                     return false;
                 end if;
                 j := j+1;
@@ -89,8 +91,11 @@ package body manipulation_chaine is
     procedure recupererChaine(chaineRetour : out Unbounded_String; chaineDepart : in Unbounded_String; i : in out integer; condition : in integer) is
 
         conditionVerifiee : boolean;
+        iInitial : integer;
 
     begin
+
+        iInitial := i;
 
         -- 1 : numerique
         -- 2 : alphebetique
@@ -98,7 +103,8 @@ package body manipulation_chaine is
 
         conditionVerifiee := true;
         while (i <= length(chaineDepart) and conditionVerifiee) loop
-            if (((condition = 1 or condition >= 3) and then Character'POS(element(chaineDepart, i)) in 48..57) or ((condition >= 2) and then ((Character'POS(element(chaineDepart, i)) in 65..90) or (Character'POS(element(chaineDepart, i)) in 97..122))) or ((condition = 4) and then (element(chaineDepart, i) = '-'))) then
+
+            if (((condition = 1 or condition = 3) and then (Character'POS(element(chaineDepart, i)) in 48..57 or (iInitial = i and then element(chaineDepart, iInitial) = '-'))) or ((condition = 2 or condition = 3) and then ((Character'POS(element(chaineDepart, i)) in 65..90) or (Character'POS(element(chaineDepart, i)) in 97..122)))) then
                 append(chaineRetour, element(chaineDepart, i));
                 i := i+1;
             else
@@ -112,8 +118,11 @@ package body manipulation_chaine is
 
         conditionVerifiee : boolean;
         j : integer;
+        iInitial : integer;
 
     begin
+
+        iInitial := i;
 
         -- 1 : numerique
         -- 2 : alphebetique
@@ -130,7 +139,7 @@ package body manipulation_chaine is
                 j := j+1;
             end loop;
 
-            if (not (((condition = 1 or condition = 3) and then Character'POS(element(chaineDepart, i)) in 48..57) or ((condition = 2 or condition = 3) and then ((Character'POS(element(chaineDepart, i)) in 65..90) or (Character'POS(element(chaineDepart, i)) in 97..122))) or ((condition = 4) and then element(chaineDepart, i) /= '-' )) and then conditionVerifiee) then
+            if (not (((condition = 1 or condition = 3) and then (Character'POS(element(chaineDepart, i)) in 48..57 or (iInitial = i and then element(chaineDepart,iInitial) = '-'))) or ((condition = 2 or condition = 3) and then ((Character'POS(element(chaineDepart, i)) in 65..90) or (Character'POS(element(chaineDepart, i)) in 97..122)))) and then conditionVerifiee) then
                 conditionVerifiee := false;                
             end if;
 
