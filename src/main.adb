@@ -3,7 +3,7 @@ use Ada.Text_IO, Ada.Integer_Text_IO, intermediaire;
 
 procedure main is
 
-   fileName : constant string := "./interpreteur/character.med";
+   fileName : constant string := "./interpreteur/facto.med";
    choice : Integer;
 
 begin

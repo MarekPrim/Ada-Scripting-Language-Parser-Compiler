@@ -80,7 +80,7 @@ D a-tiunio.ads		20210408115627 759c6b0c ada.text_io.unbounded_io%s
 D a-unccon.ads		20210408115627 0e9b276f ada.unchecked_conversion%s
 D interfac.ads		20210408115627 5ab55268 interfaces%s
 D i-cstrea.ads		20210408115627 e53d8b8e interfaces.c_streams%s
-D intermediaire.ads	20220122204348 c2e5f4d8 intermediaire%s
+D intermediaire.ads	20220125074209 c2e5f4d8 intermediaire%s
 D intermediaire.adb	20220122204217 b7049cd2 intermediaire%b
 D operateurs.ads	20220122125138 b6a7cc52 operateurs%s
 D system.ads		20210408115627 4635ec04 system%s
