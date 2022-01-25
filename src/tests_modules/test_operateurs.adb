@@ -2,6 +2,10 @@ with ada.Text_IO, ada.integer_Text_IO, Ada.Strings.Unbounded, Ada.Text_IO.Unboun
 use ada.Text_IO, ada.integer_Text_io, Ada.Strings.Unbounded, Ada.Text_IO.Unbounded_IO, Ada.Characters.Handling;
 with operateurs; use operateurs;
 with intermediaire; use intermediaire;
+with operations; use operations;
+with manipulation_chaine; use manipulation_chaine;
+with variables; use variables;
+with operations_liste; use operations_liste;
 
 procedure test_operateurs is
     
@@ -231,7 +235,7 @@ instructions := creer_liste_vide;
             Put_Line("KO branchement basique");
         end if;
 
-        branchementConditionel(instructions);
+        branchementConditionel(instructions, variables);
         if(instructions.all.ptrIns.all.numInstruction = 4) then
             Put_Line("OK branchement conditionnel");
         else

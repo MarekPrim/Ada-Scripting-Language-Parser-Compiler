@@ -2,6 +2,10 @@ with ada.Text_IO, ada.integer_Text_IO, Ada.Strings.Unbounded, Ada.Text_IO.Unboun
 --with P_List_Double;
 use ada.Text_IO, ada.integer_Text_io, Ada.Strings.Unbounded, Ada.Text_IO.Unbounded_IO, Ada.Characters.Handling;
 with intermediaire; use intermediaire;
+with operations; use operations;
+with manipulation_chaine; use manipulation_chaine;
+with variables; use variables;
+with operations_liste; use operations_liste;
 
 procedure test_intermediaire is
 
@@ -157,7 +161,7 @@ variables := creer_liste_vide;
     -- Test de l'interprétation d'une commande/ligne d'instruction
         instructions_stub := instructions;
         while(instructions /= null) loop
-            interpreterCommande(instructions);
+            interpreterCommande(instructions,variables);
         end loop;
         chne := To_Unbounded_String("n");
         if(rechercherVariable(variables,chne).all.ptrVar.all.valeurVariable = 5) then
