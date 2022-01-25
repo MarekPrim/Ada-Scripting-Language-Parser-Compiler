@@ -1,5 +1,6 @@
 with Ada.Strings.Unbounded;
 use Ada.Strings.Unbounded;
+with Ada.Command_Line; use Ada.Command_Line;
 
 package intermediaire is
     -- Enumerations
@@ -83,7 +84,7 @@ package intermediaire is
     --  Aucune
     -- Exception
     --  Aucune
-    procedure traiterProgramme(fileName : in string; choice : Integer);
+    procedure traiterProgramme;
 
     -- nom : recupererVariables
     -- semantique : récupère les variables d'un programme en langage intermédiaire contenues entre 'Début' (exclu) et 'Programme' (exclue)

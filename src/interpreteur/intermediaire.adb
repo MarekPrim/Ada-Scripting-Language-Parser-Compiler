@@ -1,6 +1,7 @@
 with ada.Text_IO, ada.integer_Text_IO, Ada.Strings.Unbounded, Ada.Text_IO.Unbounded_IO, Ada.Characters.Handling, operateurs, operations, variables, operations_liste, manipulation_chaine;
 use ada.Text_IO, ada.integer_Text_io, Ada.Strings.Unbounded, Ada.Text_IO.Unbounded_IO, Ada.Characters.Handling, operateurs, operations, variables, operations_liste, manipulation_chaine;
-
+with Ada.Command_Line; use Ada.Command_Line;
+with Ada.IO_EXCEPTIONS; use Ada.IO_EXCEPTIONS;
 
 package body intermediaire is
 
@@ -9,15 +10,44 @@ package body intermediaire is
     --package Liste_Instructions is new P_List_Double(pointeur => T_List_Instruction);
     --use Liste_Instructions;
 
-    procedure traiterProgramme(fileName : in string; choice : in Integer) is
+    procedure traiterProgramme is
 
         variables : T_List_Variable;
         instructions : T_List_Instruction;
         l_instructions : T_List_Instruction;
+        choice : Integer;
+        fileName : Unbounded_String;
     
     begin
+
+    begin
+    loop
+        fileName := To_Unbounded_String(Argument(1));
+    exit when (Argument_Count /= 0);
+    end loop;
+
+    exception
+    when Constraint_Error => Put_Line("Vous n'avez pas renseigné le fichier à interpréter;");
+    Put_Line("Utilisation du programme : ./main ./chemin_vers_fichier/fichier_souhaité");
+    raise Program_Error;
+    end;
     
-        parseFile(fileName, variables, instructions);
+    if(Argument_Count = 2) then
+        choice := (if Argument(2) = "--DEBUG"
+        then 1
+        else 0);
+    else
+        choice := 0;
+    end if;
+
+    skip_line;
+
+        begin
+        parseFile(To_String(fileName), variables, instructions);
+
+        exception
+        when Ada.IO_EXCEPTIONS.DEVICE_ERROR => Put_Line("Fichier inexistant/invalide");
+        end;
 
         pointerEnTeteInstructions(instructions);
 
