@@ -21,24 +21,22 @@ package body variables is
 
     end creer_variable;
 
-     procedure creer_variables_tableau (ligne : in Unbounded_String; i : in out integer; nomVariable : in out Unbounded_String; variables : in T_List_Variable; ptrVariable : out T_Ptr_Variable) is
+    procedure creer_variables_tableau (ligne : in Unbounded_String; i : in out integer; nomVariable : in out Unbounded_String; variables : in T_List_Variable; ptrVariable : out T_Ptr_Variable) is
 
         nomIndice : Unbounded_String;
-        valeurVariableY : integer;
 
     begin
 
         append(nomVariable, "[1]");
         i := i+1;
-        recupererChaine(nomIndice, ligne, i, 3);
-        valeurVariableY := rechercherVariable(variables, nomIndice).all.ptrVar.all.valeurVariable;
-        if (element(ligne, i) /= ']') then
-            append(nomIndice, element(ligne, i) & element(ligne, i+1));
-            valeurVariableY := operationArithmetique(element(nomIndice, length(nomIndice)-1), valeurVariableY, Integer'Value((1 => element(nomIndice, length(nomIndice)))));
-            i := i+2;
+        recupererChaine(nomIndice, ligne, i, 4);
+
+        if (isANumber(nomIndice)) then
+            nomIndice := To_Unbounded_String("Tmp");
         end if;
+
         i := i+1;
-        ptrVariable := new T_Variable'(valeurVariableY, To_Unbounded_String("Indice Tableau"), nomIndice, false);
+        ptrVariable := new T_Variable'(0, To_Unbounded_String("Indice Tableau"), nomIndice, false);
 
     end creer_variables_tableau;
 
@@ -103,7 +101,5 @@ package body variables is
         end if;
 
     end rechercherVariable;
-
-    
 
 end variables;

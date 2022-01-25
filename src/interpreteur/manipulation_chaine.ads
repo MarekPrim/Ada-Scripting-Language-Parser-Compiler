@@ -54,8 +54,8 @@ package manipulation_chaine is
 
     --private
 
-    procedure recupererChaine(nomVariable : out Unbounded_String; ligne : in Unbounded_String; i : in out integer; condition : in integer);
+    procedure recupererChaine(chaineRetour : out Unbounded_String; chaineDepart : in Unbounded_String; i : in out integer; condition : in integer);
 
-    procedure recupererChaine(nomVariable : out Unbounded_String; ligne : in Unbounded_String; i : in out integer; condition : in integer; chainesReservees : in T_Chaines_Reservees);
+    procedure recupererChaine(chaineRetour : out Unbounded_String; chaineDepart : in Unbounded_String; i : in out integer; condition : in integer; chainesReservees : in T_Chaines_Reservees);
 
 end manipulation_chaine;
