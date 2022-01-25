@@ -7,7 +7,7 @@ RV NO_DIRECT_BOOLEAN_OPERATORS
 RV NO_IO
 RV SPARK_05
 
-U main%b		main.adb		7182ea54 NE OO SU IL
+U main%b		main.adb		8c4c4e67 NE OO SU IL
 W ada%s			ada.ads			ada.ali
 W ada.integer_text_io%s	a-inteio.ads		a-inteio.ali
 W ada.text_io%s		a-textio.adb		a-textio.ali
@@ -30,8 +30,8 @@ D a-tiinio.ads		20210408115627 390edddb ada.text_io.integer_io%s
 D a-unccon.ads		20210408115627 0e9b276f ada.unchecked_conversion%s
 D interfac.ads		20210408115627 5ab55268 interfaces%s
 D i-cstrea.ads		20210408115627 e53d8b8e interfaces.c_streams%s
-D intermediaire.ads	20220125074209 c2e5f4d8 intermediaire%s
-D main.adb		20220125082612 ebd84245 main%b
+D intermediaire.ads	20220125093713 35d8ee94 intermediaire%s
+D main.adb		20220125090024 e12bfc3a main%b
 D system.ads		20210408115627 4635ec04 system%s
 D s-atocou.ads		20210408115627 b45c2d8d system.atomic_counters%s
 D s-crtl.ads		20210408115627 0ebbdb71 system.crtl%s
@@ -54,7 +54,7 @@ D s-unstyp.ads		20210408115627 34867c83 system.unsigned_types%s
 D s-wchcon.ads		20210408115627 1b7d22d2 system.wch_con%s
 G a e
 G c Z b b [main standard 4 11 none]
-G r c none [main standard 4 11 none] [traiterprogramme intermediaire 108 15 none]
+G r c none [main standard 4 11 none] [traiterprogramme intermediaire 86 15 none]
 X 1 ada.ads
 16K9*Ada 20e8 19|1r6 1r19 2r5 2r18
 X 6 a-inteio.ads
@@ -67,8 +67,8 @@ X 13 a-textio.ads
 X 14 a-tiinio.ads
 59U14*Get 19|15s7[6|18]
 X 18 intermediaire.ads
-4K9*intermediaire 354e18 19|1w40 2r39
-108U15*traiterProgramme 19|21s4
+4K9*intermediaire 144e18 19|1w40 2r39
+86U15*traiterProgramme 19|21s4
 X 19 main.adb
 4U11*main 4b11 23l5 23t9
 6a4 fileName{string} 21r21

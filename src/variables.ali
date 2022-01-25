@@ -1,0 +1,205 @@
+V "GNAT Lib v10"
+P SS ZX
+
+RN
+RV NO_ALLOCATORS
+RV NO_DIRECT_BOOLEAN_OPERATORS
+RV NO_EXCEPTION_HANDLERS
+RV NO_EXCEPTIONS
+RV NO_IO
+RV NO_LOCAL_ALLOCATORS
+RV NO_NESTED_FINALIZATION
+RV NO_SECONDARY_STACK
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_DEFAULT_INITIALIZATION
+RV NO_DYNAMIC_SIZED_OBJECTS
+RV SPARK_05
+
+U variables%b		variables.adb		8dc7e41b NE OO PK IL
+W ada%s			ada.ads			ada.ali
+W ada.characters%s	a-charac.ads		a-charac.ali
+W ada.characters.handling%s  a-chahan.adb	a-chahan.ali
+Z ada.exceptions%s	a-except.adb		a-except.ali
+W ada.integer_text_io%s	a-inteio.ads		a-inteio.ali
+W ada.io_exceptions%s	a-ioexce.ads		a-ioexce.ali
+W ada.strings%s		a-string.ads		a-string.ali
+W ada.strings.unbounded%s  a-strunb.adb		a-strunb.ali
+Z ada.tags%s		a-tags.adb		a-tags.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+W ada.text_io.unbounded_io%s  a-tiunio.ads	a-tiunio.ali
+W intermediaire%s	intermediaire.adb	intermediaire.ali
+W manipulation_chaine%s	manipulation_chaine.adb	manipulation_chaine.ali
+W operateurs%s		operateurs.adb		operateurs.ali
+W operations_liste%s	operations_liste.adb	operations_liste.ali
+Z system%s		system.ads		system.ali
+Z system.concat_2%s	s-conca2.adb		s-conca2.ali
+Z system.pool_global%s	s-pooglo.adb		s-pooglo.ali
+Z system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+Z system.soft_links%s	s-soflin.adb		s-soflin.ali
+Z system.standard_library%s  s-stalib.adb	s-stalib.ali
+Z system.storage_elements%s  s-stoele.adb	s-stoele.ali
+Z system.storage_pools%s  s-stopoo.adb		s-stopoo.ali
+Z system.storage_pools.subpools%s  s-stposu.adb	s-stposu.ali
+Z system.val_int%s	s-valint.adb		s-valint.ali
+
+U variables%s		variables.ads		61498627 EE NE OO PK IL
+W ada%s			ada.ads			ada.ali
+W ada.strings%s		a-string.ads		a-string.ali
+W ada.strings.unbounded%s  a-strunb.adb		a-strunb.ali
+W intermediaire%s	intermediaire.adb	intermediaire.ali
+
+D ada.ads		20210408115627 76789da1 ada%s
+D a-charac.ads		20210408115627 2d3ec45b ada.characters%s
+D a-chahan.ads		20210408115627 1601a50f ada.characters.handling%s
+D a-chlat1.ads		20210408115627 66457d31 ada.characters.latin_1%s
+D a-except.ads		20210408115627 a7106115 ada.exceptions%s
+D a-finali.ads		20210408115627 bf4f806b ada.finalization%s
+D a-inteio.ads		20210408115627 f64b89a4 ada.integer_text_io%s
+D a-ioexce.ads		20210408115627 e4a01f64 ada.io_exceptions%s
+D a-stream.ads		20210408115627 119b8fb3 ada.streams%s
+D a-string.ads		20210408115627 90ac6797 ada.strings%s
+D a-strmap.ads		20210408115627 e8bb714a ada.strings.maps%s
+D a-strunb.ads		20210408115627 1656705b ada.strings.unbounded%s
+D a-suteio.ads		20210408115627 26d8e9aa ada.strings.unbounded.text_io%s
+D a-tags.ads		20210408115627 491b781d ada.tags%s
+D a-textio.ads		20210408115627 aef4d56d ada.text_io%s
+D a-tiinio.ads		20210408115627 390edddb ada.text_io.integer_io%s
+D a-tiunio.ads		20210408115627 759c6b0c ada.text_io.unbounded_io%s
+D a-unccon.ads		20210408115627 0e9b276f ada.unchecked_conversion%s
+D interfac.ads		20210408115627 5ab55268 interfaces%s
+D i-cstrea.ads		20210408115627 e53d8b8e interfaces.c_streams%s
+D intermediaire.ads	20220125093713 35d8ee94 intermediaire%s
+D manipulation_chaine.ads  20220125093137 414eb133 manipulation_chaine%s
+D operateurs.ads	20220122125138 b6a7cc52 operateurs%s
+D operations_liste.ads	20220125092929 2adacee7 operations_liste%s
+D system.ads		20210408115627 4635ec04 system%s
+D s-atocou.ads		20210408115627 b45c2d8d system.atomic_counters%s
+D s-conca2.ads		20210408115627 02a0d7d0 system.concat_2%s
+D s-crtl.ads		20210408115627 0ebbdb71 system.crtl%s
+D s-exctab.ads		20210408115627 54135002 system.exception_table%s
+D s-ficobl.ads		20210408115627 078245e4 system.file_control_block%s
+D s-finmas.ads		20210408115627 7811a767 system.finalization_masters%s
+D s-finroo.ads		20210408115627 4ff27390 system.finalization_root%s
+D s-memory.ads		20210408115627 597d6634 system.memory%s
+D s-parame.ads		20210408115627 48ec542b system.parameters%s
+D s-pooglo.ads		20210408115627 ede33ef8 system.pool_global%s
+D s-secsta.ads		20210408115627 20bbe636 system.secondary_stack%s
+D s-soflin.ads		20210408115627 a7318a92 system.soft_links%s
+D s-stache.ads		20210408115627 a37c21ec system.stack_checking%s
+D s-stalib.ads		20210408115627 09bd3940 system.standard_library%s
+D s-stalib.adb		20210408115627 f2fe2716 system.standard_library%b
+D s-stoele.ads		20210408115627 2dc34a04 system.storage_elements%s
+D s-stopoo.ads		20210408115627 b16154c2 system.storage_pools%s
+D s-stposu.ads		20210408115627 97a6219c system.storage_pools.subpools%s
+D s-stratt.ads		20210408115627 aedef97e system.stream_attributes%s
+D s-traent.ads		20210408115627 005bf670 system.traceback_entries%s
+D s-unstyp.ads		20210408115627 34867c83 system.unsigned_types%s
+D s-valint.ads		20210408115627 b5ff6963 system.val_int%s
+D s-wchcon.ads		20210408115627 1b7d22d2 system.wch_con%s
+D variables.ads		20220125093722 42c718e8 variables%s
+D variables.adb		20220125093731 ee3f5c14 variables%b
+G a e
+G c Z s b [creer_variables_tableau variables 7 15 none]
+G c Z s b [creeretajoutervariable variables 9 16 none]
+G c Z s b [creer_variable variables 11 14 none]
+G c Z s b [creer_variable_tmp variables 23 14 none]
+G c Z s b [recherchervariable variables 35 14 none]
+G r c none [creer_variables_tableau variables 7 15 none] [recupererchaine manipulation_chaine 57 15 none]
+G r c none [creer_variables_tableau variables 7 15 none] [operationarithmetique operateurs 35 14 none]
+G r c none [creeretajoutervariable variables 9 16 none] [ajouter operations_liste 102 15 none]
+G r c none [creer_variable variables 11 14 none] [isanumber manipulation_chaine 53 14 none]
+X 1 ada.ads
+16K9*Ada 20e8 49|1r21 2r20 50|5r6 5r19 5r40 5r63 5r89 5r114 7r5 7r18 7r39
+. 7r62 7r88
+X 2 a-charac.ads
+16K13*Characters 18e19 50|5r93 7r92
+X 3 a-chahan.ads
+36K24*Handling 159e28 50|5w104 7r103
+X 7 a-inteio.ads
+18K13*Integer_Text_IO[16|46] 50|5w23 7r22
+X 8 a-ioexce.ads
+18K13*IO_Exceptions 30e22 50|5w118
+X 10 a-string.ads
+16K13*Strings 35e16 49|1r25 2r24 50|5r44 7r43
+X 12 a-strunb.ads
+82K21*Unbounded 756e26 49|1w33 2r32 50|5w52 7r51
+87R9*Unbounded_String<6|43R9> 739e14 49|7r51 7r110 9r93 9r128 11r78 23r51
+. 35r83 50|12r78 24r52 24r111 26r21 45r51 48r26 49r27 67r92 67r127 86r83
+92V13*Length{natural} 50|37s73 37s151
+103V13*To_Unbounded_String{87R9} 50|41s57 55s32 58s32 61s27
+116V13*To_String{string} 50|57s48
+135U14*Append 50|31s9 36s13
+191V13*Element{character} 50|35s13 36s31 36s51 37s54 37s132 54s48
+238V14*"="{boolean} 50|96s102
+X 15 a-textio.ads
+57K13*Text_IO 727e16 50|5w10 5r67 7r9 7r66
+508U14*Put_Line 50|79s47
+X 17 a-tiunio.ads
+25K21*Unbounded_IO 61e29 50|5w75 7r74
+X 21 intermediaire.ads
+4K9*intermediaire 144e18 49|1w6 2r5 50|1w6 1r25
+11X5*Variable_Deja_Definie 50|75r19 79r22
+12X5*Variable_Non_Trouvee 50|78r22 100r19
+27R10*T_Variable 48e15 50|41r28 63r20 81r28
+30P10*T_List_Variable(25R10) 49|7r143 9r58 11r44 35r49 35r108 50|12r44 24r144
+. 67r57 86r49 86r108 88r16
+33P10*T_Ptr_Variable(27R10) 49|7r178 11r129 23r102 50|12r129 24r179 45r102
+. 69r23
+44i9*valeurVariable{integer} 50|34r84
+46r9*nomVariable{12|87R9} 50|96r90
+63p9*ptrVar{33P10} 50|19r67 34r73 96r46 96r79
+64p9*next{30P10} 50|97r30
+65p9*prev{30P10} 50|93r24 94r30
+X 22 manipulation_chaine.ads
+4K9*manipulation_chaine 61e24 50|4w6 4r31
+53V14*isANumber{boolean} 50|16s28
+57U15*recupererChaine 50|33s9
+X 23 operateurs.ads
+4K9*operateurs 89e15 50|2w6 2r22
+35V14*operationArithmetique{integer} 50|37s32
+X 24 operations_liste.ads
+4K9*operations_liste 135e21 50|3w6 3r28
+102U15*ajouter 50|82s9
+X 25 system.ads
+67M9*Address
+X 33 s-memory.ads
+53V13*Alloc{25|67M9} 103i<c,__gnat_malloc>22
+68U14*Free 104i<c,__gnat_free>22
+76V13*Realloc{25|67M9} 105i<c,__gnat_realloc>22
+X 40 s-stalib.adb
+93U14 Break_Start 94i<c,__gnat_break_start>22
+X 49 variables.ads
+5K9*variables 38l5 38e14 50|10b14 109l5 109t14
+7U15*creer_variables_tableau 7>40 7=69 7=89 7>128 7<160 50|24b16 43l9 43t32
+7r40 ligne{12|87R9} 50|24b41 33r36 35r21 36r39 36r59
+7i69 i{integer} 50|24b70 32m9 32r14 33m43 35r28 36r46 36r66 38m13 38r18 40m9
+. 40r14
+7r89 nomVariable{12|87R9} 50|24b90 31m16
+7p128 variables{21|30P10} 50|24b129 34r47
+7p160 ptrVariable{21|33P10} 50|24b161 41m9
+9U16*creerEtAjouterVariable 9=39 9>75 9>111 50|67b15 84l9 84t31
+9p39 variables{21|30P10} 50|67b38 74r12 74r58 82m17
+9r75 typeVariable{12|87R9} 50|67b74 81r43
+9r111 nomVariable{12|87R9} 50|67b110 74r69 81r57
+11V14*creer_variable{21|33P10} 11>29 11>61 11>96 50|12b14 22l9 22t23
+11p29 variables{21|30P10} 50|12b29 19r39
+11r61 nomVariable{12|87R9} 50|12b61 16r38 17r39 19r50
+11b96 isCaractere{boolean} 50|12b96 16r13 17r52
+23V14*creer_variable_tmp{21|33P10} 23>34 23>69 50|17s20 45b14 65l9 65t27
+23r34 nomVariable{12|87R9} 50|45b34 54r56 57r58
+23b69 isCaractere{boolean} 50|45b69 53r13
+35V14*rechercherVariable{21|30P10} 35>34 35>66 50|19s20 34s28 74s39 86b14
+. 105l9 105t27
+35p34 variables{21|30P10} 50|86b34 92r17
+35r66 nomVariable{12|87R9} 50|86b66 96r105
+X 50 variables.adb
+26r9 nomIndice{12|87R9} 33m25 34r58 36m20 36r20 37r62 37r80 37r140 37r158
+. 41r96
+27i9 valeurVariableY{integer} 34m9 37m13 37r95 41r40
+47i9 valeurVariableTmp{integer} 54m13 57m13 63r32
+48r9 nomVariableTmp{12|87R9} 61m9 63r68
+49r9 typeVariableTmp{12|87R9} 55m13 58m13 63r51
+69p9 ptrVariable{21|33P10} 81m9 82r28
+88p9 copy{21|30P10} 92m9 93r15 94m13 94r21 96r15 96r37 96r70 97m13 97r21
+. 99r12 102r20
+

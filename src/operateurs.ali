@@ -16,7 +16,7 @@ RV NO_DYNAMIC_SIZED_OBJECTS
 RV NO_ELABORATION_CODE
 RV SPARK_05
 
-U operateurs%b		operateurs.adb		7ae531c6 NE OO PK IL
+U operateurs%b		operateurs.adb		a667fddf NE OO PK IL
 W ada%s			ada.ads			ada.ali
 W ada.characters%s	a-charac.ads		a-charac.ali
 W ada.characters.handling%s  a-chahan.adb	a-chahan.ali
@@ -29,6 +29,7 @@ Z ada.tags%s		a-tags.adb		a-tags.ali
 W ada.text_io%s		a-textio.adb		a-textio.ali
 W ada.text_io.unbounded_io%s  a-tiunio.ads	a-tiunio.ali
 W intermediaire%s	intermediaire.adb	intermediaire.ali
+W manipulation_chaine%s	manipulation_chaine.adb	manipulation_chaine.ali
 Z system%s		system.ads		system.ali
 Z system.concat_3%s	s-conca3.adb		s-conca3.ali
 Z system.img_int%s	s-imgint.adb		s-imgint.ali
@@ -36,8 +37,9 @@ Z system.secondary_stack%s  s-secsta.adb	s-secsta.ali
 Z system.soft_links%s	s-soflin.adb		s-soflin.ali
 Z system.standard_library%s  s-stalib.adb	s-stalib.ali
 Z system.val_int%s	s-valint.adb		s-valint.ali
+W variables%s		variables.adb		variables.ali
 
-U operateurs%s		operateurs.ads		621448d1 EE OO PK IL
+U operateurs%s		operateurs.ads		9529529d EE OO PK IL
 W ada%s			ada.ads			ada.ali
 W ada.strings%s		a-string.ads		a-string.ali
 W ada.strings.unbounded%s  a-strunb.adb		a-strunb.ali
@@ -67,9 +69,10 @@ D a-tiunio.ads		20210408115627 759c6b0c ada.text_io.unbounded_io%s
 D a-unccon.ads		20210408115627 0e9b276f ada.unchecked_conversion%s
 D interfac.ads		20210408115627 5ab55268 interfaces%s
 D i-cstrea.ads		20210408115627 e53d8b8e interfaces.c_streams%s
-D intermediaire.ads	20220125074209 c2e5f4d8 intermediaire%s
+D intermediaire.ads	20220125093713 35d8ee94 intermediaire%s
+D manipulation_chaine.ads  20220125093137 414eb133 manipulation_chaine%s
 D operateurs.ads	20220122125138 b6a7cc52 operateurs%s
-D operateurs.adb	20220122204530 c773f4b9 operateurs%b
+D operateurs.adb	20220125093749 ef458b37 operateurs%b
 D system.ads		20210408115627 4635ec04 system%s
 D s-atocou.ads		20210408115627 b45c2d8d system.atomic_counters%s
 D s-conca3.ads		20210408115627 0b705ca5 system.concat_3%s
@@ -95,6 +98,7 @@ D s-traent.ads		20210408115627 005bf670 system.traceback_entries%s
 D s-unstyp.ads		20210408115627 34867c83 system.unsigned_types%s
 D s-valint.ads		20210408115627 b5ff6963 system.val_int%s
 D s-wchcon.ads		20210408115627 1b7d22d2 system.wch_con%s
+D variables.ads		20220125093722 42c718e8 variables%s
 G a e
 G c Z s b [affectation operateurs 23 15 none]
 G c Z s b [operationarithmetique operateurs 35 14 none]
@@ -105,162 +109,167 @@ G c Z s b [branchementbasic operateurs 77 15 none]
 G c Z s b [branchementconditionel operateurs 84 15 none]
 G c Z s b [ecrire operateurs 86 15 none]
 G c Z s b [lire operateurs 87 15 none]
-G r c none [branchementbasic operateurs 77 15 none] [changerinstructionparnumero intermediaire 292 15 none]
-G r c none [branchementconditionel operateurs 84 15 none] [recherchervariable intermediaire 151 14 none]
-G r c none [branchementconditionel operateurs 84 15 none] [recupererchaine intermediaire 346 15 none]
-G r c none [branchementconditionel operateurs 84 15 none] [changerinstructionparnumero intermediaire 292 15 none]
-G r c none [ecrire operateurs 86 15 none] [recherchervariable intermediaire 151 14 none]
-G r c none [ecrire operateurs 86 15 none] [recupererchaine intermediaire 346 15 none]
+G r c none [branchementbasic operateurs 77 15 none] [changerinstructionparnumero intermediaire 136 15 none]
+G r c none [branchementconditionel operateurs 84 15 none] [recherchervariable variables 35 14 none]
+G r c none [branchementconditionel operateurs 84 15 none] [recupererchaine manipulation_chaine 57 15 none]
+G r c none [branchementconditionel operateurs 84 15 none] [changerinstructionparnumero intermediaire 136 15 none]
+G r c none [ecrire operateurs 86 15 none] [recherchervariable variables 35 14 none]
+G r c none [ecrire operateurs 86 15 none] [recupererchaine manipulation_chaine 57 15 none]
 G r s t_variable [lire operateurs 87 15 none] [t_variableIP intermediaire 43 10 none]
 G r l t_variable [lire operateurs 87 15 none] [t_variableDI intermediaire 43 10 none]
 G r k t_variable [lire operateurs 87 15 none] [t_variableDF intermediaire 43 10 none]
 G r j t_variable [lire operateurs 87 15 none] [t_variableDA intermediaire 43 10 none]
-G r c none [lire operateurs 87 15 none] [isanumber intermediaire 328 14 none]
-G r c none [lire operateurs 87 15 none] [recherchervariable intermediaire 151 14 none]
-G r c none [lire operateurs 87 15 none] [recupererchaine intermediaire 346 15 none]
+G r c none [lire operateurs 87 15 none] [isanumber manipulation_chaine 53 14 none]
+G r c none [lire operateurs 87 15 none] [recherchervariable variables 35 14 none]
+G r c none [lire operateurs 87 15 none] [recupererchaine manipulation_chaine 57 15 none]
 X 1 ada.ads
-16K9*Ada 20e8 22|1r21 2r20 23|2r6 2r19 2r40 2r63 2r89 2r114 4r5 4r18 4r39
+16K9*Ada 20e8 23|1r21 2r20 24|2r6 2r19 2r40 2r63 2r89 2r114 4r5 4r18 4r39
 . 4r62 4r88
 X 2 a-charac.ads
-16K13*Characters 18e19 23|2r93 4r92
+16K13*Characters 18e19 24|2r93 4r92
 X 3 a-chahan.ads
-36K24*Handling 159e28 23|2w104 4r103
+36K24*Handling 159e28 24|2w104 4r103
 X 7 a-inteio.ads
-18K13*Integer_Text_IO[16|46] 23|2w23 4r22
+18K13*Integer_Text_IO[16|46] 24|2w23 4r22
 X 8 a-ioexce.ads
-18K13*IO_Exceptions 30e22 23|2w118
+18K13*IO_Exceptions 30e22 24|2w118
 X 10 a-string.ads
-16K13*Strings 35e16 22|1r25 2r24 23|2r44 4r43
+16K13*Strings 35e16 23|1r25 2r24 24|2r44 4r43
 X 12 a-strunb.ads
-82K21*Unbounded 756e26 22|1w33 2r32 23|2w52 4r51
-87R9*Unbounded_String<6|43R9> 739e14 22|48r40 23|42r40 94r23 95r21 139r23
-. 140r21 145r21 207r23 208r21
-92V13*Length{natural} 23|107s17 108s42 109s63 161s33 180s17 181s42 182s63
-. 220s17 221s42 222s63
-116V13*To_String{string} 23|173s93 196s62
-135U14*Append 23|116s13 189s13 229s13
-191V13*Element{character} 23|108s23 109s44 171s93 181s23 182s44 194s62 221s23
-. 222s44
-238V14*"="{boolean} 23|13s76
-244V14*"="{boolean} 23|45s16 47s19 49s19 51s19 53s19 55s19 57s19 126s70 161s82
-. 161s149 170s74 193s74 216s127
+82K21*Unbounded 756e26 23|1w33 2r32 24|2w52 4r51
+87R9*Unbounded_String<6|43R9> 739e14 23|48r40 24|43r40 95r23 96r21 140r23
+. 141r21 146r21 208r23 209r21
+92V13*Length{natural} 24|108s17 109s42 110s63 162s33 181s17 182s42 183s63
+. 221s17 222s42 223s63
+116V13*To_String{string} 24|174s93 197s62
+135U14*Append 24|117s13 190s13 230s13
+191V13*Element{character} 24|109s23 110s44 172s93 182s23 183s44 195s62 222s23
+. 223s44
+238V14*"="{boolean} 24|14s76
+244V14*"="{boolean} 24|46s16 48s19 50s19 52s19 54s19 56s19 58s19 127s70 162s82
+. 162s149 171s74 194s74 217s127
 X 15 a-textio.ads
-57K13*Text_IO 727e16 23|2w10 2r67 4r9 4r66
-264U14*New_Line 23|131s9
-392U14*Put 23|127s13
-465U14*Put 23|156s13 158s13
-508U14*Put_Line 23|163s17
+57K13*Text_IO 727e16 24|2w10 2r67 4r9 4r66
+264U14*New_Line 24|132s9
+392U14*Put 24|128s13
+465U14*Put 24|157s13 159s13
+508U14*Put_Line 24|164s17
 X 16 a-tiinio.ads
-80U14*Put 23|129s13[7|18]
+80U14*Put 24|130s13[7|18]
 X 17 a-tiunio.ads
-25K21*Unbounded_IO 61e29 23|2w75 4r74
-32U14*Put=34:42 23|157s13
-57U14*Get_Line=59:42 23|159s13
+25K21*Unbounded_IO 61e29 24|2w75 4r74
+32U14*Put=34:42 24|158s13
+57U14*Get_Line=59:42 24|160s13
 X 21 intermediaire.ads
-4K9*intermediaire 354e18 22|1w6 2r5 23|1w6 1r25
-9X5*Type_Incorrect 23|16r23
-27R10*T_Variable 48e15 23|147r21
-30P10*T_List_Variable(25R10) 22|84r95 86r79 87r77 23|91r79 137r77 202r95
-31P10*T_List_Instruction(26R10) 22|23r51 77r73 84r60 86r44 87r42 23|8r51
-. 86r73 91r44 137r42 202r60
-33P10*T_Ptr_Variable(27R10) 23|146r20
+4K9*intermediaire 144e18 23|1w6 2r5 24|1w6 1r25
+9X5*Type_Incorrect 24|17r23
+27R10*T_Variable 48e15 24|148r21
+30P10*T_List_Variable(25R10) 23|84r95 86r79 87r77 24|92r79 138r77 203r95
+31P10*T_List_Instruction(26R10) 23|23r51 77r73 84r60 86r44 87r42 24|9r51
+. 87r73 92r44 138r42 203r60
+33P10*T_Ptr_Variable(27R10) 24|147r20
 34P10*T_Ptr_Instruction(28R10)
-38p9*x{33P10} 23|13r118 14r121 103r51 105r64 168r51 178r64 227r80 234r56
-39p9*y{33P10} 23|216r51 216r108 218r64
-40p9*z{33P10} 23|10r52 13r57 14r57 114r80 122r56 126r51 152r60 170r55 171r55
-. 173r55 187r80 193r55 237r52
+38p9*x{33P10} 24|14r118 15r121 104r51 106r64 169r51 179r64 228r80 235r56
+39p9*y{33P10} 24|217r51 217r108 219r64
+40p9*z{33P10} 24|11r52 14r57 15r57 115r80 123r56 127r51 153r60 171r55 172r55
+. 174r55 188r80 194r55 238r52
 43R10*T_Variable
-44i9*valeurVariable{integer} 23|14m63 14r127 106r85 118r76 122r62 171m61
-. 173m61 179r85 194m30 196m30 219r85 231r76 234r62 237r58
-45r9*typeVariable{12|87R9} 23|13r63 13r124 126r57 157r27 161r69 161r136 170r61
-. 193r61 216r114
-46r9*nomVariable{12|87R9} 23|105r70 114r86 178r70 187r86 218r70 227r86
-47b9*isConstant{boolean} 23|10r58
-51i9*numInstruction{integer} 23|241r56
-52r9*operandes{37R10} 23|10r42 13r47 13r108 14r47 14r111 103r41 105r54 114r70
-. 122r46 126r41 152r50 168r41 170r45 171r45 173r45 178r54 187r70 193r45 216r41
-. 216r98 218r54 227r70 234r46 237r42
-57p9*ptrIns{34P10} 23|10r31 13r36 13r97 14r36 14r100 103r30 105r43 114r59
-. 122r35 126r30 152r39 168r30 170r34 171r34 173r34 178r43 187r59 193r34 216r30
-. 216r87 218r43 227r59 234r35 237r31 241r45
-59p9*next{31P10} 23|133r42
-63p9*ptrVar{33P10} 23|106r74 118r65 179r74 191r72 219r74 231r65
-151V14*rechercherVariable{30P10} 23|106s29 118s18 179s29 191s25 219s29 231s18
-292U15*changerInstructionParNumero 23|88s9
-328V14*isANumber{boolean} 23|161s101
-346U15*recupererChaine 23|114s13 187s13 227s13
-X 22 operateurs.ads
-4K9*operateurs 89l5 89e15 23|6b14 246l5 246t15
+44i9*valeurVariable{integer} 24|15m63 15r127 107r85 119r76 123r62 172m61
+. 174m61 180r85 195m30 197m30 220r85 232r76 235r62 238r58
+45r9*typeVariable{12|87R9} 24|14r63 14r124 127r57 158r27 162r69 162r136 171r61
+. 194r61 217r114
+46r9*nomVariable{12|87R9} 24|106r70 115r86 179r70 188r86 219r70 228r86
+47b9*isConstant{boolean} 24|11r58
+51i9*numInstruction{integer} 24|242r56
+52r9*operandes{37R10} 24|11r42 14r47 14r108 15r47 15r111 104r41 106r54 115r70
+. 123r46 127r41 153r50 169r41 171r45 172r45 174r45 179r54 188r70 194r45 217r41
+. 217r98 219r54 228r70 235r46 238r42
+57p9*ptrIns{34P10} 24|11r31 14r36 14r97 15r36 15r100 104r30 106r43 115r59
+. 123r35 127r30 153r39 169r30 171r34 172r34 174r34 179r43 188r59 194r34 217r30
+. 217r87 219r43 228r59 235r35 238r31 242r45
+59p9*next{31P10} 24|134r42
+63p9*ptrVar{33P10} 24|107r74 119r65 180r74 192r72 220r74 232r65
+136U15*changerInstructionParNumero 24|89s9
+X 22 manipulation_chaine.ads
+4K9*manipulation_chaine 61e24 24|5w6 5r31
+53V14*isANumber{boolean} 24|162s101
+57U15*recupererChaine 24|115s13 188s13 228s13
+X 23 operateurs.ads
+4K9*operateurs 89l5 89e15 24|7b14 247l5 247t15
 6X5*Variable_Inconnue
-7X5*Variable_Constante 23|11r18
-8X5*Operateur_Incorrect 23|36r23 60r19
-23U15*affectation 23=27 23|8b15 19l9 19t20
-23p27 ptrInstruction{21|31P10} 23|8b27 10r12 13r17 13r78 14r17 14r81
-35V14*operationArithmetique{integer} 35>36 35>54 35>72 23|21b14 40l9 40t30
-. 110s33 183s33 223s33
-35e36 op{character} 23|21b36 25r14
-35i54 op1{integer} 23|21b54 28r29 30r29 32r29 34r29
-35i72 op2{integer} 23|21b72 28r35 30r35 32r35 34r35
-48V14*operationLogique{integer} 48>32 48>58 48>76 23|42b14 68l9 68t25
-48r32 op{12|87R9} 23|42b32 45r13 47r16 49r16 51r16 53r16 55r16 57r16
-48i58 op1{integer} 23|42b58 46r26 48r26 50r25 52r25 54r25 56r25 58r25
-48i76 op2{integer} 23|42b76 46r32 48r32 50r31 52r31 54r32 56r31 58r32
-59V14*successeur{character} 59>25 23|70b14 76l9 76t19
-59e25 char{character} 23|70b25 73r36
-70V14*predecesseur{character} 70>27 23|78b14 84l9 84t21
-70e27 char{character} 23|78b27 81r36
-77U15*branchementBasic 77>32 77=51 23|86b15 89l9 89t25 239s13 242s13
-77i32 line{integer} 23|86b32 88r50
-77p51 instructions{21|31P10} 23|86b51 88m37
-84U15*branchementConditionel 84=38 84>80 23|202b15 244l9 244t31
-84p38 instructions{21|31P10} 23|202b38 216r13 216r70 218r26 227r42 234r18
-. 237r14 239m32 241r28 242m45
-84p80 variables{21|30P10} 23|202b80 219r48 231r37
-86U15*ecrire 86=22 86>64 23|91b15 135l9 135t15
-86p22 instructions{21|31P10} 23|91b22 103r13 105r26 114r42 122r18 126r13
-. 133m9 133r25
-86p64 variables{21|30P10} 23|91b64 106r48 118r37
-87U15*lire 87=20 87>62 23|137b15 200l9 200t13
-87p20 instructions{21|31P10} 23|137b20 152r22 168r13 170r17 171r17 173r17
-. 178r26 187r42 193r17
-87p62 variables{21|30P10} 23|137b62 179r48 191r44
-X 23 operateurs.adb
-22i9 resultat{integer} 28m17 30m17 32m17 34m17 39r16
-43b9 resultat{boolean} 46m13 48m13 50m13 52m13 54m13 56m13 58m13 63r13
-71i9 temporary{integer} 73m9 74m9 74r22 75r30
-79i9 temporary{integer} 81m9 82m9 82r22 83r30
-93i9 z{integer} 118m13 122m13 127r31 129r17
-94r9 nomVariable{12|87R9} 114m29 116m20 116r20 118r48
-95r9 nomIndice{12|87R9} 105m13 106r59 107r24 108r31 108r49 109r52 109r70
-96i9 valeurIndice{integer} 106m13 110m17 110r59 116r53 116r84
-97e9 op{character} 108m17 110r55
-98i9 op2{integer} 109m17 110r73
-99i9 indiceDebutRecherche{integer} 113m13 114m99 114r99
-139r9 nomVariable{12|87R9} 187m29 189m20 189r20 191r55
-140r9 nomIndice{12|87R9} 178m13 179r59 180r24 181r31 181r49 182r52 182r70
-141i9 valeurIndice{integer} 179m13 183m17 183r59 189r53 189r84
-142e9 op{character} 181m17 183r55
-143i9 op2{integer} 182m17 183r73
-144i9 indiceDebutRecherche{integer} 186m13 187m99 187r99
-145r9 chaineLue{12|87R9} 159m22 161r40 161r111 171r101 173r103 194r70 196r72
-146p9 Variable{21|33P10} 191m13 194r17 196r17
-147r9 variableZ{21|43R10} 152m9 152r9 157r17 161r59 161r126
-148b9 conditionSortie{boolean} 154m9 161m13 162r21 165r24
-204i9 x{integer} 231m13 234m13 238r12
-205i9 z{integer} 237m9 239r30
-206i9 currentLine{integer} 241m13 242r30
-207r9 nomVariable{12|87R9} 227m29 229m20 229r20 231r48
-208r9 nomIndice{12|87R9} 218m13 219r59 220r24 221r31 221r49 222r52 222r70
-209i9 valeurIndice{integer} 219m13 223m17 223r59 229r53 229r84
-210e9 op{character} 221m17 223r55
-211i9 op2{integer} 222m17 223r73
-212i9 indiceDebutRecherche{integer} 226m13 227m99 227r99
-X 24 system.ads
+7X5*Variable_Constante 24|12r18
+8X5*Operateur_Incorrect 24|37r23 61r19
+23U15*affectation 23=27 24|9b15 20l9 20t20
+23p27 ptrInstruction{21|31P10} 24|9b27 11r12 14r17 14r78 15r17 15r81
+35V14*operationArithmetique{integer} 35>36 35>54 35>72 24|22b14 41l9 41t30
+. 111s33 184s33 224s33
+35e36 op{character} 24|22b36 26r14
+35i54 op1{integer} 24|22b54 29r29 31r29 33r29 35r29
+35i72 op2{integer} 24|22b72 29r35 31r35 33r35 35r35
+48V14*operationLogique{integer} 48>32 48>58 48>76 24|43b14 69l9 69t25
+48r32 op{12|87R9} 24|43b32 46r13 48r16 50r16 52r16 54r16 56r16 58r16
+48i58 op1{integer} 24|43b58 47r26 49r26 51r25 53r25 55r25 57r25 59r25
+48i76 op2{integer} 24|43b76 47r32 49r32 51r31 53r31 55r32 57r31 59r32
+59V14*successeur{character} 59>25 24|71b14 77l9 77t19
+59e25 char{character} 24|71b25 74r36
+70V14*predecesseur{character} 70>27 24|79b14 85l9 85t21
+70e27 char{character} 24|79b27 82r36
+77U15*branchementBasic 77>32 77=51 24|87b15 90l9 90t25 240s13 243s13
+77i32 line{integer} 24|87b32 89r50
+77p51 instructions{21|31P10} 24|87b51 89m37
+84U15*branchementConditionel 84=38 84>80 24|203b15 245l9 245t31
+84p38 instructions{21|31P10} 24|203b38 217r13 217r70 219r26 228r42 235r18
+. 238r14 240m32 242r28 243m45
+84p80 variables{21|30P10} 24|203b80 220r48 232r37
+86U15*ecrire 86=22 86>64 24|92b15 136l9 136t15
+86p22 instructions{21|31P10} 24|92b22 104r13 106r26 115r42 123r18 127r13
+. 134m9 134r25
+86p64 variables{21|30P10} 24|92b64 107r48 119r37
+87U15*lire 87=20 87>62 24|138b15 201l9 201t13
+87p20 instructions{21|31P10} 24|138b20 153r22 169r13 171r17 172r17 174r17
+. 179r26 188r42 194r17
+87p62 variables{21|30P10} 24|138b62 180r48 192r44
+X 24 operateurs.adb
+23i9 resultat{integer} 29m17 31m17 33m17 35m17 40r16
+44b9 resultat{boolean} 47m13 49m13 51m13 53m13 55m13 57m13 59m13 64r13
+72i9 temporary{integer} 74m9 75m9 75r22 76r30
+80i9 temporary{integer} 82m9 83m9 83r22 84r30
+94i9 z{integer} 119m13 123m13 128r31 130r17
+95r9 nomVariable{12|87R9} 115m29 117m20 117r20 119r48
+96r9 nomIndice{12|87R9} 106m13 107r59 108r24 109r31 109r49 110r52 110r70
+97i9 valeurIndice{integer} 107m13 111m17 111r59 117r53 117r84
+98e9 op{character} 109m17 111r55
+99i9 op2{integer} 110m17 111r73
+100i9 indiceDebutRecherche{integer} 114m13 115m99 115r99
+140r9 nomVariable{12|87R9} 188m29 190m20 190r20 192r55
+141r9 nomIndice{12|87R9} 179m13 180r59 181r24 182r31 182r49 183r52 183r70
+142i9 valeurIndice{integer} 180m13 184m17 184r59 190r53 190r84
+143e9 op{character} 182m17 184r55
+144i9 op2{integer} 183m17 184r73
+145i9 indiceDebutRecherche{integer} 187m13 188m99 188r99
+146r9 chaineLue{12|87R9} 160m22 162r40 162r111 172r101 174r103 195r70 197r72
+147p9 Variable{21|33P10} 192m13 195r17 197r17
+148r9 variableZ{21|43R10} 153m9 153r9 158r17 162r59 162r126
+149b9 conditionSortie{boolean} 155m9 162m13 163r21 166r24
+205i9 x{integer} 232m13 235m13 239r12
+206i9 z{integer} 238m9 240r30
+207i9 currentLine{integer} 242m13 243r30
+208r9 nomVariable{12|87R9} 228m29 230m20 230r20 232r48
+209r9 nomIndice{12|87R9} 219m13 220r59 221r24 222r31 222r49 223r52 223r70
+210i9 valeurIndice{integer} 220m13 224m17 224r59 230r53 230r84
+211e9 op{character} 222m17 224r55
+212i9 op2{integer} 223m17 224r73
+213i9 indiceDebutRecherche{integer} 227m13 228m99 228r99
+X 25 system.ads
 67M9*Address
-X 33 s-memory.ads
-53V13*Alloc{24|67M9} 103i<c,__gnat_malloc>22
+X 34 s-memory.ads
+53V13*Alloc{25|67M9} 103i<c,__gnat_malloc>22
 68U14*Free 104i<c,__gnat_free>22
-76V13*Realloc{24|67M9} 105i<c,__gnat_realloc>22
-X 40 s-stalib.adb
+76V13*Realloc{25|67M9} 105i<c,__gnat_realloc>22
+X 41 s-stalib.adb
 93U14 Break_Start 94i<c,__gnat_break_start>22
+X 50 variables.ads
+5K9*variables 24|6w6 6r21 50|38e14
+35V14*rechercherVariable{21|30P10} 24|107s29 119s18 180s29 192s25 220s29
+. 232s18
 

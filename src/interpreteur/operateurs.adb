@@ -2,7 +2,8 @@ with intermediaire; use intermediaire; --Permet de partager les types définis d
 with ada.Text_IO, ada.integer_Text_IO, Ada.Strings.Unbounded, Ada.Text_IO.Unbounded_IO, Ada.Characters.Handling, ADA.IO_EXCEPTIONS;
 --with P_List_Double;
 use ada.Text_IO, ada.integer_Text_io, Ada.Strings.Unbounded, Ada.Text_IO.Unbounded_IO, Ada.Characters.Handling;
-
+with manipulation_chaine; use manipulation_chaine;
+with variables; use variables;
 package body operateurs is
 
     procedure affectation(ptrInstruction : in out T_List_Instruction) is

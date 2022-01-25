@@ -1,27 +1,38 @@
-with Ada.Strings.Unbounded;
-use Ada.Strings.Unbounded;
+with intermediaire, Ada.Strings.Unbounded; 
+use intermediaire, Ada.Strings.Unbounded;
 
-generic
-type T is private;
+
 package variables is
 
-    type T_Variable is record
-        valeurVariable : T;
-        typeVariable : Unbounded_String;
-        nomVariable : Unbounded_String;
-        isConstant : Boolean;
-    end record;
+    procedure creer_variables_tableau (ligne : in Unbounded_String; i : in out integer; nomVariable : in out Unbounded_String; variables : in T_List_Variable; ptrVariable : out T_Ptr_Variable);
 
-    function getValeur(variable : in T_Variable) return T;
-    procedure setValeur(variable : in out T_Variable; valeur : in T);
+     procedure creerEtAjouterVariable(variables : in out T_List_Variable; typeVariable : in Unbounded_String; nomVariable : in Unbounded_String);
 
-    function getType(variable : in T_Variable) return Unbounded_String;
-    procedure setType(variable : in out T_Variable; typeVariable : in Unbounded_String);
+    function creer_variable(variables : in T_List_Variable; nomVariable : in Unbounded_String; isCaractere : in boolean) return T_Ptr_Variable;
 
-    function getNom(variable : in T_Variable) return Unbounded_String;
-    procedure setNom(variable : in out T_Variable; nomVariable : in Unbounded_String);
+    -- nom : creer_variable_tmp
+    -- semantique : crée une variable temporaire
+    -- parametres :
+    --          nomVariable : in chaine
+    -- type retour : T_Ptr_Variable
+    -- préconditions
+    --          Aucune
+    -- post-conditions
+    --          Aucune
+    -- exception : /
+    function creer_variable_tmp (nomVariable : in Unbounded_String; isCaractere : in boolean) return T_Ptr_Variable;
 
-    function isConstant(variable : in T_Variable) return Boolean;
+        -- nom : rechercherVariable
+    -- semantique : retourne un pointeur sur la variable recherchée
+    -- parametres :
+    --          nomVariable : in string         // nom de la variable à rechercher
+    --          ptrVar : in T_List_Variable    // liste des variables
+    -- typeRetour : 
+    --          ptrVariable T_List_Variable    // pointeur sur la variable recherchée
+    -- Préconditions    : 
+    -- Postconditions   :  
+    -- Exceptions : Variable_Non_Trouvee
+    function rechercherVariable (variables : in T_List_Variable; nomVariable : in Unbounded_String) return T_List_Variable;
 
 
 end variables;
