@@ -54,8 +54,35 @@ package manipulation_chaine is
 
     --private
 
+    -- nom : recupererChaine
+    -- semantique : recupere la chaine d'une ligne basique
+    -- parametres :
+    --          chaineRetour : Unbounded_String
+    --          chaineDepart : Unbounded_String
+    --          i : in out integer
+    --          condition : in boolean
+    -- type retour : Unbounded_String
+    -- préconditions
+    --          Aucune
+    -- post-conditions
+    --          Aucune
+    -- exception : /
     procedure recupererChaine(chaineRetour : out Unbounded_String; chaineDepart : in Unbounded_String; i : in out integer; condition : in integer);
 
+    -- nom : recupererChaine
+    -- semantique : recupere la chaine d'une ligne jusqu'à un mot réservé
+    -- parametres :
+    --          chaineRetour : Unbounded_String
+    --          chaineDepart : Unbounded_String
+    --          i : in out integer
+    --          condition : in boolean
+    --          chaineReserve : in T_Chaines_Reservees
+    -- type retour : Unbounded_String
+    -- préconditions
+    --          Aucune
+    -- post-conditions
+    --          Aucune
+    -- exception : /
     procedure recupererChaine(chaineRetour : out Unbounded_String; chaineDepart : in Unbounded_String; i : in out integer; condition : in integer; chainesReservees : in T_Chaines_Reservees);
 
 end manipulation_chaine;

@@ -1,2 +1,10 @@
 *.o
 *.ali
+src/tests_modules/intermediaire.ali
+src/tests_modules/intermediaire.ali
+src/tests_modules/intermediaire.o
+src/tests_modules/intermediaire.ali
+src/tests_modules/intermediaire.o
+src/tests_modules/intermediaire.ali
+src/tests_modules/intermediaire.ali
+src/tests_modules/test_intermediaire.o
