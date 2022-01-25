@@ -37,17 +37,7 @@ package variables is
     --     nomVariable : out Unbounded_String
     function creer_variable(variables : in T_List_Variable; nomVariable : in Unbounded_String; isCaractere : in boolean) return T_Ptr_Variable;
 
-    -- nom : creer_variable_tmp
-    -- semantique : crée une variable temporaire
-    -- parametres :
-    --          nomVariable : in chaine
-    -- type retour : T_Ptr_Variable
-    -- préconditions
-    --          Aucune
-    -- post-conditions
-    --          Aucune
-    -- exception : /
-    function creer_variable_tmp (nomVariable : in Unbounded_String; isCaractere : in boolean) return T_Ptr_Variable;
+    
 
         -- nom : rechercherVariable
     -- semantique : retourne un pointeur sur la variable recherchée
@@ -61,5 +51,16 @@ package variables is
     -- Exceptions : Variable_Non_Trouvee
     function rechercherVariable (variables : in T_List_Variable; nomVariable : in Unbounded_String) return T_List_Variable;
 
-
+ private
+    -- nom : creer_variable_tmp
+    -- semantique : crée une variable temporaire
+    -- parametres :
+    --          nomVariable : in chaine
+    -- type retour : T_Ptr_Variable
+    -- préconditions
+    --          Aucune
+    -- post-conditions
+    --          Aucune
+    -- exception : /
+    function creer_variable_tmp (nomVariable : in Unbounded_String; isCaractere : in boolean) return T_Ptr_Variable;
 end variables;

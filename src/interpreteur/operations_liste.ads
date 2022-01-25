@@ -25,28 +25,9 @@ package operations_liste is
     -- exception : /
     procedure afficher_liste(f_l : in T_List_Instruction);
 
-    -- nom : afficherLigneInstruction
-    -- semantique : affiche une ligne d'instruction
-    -- parametres :
-    --          ptrInstruction : T_Ptr_Instruction
-    -- préconditions
-    --          Aucune
-    -- post-conditions
-    --          Aucune
-    -- exception : /
-    procedure afficherLigneInstruction (ptrInstruction : T_Ptr_Instruction);
+    
 
-    -- nom : afficherParametreLigneInstruction
-    -- semantique : affiche les paramètres d'une ligne d'instruction
-    -- parametres :
-    --          ptrVariable : T_Ptr_Variable
-    -- préconditions
-    --          Aucune
-    -- post-conditions
-    --          Aucune
-    -- exception : /
-    procedure afficherParametreLigneInstruction (ptrVariable : T_Ptr_Variable);
-
+    
      -- nom : creer_liste_vide
     -- semantique : creer une liste vide
     -- parametres : /
@@ -69,7 +50,20 @@ package operations_liste is
     with 
        post => est_vide(creer_liste_vide'result) = true;
 
-    -- nom : est_vide
+    -- nom : ajouter
+    -- semantique : ajoute un élément en queue de liste
+    -- parametres :
+    --          f_l : in out T_List_Variable    // liste
+    --          f_nouveau : in T_Ptr_Variable   // élément à ajouter
+    -- préconditions
+    --          Aucune
+    -- post-conditions
+    --          f_l.all.ptrVar = f_nouveau
+    --          f_nouveau.all.prev = f_l
+    -- exception : /
+    procedure ajouter(f_l : in out T_List_Variable; f_nouveau : in T_Ptr_Variable);
+
+-- nom : est_vide
     -- semantique : teste si une liste f_l est vide
     -- parametres : l : in T_List_Integer
     -- type retour : boolean
@@ -87,19 +81,6 @@ package operations_liste is
     -- exception : /
     function est_vide(p : in T_List_Instruction) return boolean;
 
-
-    -- nom : ajouter
-    -- semantique : ajoute un élément en queue de liste
-    -- parametres :
-    --          f_l : in out T_List_Variable    // liste
-    --          f_nouveau : in T_Ptr_Variable   // élément à ajouter
-    -- préconditions
-    --          Aucune
-    -- post-conditions
-    --          f_l.all.ptrVar = f_nouveau
-    --          f_nouveau.all.prev = f_l
-    -- exception : /
-    procedure ajouter(f_l : in out T_List_Variable; f_nouveau : in T_Ptr_Variable);
 
     -- nom : ajouter
     -- semantique : ajoute un élément en queue de liste
@@ -131,5 +112,35 @@ package operations_liste is
     -- Postconditions   : ptr.all.prev = null 
     -- Exceptions :                 
     procedure pointerEnTeteInstructions (ptrInstruction : in out T_List_Instruction);
+
+
+
+    private
+
+     -- nom : afficherLigneInstruction
+    -- semantique : affiche une ligne d'instruction
+    -- parametres :
+    --          ptrInstruction : T_Ptr_Instruction
+    -- préconditions
+    --          Aucune
+    -- post-conditions
+    --          Aucune
+    -- exception : /
+   procedure afficherLigneInstruction (ptrInstruction : T_Ptr_Instruction);
+
+
+   -- nom : afficherParametreLigneInstruction
+    -- semantique : affiche les paramètres d'une ligne d'instruction
+    -- parametres :
+    --          ptrVariable : T_Ptr_Variable
+    -- préconditions
+    --          Aucune
+    -- post-conditions
+    --          Aucune
+    -- exception : /
+    procedure afficherParametreLigneInstruction (ptrVariable : T_Ptr_Variable);
+
+    
+
 
 end operations_liste;
