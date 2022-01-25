@@ -20,11 +20,12 @@ package body operateurs is
     end affectation;
 
     function operationArithmetique(op: in Character; op1 : in Integer; op2 : in Integer) return integer is
+    
         resultat : Integer;
+    
     begin
 
         case op is
-
             when '+' =>
                 resultat := op1 + op2;
             when '-' =>
@@ -38,6 +39,7 @@ package body operateurs is
         end case;
 
         return resultat;
+
     end operationArithmetique;
 
     function operationLogique (op : in Unbounded_String; op1 : in Integer; op2 : in integer) return integer is
@@ -69,24 +71,35 @@ package body operateurs is
     end operationLogique;
 
     function successeur(char : in Character) return Character is
+        
         temporary : Integer;
+    
     begin
+    
         temporary := Character'POS(char);
         temporary := temporary + 1;
         return Character'VAL(temporary);
+    
     end successeur;
 
     function predecesseur(char : in Character) return Character is
+    
         temporary : Integer;
+    
     begin
+    
         temporary := Character'POS(char);
         temporary := temporary - 1;
         return Character'VAL(temporary);
+    
     end predecesseur;
 
     procedure branchementBasic(line : in Integer; instructions : in out T_List_Instruction) is
+    
     begin
+    
         changerInstructionParNumero(instructions,line);
+    
     end branchementBasic;
 
     procedure ecrire(instructions : in out T_List_Instruction; variables : in T_List_Variable) is

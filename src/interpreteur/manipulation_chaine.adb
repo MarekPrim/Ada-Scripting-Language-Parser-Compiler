@@ -7,11 +7,14 @@ use ada.Text_IO, ada.integer_Text_io, Ada.Strings.Unbounded, Ada.Text_IO.Unbound
 
 package body manipulation_chaine is
 
-function ligneCommenceParMotReserve (ligne : in Unbounded_string; enum : in string) return boolean is
+    function ligneCommenceParMotReserve (ligne : in Unbounded_string; enum : in string) return boolean is
+        
         i : integer;
         longueurEnum : integer;
         currentChar : Character;
+        
     begin
+
         i := 1;
 
         longueurEnum := length(To_Unbounded_String(enum));
@@ -62,7 +65,9 @@ function ligneCommenceParMotReserve (ligne : in Unbounded_string; enum : in stri
     end estLigneUtile;
 
     function isANumber (nomVariable : in Unbounded_String) return boolean is
+        
         j : integer;
+    
     begin
 
         if (length(nomVariable) = 0) then
@@ -70,17 +75,18 @@ function ligneCommenceParMotReserve (ligne : in Unbounded_string; enum : in stri
         else
             j := 1;
             while(j <= length(nomVariable)) loop
-                if (not(Character'POS(element(nomVariable, j)) in 48..57)) then
+                if (not(Character'POS(element(nomVariable, j)) in 48..57) and element(nomVariable,j) /= '-') then
                     return false;
                 end if;
                 j := j+1;
             end loop;
         end if;
         return true;
+
     end isANumber;
 
 
-    procedure recupererChaine(nomVariable : out Unbounded_String; ligne : in Unbounded_String; i : in out integer; condition : in integer) is
+    procedure recupererChaine(chaineRetour : out Unbounded_String; chaineDepart : in Unbounded_String; i : in out integer; condition : in integer) is
 
         conditionVerifiee : boolean;
 
@@ -91,9 +97,9 @@ function ligneCommenceParMotReserve (ligne : in Unbounded_string; enum : in stri
         -- 3 : alphanumerique
 
         conditionVerifiee := true;
-        while (i <= length(ligne) and conditionVerifiee) loop
-            if (((condition = 1 or condition = 3) and then Character'POS(element(ligne, i)) in 48..57) or ((condition = 2 or condition = 3) and then ((Character'POS(element(ligne, i)) in 65..90) or (Character'POS(element(ligne, i)) in 97..122)))) then
-                append(nomVariable, element(ligne, i));
+        while (i <= length(chaineDepart) and conditionVerifiee) loop
+            if (((condition = 1 or condition >= 3) and then Character'POS(element(chaineDepart, i)) in 48..57) or ((condition >= 2) and then ((Character'POS(element(chaineDepart, i)) in 65..90) or (Character'POS(element(chaineDepart, i)) in 97..122))) or ((condition = 4) and then (element(chaineDepart, i) = '-'))) then
+                append(chaineRetour, element(chaineDepart, i));
                 i := i+1;
             else
                 conditionVerifiee := false;
@@ -102,7 +108,7 @@ function ligneCommenceParMotReserve (ligne : in Unbounded_string; enum : in stri
 
     end recupererChaine;
 
-     procedure recupererChaine(nomVariable : out Unbounded_String; ligne : in Unbounded_String; i : in out integer; condition : in integer; chainesReservees : in T_Chaines_Reservees) is
+     procedure recupererChaine(chaineRetour : out Unbounded_String; chaineDepart : in Unbounded_String; i : in out integer; condition : in integer; chainesReservees : in T_Chaines_Reservees) is
 
         conditionVerifiee : boolean;
         j : integer;
@@ -114,22 +120,22 @@ function ligneCommenceParMotReserve (ligne : in Unbounded_string; enum : in stri
         -- 3 : alphanumerique
 
         conditionVerifiee := true;
-        while (i <= length(ligne) and conditionVerifiee) loop
+        while (i <= length(chaineDepart) and conditionVerifiee) loop
             --if ((((condition = 1 or condition = 3) and then Character'POS(element(ligne, i)) in 48..57) or ((condition = 2 or condition = 3) and then ((Character'POS(element(ligne, i)) in 65..90) or (Character'POS(element(ligne, i)) in 97..122)))) and then not(i <= i+length(chaineReservee)-1 and then slice(ligne, i, i+length(chaineReservee)-1) = chaineReservee)) then
             j := 1;
             while(j <= chainesReservees.nbElements and conditionVerifiee) loop
-                if (i+length(chainesReservees.chaines(j))-1 <= length(ligne) and then slice(ligne, i, i+length(chainesReservees.chaines(j))-1) = chainesReservees.chaines(j)) then
+                if (i+length(chainesReservees.chaines(j))-1 <= length(chaineDepart) and then slice(chaineDepart, i, i+length(chainesReservees.chaines(j))-1) = chainesReservees.chaines(j)) then
                     conditionVerifiee := false;
                 end if;
                 j := j+1;
             end loop;
 
-            if (not (((condition = 1 or condition = 3) and then Character'POS(element(ligne, i)) in 48..57) or ((condition = 2 or condition = 3) and then ((Character'POS(element(ligne, i)) in 65..90) or (Character'POS(element(ligne, i)) in 97..122)))) and then conditionVerifiee) then
+            if (not (((condition = 1 or condition = 3) and then Character'POS(element(chaineDepart, i)) in 48..57) or ((condition = 2 or condition = 3) and then ((Character'POS(element(chaineDepart, i)) in 65..90) or (Character'POS(element(chaineDepart, i)) in 97..122))) or ((condition = 4) and then element(chaineDepart, i) /= '-' )) and then conditionVerifiee) then
                 conditionVerifiee := false;                
             end if;
 
             if (conditionVerifiee) then
-                append(nomVariable, element(ligne, i));
+                append(chaineRetour, element(chaineDepart, i));
                 i := i+1;
             end if;
         end loop;
