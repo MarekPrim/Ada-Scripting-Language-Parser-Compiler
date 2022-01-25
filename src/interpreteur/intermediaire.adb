@@ -16,7 +16,7 @@ package body intermediaire is
         instructions : T_List_Instruction;
         l_instructions : T_List_Instruction;
         choice : Integer;
-        fileName : Unbounded_String ;
+        fileName : Unbounded_String;
     
     begin
 
@@ -31,14 +31,14 @@ package body intermediaire is
     Put_Line("Utilisation du programme : ./main ./chemin_vers_fichier/fichier_souhaité");
     raise Program_Error;
     end;
-
-    loop
-        Put_Line("Mode normal : 0");
-        Put_Line("Debug : 1");
-        new_line;
-        Get(choice);
-    exit when (choice = 0 or choice = 1);
-    end loop;
+    
+    if(Argument_Count = 2) then
+        choice := (if Argument(2) = "--DEBUG"
+        then 1
+        else 0);
+    else
+        choice := 0;
+    end if;
 
     skip_line;
 
