@@ -1,0 +1,15 @@
+Programme Exponentiation est
+n , e , i, uni, T1 : Entier
+Debut
+1 Lire(e)
+2 Lire(n)
+3 i <- 1
+4 uni <- e
+5 T1 <- i < n
+6 IF T1 GOTO 8
+7 GOTO 11
+8 e <- e * uni
+9 i <- i + 1
+10 GOTO 5
+11 Ecrire(e)
+Fin

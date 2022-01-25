@@ -169,6 +169,8 @@ package body operateurs is
         loop
             put("Entrez une chaine de type ");
             put(variableZ.typeVariable);
+            put(" pour la variable ");
+            put(instructions.all.ptrIns.all.operandes.z.all.nomVariable);
             put(" : ");
             get_line(chaineLue);
 

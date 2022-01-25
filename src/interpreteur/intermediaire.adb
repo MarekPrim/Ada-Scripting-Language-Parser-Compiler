@@ -69,6 +69,10 @@ package body intermediaire is
 
     end traiterProgramme;
 
+    -- private
+    -- Les sous-programmes suivant ne sont pas déclarés private afin de pouvoir toujours réaliser des tests unitaires
+    -- Dans une situation de mise en production, les autres sous-programmes devraient être déclarés private
+
     
 
     procedure parseFile (fileName : in string; variables : in out T_List_Variable; instructions : in out T_List_Instruction) is
