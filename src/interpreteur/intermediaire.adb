@@ -5,11 +5,6 @@ with Ada.IO_EXCEPTIONS; use Ada.IO_EXCEPTIONS;
 
 package body intermediaire is
 
-    --package Liste_Variables is new P_List_Double(pointeur => T_List_Variable);
-    --use Liste_Variables;
-    --package Liste_Instructions is new P_List_Double(pointeur => T_List_Instruction);
-    --use Liste_Instructions;
-
     procedure traiter_programme is
 
         variables : T_List_Variable;
