@@ -13,10 +13,10 @@ package body variables is
 
     begin
 
-        if (isCaractere or isANumber(nomVariable)) then
+        if (isCaractere or is_a_number(nomVariable)) then
             return creer_variable_tmp(nomVariable, isCaractere);
         else
-            return rechercherVariable(variables, nomVariable).all.ptrVar;
+            return rechercher_variable(variables, nomVariable).all.ptrVar;
         end if;
 
     end creer_variable;
@@ -37,7 +37,7 @@ package body variables is
 
         i := i+1;
 
-        if (isANumber(nomIndice)) then
+        if (is_a_number(nomIndice)) then
             nomIndice := To_Unbounded_String("Tmp");
         end if;
 
@@ -67,14 +67,14 @@ package body variables is
 
     end creer_variable_tmp;
 
-    procedure creerEtAjouterVariable(variables : in out T_List_Variable; typeVariable : in Unbounded_String; nomVariable : in Unbounded_String) is
+    procedure creer_et_ajouter_variable(variables : in out T_List_Variable; typeVariable : in Unbounded_String; nomVariable : in Unbounded_String) is
 
         ptrVariable : T_Ptr_Variable;
 
     begin
 
         begin
-        if(variables /= null and then rechercherVariable(variables, nomVariable) /= null) then
+        if(variables /= null and then rechercher_variable(variables, nomVariable) /= null) then
             raise Variable_Deja_Definie;
         end if;
             exception
@@ -84,9 +84,9 @@ package body variables is
         ptrVariable := new T_Variable'(0, typeVariable, nomVariable, false);
         ajouter(variables, ptrVariable);
 
-    end creerEtAjouterVariable;
+    end creer_et_ajouter_variable;
 
-    function rechercherVariable (variables : in T_List_Variable; nomVariable : in Unbounded_String) return T_List_Variable is
+    function rechercher_variable (variables : in T_List_Variable; nomVariable : in Unbounded_String) return T_List_Variable is
     
         copy : T_List_Variable;
     
@@ -105,6 +105,6 @@ package body variables is
             return copy;
         end if;
 
-    end rechercherVariable;
+    end rechercher_variable;
 
 end variables;

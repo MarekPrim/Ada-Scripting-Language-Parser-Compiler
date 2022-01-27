@@ -14,7 +14,7 @@ package manipulation_chaine is
     --  renvoie true si la chaine est un mot réservé, false sinon
     -- Exception
     --  Aucune
-    function ligneCommenceParMotReserve (ligne : in Unbounded_string; enum : in string) return boolean;
+    function ligne_commence_par_mot_reserve (ligne : in Unbounded_string; enum : in string) return boolean;
 
     -- Renvoie une chaine de caracteres sans espace (trim)
     -- Paramètres :
@@ -25,10 +25,10 @@ package manipulation_chaine is
     --  renvoie une chaine de caracteres sans espace
     -- Exception
     --  Aucune
-    function renvoyerLigneSansEspace (ligne : in Unbounded_string) return Unbounded_string;
+    function renvoyer_ligne_sans_espace (ligne : in Unbounded_string) return Unbounded_string;
 
 
-     -- nom : estLigneUtile
+     -- nom : est_ligne_utile
     -- semantique : teste si une ligne d'instruction est utile
     -- parametres :
     --          ligne : Unbounded_String
@@ -38,9 +38,9 @@ package manipulation_chaine is
     -- post-conditions
     --          Aucune
     -- exception : /
-    function estLigneUtile (ligne : in Unbounded_String) return boolean;
+    function est_ligne_utile (ligne : in Unbounded_String) return boolean;
 
-    -- nom : isANumber
+    -- nom : is_a_number
     -- semantique : teste si une chaine est un nombre
     -- parametres :
     --          chaine : in chaine
@@ -50,11 +50,11 @@ package manipulation_chaine is
     -- post-conditions
     --          Aucune
     -- exception : /
-    function isANumber (nomVariable : in Unbounded_String) return boolean;
+    function is_a_number (nomVariable : in Unbounded_String) return boolean;
 
     --private
 
-    -- nom : recupererChaine
+    -- nom : recuperer_chaine
     -- semantique : recupere la chaine d'une ligne basique
     -- parametres :
     --          chaineRetour : Unbounded_String
@@ -67,9 +67,9 @@ package manipulation_chaine is
     -- post-conditions
     --          Aucune
     -- exception : /
-    procedure recupererChaine(chaineRetour : out Unbounded_String; chaineDepart : in Unbounded_String; i : in out integer; condition : in integer);
+    procedure recuperer_chaine(chaineRetour : out Unbounded_String; chaineDepart : in Unbounded_String; i : in out integer; condition : in integer);
 
-    -- nom : recupererChaine
+    -- nom : recuperer_chaine
     -- semantique : recupere la chaine d'une ligne jusqu'à un mot réservé
     -- parametres :
     --          chaineRetour : Unbounded_String
@@ -83,6 +83,6 @@ package manipulation_chaine is
     -- post-conditions
     --          Aucune
     -- exception : /
-    procedure recupererChaine(chaineRetour : out Unbounded_String; chaineDepart : in Unbounded_String; i : in out integer; condition : in integer; chainesReservees : in T_Chaines_Reservees);
+    procedure recuperer_chaine(chaineRetour : out Unbounded_String; chaineDepart : in Unbounded_String; i : in out integer; condition : in integer; chainesReservees : in T_Chaines_Reservees);
 
 end manipulation_chaine;

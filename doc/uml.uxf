@@ -44,15 +44,15 @@ z : T_Ptr_Variable
 bg=green
 
 +parseFile (fileName : in string; variables : in out T_List_Variable; instructions : in out T_List_Instruction)
-+ligneCommenceParMotReserve (ligne : in Unbounded_string; enum : in string) : boolean
-+renvoyerLigneSansEspace (ligne : in Unbounded_string) : Unbounded_string
-+traiterProgramme(fileName : in string)
++ligne_commence_par_mot_reserve (ligne : in Unbounded_string; enum : in string) : boolean
++renvoyer_ligne_sans_espace (ligne : in Unbounded_string) : Unbounded_string
++traiter_programme(fileName : in string)
 +recupererInstructions(instructions : in out T_List_Instruction; ligne : in Unbounded_string)
 +recupererVariables(variables : in out T_List_Variable; ligne : in Unbounded_string)
 +interpreterCommande (ptrLine : in T_Cell_Instruction; ptrVar : in out T_List_Variable)
-+rechercherVariable (variables : in T_List_Variable, nomVariable : in string) : T_List_Variable
-+ligneCommenceParMotReserve (ligne : in Unbounded_string; enum : in string) : boolean
-+renvoyerLigneSansEspace (ligne : in Unbounded_string) : Unbounded_string
++rechercher_variable (variables : in T_List_Variable, nomVariable : in string) : T_List_Variable
++ligne_commence_par_mot_reserve (ligne : in Unbounded_string; enum : in string) : boolean
++renvoyer_ligne_sans_espace (ligne : in Unbounded_string) : Unbounded_string
 +creer_liste_vide : T_List_Variable
 +creer_liste_vide : T_List_Instruction
 +est_vide(p : in T_List_Instruction) : boolean
@@ -62,10 +62,10 @@ bg=green
 --
 bg=yellow
 +affectation(typeVariable : in String; identificateur : in String; valeur : in Integer; variables : in out T_List_Variable)
-+operationArithmetique(op: in String; op1 : in Integer; op2 : in Integer; cp : in out Integer; res : out Integer)
-+operationLogique(instructions : in T_List_Instruction; cp : in out Integer; res : out Boolean)
-+branchementBasic(cp : in out Integer; line : in Integer)
-+branchementConditionel(cp : in out Integer; instructions : in T_List_Instruction; line : in Integer)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>737</x><y>196</y><w>210</w><h>100</h></coordinates><panel_attributes>T_Variable
++operation_arithmetique(op: in String; op1 : in Integer; op2 : in Integer; cp : in out Integer; res : out Integer)
++operation_logique(instructions : in T_List_Instruction; cp : in out Integer; res : out Boolean)
++branchement_basic(cp : in out Integer; line : in Integer)
++branchement_conditionel(cp : in out Integer; instructions : in T_List_Instruction; line : in Integer)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>737</x><y>196</y><w>210</w><h>100</h></coordinates><panel_attributes>T_Variable
 --
 valeurVariable : Integer
 tyleVariable : Chaine
