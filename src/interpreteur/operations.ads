@@ -68,7 +68,7 @@ package operations is
     --  variables : in T_List_Variable
     -- précondition : /
     -- postcondition : /
-    -- exception : /
+    -- exception : Element_Tableau_Deja_Utilise
     procedure affectationOperation (ligne : in Unbounded_String; i : in out integer; ptrInstruction : in out T_Ptr_Instruction; operation : out Unbounded_String; variables : in T_List_Variable);
 
 end operations;

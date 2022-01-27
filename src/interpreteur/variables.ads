@@ -25,7 +25,7 @@ package variables is
     --     variables : in out T_List_Variable
     -- pré-conditions : /
     -- post-conditions : /
-    -- exception : /
+    -- exception : Variable_Deja_Definie
     procedure creerEtAjouterVariable(variables : in out T_List_Variable; typeVariable : in Unbounded_String; nomVariable : in Unbounded_String);
 
 

@@ -19,7 +19,7 @@ package body intermediaire is
         fileName : Unbounded_String;
     
     begin
-
+        -- Récupération du nom de fichier via l'invite de commande
         begin
             loop
                 fileName := To_Unbounded_String(Argument(1));
@@ -32,6 +32,7 @@ package body intermediaire is
             raise Program_Error;
         end;
         
+        -- Récupération de l'option --DEBUG depuis l'invite de commande
         if(Argument_Count = 2) then
             choice := (if Argument(2) = "--DEBUG"
             then 1
@@ -42,6 +43,7 @@ package body intermediaire is
 
         skip_line;
 
+        -- Ouverture du fichier, récupération des variables et des instructions
         begin
             parseFile(To_String(fileName), variables, instructions);
 
@@ -49,10 +51,13 @@ package body intermediaire is
             when Ada.IO_EXCEPTIONS.DEVICE_ERROR => Put_Line("Fichier inexistant/invalide");
         end;
 
+        -- Remise du pointeur sur la liste en tête
         pointerEnTeteInstructions(instructions);
 
+        -- Copie de la liste d'instructions
         l_instructions := instructions;
 
+        -- Interprétation des instructions
         while(l_instructions /= null) loop
             if(choice = 1 and l_instructions.next /= null) then
                 Put("Numéro de l'instruction en cours : ");
@@ -62,6 +67,8 @@ package body intermediaire is
             interpreterCommande(l_instructions, variables);
         end loop;
 
+
+        -- Affichage de la mémoire en fin d'exécution
         afficher_liste(instructions);
         Put_Line("Etat des variables en terminaison du programme");
         afficher_liste(variables);
@@ -77,11 +84,12 @@ package body intermediaire is
         ligne : Unbounded_string;
     begin
     
+        -- Création des listes de variable et d'instruction
         variables := creer_liste_vide;
-
         instructions := creer_liste_vide;
 
-        Open (F, In_File, fileName);    -- Ouverture du fichier en lecture
+        -- Ouverture du fichier en lecture
+        Open (F, In_File, fileName);    
 
         loop
             ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));     -- Lecture de la ligne courante sans espace
@@ -154,6 +162,7 @@ package body intermediaire is
             -- Parcourir la ligne pour trouver le nom de la variable
             if (element(ligne, i) /= ',') then
                 recupererChaine(nomVariable, ligne, i, 3);
+                -- Différenciation entre variables unaires et tableaux
                 if (isArray) then
                     for i in 1..Integer'value(to_string(nbElementsTableau)) loop
                         nomVariableTableau := nomVariable;

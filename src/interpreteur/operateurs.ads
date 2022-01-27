@@ -19,7 +19,7 @@ package operateurs is
     --                  ptrVar.all.valeur = T
     --                  ptrVar.all.typeVariable = typeVariable
     --                  ptrVar.all.identificateur = identificateur
-    -- Exceptions : Variable_Inconnue, Variable_Constante
+    -- Exceptions : Type_Incorrect, Variable_Constante
     procedure affectation(ptrInstruction : in out T_List_Instruction);
 
     -- nom : operationArithmetique
@@ -44,7 +44,7 @@ package operateurs is
         -- true si l'opération logique est vraie, false sinon
     -- Préconditions : op est bien un opérateur logique
     -- Postconditions : 
-    -- Exceptions : 
+    -- Exceptions : Operateur_Incorrect
     function operationLogique (op : in Unbounded_String; op1 : in Integer; op2 : in integer) return integer;
 
     -- successeur
