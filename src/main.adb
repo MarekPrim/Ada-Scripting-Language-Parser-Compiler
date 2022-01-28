@@ -6,6 +6,6 @@ procedure main is
 
    
 begin
-   traiterProgramme;
+   traiter_programme;
 
 end main;

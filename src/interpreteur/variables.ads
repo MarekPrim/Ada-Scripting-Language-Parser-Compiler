@@ -17,7 +17,7 @@ package variables is
     -- exception : /
     procedure creer_variables_tableau (ligne : in Unbounded_String; i : in out integer; nomVariable : in out Unbounded_String; variables : in T_List_Variable; ptrVariable : out T_Ptr_Variable);
 
-    -- nom : creerEtAjouterVariable
+    -- nom : creer_et_ajouter_variable
     -- sémantique : Créee et ajoute une variable dans la liste des variables
     -- paramètres :
     --     type : in Unbounded_String
@@ -25,8 +25,8 @@ package variables is
     --     variables : in out T_List_Variable
     -- pré-conditions : /
     -- post-conditions : /
-    -- exception : /
-    procedure creerEtAjouterVariable(variables : in out T_List_Variable; typeVariable : in Unbounded_String; nomVariable : in Unbounded_String);
+    -- exception : Variable_Deja_Definie
+    procedure creer_et_ajouter_variable(variables : in out T_List_Variable; typeVariable : in Unbounded_String; nomVariable : in Unbounded_String);
 
 
     -- nom : creer_variable
@@ -39,7 +39,7 @@ package variables is
 
     
 
-        -- nom : rechercherVariable
+        -- nom : rechercher_variable
     -- semantique : retourne un pointeur sur la variable recherchée
     -- parametres :
     --          nomVariable : in string         // nom de la variable à rechercher
@@ -49,7 +49,7 @@ package variables is
     -- Préconditions    : 
     -- Postconditions   :  
     -- Exceptions : Variable_Non_Trouvee
-    function rechercherVariable (variables : in T_List_Variable; nomVariable : in Unbounded_String) return T_List_Variable;
+    function rechercher_variable (variables : in T_List_Variable; nomVariable : in Unbounded_String) return T_List_Variable;
 
  private
     -- nom : creer_variable_tmp

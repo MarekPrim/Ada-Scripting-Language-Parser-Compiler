@@ -7,7 +7,7 @@ use ada.Text_IO, ada.integer_Text_io, Ada.Strings.Unbounded, Ada.Text_IO.Unbound
 
 package body manipulation_chaine is
 
-    function ligneCommenceParMotReserve (ligne : in Unbounded_string; enum : in string) return boolean is
+    function ligne_commence_par_mot_reserve (ligne : in Unbounded_string; enum : in string) return boolean is
         
         i : integer;
         longueurEnum : integer;
@@ -35,9 +35,9 @@ package body manipulation_chaine is
 
         return true; -- Si on a parcouru toute l'énumération sans rencontrer de caractère différent, on retourne vrai
 
-    end ligneCommenceParMotReserve;
+    end ligne_commence_par_mot_reserve;
 
-    function renvoyerLigneSansEspace (ligne : in Unbounded_string) return Unbounded_string is
+    function renvoyer_ligne_sans_espace (ligne : in Unbounded_string) return Unbounded_string is
         
         j : integer;
         trimLigne : Unbounded_string;
@@ -54,17 +54,17 @@ package body manipulation_chaine is
     
         return trimLigne;
     
-    end renvoyerLigneSansEspace;
+    end renvoyer_ligne_sans_espace;
 
-    function estLigneUtile (ligne : in Unbounded_String) return boolean is
+    function est_ligne_utile (ligne : in Unbounded_String) return boolean is
     
     begin
-
+        -- return => ligne commence par un commentaire
         return not(length(ligne) = 0 or (length(ligne) >= 2 and then slice(ligne, 1, 2) = "--"));
 
-    end estLigneUtile;
+    end est_ligne_utile;
 
-    function isANumber (nomVariable : in Unbounded_String) return boolean is
+    function is_a_number (nomVariable : in Unbounded_String) return boolean is
         
         j : integer;
     
@@ -85,10 +85,10 @@ package body manipulation_chaine is
         end if;
         return true;
 
-    end isANumber;
+    end is_a_number;
 
 
-    procedure recupererChaine(chaineRetour : out Unbounded_String; chaineDepart : in Unbounded_String; i : in out integer; condition : in integer) is
+    procedure recuperer_chaine(chaineRetour : out Unbounded_String; chaineDepart : in Unbounded_String; i : in out integer; condition : in integer) is
 
         conditionVerifiee : boolean;
         iInitial : integer;
@@ -112,9 +112,9 @@ package body manipulation_chaine is
             end if;
         end loop;
 
-    end recupererChaine;
+    end recuperer_chaine;
 
-     procedure recupererChaine(chaineRetour : out Unbounded_String; chaineDepart : in Unbounded_String; i : in out integer; condition : in integer; chainesReservees : in T_Chaines_Reservees) is
+     procedure recuperer_chaine(chaineRetour : out Unbounded_String; chaineDepart : in Unbounded_String; i : in out integer; condition : in integer; chainesReservees : in T_Chaines_Reservees) is
 
         conditionVerifiee : boolean;
         j : integer;
@@ -149,6 +149,6 @@ package body manipulation_chaine is
             end if;
         end loop;
 
-    end recupererChaine;
+    end recuperer_chaine;
 
 end manipulation_chaine;

@@ -3,7 +3,7 @@ use intermediaire, Ada.Strings.Unbounded;
 
 package operations is
 
-    -- ifOperation
+    -- if_operation
     -- paramètres :
     --  ligne : in Unbounded_String
     --  i : in out integer
@@ -13,9 +13,9 @@ package operations is
     -- précondition : /
     -- postcondition : /
     -- exception : /
-    procedure ifOperation (ligne : in Unbounded_String; i : in out integer; ptrInstruction : in out T_Ptr_Instruction; operation : out Unbounded_String; variables : in T_List_Variable);
+    procedure if_operation (ligne : in Unbounded_String; i : in out integer; ptrInstruction : in out T_Ptr_Instruction; operation : out Unbounded_String; variables : in T_List_Variable);
     
-    -- gotoOperation
+    -- goto_operation
     -- paramètres :
     --  ligne : in Unbounded_String
     --  i : in out integer
@@ -25,29 +25,17 @@ package operations is
     -- précondition : /
     -- postcondition : /
     -- exception : /
-    procedure gotoOperation (ligne : in Unbounded_String; i : in out integer; ptrInstruction : in out T_Ptr_Instruction; operation : out Unbounded_String; variables : in T_List_Variable);
+    procedure goto_operation (ligne : in Unbounded_String; i : in out integer; ptrInstruction : in out T_Ptr_Instruction; operation : out Unbounded_String; variables : in T_List_Variable);
 
-    -- nullOperation
+    -- null_operation
     -- paramètres :
     --  operation : out Unbounded_String
     -- précondition : /
     -- postcondition : /
     -- exception : /
-    procedure nullOperation (operation : out Unbounded_String);
+    procedure null_operation (operation : out Unbounded_String);
 
-    -- lireOperation
-    -- paramètres :
-    --  ligne : in Unbounded_String
-    --  i : in out integer
-    --  ptrInstruction : in out T_Ptr_Instruction
-    --  operation : out Unbounded_String
-    --  variables : in T_List_Variable
-    -- précondition : /
-    -- postcondition : /
-    -- exception : /
-    procedure lireOperation (ligne : in Unbounded_String; i : in out integer; ptrInstruction : in out T_Ptr_Instruction; operation : out Unbounded_String; variables : in T_List_Variable);
-
-    -- ecrireOperation
+    -- lire_operation
     -- paramètres :
     --  ligne : in Unbounded_String
     --  i : in out integer
@@ -57,9 +45,9 @@ package operations is
     -- précondition : /
     -- postcondition : /
     -- exception : /
-    procedure ecrireOperation (ligne : in Unbounded_String; i : in out integer; ptrInstruction : in out T_Ptr_Instruction; operation : out Unbounded_String; variables : in T_List_Variable);
+    procedure lire_operation (ligne : in Unbounded_String; i : in out integer; ptrInstruction : in out T_Ptr_Instruction; operation : out Unbounded_String; variables : in T_List_Variable);
 
-    -- affectationOperation
+    -- ecrire_operation
     -- paramètres :
     --  ligne : in Unbounded_String
     --  i : in out integer
@@ -69,6 +57,18 @@ package operations is
     -- précondition : /
     -- postcondition : /
     -- exception : /
-    procedure affectationOperation (ligne : in Unbounded_String; i : in out integer; ptrInstruction : in out T_Ptr_Instruction; operation : out Unbounded_String; variables : in T_List_Variable);
+    procedure ecrire_operation (ligne : in Unbounded_String; i : in out integer; ptrInstruction : in out T_Ptr_Instruction; operation : out Unbounded_String; variables : in T_List_Variable);
+
+    -- affectation_operation
+    -- paramètres :
+    --  ligne : in Unbounded_String
+    --  i : in out integer
+    --  ptrInstruction : in out T_Ptr_Instruction
+    --  operation : out Unbounded_String
+    --  variables : in T_List_Variable
+    -- précondition : /
+    -- postcondition : /
+    -- exception : Element_Tableau_Deja_Utilise
+    procedure affectation_operation (ligne : in Unbounded_String; i : in out integer; ptrInstruction : in out T_Ptr_Instruction; operation : out Unbounded_String; variables : in T_List_Variable);
 
 end operations;

@@ -71,7 +71,11 @@ package intermediaire is
     --  fileName in string : le nom du fichier à lire
     --  listeInstructions in out T_List_Instruction : la liste des instructions
     --  listeVariables in out T_List_Variable : la liste des variables
-    -- Préconditions
+    -- Préconditions:
+    --  aucune
+    -- Postconditions
+    --  aucune
+    -- Exceptions : Aucune_Variable_Definie
     procedure parseFile (fileName : in string; variables : in out T_List_Variable; instructions : in out T_List_Instruction);
 
     
@@ -84,7 +88,7 @@ package intermediaire is
     --  Aucune
     -- Exception
     --  Aucune
-    procedure traiterProgramme;
+    procedure traiter_programme;
 
     -- nom : recupererVariables
     -- semantique : récupère les variables d'un programme en langage intermédiaire contenues entre 'Début' (exclu) et 'Programme' (exclue)
@@ -133,7 +137,7 @@ package intermediaire is
     --          Aucune
     -- post-conditions
     --          Aucune
-    -- exception : /
+    -- exception : instuction_not_found
     procedure changerInstructionParNumero(ptrInstruction : in out T_List_Instruction; numInstruction : in integer);
 
     

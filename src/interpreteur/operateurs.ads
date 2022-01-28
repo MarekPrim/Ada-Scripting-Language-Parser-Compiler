@@ -19,10 +19,10 @@ package operateurs is
     --                  ptrVar.all.valeur = T
     --                  ptrVar.all.typeVariable = typeVariable
     --                  ptrVar.all.identificateur = identificateur
-    -- Exceptions : Variable_Inconnue, Variable_Constante
+    -- Exceptions : Type_Incorrect, Variable_Constante
     procedure affectation(ptrInstruction : in out T_List_Instruction);
 
-    -- nom : operationArithmetique
+    -- nom : operation_arithmetique
     -- semantique : effectue l'operation arithmetique
     -- parametres :
     -- op : operateur arithmetique {+,-,*,/}
@@ -32,9 +32,9 @@ package operateurs is
     -- Précondition : la liste des variables est bien formée; op est un operateur arithmetique
     -- Postcondition : CP est incrémenté de 1
     -- Exceptions : Operateur_Incorrect
-    function operationArithmetique(op: in Character; op1 : in Integer; op2 : in Integer) return integer;
+    function operation_arithmetique(op: in Character; op1 : in Integer; op2 : in Integer) return integer;
     
-    -- operationLogique
+    -- operation_logique
     -- Retourne si une opération logique est vraie ou fausse
     -- Paramètres :
         -- op : le caractère représentant l'opération logique {OR ; AND ; NOT}
@@ -44,8 +44,8 @@ package operateurs is
         -- true si l'opération logique est vraie, false sinon
     -- Préconditions : op est bien un opérateur logique
     -- Postconditions : 
-    -- Exceptions : 
-    function operationLogique (op : in Unbounded_String; op1 : in Integer; op2 : in integer) return integer;
+    -- Exceptions : Operateur_Incorrect
+    function operation_logique (op : in Unbounded_String; op1 : in Integer; op2 : in integer) return integer;
 
     -- successeur
     -- Retourne le successeur d'un charactère
@@ -69,19 +69,19 @@ package operateurs is
     -- Exceptions : /
     function predecesseur(char : in Character) return Character;
 
-    -- branchementBasic
+    -- branchement_basic
     -- Attribution d'un numéro de ligne à CP
     -- Précondition : 
     -- Postcondition :
     -- Exceptions :
-    procedure branchementBasic(line : in Integer; instructions : in out T_List_Instruction);
+    procedure branchement_basic(line : in Integer; instructions : in out T_List_Instruction);
 
-    -- branchementConditionel
+    -- branchement_conditionel
     -- Evaluation d'une condition, affectation à CP de line si la condition est vraie sinon incrémentation de CP
     -- Précondition : 
     -- Postcondition :
     -- Exceptions :
-    procedure branchementConditionel(instructions : in out T_List_Instruction; variables : in T_List_Variable);
+    procedure branchement_conditionel(instructions : in out T_List_Instruction; variables : in T_List_Variable);
 
     -- ecrire
     -- Ecriture d'une chaine de caractère sur la sortie standard

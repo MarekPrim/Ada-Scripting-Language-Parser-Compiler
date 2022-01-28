@@ -8,6 +8,8 @@ package body operateurs is
 
     procedure affectation(ptrInstruction : in out T_List_Instruction) is
     begin
+        -- Structure d'une ligne d'instructions
+        -- z op x y
         if ptrInstruction.all.ptrIns.all.operandes.z.all.isConstant then
            raise Variable_Constante;
         else
@@ -19,7 +21,7 @@ package body operateurs is
         end if;
     end affectation;
 
-    function operationArithmetique(op: in Character; op1 : in Integer; op2 : in Integer) return integer is
+    function operation_arithmetique(op: in Character; op1 : in Integer; op2 : in Integer) return integer is
     
         resultat : Integer;
     
@@ -40,9 +42,9 @@ package body operateurs is
 
         return resultat;
 
-    end operationArithmetique;
+    end operation_arithmetique;
 
-    function operationLogique (op : in Unbounded_String; op1 : in Integer; op2 : in integer) return integer is
+    function operation_logique (op : in Unbounded_String; op1 : in Integer; op2 : in integer) return integer is
         resultat : boolean;
     begin
         if (op = "AND") then
@@ -63,12 +65,9 @@ package body operateurs is
             raise Operateur_Incorrect;
         end if;
 
-        if (resultat) then
-            return 1;
-        end if;
-        return 0;
+        return (if resultat then 1 else 0);
 
-    end operationLogique;
+    end operation_logique;
 
     function successeur(char : in Character) return Character is
         
@@ -94,13 +93,13 @@ package body operateurs is
     
     end predecesseur;
 
-    procedure branchementBasic(line : in Integer; instructions : in out T_List_Instruction) is
+    procedure branchement_basic(line : in Integer; instructions : in out T_List_Instruction) is
     
     begin
     
         changerInstructionParNumero(instructions,line);
     
-    end branchementBasic;
+    end branchement_basic;
 
     procedure ecrire(instructions : in out T_List_Instruction; variables : in T_List_Variable) is
 
@@ -117,19 +116,19 @@ package body operateurs is
         if (instructions.all.ptrIns.all.operandes.x /= null) then
 
             nomIndice := instructions.all.ptrIns.all.operandes.x.all.nomVariable;
-            valeurIndice := rechercherVariable(variables, nomIndice).all.ptrVar.all.valeurVariable;
+            valeurIndice := rechercher_variable(variables, nomIndice).all.ptrVar.all.valeurVariable;
             if (length(nomIndice) > 1) then
                 op := element(nomIndice, length(nomIndice)-1);
                 op2 := Integer'Value((1 => element(nomIndice, length(nomIndice))));
-                valeurIndice := operationArithmetique(op, valeurIndice, op2);
+                valeurIndice := operation_arithmetique(op, valeurIndice, op2);
             end if;
 
             indiceDebutRecherche := 1;
-            recupererChaine(nomVariable, instructions.all.ptrIns.all.operandes.z.all.nomVariable, indiceDebutRecherche, 3);
+            recuperer_chaine(nomVariable, instructions.all.ptrIns.all.operandes.z.all.nomVariable, indiceDebutRecherche, 3);
 
             append(nomVariable, "[" & Integer'Image(valeurIndice)(2..Integer'Image(valeurIndice)'length) & "]");
 
-            z := rechercherVariable(variables, nomVariable).all.ptrVar.all.valeurVariable;
+            z := rechercher_variable(variables, nomVariable).all.ptrVar.all.valeurVariable;
 
         else
 
@@ -174,7 +173,7 @@ package body operateurs is
             put(" : ");
             get_line(chaineLue);
 
-            conditionSortie := (length(chaineLue) = 1 and variableZ.typeVariable = "Caractere") or (isANumber(chaineLue) and variableZ.typeVariable = "Entier");
+            conditionSortie := (length(chaineLue) = 1 and variableZ.typeVariable = "Caractere") or (is_a_number(chaineLue) and variableZ.typeVariable = "Entier");
             if (not conditionSortie) then
                 put_line("La chaine remplie ne correspond pas au type demandé");
             end if;     
@@ -192,19 +191,19 @@ package body operateurs is
         else
 
             nomIndice := instructions.all.ptrIns.all.operandes.x.all.nomVariable;
-            valeurIndice := rechercherVariable(variables, nomIndice).all.ptrVar.all.valeurVariable;
+            valeurIndice := rechercher_variable(variables, nomIndice).all.ptrVar.all.valeurVariable;
             if (length(nomIndice) > 1) then
                 op := element(nomIndice, length(nomIndice)-1);
                 op2 := Integer'Value((1 => element(nomIndice, length(nomIndice))));
-                valeurIndice := operationArithmetique(op, valeurIndice, op2);
+                valeurIndice := operation_arithmetique(op, valeurIndice, op2);
             end if;
 
             indiceDebutRecherche := 1;
-            recupererChaine(nomVariable, instructions.all.ptrIns.all.operandes.z.all.nomVariable, indiceDebutRecherche, 3);
+            recuperer_chaine(nomVariable, instructions.all.ptrIns.all.operandes.z.all.nomVariable, indiceDebutRecherche, 3);
 
             append(nomVariable, "[" & Integer'Image(valeurIndice)(2..Integer'Image(valeurIndice)'length) & "]");
 
-            variable := rechercherVariable(variables, nomVariable).all.ptrVar;
+            variable := rechercher_variable(variables, nomVariable).all.ptrVar;
 
             if (instructions.all.ptrIns.all.operandes.z.all.typeVariable = "Caractere") then
                 variable.all.valeurVariable := Character'Pos(element(chaineLue, 1));
@@ -215,7 +214,7 @@ package body operateurs is
         end if;
     end lire;
 
-    procedure branchementConditionel(instructions : in out T_List_Instruction; variables : in T_List_Variable) is
+    procedure branchement_conditionel(instructions : in out T_List_Instruction; variables : in T_List_Variable) is
         
         x : Integer;
         z : Integer;
@@ -232,19 +231,19 @@ package body operateurs is
         if (instructions.all.ptrIns.all.operandes.y /= null and then instructions.all.ptrIns.all.operandes.y.all.typeVariable = "Indice Tableau") then
             
             nomIndice := instructions.all.ptrIns.all.operandes.y.all.nomVariable;
-            valeurIndice := rechercherVariable(variables, nomIndice).all.ptrVar.all.valeurVariable;
+            valeurIndice := rechercher_variable(variables, nomIndice).all.ptrVar.all.valeurVariable;
             if (length(nomIndice) > 1) then
                 op := element(nomIndice, length(nomIndice)-1);
                 op2 := Integer'Value((1 => element(nomIndice, length(nomIndice))));
-                valeurIndice := operationArithmetique(op, valeurIndice, op2);
+                valeurIndice := operation_arithmetique(op, valeurIndice, op2);
             end if;
 
             indiceDebutRecherche := 1;
-            recupererChaine(nomVariable, instructions.all.ptrIns.all.operandes.x.all.nomVariable, indiceDebutRecherche, 3);
+            recuperer_chaine(nomVariable, instructions.all.ptrIns.all.operandes.x.all.nomVariable, indiceDebutRecherche, 3);
 
             append(nomVariable, "[" & Integer'Image(valeurIndice)(2..Integer'Image(valeurIndice)'length) & "]");
 
-            x := rechercherVariable(variables, nomVariable).all.ptrVar.all.valeurVariable;
+            x := rechercher_variable(variables, nomVariable).all.ptrVar.all.valeurVariable;
 
         else
             x := instructions.all.ptrIns.all.operandes.x.all.valeurVariable;
@@ -252,11 +251,11 @@ package body operateurs is
 
         z := instructions.all.ptrIns.all.operandes.z.all.valeurVariable;
         if(x = 1) then
-            branchementBasic(z,instructions);
+            branchement_basic(z,instructions);
         else
             currentLine := instructions.all.ptrIns.all.numInstruction;
-            branchementBasic(currentLine+1, instructions);
+            branchement_basic(currentLine+1, instructions);
         end if;
-    end branchementConditionel;
+    end branchement_conditionel;
 
 end operateurs;
