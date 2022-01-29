@@ -6,22 +6,47 @@ with manipulation_chaine; use manipulation_chaine;
 with variables; use variables;
 package body operateurs is
 
-    procedure affectation(ptrInstruction : in out T_List_Instruction) is
+    procedure affectation(instructions : in out T_List_Instruction; variables : in out T_List_Variable) is
+    
+        variableX : T_Ptr_Variable;
+        variableY : T_Ptr_Variable;
+        variableZ : T_Ptr_Variable;
+
     begin
-        -- Structure d'une ligne d'instructions
-        -- z op x y
-        if ptrInstruction.all.ptrIns.all.operandes.z.all.isConstant then
-           raise Variable_Constante;
+
+        if (instructions.all.ptrIns.all.operandes.z /= null and then isArray(instructions.all.ptrIns.all.operandes.z.all.nomVariable)) then
+            variableZ := recupererElementTableau(instructions.all.ptrIns.all.operandes.z.all.nomVariable, variables);
         else
-            if (ptrInstruction.all.ptrIns.all.operandes.z.all.typeVariable = ptrInstruction.all.ptrIns.all.operandes.x.all.typeVariable) then
-                ptrInstruction.all.ptrIns.all.operandes.z.all.valeurVariable := ptrInstruction.all.ptrIns.all.operandes.x.all.valeurVariable;
+            variableZ := instructions.all.ptrIns.all.operandes.z;
+        end if;
+
+        if (instructions.all.ptrIns.all.operandes.x /= null and then isArray(instructions.all.ptrIns.all.operandes.x.all.nomVariable)) then
+            variableX := recupererElementTableau(instructions.all.ptrIns.all.operandes.x.all.nomVariable, variables);
+        else
+            variableX := instructions.all.ptrIns.all.operandes.x;
+        end if;
+
+        if (instructions.all.ptrIns.all.operandes.y /= null and then isArray(instructions.all.ptrIns.all.operandes.y.all.nomVariable)) then
+            variableY := recupererElementTableau(instructions.all.ptrIns.all.operandes.y.all.nomVariable, variables);
+        else
+            variableY := instructions.all.ptrIns.all.operandes.y;
+        end if;
+
+        if (variableY = null) then
+            variableZ.all.valeurVariable := variableX.all.valeurVariable;
+        else
+            if (element(instructions.all.ptrIns.all.operation, 1) = '+' or element(instructions.all.ptrIns.all.operation, 1) = '*' or element(instructions.all.ptrIns.all.operation, 1) = '/' or element(instructions.all.ptrIns.all.operation, 1) = '-') then
+                variableZ.all.valeurVariable := operationArithmetique(element(instructions.all.ptrIns.all.operation, 1), variableX.all.valeurVariable, variableY.all.valeurVariable);
             else
-                raise Type_Incorrect;
+                variableZ.all.valeurVariable := operationLogique(instructions.all.ptrIns.all.operation, variableX.all.valeurVariable, variableY.all.valeurVariable);
             end if;
         end if;
+
+        instructions := instructions.all.next;
+
     end affectation;
 
-    function operation_arithmetique(op: in Character; op1 : in Integer; op2 : in Integer) return integer is
+    function operationArithmetique(op: in Character; op1 : in Integer; op2 : in Integer) return integer is
     
         resultat : Integer;
     
@@ -42,11 +67,14 @@ package body operateurs is
 
         return resultat;
 
-    end operation_arithmetique;
+    end operationArithmetique;
 
-    function operation_logique (op : in Unbounded_String; op1 : in Integer; op2 : in integer) return integer is
+    function operationLogique (op : in Unbounded_String; op1 : in Integer; op2 : in integer) return integer is
+        
         resultat : boolean;
+    
     begin
+
         if (op = "AND") then
             resultat := (op1 + op2 = 2);
         elsif (op = "OR") then
@@ -65,9 +93,12 @@ package body operateurs is
             raise Operateur_Incorrect;
         end if;
 
-        return (if resultat then 1 else 0);
+        if (resultat) then
+            return 1;
+        end if;
+        return 0;
 
-    end operation_logique;
+    end operationLogique;
 
     function successeur(char : in Character) return Character is
         
@@ -93,56 +124,25 @@ package body operateurs is
     
     end predecesseur;
 
-    procedure branchement_basic(line : in Integer; instructions : in out T_List_Instruction) is
-    
-    begin
-    
-        changerInstructionParNumero(instructions,line);
-    
-    end branchement_basic;
-
     procedure ecrire(instructions : in out T_List_Instruction; variables : in T_List_Variable) is
 
-        z : Integer;
+        variableZ : T_Ptr_Variable;
         nomVariable : Unbounded_String;
         nomIndice : Unbounded_String;
-        valeurIndice : Integer;
-        op : character;
-        op2 : integer;
-        indiceDebutRecherche : integer;
 
     begin
 
-        if (instructions.all.ptrIns.all.operandes.x /= null) then
-
-            nomIndice := instructions.all.ptrIns.all.operandes.x.all.nomVariable;
-            valeurIndice := rechercher_variable(variables, nomIndice).all.ptrVar.all.valeurVariable;
-            if (length(nomIndice) > 1) then
-                op := element(nomIndice, length(nomIndice)-1);
-                op2 := Integer'Value((1 => element(nomIndice, length(nomIndice))));
-                valeurIndice := operation_arithmetique(op, valeurIndice, op2);
-            end if;
-
-            indiceDebutRecherche := 1;
-            recuperer_chaine(nomVariable, instructions.all.ptrIns.all.operandes.z.all.nomVariable, indiceDebutRecherche, 3);
-
-            append(nomVariable, "[" & Integer'Image(valeurIndice)(2..Integer'Image(valeurIndice)'length) & "]");
-
-            z := rechercher_variable(variables, nomVariable).all.ptrVar.all.valeurVariable;
-
+        if (isArray(instructions.all.ptrIns.all.operandes.z.all.nomVariable)) then
+            variableZ := recupererElementTableau(instructions.all.ptrIns.all.operandes.z.all.nomVariable, variables);
         else
-
-            z := instructions.all.ptrIns.all.operandes.z.all.valeurVariable;
-            
+            variableZ := instructions.all.ptrIns.all.operandes.z;
         end if;
-
-        if (instructions.all.ptrIns.all.operandes.z.all.typeVariable = "Caractere") then
-            put(Character'Val(z));
+        if (variableZ.all.typeVariable = "Caractere") then
+            put(Character'Val(variableZ.all.valeurVariable));
         else
-            put(z, 1);
+            put(variableZ.all.valeurVariable, 1);
         end if;
         new_line;
-
         instructions := instructions.all.next;
 
     end ecrire;
@@ -151,111 +151,96 @@ package body operateurs is
 
         nomVariable : Unbounded_String;
         nomIndice : Unbounded_String;
-        valeurIndice : Integer;
-        op : character;
-        op2 : integer;
-        indiceDebutRecherche : integer;
         chaineLue : Unbounded_String;
-        Variable : T_Ptr_Variable;
-        variableZ : T_Variable;
+        variableZ : T_Ptr_Variable;
         conditionSortie : boolean;
 
     begin
 
-        variableZ := instructions.all.ptrIns.all.operandes.z.all;
+        if (isArray(instructions.all.ptrIns.all.operandes.z.all.nomVariable)) then
+            variableZ := recupererElementTableau(instructions.all.ptrIns.all.operandes.z.all.nomVariable, variables);
+        else
+            variableZ := instructions.all.ptrIns.all.operandes.z;
+        end if;
 
         conditionSortie := false;
         loop
             put("Entrez une chaine de type ");
-            put(variableZ.typeVariable);
+            put(variableZ.all.typeVariable);
             put(" pour la variable ");
-            put(instructions.all.ptrIns.all.operandes.z.all.nomVariable);
+            put(variableZ.all.nomVariable);
             put(" : ");
             get_line(chaineLue);
 
-            conditionSortie := (length(chaineLue) = 1 and variableZ.typeVariable = "Caractere") or (is_a_number(chaineLue) and variableZ.typeVariable = "Entier");
+            conditionSortie := (length(chaineLue) = 1 and variableZ.all.typeVariable = "Caractere") or (isANumber(chaineLue) and variableZ.all.typeVariable = "Entier");
             if (not conditionSortie) then
                 put_line("La chaine remplie ne correspond pas au type demandé");
             end if;     
             exit when (conditionSortie);
         end loop;
 
-        if (instructions.all.ptrIns.all.operandes.x = null) then
-
-            if (instructions.all.ptrIns.all.operandes.z.all.typeVariable = "Caractere") then
-                instructions.all.ptrIns.all.operandes.z.all.valeurVariable := Character'Pos(element(chaineLue, 1));
-            else
-                instructions.all.ptrIns.all.operandes.z.all.valeurVariable := Integer'Value(to_string(chaineLue));
-            end if;
-
+        if (variableZ.all.typeVariable = "Caractere") then
+            variableZ.all.valeurVariable := Character'Pos(element(chaineLue, 1));
         else
-
-            nomIndice := instructions.all.ptrIns.all.operandes.x.all.nomVariable;
-            valeurIndice := rechercher_variable(variables, nomIndice).all.ptrVar.all.valeurVariable;
-            if (length(nomIndice) > 1) then
-                op := element(nomIndice, length(nomIndice)-1);
-                op2 := Integer'Value((1 => element(nomIndice, length(nomIndice))));
-                valeurIndice := operation_arithmetique(op, valeurIndice, op2);
-            end if;
-
-            indiceDebutRecherche := 1;
-            recuperer_chaine(nomVariable, instructions.all.ptrIns.all.operandes.z.all.nomVariable, indiceDebutRecherche, 3);
-
-            append(nomVariable, "[" & Integer'Image(valeurIndice)(2..Integer'Image(valeurIndice)'length) & "]");
-
-            variable := rechercher_variable(variables, nomVariable).all.ptrVar;
-
-            if (instructions.all.ptrIns.all.operandes.z.all.typeVariable = "Caractere") then
-                variable.all.valeurVariable := Character'Pos(element(chaineLue, 1));
-            else
-                variable.all.valeurVariable := Integer'Value(to_string(chaineLue));
-            end if;
-
+            variableZ.all.valeurVariable := Integer'Value(to_string(chaineLue));
         end if;
+
+        instructions := instructions.all.next;
+
     end lire;
 
-    procedure branchement_conditionel(instructions : in out T_List_Instruction; variables : in T_List_Variable) is
+    procedure branchementConditionel(instructions : in out T_List_Instruction; variables : in T_List_Variable) is
         
-        x : Integer;
-        z : Integer;
+        variableX : T_Ptr_Variable;
+        variableZ : T_Ptr_Variable;
+
         currentLine : Integer;
         nomVariable : Unbounded_String;
         nomIndice : Unbounded_String;
-        valeurIndice : Integer;
-        op : character;
-        op2 : integer;
-        indiceDebutRecherche : integer;
 
     begin
 
-        if (instructions.all.ptrIns.all.operandes.y /= null and then instructions.all.ptrIns.all.operandes.y.all.typeVariable = "Indice Tableau") then
-            
-            nomIndice := instructions.all.ptrIns.all.operandes.y.all.nomVariable;
-            valeurIndice := rechercher_variable(variables, nomIndice).all.ptrVar.all.valeurVariable;
-            if (length(nomIndice) > 1) then
-                op := element(nomIndice, length(nomIndice)-1);
-                op2 := Integer'Value((1 => element(nomIndice, length(nomIndice))));
-                valeurIndice := operation_arithmetique(op, valeurIndice, op2);
-            end if;
-
-            indiceDebutRecherche := 1;
-            recuperer_chaine(nomVariable, instructions.all.ptrIns.all.operandes.x.all.nomVariable, indiceDebutRecherche, 3);
-
-            append(nomVariable, "[" & Integer'Image(valeurIndice)(2..Integer'Image(valeurIndice)'length) & "]");
-
-            x := rechercher_variable(variables, nomVariable).all.ptrVar.all.valeurVariable;
-
+        if (instructions.all.ptrIns.all.operandes.z /= null and then isArray(instructions.all.ptrIns.all.operandes.z.all.nomVariable)) then
+            variableZ := recupererElementTableau(instructions.all.ptrIns.all.operandes.z.all.nomVariable, variables);
         else
-            x := instructions.all.ptrIns.all.operandes.x.all.valeurVariable;
+            variableZ := instructions.all.ptrIns.all.operandes.z;
         end if;
 
-        z := instructions.all.ptrIns.all.operandes.z.all.valeurVariable;
-        if(x = 1) then
-            branchement_basic(z,instructions);
+        if (instructions.all.ptrIns.all.operandes.x /= null and then isArray(instructions.all.ptrIns.all.operandes.x.all.nomVariable)) then
+            variableX := recupererElementTableau(instructions.all.ptrIns.all.operandes.x.all.nomVariable, variables);
+        else
+            variableX := instructions.all.ptrIns.all.operandes.x;
+        end if;
+
+        if(variableX.all.valeurVariable = 1) then
+            branchementBasic(instructions, variableZ.all.valeurVariable);
         else
             currentLine := instructions.all.ptrIns.all.numInstruction;
-            branchement_basic(currentLine+1, instructions);
+            branchementBasic(instructions, currentLine+1);
         end if;
-    end branchement_conditionel;
+
+    end branchementConditionel;
+
+    procedure branchementBasic(instructions : in out T_List_Instruction; numInstruction : in integer) is
+    
+    begin
+
+        if (instructions = null) then
+            raise instuction_not_found;
+        elsif (instructions.all.ptrIns.all.numInstruction < numInstruction) then
+            instructions := instructions.all.next;
+            branchementBasic(instructions, numInstruction);
+        elsif (instructions.all.ptrIns.all.numInstruction > numInstruction) then
+            instructions := instructions.all.prev;
+            branchementBasic(instructions, numInstruction);
+        else
+            null;
+        end if;
+
+        exception
+            when Instuction_Not_Found => 
+                put("GOTO : la ligne précisée n'existe pas dans le fichier");
+    
+    end branchementBasic;
 
 end operateurs;

@@ -5,7 +5,12 @@ with Ada.IO_EXCEPTIONS; use Ada.IO_EXCEPTIONS;
 
 package body intermediaire is
 
-    procedure traiter_programme is
+    --package Liste_Variables is new P_List_Double(pointeur => T_List_Variable);
+    --use Liste_Variables;
+    --package Liste_Instructions is new P_List_Double(pointeur => T_List_Instruction);
+    --use Liste_Instructions;
+
+    procedure traiterProgramme is
 
         variables : T_List_Variable;
         instructions : T_List_Instruction;
@@ -14,7 +19,7 @@ package body intermediaire is
         fileName : Unbounded_String;
     
     begin
-        -- Récupération du nom de fichier via l'invite de commande
+
         begin
             loop
                 fileName := To_Unbounded_String(Argument(1));
@@ -27,7 +32,6 @@ package body intermediaire is
             raise Program_Error;
         end;
         
-        -- Récupération de l'option --DEBUG depuis l'invite de commande
         if(Argument_Count = 2) then
             choice := (if Argument(2) = "--DEBUG"
             then 1
@@ -38,7 +42,6 @@ package body intermediaire is
 
         skip_line;
 
-        -- Ouverture du fichier, récupération des variables et des instructions
         begin
             parseFile(To_String(fileName), variables, instructions);
 
@@ -46,13 +49,10 @@ package body intermediaire is
             when Ada.IO_EXCEPTIONS.DEVICE_ERROR => Put_Line("Fichier inexistant/invalide");
         end;
 
-        -- Remise du pointeur sur la liste en tête
-        pointer_en_tete_instructions(instructions);
+        pointerEnTeteInstructions(instructions);
 
-        -- Copie de la liste d'instructions
         l_instructions := instructions;
 
-        -- Interprétation des instructions
         while(l_instructions /= null) loop
             if(choice = 1 and l_instructions.next /= null) then
                 Put("Numéro de l'instruction en cours : ");
@@ -62,13 +62,11 @@ package body intermediaire is
             interpreterCommande(l_instructions, variables);
         end loop;
 
-
-        -- Affichage de la mémoire en fin d'exécution
         afficher_liste(instructions);
         Put_Line("Etat des variables en terminaison du programme");
         afficher_liste(variables);
 
-    end traiter_programme;
+    end traiterProgramme;
 
     -- private
     -- Les sous-programmes suivant ne sont pas déclarés private afin de pouvoir toujours réaliser des tests unitaires
@@ -79,112 +77,55 @@ package body intermediaire is
         ligne : Unbounded_string;
     begin
     
-        -- Création des listes de variable et d'instruction
         variables := creer_liste_vide;
+
         instructions := creer_liste_vide;
 
-        -- Ouverture du fichier en lecture
-        Open (F, In_File, fileName);    
+        Open (F, In_File, fileName);    -- Ouverture du fichier en lecture
 
         loop
-            ligne := renvoyer_ligne_sans_espace(Ada.Text_IO.Unbounded_IO.get_line(f));     -- Lecture de la ligne courante sans espace
-        exit when (ligne_commence_par_mot_reserve(ligne, Reserved_Langage_Word'Image(Programme)));  -- Tant que la ligne ne commence par un mot réservé
+            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));     -- Lecture de la ligne courante sans espace
+        exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Programme)));  -- Tant que la ligne ne commence par un mot réservé
         end loop;
 
         loop
-            ligne := renvoyer_ligne_sans_espace(Ada.Text_IO.Unbounded_IO.get_line(f)); -- Lecture de la ligne courante sans espace
-        exit when est_ligne_utile(ligne);
+            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f)); -- Lecture de la ligne courante sans espace
+        exit when estLigneUtile(ligne);
         end loop;
 
-        if (ligne_commence_par_mot_reserve(ligne, Reserved_Langage_Word'Image(Debut))) then -- Si la ligne commence par un mot réservé
+        if (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut))) then -- Si la ligne commence par un mot réservé
             raise Aucune_Variable_Definie;  -- On lève une exception car cela indique qu'il n'y a pas de variable
         end if;
 
         loop
-            if (est_ligne_utile(ligne)) then  -- Si la ligne est utile (ie. pas un commentaire )
+            if (estLigneUtile(ligne)) then  -- Si la ligne est utile (ie. pas un commentaire )
                 recupererVariables(variables, ligne);   -- Récupération des variables
             end if;
-        
-            ligne := renvoyer_ligne_sans_espace(Ada.Text_IO.Unbounded_IO.get_line(f)); -- Lecture de la ligne courante sans espace
-
-        exit when (ligne_commence_par_mot_reserve(ligne, Reserved_Langage_Word'Image(Debut))); -- Jusqu'à arriver à 'Debut'
+            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f)); -- Lecture de la ligne courante sans espace
+        exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut))); -- Jusqu'à arriver à 'Debut'
         end loop;
 
-        ligne := renvoyer_ligne_sans_espace(Ada.Text_IO.Unbounded_IO.get_line(f));
+        ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
 
         loop
-            if (est_ligne_utile(ligne)) then
+            if (estLigneUtile(ligne)) then
                 recupererInstructions(instructions, variables, ligne);  -- Récupération des instructions
             end if;
-
-            ligne := renvoyer_ligne_sans_espace(Ada.Text_IO.Unbounded_IO.get_line(f));
-        exit when (ligne_commence_par_mot_reserve(ligne, Reserved_Langage_Word'Image(Fin)));    -- Jusqu'à arriver à 'Fin'
+            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
+        exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Fin)));    -- Jusqu'à arriver à 'Fin'
         end loop;
 
         Close(F);
 
     end parseFile;
 
-    procedure recupererVariables(variables : in out T_List_Variable; ligne : in Unbounded_string) is
-        
-        i : integer; 
-        typeVariable : Unbounded_String;
-        nomVariable : Unbounded_String;
-        nomVariableTableau : Unbounded_String;
-        isArray : boolean;
-        nbElementsTableau : Unbounded_String;
-
-    begin
-
-        i := 1;
-        -- Parcourir la ligne jusqu'à trouver la déclaration de type
-        while(element(ligne, i) /= ':') loop
-            i := i+1;
-        end loop;
-        i := i+1;
-        -- Récupérer le type de la variable
-        isArray := element(ligne, i) = '[';
-        if (isArray) then
-            i := i+1;
-        end if;
-        recuperer_chaine(typeVariable, ligne, i, 2);
-        if (isArray) then
-            i := i+1;
-            recuperer_chaine(nbElementsTableau, ligne, i, 1);
-        end if;
-        i := 1;
-        while(i <= length(ligne) and element(ligne, i) /= ':') loop
-            -- Parcourir la ligne pour trouver le nom de la variable
-            if (element(ligne, i) /= ',') then
-                recuperer_chaine(nomVariable, ligne, i, 3);
-                -- Différenciation entre variables unaires et tableaux
-                if (isArray) then
-                    for i in 1..Integer'value(to_string(nbElementsTableau)) loop
-                        nomVariableTableau := nomVariable;
-                        append(nomVariableTableau,'[' & Integer'Image(i)(2..Integer'Image(i)'length) &']');
-                        creer_et_ajouter_variable(variables, typeVariable, nomVariableTableau);
-                    end loop;
-                else
-                    creer_et_ajouter_variable(variables, typeVariable, nomVariable);
-                end if;
-                nomVariable := To_Unbounded_String("");
-            else
-                i := i+1;
-            end if;
-        end loop;
-
-    end recupererVariables;
-    
-
     function recupererNumeroInstructionLigne (index : in out integer; ligne : in Unbounded_String) return integer is
+        
         numInstruction : Unbounded_String;
+    
     begin
 
-        while (Character'POS(element(ligne, index)) in 48..57) loop
-            append(numInstruction, element(ligne, index));
-            index := index+1;
-        end loop;
-
+        recupererChaine(numInstruction, ligne, index, 1);
         return Integer'Value(To_String(numInstruction));
 
     end recupererNumeroInstructionLigne;
@@ -197,168 +138,62 @@ package body intermediaire is
         typeVariableZ : Unbounded_String;
         nomVariableY : Unbounded_String;
         operation : Unbounded_String;
-        ptrInstruction : T_Ptr_Instruction; 
+        instruction : T_Ptr_Instruction; 
         isCaractere : boolean := false;
 
     begin
 
-        ptrInstruction := new T_Instruction;
+        instruction := new T_Instruction;
 
         -- recuperation du numero de l'instruction
         i := 1;
-        ptrInstruction.all.numInstruction := recupererNumeroInstructionLigne(i,ligne);
+        instruction.all.numInstruction := recupererNumeroInstructionLigne(i,ligne);
 
         if (i <= length(ligne)-1 and then Slice(ligne, i, i+1) = "IF") then
-
-            if_operation(ligne, i, ptrInstruction, operation, variables);
-
+            ifOperation(ligne, i, instruction, operation, variables);
         elsif (i <= length(ligne)-3 and then Slice(ligne, i, i+3) = "GOTO") then
-
-            goto_operation(ligne, i, ptrInstruction, operation, variables);
-
+            gotoOperation(ligne, i, instruction, operation, variables);
         elsif (i <= length(ligne)-3 and then Slice(ligne, i, i+3) = "NULL") then
-            
-            null_operation(operation);
-
+            nullOperation(operation);
         elsif (i <= length(ligne)-5 and then Slice(ligne, i, i+5) = "Ecrire") then
-            
-            ecrire_operation(ligne, i, ptrInstruction, operation, variables);
-
+            ecrireOperation(ligne, i, instruction, operation, variables);
         elsif (i <= length(ligne)-3 and then Slice(ligne, i, i+3) = "Lire") then
-
-            lire_operation(ligne, i, ptrInstruction, operation, variables);
-
+            lireOperation(ligne, i, instruction, operation, variables);
         else
-
-            affectation_operation(ligne, i, ptrInstruction, operation, variables);
-
+            affectationOperation(ligne, i, instruction, operation, variables);
         end if;
 
-        ptrInstruction.all.operation := operation;
-        ajouter(instructions, ptrInstruction);
+        instruction.all.operation := operation;
+        ajouter(instructions, instruction);
 
     end recupererInstructions;
 
-
-    procedure interpreterCommande (ptrInstruction : in out T_List_Instruction; variables : in T_List_Variable) is
+    procedure interpreterCommande (instructions : in out T_List_Instruction; variables : in out T_List_Variable) is
         
         nomOperation : Unbounded_String;
-
         nomVariable : Unbounded_String;
         nomIndice : Unbounded_String;
         nomIndiceReel : Unbounded_String;
-        valeurIndice : Integer;
-        op : character;
-        op2 : integer;
-        indiceDebutRecherche : integer;
         chaineLue : Unbounded_String;
-        Variable : T_Ptr_Variable;
     
     begin
 
-        nomOperation := ptrInstruction.all.ptrIns.all.operation;
+        nomOperation := instructions.all.ptrIns.all.operation;
 
         if(nomOperation = "NULL") then
-            ptrInstruction := ptrInstruction.all.next;
+            branchementBasic(instructions, instructions.all.ptrIns.all.numInstruction+1);
         elsif(nomOperation = "GOTO") then
-            branchement_basic(ptrInstruction.all.ptrIns.all.operandes.z.all.valeurVariable,ptrInstruction);
+            branchementBasic(instructions, instructions.all.ptrIns.all.operandes.z.all.valeurVariable);
         elsif(nomOperation = "IF") then
-            branchement_conditionel(ptrInstruction, variables);
+            branchementConditionel(instructions, variables);
         elsif(nomOperation = "ECRIRE") then
-            ecrire(ptrInstruction, variables);
+            ecrire(instructions, variables);
         elsif(nomOperation = "LIRE") then
-            lire(ptrInstruction, variables);
-            ptrInstruction := ptrInstruction.all.next;
+            lire(instructions, variables);
         else
-            if (ptrInstruction.all.ptrIns.all.operandes.y = null) then
-                ptrInstruction.all.ptrIns.all.operandes.z.all.valeurVariable := ptrInstruction.all.ptrIns.all.operandes.x.all.valeurVariable;
-            else
-
-                if (ptrInstruction.all.ptrIns.all.operandes.x.all.typeVariable = "Indice Tableau") then
-                    
-                    indiceDebutRecherche := 1;
-
-                    nomIndice := ptrInstruction.all.ptrIns.all.operandes.x.all.nomVariable;
-                    recuperer_chaine(nomIndiceReel, nomIndice, indiceDebutRecherche, 3);
-                    valeurIndice := rechercher_variable(variables, nomIndiceReel).all.ptrVar.all.valeurVariable;
-
-                    if (nomIndice /= nomIndiceReel) then
-                        op := element(nomIndice, length(nomIndice)-1);
-                        op2 := Integer'Value((1 => element(nomIndice, length(nomIndice))));
-                        valeurIndice := operation_arithmetique(op, valeurIndice, op2);
-                    end if;
-
-                    indiceDebutRecherche := 1;
-
-                    recuperer_chaine(nomVariable, ptrInstruction.all.ptrIns.all.operandes.z.all.nomVariable, indiceDebutRecherche, 3);
-
-                    append(nomVariable, "[" & Integer'Image(valeurIndice)(2..Integer'Image(valeurIndice)'length) & "]");
-
-                    variable := rechercher_variable(variables, nomVariable).all.ptrVar;
-
-                    variable.all.valeurVariable := ptrInstruction.all.ptrIns.all.operandes.y.all.valeurVariable;
-
-                else
-
-                    if (ptrInstruction.all.ptrIns.all.operandes.y.all.typeVariable = "Indice Tableau") then
-
-                        indiceDebutRecherche := 1;
-
-                        nomIndice := ptrInstruction.all.ptrIns.all.operandes.y.all.nomVariable;
-                        recuperer_chaine(nomIndiceReel, nomIndice, indiceDebutRecherche, 3);
-                        valeurIndice := rechercher_variable(variables, nomIndiceReel).all.ptrVar.all.valeurVariable;
-                        if (nomIndice /= nomIndiceReel) then
-                            op := element(nomIndice, length(nomIndice)-1);
-                            op2 := Integer'Value((1 => element(nomIndice, length(nomIndice))));
-                            valeurIndice := operation_arithmetique(op, valeurIndice, op2);
-                        end if;
-
-                        indiceDebutRecherche := 1;
-
-
-                        recuperer_chaine(nomVariable, ptrInstruction.all.ptrIns.all.operandes.x.all.nomVariable, indiceDebutRecherche, 3);
-
-                        append(nomVariable, "[" & Integer'Image(valeurIndice)(2..Integer'Image(valeurIndice)'length) & "]");
-
-                        variable := rechercher_variable(variables, nomVariable).all.ptrVar;
-
-                        ptrInstruction.all.ptrIns.all.operandes.z.all.valeurVariable := variable.all.valeurVariable;
-                    else
-                        
-                        if (element(ptrInstruction.all.ptrIns.all.operation, 1) = '+' or element(ptrInstruction.all.ptrIns.all.operation, 1) = '*' or element(ptrInstruction.all.ptrIns.all.operation, 1) = '/' or element(ptrInstruction.all.ptrIns.all.operation, 1) = '-') then
-                            ptrInstruction.all.ptrIns.all.operandes.z.valeurVariable := operation_arithmetique(element(ptrInstruction.all.ptrIns.all.operation, 1), ptrInstruction.all.ptrIns.all.operandes.x.valeurVariable, ptrInstruction.all.ptrIns.all.operandes.y.valeurVariable);
-                        else
-                            ptrInstruction.all.ptrIns.all.operandes.z.valeurVariable := operation_logique(ptrInstruction.all.ptrIns.all.operation, ptrInstruction.all.ptrIns.all.operandes.x.valeurVariable, ptrInstruction.all.ptrIns.all.operandes.y.valeurVariable);
-                        end if;
-                    end if;
-
-                end if;
-
-            end if;
-            ptrInstruction := ptrInstruction.all.next;
+            affectation(instructions, variables);
         end if;
 
     end interpreterCommande;
-
-    procedure changerInstructionParNumero(ptrInstruction : in out T_List_Instruction; numInstruction : in integer) is
-        instuction_not_found: Exception;
-    begin
-        if (ptrInstruction = null) then
-            raise instuction_not_found;
-        elsif (ptrInstruction.all.ptrIns.all.numInstruction < numInstruction) then
-            ptrInstruction := ptrInstruction.all.next;
-            changerInstructionParNumero(ptrInstruction, numInstruction);
-        elsif (ptrInstruction.all.ptrIns.all.numInstruction > numInstruction) then
-            ptrInstruction := ptrInstruction.all.prev;
-            changerInstructionParNumero(ptrInstruction, numInstruction);
-        else
-            null;
-        end if;
-
-        exception
-            when instuction_not_found => 
-                put("GOTO : la ligne précisée n'existe pas dans le fichier");
-
-    end changerInstructionParNumero;
 
 end intermediaire;

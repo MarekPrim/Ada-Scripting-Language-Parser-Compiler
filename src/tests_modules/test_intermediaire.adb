@@ -97,7 +97,7 @@ variables := creer_liste_vide;
     -- Test de la recherche d'une variable
         
         chne := To_Unbounded_String("Sum");
-        search := rechercher_variable(variables, chne);
+        search := rechercherVariable(variables, chne);
         if(search /= null) then
             if(search.all.ptrVar.all.nomVariable = "Sum") then
                 Put_Line("OK rechercheVariable");
@@ -111,7 +111,7 @@ variables := creer_liste_vide;
         begin -- Recherche d'une variable inexistante
            
             chne := To_Unbounded_String("xyz");
-            search := rechercher_variable(variables,chne);
+            search := rechercherVariable(variables,chne);
 
             exception
                 when Variable_Non_Trouvee => Put_Line("OK exception variable non trouvee");
@@ -164,21 +164,21 @@ variables := creer_liste_vide;
             interpreterCommande(instructions,variables);
         end loop;
         chne := To_Unbounded_String("n");
-        if(rechercher_variable(variables,chne).all.ptrVar.all.valeurVariable = 5) then
+        if(rechercherVariable(variables,chne).all.ptrVar.all.valeurVariable = 5) then
             Put_Line("OK interpreterCommande");
         else
             Put_Line("KO interpreterCommande");
         end if;
 
         chne := To_Unbounded_String("i");
-        if(rechercher_variable(variables,chne).all.ptrVar.all.valeurVariable = 1) then
+        if(rechercherVariable(variables,chne).all.ptrVar.all.valeurVariable = 1) then
             Put_Line("OK interpreterCommande");
         else
             Put_Line("KO interpreterCommande");
         end if;
 
         chne := To_Unbounded_String("Sum");
-        if(rechercher_variable(variables,chne).all.ptrVar.all.valeurVariable = 6) then
+        if(rechercherVariable(variables,chne).all.ptrVar.all.valeurVariable = 6) then
             Put_Line("OK interpreterCommande");
         else
             Put_Line("KO interpreterCommande");

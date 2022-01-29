@@ -9,17 +9,94 @@ use ada.Text_IO, ada.integer_Text_io, Ada.Strings.Unbounded, Ada.Text_IO.Unbound
 
 package body variables is
 
+    procedure recupererVariables(variables : in out T_List_Variable; ligne : in Unbounded_string) is
+        
+        i : integer; 
+        typeVariable : Unbounded_String;
+        nomVariable : Unbounded_String;
+        nomVariableTableau : Unbounded_String;
+        isArray : boolean;
+        nbElementsTableau : Unbounded_String;
+
+    begin
+
+        i := 1;
+        -- Parcourir la ligne jusqu'à trouver la déclaration de type
+        while(element(ligne, i) /= ':') loop
+            i := i+1;
+        end loop;
+        i := i+1;
+        -- Récupérer le type de la variable
+        isArray := element(ligne, i) = '[';
+        if (isArray) then
+            i := i+1;
+        end if;
+        recupererChaine(typeVariable, ligne, i, 2);
+        if (isArray) then
+            i := i+1;
+            recupererChaine(nbElementsTableau, ligne, i, 1);
+        end if;
+        i := 1;
+        while(i <= length(ligne) and element(ligne, i) /= ':') loop
+            -- Parcourir la ligne pour trouver le nom de la variable
+            if (element(ligne, i) /= ',') then
+                recupererChaine(nomVariable, ligne, i, 3);
+                if (isArray) then
+                    -- création des variables ayant pour noms nomDuTableau[1], ..., nomDuTableau[nbElementsTableau]
+                    for i in 1..Integer'value(to_string(nbElementsTableau)) loop
+                        nomVariableTableau := nomVariable;
+                        append(nomVariableTableau,'[' & Integer'Image(i)(2..Integer'Image(i)'length) &']');
+                        creerEtAjouterVariable(variables, typeVariable, nomVariableTableau);
+                    end loop;
+                else
+                    creerEtAjouterVariable(variables, typeVariable, nomVariable);
+                end if;
+                nomVariable := To_Unbounded_String("");
+            else
+                i := i+1;
+            end if;
+        end loop;
+
+    end recupererVariables;
+
     function creer_variable(variables : in T_List_Variable; nomVariable : in Unbounded_String; isCaractere : in boolean) return T_Ptr_Variable is
 
     begin
 
-        if (isCaractere or is_a_number(nomVariable)) then
+        if (isCaractere or isANumber(nomVariable)) then
             return creer_variable_tmp(nomVariable, isCaractere);
         else
-            return rechercher_variable(variables, nomVariable).all.ptrVar;
+            return rechercherVariable(variables, nomVariable).all.ptrVar;
         end if;
 
     end creer_variable;
+
+    procedure creer_variable_tableau (ligne : in Unbounded_String; i : in out integer; nomTableau : in out Unbounded_String; variables : in T_List_Variable; ptrVariable : out T_Ptr_Variable) is
+
+        nomVariableTableau : Unbounded_String;
+        typeTableau : Unbounded_String;
+
+    begin
+
+        nomVariableTableau := nomTableau;
+        append(nomTableau, "[1]");
+        append(nomVariableTableau, "[");
+
+        typeTableau := rechercherVariable(variables, nomTableau).all.ptrVar.all.typeVariable;
+        i := i+1;
+
+        while (i < length(ligne) and then element(ligne, i) /= ']') loop
+            append(nomVariableTableau, element(ligne, i));
+            i := i+1;
+        end loop;
+
+        append(nomVariableTableau, "]");
+
+        i := i+1;
+
+        ptrVariable := new T_Variable'(0, typeTableau, nomVariableTableau, false);
+
+    end creer_variable_tableau;
 
     procedure creer_variables_tableau (ligne : in Unbounded_String; i : in out integer; nomVariable : in out Unbounded_String; variables : in T_List_Variable; ptrVariable : out T_Ptr_Variable) is
 
@@ -37,7 +114,7 @@ package body variables is
 
         i := i+1;
 
-        if (is_a_number(nomIndice)) then
+        if (isANumber(nomIndice)) then
             nomIndice := To_Unbounded_String("Tmp");
         end if;
 
@@ -67,14 +144,14 @@ package body variables is
 
     end creer_variable_tmp;
 
-    procedure creer_et_ajouter_variable(variables : in out T_List_Variable; typeVariable : in Unbounded_String; nomVariable : in Unbounded_String) is
+    procedure creerEtAjouterVariable(variables : in out T_List_Variable; typeVariable : in Unbounded_String; nomVariable : in Unbounded_String) is
 
         ptrVariable : T_Ptr_Variable;
 
     begin
 
         begin
-        if(variables /= null and then rechercher_variable(variables, nomVariable) /= null) then
+        if(variables /= null and then rechercherVariable(variables, nomVariable) /= null) then
             raise Variable_Deja_Definie;
         end if;
             exception
@@ -84,9 +161,62 @@ package body variables is
         ptrVariable := new T_Variable'(0, typeVariable, nomVariable, false);
         ajouter(variables, ptrVariable);
 
-    end creer_et_ajouter_variable;
+    end creerEtAjouterVariable;
 
-    function rechercher_variable (variables : in T_List_Variable; nomVariable : in Unbounded_String) return T_List_Variable is
+
+    function recupererElementTableau(nomVariableTableau : in Unbounded_String; variables : in T_List_Variable) return T_Ptr_Variable is
+
+        nomTableau : Unbounded_String;
+        nomIndice : Unbounded_String;
+        elementTableau : Unbounded_String;
+        i : integer;
+        valeurIndice : integer;
+
+    begin
+
+        i := 1;
+
+        recupererChaine(nomTableau, nomVariableTableau, i, 3);
+        elementTableau := nomTableau;
+        append(elementTableau, "[");
+        i := i+1;
+        recupererChaine(nomIndice, nomVariableTableau, i, 3);
+
+        if (isANumber(nomIndice)) then
+            valeurIndice := Integer'Value(to_string(nomIndice));
+        else
+            valeurIndice := rechercherVariable(variables, nomIndice).all.ptrVar.all.valeurVariable;
+            if (element(nomVariableTableau,i) /= ']') then
+                valeurIndice := operationArithmetique(element(nomVariableTableau, i), Integer'Value(( 1 => element(nomVariableTableau, i+1) )), valeurIndice);
+            end if;
+        end if;
+
+        append(elementTableau, Integer'Image(valeurIndice)(2..Integer'Image(valeurIndice)'length) & "]");
+        
+        return rechercherVariable(variables, elementTableau).all.ptrVar;
+
+    end recupererElementTableau;
+
+    function isArray (nomVariable : in Unbounded_String) return boolean is
+
+        i : integer;
+
+    begin
+
+        i := 1;
+        while (i <= length(nomVariable)) loop
+            if (element(nomVariable, i) = '[') then
+                return true;
+            end if;
+            i := i+1;
+        end loop;
+
+        return false;
+
+    end isArray;
+
+
+    function rechercherVariable (variables : in T_List_Variable; nomVariable : in Unbounded_String) return T_List_Variable is
     
         copy : T_List_Variable;
     
@@ -105,6 +235,6 @@ package body variables is
             return copy;
         end if;
 
-    end rechercher_variable;
+    end rechercherVariable;
 
 end variables;

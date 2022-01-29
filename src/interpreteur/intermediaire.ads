@@ -15,6 +15,7 @@ package intermediaire is
     Fichier_Non_Lisible : Exception;
     Fichier_Non_Trouve : Exception;
     Element_Tableau_Deja_Utilise : Exception;
+    Instuction_Not_Found: Exception;
 
     type Tab_Chaines is array(1..2) of Unbounded_String;
 

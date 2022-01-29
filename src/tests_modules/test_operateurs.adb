@@ -36,21 +36,20 @@ procedure test_operateurs is
 
 begin
 
-
-
-variables := creer_liste_vide;
-instructions := creer_liste_vide;
-search := creer_liste_vide;
-parseFile(fileName, variables, instructions);
-instruction := creer_liste_vide;
+    variables := creer_liste_vide;
+    instructions := creer_liste_vide;
+    search := creer_liste_vide;
+    parseFile(fileName, variables, instructions);
+    instruction := creer_liste_vide;
 
         afficher_liste(instructions);
-    -- Test affectation
+        -- Test affectation
         instruction := instructions;
-        pointer_en_tete_instructions(instruction);
-        affectation(instruction);
+        pointerEnTeteInstructions(instruction);
+        affectation(instruction, variables);
+        instruction := instruction.all.prev;
         
-        --search := rechercher_variable(variables,chne);
+        --search := rechercherVariable(variables,chne);
         new_line;
         Put(instruction.all.ptrIns.all.operandes.x.all.valeurVariable);
         new_line;
@@ -70,7 +69,7 @@ instruction := creer_liste_vide;
         resultat_arithmetique := 0;
 
         --operateur(1) := '+';
-        resultat_arithmetique := operation_arithmetique('+',op1,op2);
+        resultat_arithmetique := operationArithmetique('+',op1,op2);
         if(resultat_arithmetique = 6) then
             Put_Line("Operation arithmetique + OK");
         else
@@ -80,7 +79,7 @@ instruction := creer_liste_vide;
 
 
         --operateur(1) := '-';
-        resultat_arithmetique := operation_arithmetique('-',op1,op2);
+        resultat_arithmetique := operationArithmetique('-',op1,op2);
         if(resultat_arithmetique = 2) then
             Put_Line("Operation arithmetique - OK");
         else
@@ -89,7 +88,7 @@ instruction := creer_liste_vide;
 
 
         --operateur(1) := '*';
-        resultat_arithmetique := operation_arithmetique('*',op1,op2);
+        resultat_arithmetique := operationArithmetique('*',op1,op2);
         if(resultat_arithmetique = 8) then
             Put_Line("Operation arithmetique * OK");
         else
@@ -98,7 +97,7 @@ instruction := creer_liste_vide;
 
 
         --operateur(1) := '/';
-        resultat_arithmetique := operation_arithmetique('/',op1,op2);
+        resultat_arithmetique := operationArithmetique('/',op1,op2);
         if(resultat_arithmetique = 2) then
             Put_Line("Operation arithmetique / OK ");
         else
@@ -108,7 +107,7 @@ instruction := creer_liste_vide;
 
         begin
             operateur(1) := '^';
-             resultat_arithmetique := operation_arithmetique(':',op1,op2);
+             resultat_arithmetique := operationArithmetique(':',op1,op2);
 
             exception
                 when Operateur_Incorrect => Put_Line("OK exception : Operateur_Incorrect");
@@ -137,7 +136,7 @@ instruction := creer_liste_vide;
         operandes.z := null;
         instructions.all.ptrIns := new T_Instruction'(1,operandes,chaine);
 
-        resultat_logique := operation_logique(chaine,op1,op2);
+        resultat_logique := operationLogique(chaine,op1,op2);
         if(resultat_logique = 0) then
             Put_Line("OK operation logique ="); 
         else
@@ -149,7 +148,7 @@ instruction := creer_liste_vide;
         instructions := new T_Cell_Instruction'(null,null,null);
         chaine := To_Unbounded_String(">");
         instructions.all.ptrIns := new T_Instruction'(1,operandes,chaine);
-        resultat_logique := operation_logique(chaine,op1,op2);
+        resultat_logique := operationLogique(chaine,op1,op2);
         if(resultat_logique = 0) then
             Put_Line("OK operation logique >");
         else
@@ -161,7 +160,7 @@ instruction := creer_liste_vide;
         chaine := To_Unbounded_String("<");
         operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
         instructions.all.ptrIns := new T_Instruction'(1,operandes,chaine);
-        resultat_logique := operation_logique(chaine,op1,op2);
+        resultat_logique := operationLogique(chaine,op1,op2);
         if(resultat_logique = 1) then
             Put_Line("OK operation logique <");
         else
@@ -174,7 +173,7 @@ instructions := creer_liste_vide;
         chaine := To_Unbounded_String(">=");
         operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
         instructions.all.ptrIns := new T_Instruction'(1,operandes,chaine);
-        resultat_logique := operation_logique(chaine,op1,op2);
+        resultat_logique := operationLogique(chaine,op1,op2);
         if(resultat_logique = 0) then
             Put_Line("OK operation logique >= ");
         else
@@ -187,7 +186,7 @@ instructions := creer_liste_vide;
         operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
         instructions.all.ptrIns := new T_Instruction'(1,operandes,chaine);
 
-        resultat_logique := operation_logique(chaine,op1,op2);
+        resultat_logique := operationLogique(chaine,op1,op2);
         if(resultat_logique = 1) then
             Put_Line("OK operation logique <= ");
         else
@@ -202,7 +201,7 @@ instructions := creer_liste_vide;
         variables.all.next.all.ptrVar.typeVariable := To_Unbounded_String("Booleen");
         operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
         instructions.all.ptrIns := new T_Instruction'(1,operandes,chaine);
-        resultat_logique := operation_logique(chaine,op1,op2);
+        resultat_logique := operationLogique(chaine,op1,op2);
         if(resultat_logique = 0) then
             Put_Line("OK operation logique & ");
         else
@@ -214,7 +213,7 @@ instructions := creer_liste_vide;
         chaine := To_Unbounded_String("OR");
         operandes := (variables.all.ptrVar,variables.all.next.ptrVar,null);
         instructions.all.ptrIns := new T_Instruction'(1,operandes,chaine);
-        resultat_logique := operation_logique(chaine,op1,op2);
+        resultat_logique := operationLogique(chaine,op1,op2);
         if(resultat_logique = 1) then
             Put_Line("OK operation logique | ");
         else
@@ -228,14 +227,14 @@ instructions := creer_liste_vide;
         variables := creer_liste_vide;
         parseFile(fileNameGoto, variables, instructions);
 
-        branchement_basic(3,instructions);
+        branchementBasic(instructions, 3);
         if(instructions.all.ptrIns.all.numInstruction = 3) then
             Put_Line("OK branchement basique");
         else
             Put_Line("KO branchement basique");
         end if;
 
-        branchement_conditionel(instructions, variables);
+        branchementConditionel(instructions, variables);
         if(instructions.all.ptrIns.all.numInstruction = 4) then
             Put_Line("OK branchement conditionnel");
         else

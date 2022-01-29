@@ -25,10 +25,7 @@ package operations_liste is
     -- exception : /
     procedure afficher_liste(f_l : in T_List_Instruction);
 
-    
-
-    
-     -- nom : creer_liste_vide
+    -- nom : creer_liste_vide
     -- semantique : creer une liste vide
     -- parametres : /
     -- type retour : T_List_Integer
@@ -111,13 +108,13 @@ package operations_liste is
     -- Préconditions    : la liste des lignes n'est pas vide
     -- Postconditions   : ptr.all.prev = null 
     -- Exceptions :                 
-    procedure pointer_en_tete_instructions (ptrInstruction : in out T_List_Instruction);
+    procedure pointerEnTeteInstructions (ptrInstruction : in out T_List_Instruction);
 
 
 
     private
 
-     -- nom : afficher_ligne_instruction
+     -- nom : afficherLigneInstruction
     -- semantique : affiche une ligne d'instruction
     -- parametres :
     --          ptrInstruction : T_Ptr_Instruction
@@ -126,10 +123,10 @@ package operations_liste is
     -- post-conditions
     --          Aucune
     -- exception : /
-   procedure afficher_ligne_instruction (ptrInstruction : T_Ptr_Instruction);
+   procedure afficherLigneInstruction (ptrInstruction : T_Ptr_Instruction);
 
 
-   -- nom : afficher_parametre_ligne_instruction
+   -- nom : afficherParametreLigneInstruction
     -- semantique : affiche les paramètres d'une ligne d'instruction
     -- parametres :
     --          ptrVariable : T_Ptr_Variable
@@ -138,7 +135,7 @@ package operations_liste is
     -- post-conditions
     --          Aucune
     -- exception : /
-    procedure afficher_parametre_ligne_instruction (ptrVariable : T_Ptr_Variable);
+    procedure afficherParametreLigneInstruction (ptrVariable : T_Ptr_Variable);
 
     
 

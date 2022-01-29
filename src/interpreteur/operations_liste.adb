@@ -7,9 +7,12 @@ use ada.Text_IO, ada.integer_Text_io, Ada.Strings.Unbounded, Ada.Text_IO.Unbound
 package body operations_liste is
 
 
-procedure afficher_liste(f_l : in T_List_Variable) is
+    procedure afficher_liste(f_l : in T_List_Variable) is
+    
         l : T_List_Variable;
+    
     begin
+    
         l := f_l;
         while(l.all.prev /= null) loop
             l := l.all.prev;
@@ -29,20 +32,25 @@ procedure afficher_liste(f_l : in T_List_Variable) is
             new_line;
             l := l.all.next;
         end loop;
+   
     end afficher_liste;
 
     procedure afficher_liste(f_l : in T_List_Instruction) is
-        l : T_List_Instruction;
+    
+       l : T_List_Instruction;
+    
     begin
+    
         l := f_l;
-        pointer_en_tete_instructions(l);
+        pointerEnTeteInstructions(l);
         while (l /= null) loop
-            afficher_ligne_instruction(l.all.ptrIns);
+            afficherLigneInstruction(l.all.ptrIns);
             l := l.all.next;
         end loop;
+    
     end afficher_liste;
 
-    procedure afficher_ligne_instruction (ptrInstruction : T_Ptr_Instruction) is
+    procedure afficherLigneInstruction (ptrInstruction : T_Ptr_Instruction) is
 
     begin
         
@@ -53,19 +61,20 @@ procedure afficher_liste(f_l : in T_List_Variable) is
         put_line(ptrInstruction.all.operation);
 
         put("       parametre z :");
-        afficher_parametre_ligne_instruction(ptrInstruction.all.operandes.z);
+        afficherParametreLigneInstruction(ptrInstruction.all.operandes.z);
 
         put("       parametre x :");
-        afficher_parametre_ligne_instruction(ptrInstruction.all.operandes.x);
+        afficherParametreLigneInstruction(ptrInstruction.all.operandes.x);
 
         put("       parametre y :");
-        afficher_parametre_ligne_instruction(ptrInstruction.all.operandes.y);
+        afficherParametreLigneInstruction(ptrInstruction.all.operandes.y);
 
         new_line;
 
-    end afficher_ligne_instruction;
+    end afficherLigneInstruction;
 
-    procedure afficher_parametre_ligne_instruction (ptrVariable : T_Ptr_Variable) is
+    procedure afficherParametreLigneInstruction (ptrVariable : T_Ptr_Variable) is
+    
     begin
 
         if (ptrVariable /= null) then
@@ -76,39 +85,59 @@ procedure afficher_liste(f_l : in T_List_Variable) is
             put_line(ptrVariable.all.nomVariable);
             put("                valeur  : ");
             put(ptrVariable.all.valeurVariable, 1);
+            if (ptrVariable.all.typeVariable = "Caractere") then
+                put(" => ");
+                put(Character'VAL(ptrVariable.all.valeurVariable));
+            end if;
         else
             put(" /");
         end if;
         new_line;
 
-    end afficher_parametre_ligne_instruction;
+    end afficherParametreLigneInstruction;
 
     function creer_liste_vide return T_List_Variable is
-    p : T_List_Variable;
+    
+        p : T_List_Variable;
+    
     begin
+    
         p := null;
         return p;
+    
     end creer_liste_vide;
 
     function est_vide(p : in T_List_Variable) return boolean is
+    
     begin
+    
         return p = null;
+    
     end est_vide;
 
     function creer_liste_vide return T_List_Instruction is
-    p : T_List_Instruction;
+    
+        p : T_List_Instruction;
+    
     begin
         p := null;
+        
         return p;
+    
     end creer_liste_vide;
 
     function est_vide(p : in T_List_Instruction) return boolean is
+    
     begin
+    
         return p = null;
+    
     end est_vide;
 
     procedure ajouter(f_l : in out T_List_Variable; f_nouveau : in T_Ptr_Variable) is
+    
     begin
+    
         if (f_l = null) then
             f_l := new T_Cell_Variable'(f_nouveau, null, null);
         else
@@ -119,10 +148,13 @@ procedure afficher_liste(f_l : in T_List_Variable) is
             f_l.all.next.all.prev := f_l;  
             f_l := f_l.all.next;
         end if;
+    
     end ajouter;
 
     procedure ajouter(f_l : in out T_List_Instruction; f_nouveau : in T_Ptr_Instruction) is
+    
     begin
+        
         if (f_l = null) then
             f_l := new T_Cell_Instruction'(f_nouveau, null, null);
         else
@@ -133,9 +165,10 @@ procedure afficher_liste(f_l : in T_List_Variable) is
             f_l.all.next.all.prev := f_l;  
             f_l := f_l.all.next;
         end if;
+    
     end ajouter;
 
-    procedure pointer_en_tete_instructions (ptrInstruction : in out T_List_Instruction) is
+    procedure pointerEnTeteInstructions (ptrInstruction : in out T_List_Instruction) is
 
     begin
 
@@ -143,6 +176,6 @@ procedure afficher_liste(f_l : in T_List_Variable) is
             ptrInstruction := ptrInstruction.all.prev;
         end loop;
 
-    end pointer_en_tete_instructions;
+    end pointerEnTeteInstructions;
 
 end operations_liste;
