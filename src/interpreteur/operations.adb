@@ -7,7 +7,7 @@ use ada.Text_IO, ada.integer_Text_io, Ada.Strings.Unbounded, Ada.Text_IO.Unbound
 
 package body operations is
 
-    procedure ifOperation (ligne : in Unbounded_String; i : in out integer; ptrInstruction : in out T_Ptr_Instruction; operation : out Unbounded_String; variables : in T_List_Variable) is
+    procedure if_operation (ligne : in Unbounded_String; i : in out integer; ptrInstruction : in out T_Ptr_Instruction; operation : out Unbounded_String; variables : in T_List_Variable) is
     
         nomVariableX : Unbounded_String;
         nomVariableY : Unbounded_String;
@@ -25,23 +25,23 @@ package body operations is
         chainesReservees.nbElements := 1;
         
         -- parcourir la ligne jusqu'au début de la chaîne GOTO, mettre le résultat dans nomVariableX
-        recupererChaine(nomVariableX, ligne, i, 3, chainesReservees);
+        recuperer_chaine(nomVariableX, ligne, i, 3, chainesReservees);
 
         if (element(ligne, i) = '[') then
             creer_variable_tableau(ligne, i, nomVariableX, variables, ptrInstruction.all.operandes.x);
         else
-            ptrInstruction.all.operandes.x := rechercherVariable(variables, nomVariableX).all.ptrVar;
+            ptrInstruction.all.operandes.x := rechercher_variable(variables, nomVariableX).all.ptrVar;
         end if;
         i := i+4;
         
         -- recuperer le paramètre z : numero de ligne du GOTO
-        recupererChaine(nomVariableZ, ligne, i, 1);
+        recuperer_chaine(nomVariableZ, ligne, i, 1);
 
         ptrInstruction.all.operandes.z := creer_variable(variables, nomVariableZ, false);
 
-    end ifOperation;
+    end if_operation;
 
-    procedure ecrireOperation (ligne : in Unbounded_String; i : in out integer; ptrInstruction : in out T_Ptr_Instruction; operation : out Unbounded_String; variables : in T_List_Variable) is
+    procedure ecrire_operation (ligne : in Unbounded_String; i : in out integer; ptrInstruction : in out T_Ptr_Instruction; operation : out Unbounded_String; variables : in T_List_Variable) is
     
         nomVariableZ : Unbounded_String;
         nomVariableX : Unbounded_String;
@@ -57,7 +57,7 @@ package body operations is
             i := i+1;
         end if;
         
-        recupererChaine(nomVariableZ, ligne, i, 3);
+        recuperer_chaine(nomVariableZ, ligne, i, 3);
 
         if (element(ligne, i) = '[') then
             creer_variable_tableau(ligne, i, nomVariableZ, variables, ptrInstruction.all.operandes.z);
@@ -65,9 +65,9 @@ package body operations is
             ptrInstruction.all.operandes.z := creer_variable(variables, nomVariableZ, isCaractere);
         end if;
 
-    end ecrireOperation;
+    end ecrire_operation;
 
-    procedure lireOperation (ligne : in Unbounded_String; i : in out integer; ptrInstruction : in out T_Ptr_Instruction; operation : out Unbounded_String; variables : in T_List_Variable) is
+    procedure lire_operation (ligne : in Unbounded_String; i : in out integer; ptrInstruction : in out T_Ptr_Instruction; operation : out Unbounded_String; variables : in T_List_Variable) is
     
         nomVariableZ : Unbounded_String;
         nomVariableX : Unbounded_String;
@@ -76,7 +76,7 @@ package body operations is
 
         operation := To_Unbounded_String("LIRE");
         i := i+5;
-        recupererChaine(nomVariableZ, ligne, i, 3);
+        recuperer_chaine(nomVariableZ, ligne, i, 3);
 
         if (element(ligne, i) = '[') then
             creer_variable_tableau(ligne, i, nomVariableZ, variables, ptrInstruction.all.operandes.z);
@@ -84,9 +84,9 @@ package body operations is
             ptrInstruction.all.operandes.z := creer_variable(variables, nomVariableZ, false);
         end if;
 
-    end lireOperation;
+    end lire_operation;
 
-    procedure gotoOperation (ligne : in Unbounded_String; i : in out integer; ptrInstruction : in out T_Ptr_Instruction; operation : out Unbounded_String; variables : in T_List_Variable) is
+    procedure goto_operation (ligne : in Unbounded_String; i : in out integer; ptrInstruction : in out T_Ptr_Instruction; operation : out Unbounded_String; variables : in T_List_Variable) is
     
         nomVariableZ : Unbounded_String;
 
@@ -94,20 +94,20 @@ package body operations is
 
         operation := To_Unbounded_String("GOTO");
         i := i+4;
-        recupererChaine(nomVariableZ, ligne, i, 1);
+        recuperer_chaine(nomVariableZ, ligne, i, 1);
         ptrInstruction.all.operandes.z := creer_variable(variables, nomVariableZ, false);
 
-    end gotoOperation;
+    end goto_operation;
 
-    procedure nullOperation (operation : out Unbounded_String) is
+    procedure null_operation (operation : out Unbounded_String) is
 
     begin
 
         operation := To_Unbounded_String("NULL");
 
-    end nullOperation;
+    end null_operation;
 
-    procedure affectationOperation (ligne : in Unbounded_String; i : in out integer; ptrInstruction : in out T_Ptr_Instruction; operation : out Unbounded_String; variables : in T_List_Variable) is
+    procedure affectation_operation (ligne : in Unbounded_String; i : in out integer; ptrInstruction : in out T_Ptr_Instruction; operation : out Unbounded_String; variables : in T_List_Variable) is
 
         nomVariableX : Unbounded_String;
         nomVariableY : Unbounded_String;
@@ -118,12 +118,12 @@ package body operations is
 
     begin
 
-        recupererChaine(nomVariableZ, ligne, i, 3);
+        recuperer_chaine(nomVariableZ, ligne, i, 3);
 
         if (element(ligne, i) = '[') then
             creer_variable_tableau(ligne, i, nomVariableZ, variables, ptrInstruction.all.operandes.z);
         else
-            ptrInstruction.all.operandes.z := rechercherVariable(variables, nomVariableZ).all.ptrVar;
+            ptrInstruction.all.operandes.z := rechercher_variable(variables, nomVariableZ).all.ptrVar;
         end if;
 
         i := i+2;
@@ -136,7 +136,7 @@ package body operations is
             i := i+1;
         end if;
 
-        recupererChaine(nomVariableX, ligne, i, 3, chainesReservees);
+        recuperer_chaine(nomVariableX, ligne, i, 3, chainesReservees);
 
         if (i <= length(ligne) and then element(ligne, i) = '[') then
             creer_variable_tableau(ligne, i, nomVariableX, variables, ptrInstruction.all.operandes.x);
@@ -162,7 +162,7 @@ package body operations is
                 exit when (element(ligne,i) /= '<' and element(ligne,i) /= '>' and element(ligne,i) /= '=') ;
                 end loop;
             end if;
-            recupererChaine(nomVariableY, ligne, i, 3);
+            recuperer_chaine(nomVariableY, ligne, i, 3);
             if (i <= length(ligne) and then element(ligne, i) = '[') then
                 creer_variable_tableau(ligne, i, nomVariableY, variables, ptrInstruction.all.operandes.y);
             else
@@ -172,6 +172,6 @@ package body operations is
             operation := To_Unbounded_String("AFFECTATION");
         end if;
 
-    end affectationOperation;
+    end affectation_operation;
 
 end operations;

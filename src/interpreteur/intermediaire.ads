@@ -77,7 +77,7 @@ package intermediaire is
     -- Postconditions
     --  aucune
     -- Exceptions : Aucune_Variable_Definie
-    procedure parseFile (fileName : in string; variables : in out T_List_Variable; instructions : in out T_List_Instruction);
+    procedure parse_file (fileName : in string; variables : in out T_List_Variable; instructions : in out T_List_Instruction);
 
     
     -- Wrapper pour le traitement du programme
@@ -91,17 +91,9 @@ package intermediaire is
     --  Aucune
     procedure traiter_programme;
 
-    -- nom : recupererVariables
-    -- semantique : récupère les variables d'un programme en langage intermédiaire contenues entre 'Début' (exclu) et 'Programme' (exclue)
-    -- paramètres :
-    --  variables : in out T_List_Variable : la liste des variables
-    -- ligne : in Unbounded_string : la ligne à analyser
-    -- Préconditions : le programme est correctement formé [Non vérifié dans notre cas]
-    -- Postconditions : la liste doublement chainée contient les variables du programme
-    -- Exceptions : Aucune_Variable_Definie, Variable_Deja_Definie
-     procedure recupererVariables(variables : in out T_List_Variable; ligne : in Unbounded_string);
+
     
-    -- nom : recupererInstructions
+    -- nom : recuperer_instructions
     -- semantique : récupère les lignes d'un programme en langage intermédiaire contenues entre 'Début' (exclu) et 'Fin' (exclue)
     -- paramètres 
     --  instructions : in out T_List_Instruction : la liste des instructions
@@ -110,9 +102,9 @@ package intermediaire is
     --                  le fichier est fermé
     --                  le contenu entre 'Début' et 'Fin' n'est pas vide
     -- Postconditions : le fichier est fermé
-    procedure recupererInstructions(instructions : in out T_List_Instruction; variables : in out T_List_Variable; ligne : in Unbounded_string);
+    procedure recuperer_instructions(instructions : in out T_List_Instruction; variables : in out T_List_Variable; ligne : in Unbounded_string);
 
-    -- nom : interpreterCommande
+    -- nom : interpreter_commande
     -- semantique : interprete la ligne pointée par ptrLine
     -- parametres :
     --  ptrLine : in out T_Cell_Instruction : la ligne à interpréter
@@ -120,26 +112,9 @@ package intermediaire is
     -- Préconditions    : ptrLigne n'est pas null
     -- Postconditions   : le numéro de la ligne pointée par ptrLine change pendant la procédure
     -- Exceptions       : Acces_Limite
-    procedure interpreterCommande (ptrInstruction : in out T_List_Instruction; variables : in T_List_Variable);
+    procedure interpreter_commande (instructions : in out T_List_Instruction; variables : in out T_List_Variable);
 
 
-
-
-   
-
-     
-
-    -- nom : changerInstructionParNumero
-    -- semantique : change l'instruction à executer par une autre ligne d'instruction (EX : GOTO)
-    -- parametres :
-    --          ptrInstruction : T_List_Instruction
-    --          numeroInstruction : in integer
-    -- préconditions
-    --          Aucune
-    -- post-conditions
-    --          Aucune
-    -- exception : instuction_not_found
-    procedure changerInstructionParNumero(ptrInstruction : in out T_List_Instruction; numInstruction : in integer);
 
     
 

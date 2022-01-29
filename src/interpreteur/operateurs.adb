@@ -14,20 +14,20 @@ package body operateurs is
 
     begin
 
-        if (instructions.all.ptrIns.all.operandes.z /= null and then isArray(instructions.all.ptrIns.all.operandes.z.all.nomVariable)) then
-            variableZ := recupererElementTableau(instructions.all.ptrIns.all.operandes.z.all.nomVariable, variables);
+        if (instructions.all.ptrIns.all.operandes.z /= null and then is_array(instructions.all.ptrIns.all.operandes.z.all.nomVariable)) then
+            variableZ := recuperer_element_tableau(instructions.all.ptrIns.all.operandes.z.all.nomVariable, variables);
         else
             variableZ := instructions.all.ptrIns.all.operandes.z;
         end if;
 
-        if (instructions.all.ptrIns.all.operandes.x /= null and then isArray(instructions.all.ptrIns.all.operandes.x.all.nomVariable)) then
-            variableX := recupererElementTableau(instructions.all.ptrIns.all.operandes.x.all.nomVariable, variables);
+        if (instructions.all.ptrIns.all.operandes.x /= null and then is_array(instructions.all.ptrIns.all.operandes.x.all.nomVariable)) then
+            variableX := recuperer_element_tableau(instructions.all.ptrIns.all.operandes.x.all.nomVariable, variables);
         else
             variableX := instructions.all.ptrIns.all.operandes.x;
         end if;
 
-        if (instructions.all.ptrIns.all.operandes.y /= null and then isArray(instructions.all.ptrIns.all.operandes.y.all.nomVariable)) then
-            variableY := recupererElementTableau(instructions.all.ptrIns.all.operandes.y.all.nomVariable, variables);
+        if (instructions.all.ptrIns.all.operandes.y /= null and then is_array(instructions.all.ptrIns.all.operandes.y.all.nomVariable)) then
+            variableY := recuperer_element_tableau(instructions.all.ptrIns.all.operandes.y.all.nomVariable, variables);
         else
             variableY := instructions.all.ptrIns.all.operandes.y;
         end if;
@@ -36,9 +36,9 @@ package body operateurs is
             variableZ.all.valeurVariable := variableX.all.valeurVariable;
         else
             if (element(instructions.all.ptrIns.all.operation, 1) = '+' or element(instructions.all.ptrIns.all.operation, 1) = '*' or element(instructions.all.ptrIns.all.operation, 1) = '/' or element(instructions.all.ptrIns.all.operation, 1) = '-') then
-                variableZ.all.valeurVariable := operationArithmetique(element(instructions.all.ptrIns.all.operation, 1), variableX.all.valeurVariable, variableY.all.valeurVariable);
+                variableZ.all.valeurVariable := operation_arithmetique(element(instructions.all.ptrIns.all.operation, 1), variableX.all.valeurVariable, variableY.all.valeurVariable);
             else
-                variableZ.all.valeurVariable := operationLogique(instructions.all.ptrIns.all.operation, variableX.all.valeurVariable, variableY.all.valeurVariable);
+                variableZ.all.valeurVariable := operation_logique(instructions.all.ptrIns.all.operation, variableX.all.valeurVariable, variableY.all.valeurVariable);
             end if;
         end if;
 
@@ -46,7 +46,7 @@ package body operateurs is
 
     end affectation;
 
-    function operationArithmetique(op: in Character; op1 : in Integer; op2 : in Integer) return integer is
+    function operation_arithmetique(op: in Character; op1 : in Integer; op2 : in Integer) return integer is
     
         resultat : Integer;
     
@@ -67,9 +67,9 @@ package body operateurs is
 
         return resultat;
 
-    end operationArithmetique;
+    end operation_arithmetique;
 
-    function operationLogique (op : in Unbounded_String; op1 : in Integer; op2 : in integer) return integer is
+    function operation_logique (op : in Unbounded_String; op1 : in Integer; op2 : in integer) return integer is
         
         resultat : boolean;
     
@@ -98,7 +98,7 @@ package body operateurs is
         end if;
         return 0;
 
-    end operationLogique;
+    end operation_logique;
 
     function successeur(char : in Character) return Character is
         
@@ -132,8 +132,8 @@ package body operateurs is
 
     begin
 
-        if (isArray(instructions.all.ptrIns.all.operandes.z.all.nomVariable)) then
-            variableZ := recupererElementTableau(instructions.all.ptrIns.all.operandes.z.all.nomVariable, variables);
+        if (is_array(instructions.all.ptrIns.all.operandes.z.all.nomVariable)) then
+            variableZ := recuperer_element_tableau(instructions.all.ptrIns.all.operandes.z.all.nomVariable, variables);
         else
             variableZ := instructions.all.ptrIns.all.operandes.z;
         end if;
@@ -157,8 +157,8 @@ package body operateurs is
 
     begin
 
-        if (isArray(instructions.all.ptrIns.all.operandes.z.all.nomVariable)) then
-            variableZ := recupererElementTableau(instructions.all.ptrIns.all.operandes.z.all.nomVariable, variables);
+        if (is_array(instructions.all.ptrIns.all.operandes.z.all.nomVariable)) then
+            variableZ := recuperer_element_tableau(instructions.all.ptrIns.all.operandes.z.all.nomVariable, variables);
         else
             variableZ := instructions.all.ptrIns.all.operandes.z;
         end if;
@@ -172,7 +172,7 @@ package body operateurs is
             put(" : ");
             get_line(chaineLue);
 
-            conditionSortie := (length(chaineLue) = 1 and variableZ.all.typeVariable = "Caractere") or (isANumber(chaineLue) and variableZ.all.typeVariable = "Entier");
+            conditionSortie := (length(chaineLue) = 1 and variableZ.all.typeVariable = "Caractere") or (is_a_number(chaineLue) and variableZ.all.typeVariable = "Entier");
             if (not conditionSortie) then
                 put_line("La chaine remplie ne correspond pas au type demandé");
             end if;     
@@ -189,7 +189,7 @@ package body operateurs is
 
     end lire;
 
-    procedure branchementConditionel(instructions : in out T_List_Instruction; variables : in T_List_Variable) is
+    procedure branchement_conditionel(instructions : in out T_List_Instruction; variables : in T_List_Variable) is
         
         variableX : T_Ptr_Variable;
         variableZ : T_Ptr_Variable;
@@ -200,28 +200,28 @@ package body operateurs is
 
     begin
 
-        if (instructions.all.ptrIns.all.operandes.z /= null and then isArray(instructions.all.ptrIns.all.operandes.z.all.nomVariable)) then
-            variableZ := recupererElementTableau(instructions.all.ptrIns.all.operandes.z.all.nomVariable, variables);
+        if (instructions.all.ptrIns.all.operandes.z /= null and then is_array(instructions.all.ptrIns.all.operandes.z.all.nomVariable)) then
+            variableZ := recuperer_element_tableau(instructions.all.ptrIns.all.operandes.z.all.nomVariable, variables);
         else
             variableZ := instructions.all.ptrIns.all.operandes.z;
         end if;
 
-        if (instructions.all.ptrIns.all.operandes.x /= null and then isArray(instructions.all.ptrIns.all.operandes.x.all.nomVariable)) then
-            variableX := recupererElementTableau(instructions.all.ptrIns.all.operandes.x.all.nomVariable, variables);
+        if (instructions.all.ptrIns.all.operandes.x /= null and then is_array(instructions.all.ptrIns.all.operandes.x.all.nomVariable)) then
+            variableX := recuperer_element_tableau(instructions.all.ptrIns.all.operandes.x.all.nomVariable, variables);
         else
             variableX := instructions.all.ptrIns.all.operandes.x;
         end if;
 
         if(variableX.all.valeurVariable = 1) then
-            branchementBasic(instructions, variableZ.all.valeurVariable);
+            branchement_basic(instructions, variableZ.all.valeurVariable);
         else
             currentLine := instructions.all.ptrIns.all.numInstruction;
-            branchementBasic(instructions, currentLine+1);
+            branchement_basic(instructions, currentLine+1);
         end if;
 
-    end branchementConditionel;
+    end branchement_conditionel;
 
-    procedure branchementBasic(instructions : in out T_List_Instruction; numInstruction : in integer) is
+    procedure branchement_basic(instructions : in out T_List_Instruction; numInstruction : in integer) is
     
     begin
 
@@ -229,10 +229,10 @@ package body operateurs is
             raise instuction_not_found;
         elsif (instructions.all.ptrIns.all.numInstruction < numInstruction) then
             instructions := instructions.all.next;
-            branchementBasic(instructions, numInstruction);
+            branchement_basic(instructions, numInstruction);
         elsif (instructions.all.ptrIns.all.numInstruction > numInstruction) then
             instructions := instructions.all.prev;
-            branchementBasic(instructions, numInstruction);
+            branchement_basic(instructions, numInstruction);
         else
             null;
         end if;
@@ -241,6 +241,6 @@ package body operateurs is
             when Instuction_Not_Found => 
                 put("GOTO : la ligne précisée n'existe pas dans le fichier");
     
-    end branchementBasic;
+    end branchement_basic;
 
 end operateurs;

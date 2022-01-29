@@ -25,12 +25,12 @@ bg=green
 +lire(instructions : in out T_List_Instruction; variables : in T_List_Variable)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>92</x><y>128</y><w>700</w><h>140</h></coordinates><panel_attributes>Intermediaire
 --
 bg=yellow
-+parseFile (fileName : in string; variables : in out T_List_Variable; instructions : in out T_List_Instruction);
++parse_file (fileName : in string; variables : in out T_List_Variable; instructions : in out T_List_Instruction);
 +traiter_programme
-+recupererVariables(variables : in out T_List_Variable; ligne : in Unbounded_string)
-+recupererInstructions(instructions : in out T_List_Instruction; variables : in out T_List_Variable; ligne : in Unbounded_string)
-+interpreterCommande (ptrInstruction : in out T_List_Instruction; variables : in T_List_Variable)
-+changerInstructionParNumero(ptrInstruction : in out T_List_Instruction; numInstruction : in integer)
++recuperer_variables(variables : in out T_List_Variable; ligne : in Unbounded_string)
++recuperer_instructions(instructions : in out T_List_Instruction; variables : in out T_List_Variable; ligne : in Unbounded_string)
++interpreter_commande (ptrInstruction : in out T_List_Instruction; variables : in T_List_Variable)
++changer_instruction_par_numero(ptrInstruction : in out T_List_Instruction; numInstruction : in integer)
 
 </panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>919</x><y>336</y><w>210</w><h>100</h></coordinates><panel_attributes>T_Variable
 --

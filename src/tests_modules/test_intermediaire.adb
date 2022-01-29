@@ -29,7 +29,7 @@ begin
 instructions := creer_liste_vide;
 search := creer_liste_vide;
 variables := creer_liste_vide;
-    parseFile(fileName, variables, instructions);
+    parse_file(fileName, variables, instructions);
     Put_Line(variables.all.ptrVar.all.nomVariable);
     -- variables = tête de la liste
         if(variables.all.ptrVar.all.nomVariable = "Sum") then
@@ -60,7 +60,7 @@ variables := creer_liste_vide;
         begin
             variables_stub := creer_liste_vide;
             instructions_stub := creer_liste_vide;
-            parseFile(fileNameSansVariable, variables_stub, instructions_stub);
+            parse_file(fileNameSansVariable, variables_stub, instructions_stub);
             exception
                 when Aucune_Variable_Definie => Put_Line("OK exception Pas de variable définie");
                 when ADA.STRINGS.INDEX_ERROR => Put_Line("Levée d'exception prévisible");
@@ -71,7 +71,7 @@ variables := creer_liste_vide;
         begin
             variables_stub := creer_liste_vide;
             instructions_stub := creer_liste_vide;
-            parseFile(fileNameSansType, variables_stub, instructions_stub);
+            parse_file(fileNameSansType, variables_stub, instructions_stub);
             exception
                 when Variable_Deja_Definie => 
                     Put_Line("OK exception deux fois même déclaration");
@@ -84,7 +84,7 @@ variables := creer_liste_vide;
             begin
             variables_stub := creer_liste_vide;
             instructions_stub := creer_liste_vide;
-            parseFile("ce_fichier_n_existe_pas.med", variables_stub, instructions_stub);
+            parse_file("ce_fichier_n_existe_pas.med", variables_stub, instructions_stub);
             exception
                 when ADA.STRINGS.INDEX_ERROR => Put_Line("Levée d'exception prévisible");
                 when ADA.IO_EXCEPTIONS.NAME_ERROR => raise Fichier_Non_Trouve;
@@ -97,7 +97,7 @@ variables := creer_liste_vide;
     -- Test de la recherche d'une variable
         
         chne := To_Unbounded_String("Sum");
-        search := rechercherVariable(variables, chne);
+        search := rechercher_variable(variables, chne);
         if(search /= null) then
             if(search.all.ptrVar.all.nomVariable = "Sum") then
                 Put_Line("OK rechercheVariable");
@@ -111,7 +111,7 @@ variables := creer_liste_vide;
         begin -- Recherche d'une variable inexistante
            
             chne := To_Unbounded_String("xyz");
-            search := rechercherVariable(variables,chne);
+            search := rechercher_variable(variables,chne);
 
             exception
                 when Variable_Non_Trouvee => Put_Line("OK exception variable non trouvee");
@@ -161,27 +161,27 @@ variables := creer_liste_vide;
     -- Test de l'interprétation d'une commande/ligne d'instruction
         instructions_stub := instructions;
         while(instructions /= null) loop
-            interpreterCommande(instructions,variables);
+            interpreter_commande(instructions,variables);
         end loop;
         chne := To_Unbounded_String("n");
-        if(rechercherVariable(variables,chne).all.ptrVar.all.valeurVariable = 5) then
-            Put_Line("OK interpreterCommande");
+        if(rechercher_variable(variables,chne).all.ptrVar.all.valeurVariable = 5) then
+            Put_Line("OK interpreter_commande");
         else
-            Put_Line("KO interpreterCommande");
+            Put_Line("KO interpreter_commande");
         end if;
 
         chne := To_Unbounded_String("i");
-        if(rechercherVariable(variables,chne).all.ptrVar.all.valeurVariable = 1) then
-            Put_Line("OK interpreterCommande");
+        if(rechercher_variable(variables,chne).all.ptrVar.all.valeurVariable = 1) then
+            Put_Line("OK interpreter_commande");
         else
-            Put_Line("KO interpreterCommande");
+            Put_Line("KO interpreter_commande");
         end if;
 
         chne := To_Unbounded_String("Sum");
-        if(rechercherVariable(variables,chne).all.ptrVar.all.valeurVariable = 6) then
-            Put_Line("OK interpreterCommande");
+        if(rechercher_variable(variables,chne).all.ptrVar.all.valeurVariable = 6) then
+            Put_Line("OK interpreter_commande");
         else
-            Put_Line("KO interpreterCommande");
+            Put_Line("KO interpreter_commande");
         end if;
 
         afficher_liste(instructions_stub);

@@ -10,7 +10,7 @@ package body intermediaire is
     --package Liste_Instructions is new P_List_Double(pointeur => T_List_Instruction);
     --use Liste_Instructions;
 
-    procedure traiterProgramme is
+    procedure traiter_programme is
 
         variables : T_List_Variable;
         instructions : T_List_Instruction;
@@ -43,13 +43,13 @@ package body intermediaire is
         skip_line;
 
         begin
-            parseFile(To_String(fileName), variables, instructions);
+            parse_file(To_String(fileName), variables, instructions);
 
             exception
             when Ada.IO_EXCEPTIONS.DEVICE_ERROR => Put_Line("Fichier inexistant/invalide");
         end;
 
-        pointerEnTeteInstructions(instructions);
+        pointer_en_tete_instructions(instructions);
 
         l_instructions := instructions;
 
@@ -59,20 +59,20 @@ package body intermediaire is
                 Put(l_instructions.all.ptrIns.all.numInstruction, 1);
                 new_line;
             end if;
-            interpreterCommande(l_instructions, variables);
+            interpreter_commande(l_instructions, variables);
         end loop;
 
         afficher_liste(instructions);
         Put_Line("Etat des variables en terminaison du programme");
         afficher_liste(variables);
 
-    end traiterProgramme;
+    end traiter_programme;
 
     -- private
     -- Les sous-programmes suivant ne sont pas déclarés private afin de pouvoir toujours réaliser des tests unitaires
     -- Dans une situation de mise en production, les autres sous-programmes devraient être déclarés private
 
-    procedure parseFile (fileName : in string; variables : in out T_List_Variable; instructions : in out T_List_Instruction) is
+    procedure parse_file (fileName : in string; variables : in out T_List_Variable; instructions : in out T_List_Instruction) is
         F         : File_Type;
         ligne : Unbounded_string;
     begin
@@ -84,53 +84,53 @@ package body intermediaire is
         Open (F, In_File, fileName);    -- Ouverture du fichier en lecture
 
         loop
-            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));     -- Lecture de la ligne courante sans espace
-        exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Programme)));  -- Tant que la ligne ne commence par un mot réservé
+            ligne := renvoyer_ligne_sans_espace(Ada.Text_IO.Unbounded_IO.get_line(f));     -- Lecture de la ligne courante sans espace
+        exit when (ligne_commence_par_mot_reserve(ligne, Reserved_Langage_Word'Image(Programme)));  -- Tant que la ligne ne commence par un mot réservé
         end loop;
 
         loop
-            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f)); -- Lecture de la ligne courante sans espace
-        exit when estLigneUtile(ligne);
+            ligne := renvoyer_ligne_sans_espace(Ada.Text_IO.Unbounded_IO.get_line(f)); -- Lecture de la ligne courante sans espace
+        exit when est_ligne_utile(ligne);
         end loop;
 
-        if (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut))) then -- Si la ligne commence par un mot réservé
+        if (ligne_commence_par_mot_reserve(ligne, Reserved_Langage_Word'Image(Debut))) then -- Si la ligne commence par un mot réservé
             raise Aucune_Variable_Definie;  -- On lève une exception car cela indique qu'il n'y a pas de variable
         end if;
 
         loop
-            if (estLigneUtile(ligne)) then  -- Si la ligne est utile (ie. pas un commentaire )
-                recupererVariables(variables, ligne);   -- Récupération des variables
+            if (est_ligne_utile(ligne)) then  -- Si la ligne est utile (ie. pas un commentaire )
+                recuperer_variables(variables, ligne);   -- Récupération des variables
             end if;
-            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f)); -- Lecture de la ligne courante sans espace
-        exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Debut))); -- Jusqu'à arriver à 'Debut'
+            ligne := renvoyer_ligne_sans_espace(Ada.Text_IO.Unbounded_IO.get_line(f)); -- Lecture de la ligne courante sans espace
+        exit when (ligne_commence_par_mot_reserve(ligne, Reserved_Langage_Word'Image(Debut))); -- Jusqu'à arriver à 'Debut'
         end loop;
 
-        ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
+        ligne := renvoyer_ligne_sans_espace(Ada.Text_IO.Unbounded_IO.get_line(f));
 
         loop
-            if (estLigneUtile(ligne)) then
-                recupererInstructions(instructions, variables, ligne);  -- Récupération des instructions
+            if (est_ligne_utile(ligne)) then
+                recuperer_instructions(instructions, variables, ligne);  -- Récupération des instructions
             end if;
-            ligne := renvoyerLigneSansEspace(Ada.Text_IO.Unbounded_IO.get_line(f));
-        exit when (ligneCommenceParMotReserve(ligne, Reserved_Langage_Word'Image(Fin)));    -- Jusqu'à arriver à 'Fin'
+            ligne := renvoyer_ligne_sans_espace(Ada.Text_IO.Unbounded_IO.get_line(f));
+        exit when (ligne_commence_par_mot_reserve(ligne, Reserved_Langage_Word'Image(Fin)));    -- Jusqu'à arriver à 'Fin'
         end loop;
 
         Close(F);
 
-    end parseFile;
+    end parse_file;
 
-    function recupererNumeroInstructionLigne (index : in out integer; ligne : in Unbounded_String) return integer is
+    function recuperer_numero_instruction_ligne (index : in out integer; ligne : in Unbounded_String) return integer is
         
         numInstruction : Unbounded_String;
     
     begin
 
-        recupererChaine(numInstruction, ligne, index, 1);
+        recuperer_chaine(numInstruction, ligne, index, 1);
         return Integer'Value(To_String(numInstruction));
 
-    end recupererNumeroInstructionLigne;
+    end recuperer_numero_instruction_ligne;
 
-    procedure recupererInstructions(instructions : in out T_List_Instruction; variables : in out T_List_Variable; ligne : in Unbounded_string) is
+    procedure recuperer_instructions(instructions : in out T_List_Instruction; variables : in out T_List_Variable; ligne : in Unbounded_string) is
      
         i : integer;
         nomVariableZ : Unbounded_String;
@@ -147,28 +147,28 @@ package body intermediaire is
 
         -- recuperation du numero de l'instruction
         i := 1;
-        instruction.all.numInstruction := recupererNumeroInstructionLigne(i,ligne);
+        instruction.all.numInstruction := recuperer_numero_instruction_ligne(i,ligne);
 
         if (i <= length(ligne)-1 and then Slice(ligne, i, i+1) = "IF") then
-            ifOperation(ligne, i, instruction, operation, variables);
+            if_operation(ligne, i, instruction, operation, variables);
         elsif (i <= length(ligne)-3 and then Slice(ligne, i, i+3) = "GOTO") then
-            gotoOperation(ligne, i, instruction, operation, variables);
+            goto_operation(ligne, i, instruction, operation, variables);
         elsif (i <= length(ligne)-3 and then Slice(ligne, i, i+3) = "NULL") then
-            nullOperation(operation);
+            null_operation(operation);
         elsif (i <= length(ligne)-5 and then Slice(ligne, i, i+5) = "Ecrire") then
-            ecrireOperation(ligne, i, instruction, operation, variables);
+            ecrire_operation(ligne, i, instruction, operation, variables);
         elsif (i <= length(ligne)-3 and then Slice(ligne, i, i+3) = "Lire") then
-            lireOperation(ligne, i, instruction, operation, variables);
+            lire_operation(ligne, i, instruction, operation, variables);
         else
-            affectationOperation(ligne, i, instruction, operation, variables);
+            affectation_operation(ligne, i, instruction, operation, variables);
         end if;
 
         instruction.all.operation := operation;
         ajouter(instructions, instruction);
 
-    end recupererInstructions;
+    end recuperer_instructions;
 
-    procedure interpreterCommande (instructions : in out T_List_Instruction; variables : in out T_List_Variable) is
+    procedure interpreter_commande (instructions : in out T_List_Instruction; variables : in out T_List_Variable) is
         
         nomOperation : Unbounded_String;
         nomVariable : Unbounded_String;
@@ -181,11 +181,11 @@ package body intermediaire is
         nomOperation := instructions.all.ptrIns.all.operation;
 
         if(nomOperation = "NULL") then
-            branchementBasic(instructions, instructions.all.ptrIns.all.numInstruction+1);
+            branchement_basic(instructions, instructions.all.ptrIns.all.numInstruction+1);
         elsif(nomOperation = "GOTO") then
-            branchementBasic(instructions, instructions.all.ptrIns.all.operandes.z.all.valeurVariable);
+            branchement_basic(instructions, instructions.all.ptrIns.all.operandes.z.all.valeurVariable);
         elsif(nomOperation = "IF") then
-            branchementConditionel(instructions, variables);
+            branchement_conditionel(instructions, variables);
         elsif(nomOperation = "ECRIRE") then
             ecrire(instructions, variables);
         elsif(nomOperation = "LIRE") then
@@ -194,6 +194,6 @@ package body intermediaire is
             affectation(instructions, variables);
         end if;
 
-    end interpreterCommande;
+    end interpreter_commande;
 
 end intermediaire;

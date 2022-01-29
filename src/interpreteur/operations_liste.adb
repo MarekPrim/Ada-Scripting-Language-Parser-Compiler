@@ -42,15 +42,15 @@ package body operations_liste is
     begin
     
         l := f_l;
-        pointerEnTeteInstructions(l);
+        pointer_en_tete_instructions(l);
         while (l /= null) loop
-            afficherLigneInstruction(l.all.ptrIns);
+            afficher_ligne_instruction(l.all.ptrIns);
             l := l.all.next;
         end loop;
     
     end afficher_liste;
 
-    procedure afficherLigneInstruction (ptrInstruction : T_Ptr_Instruction) is
+    procedure afficher_ligne_instruction (ptrInstruction : T_Ptr_Instruction) is
 
     begin
         
@@ -61,19 +61,19 @@ package body operations_liste is
         put_line(ptrInstruction.all.operation);
 
         put("       parametre z :");
-        afficherParametreLigneInstruction(ptrInstruction.all.operandes.z);
+        afficher_parametre_ligne_instruction(ptrInstruction.all.operandes.z);
 
         put("       parametre x :");
-        afficherParametreLigneInstruction(ptrInstruction.all.operandes.x);
+        afficher_parametre_ligne_instruction(ptrInstruction.all.operandes.x);
 
         put("       parametre y :");
-        afficherParametreLigneInstruction(ptrInstruction.all.operandes.y);
+        afficher_parametre_ligne_instruction(ptrInstruction.all.operandes.y);
 
         new_line;
 
-    end afficherLigneInstruction;
+    end afficher_ligne_instruction;
 
-    procedure afficherParametreLigneInstruction (ptrVariable : T_Ptr_Variable) is
+    procedure afficher_parametre_ligne_instruction (ptrVariable : T_Ptr_Variable) is
     
     begin
 
@@ -94,7 +94,7 @@ package body operations_liste is
         end if;
         new_line;
 
-    end afficherParametreLigneInstruction;
+    end afficher_parametre_ligne_instruction;
 
     function creer_liste_vide return T_List_Variable is
     
@@ -168,7 +168,7 @@ package body operations_liste is
     
     end ajouter;
 
-    procedure pointerEnTeteInstructions (ptrInstruction : in out T_List_Instruction) is
+    procedure pointer_en_tete_instructions (ptrInstruction : in out T_List_Instruction) is
 
     begin
 
@@ -176,6 +176,6 @@ package body operations_liste is
             ptrInstruction := ptrInstruction.all.prev;
         end loop;
 
-    end pointerEnTeteInstructions;
+    end pointer_en_tete_instructions;
 
 end operations_liste;
