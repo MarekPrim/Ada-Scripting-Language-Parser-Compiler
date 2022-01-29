@@ -25,7 +25,6 @@ package variables is
     -- pré-conditions : /
     -- post-conditions : /
     -- exception : /
-    procedure creer_variables_tableau (ligne : in Unbounded_String; i : in out integer; nomVariable : in out Unbounded_String; variables : in T_List_Variable; ptrVariable : out T_Ptr_Variable);
     procedure creer_variable_tableau (ligne : in Unbounded_String; i : in out integer; nomTableau : in out Unbounded_String; variables : in T_List_Variable; ptrVariable : out T_Ptr_Variable);
 
     function is_array (nomVariable : in Unbounded_String) return boolean;

@@ -98,29 +98,7 @@ package body variables is
 
     end creer_variable_tableau;
 
-    procedure creer_variables_tableau (ligne : in Unbounded_String; i : in out integer; nomVariable : in out Unbounded_String; variables : in T_List_Variable; ptrVariable : out T_Ptr_Variable) is
-
-        nomIndice : Unbounded_String;
-
-    begin
-
-        append(nomVariable, "[1]");
-        i := i+1;
-
-        while (i < length(ligne) and then element(ligne, i) /= ']') loop
-            append(nomIndice, element(ligne, i));
-            i := i+1;
-        end loop;
-
-        i := i+1;
-
-        if (is_a_number(nomIndice)) then
-            nomIndice := To_Unbounded_String("Tmp");
-        end if;
-
-        ptrVariable := new T_Variable'(0, To_Unbounded_String("Indice Tableau"), nomIndice, false);
-
-    end creer_variables_tableau;
+    
 
     function creer_variable_tmp (nomVariable : in Unbounded_String; isCaractere : in boolean) return T_Ptr_Variable is
         
